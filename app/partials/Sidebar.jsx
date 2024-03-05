@@ -659,7 +659,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                 <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/product"
+                                                            href="/admin/country"
                                                             className={({ isActive }) =>
                                                                 "text-slate-200 block transition duration-150 truncate " +
                                                                 (isActive
@@ -750,7 +750,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             />
                                                         </svg>
                                                         <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                            Vehcile
+                            Vehicle
                             </span>
                                                     </div>
                                                     {/* Icon */}
@@ -770,7 +770,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                 <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/vechile"
+                                                            href="/admin/vehicle"
                                                             className={({ isActive }) =>
                                                                 "text-slate-200 block transition duration-150 truncate " +
                                                                 (isActive

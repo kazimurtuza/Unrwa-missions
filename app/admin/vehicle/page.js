@@ -4,25 +4,24 @@ import ActionDropdown from "@/app/components/actionDropdown";
 import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
 
-function Category() {
-    const [category, setCategoryList] = useState([]);
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+function Vehicle() {
+    const [vehicle, setVehicleList] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axiosClient.get('categories');
-                setCategoryList(data.result);
+                const { data } = await axiosClient.get('vehicle');
+                setVehicleList(data.result);
             } catch (error) {
-                console.error('Error fetching categories:', error);
+                console.error('Error fetching vehicles:', error);
             }
         };
 
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-    let tableName = "Category";
-    const headName = ["Si", "Name", "Slug", "Status", "Action"];
+    let tableName = "Vehicle";
+    const headName = ["Si", "Name", "Registration Number", "Vehicle Type", "Description", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -38,7 +37,7 @@ function Category() {
 
     const body = (
         <>
-            {category.map((item, index) => (
+            {Array.isArray(vehicle) && vehicle.map((item, index) => (
 
                 <tr key={index}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -70,7 +69,15 @@ function Category() {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                            {item.slug}
+                            {item.registration_number}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.vehicle_type}
                         </p>
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}
@@ -84,24 +91,15 @@ function Category() {
                     {/*        Due in 3 days*/}
                     {/*    </p>*/}
                     {/*</td>*/}
-
-
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {item.status?(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span
-                            aria-hidden
-                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                        ></span>
-                        <span className="relative">Active</span>
-                    </span>):(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span
-                            aria-hidden
-                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                        ></span>
-                        <span className="relative">Inactive</span>
-                    </span>)}
-
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.description}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
                     </td>
+                  
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                         <ActionDropdown />
                     </td>
@@ -116,4 +114,4 @@ function Category() {
     );
 }
 
-export default Category;
+export default Vehicle;
