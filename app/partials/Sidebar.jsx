@@ -350,6 +350,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                                     ? "text-indigo-500"
                                                                     : "text-slate-400 hover:text-slate-200")
                                                             }
+
                                                         >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                 Driver Create
@@ -365,6 +366,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                                     ? "text-indigo-500"
                                                                     : "text-slate-400 hover:text-slate-200")
                                                             }
+
                                                         >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                 Driver List
@@ -375,7 +377,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                 </ul>
                                             </div>
                                         </React.Fragment>
-
                                     );
                                 }}
                             </SidebarLinkGroup>
@@ -460,6 +461,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                                     ? "text-indigo-500"
                                                                     : "text-slate-400 hover:text-slate-200")
                                                             }
+
                                                         >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                 Staff Create
@@ -476,6 +478,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                                     ? "text-indigo-500"
                                                                     : "text-slate-400 hover:text-slate-200")
                                                             }
+
                                                         >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                 Staff List
@@ -486,7 +489,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                 </ul>
                                             </div>
                                         </React.Fragment>
-
                                     );
                                 }}
                             </SidebarLinkGroup>
@@ -578,13 +580,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li>
 
-
-
-
                                                 </ul>
                                             </div>
                                         </React.Fragment>
-
                                     );
                                 }}
                             </SidebarLinkGroup>
@@ -685,6 +683,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                                     ? "text-indigo-500"
                                                                     : "text-slate-400 hover:text-slate-200")
                                                             }
+
                                                         >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                 Country Create
@@ -692,15 +691,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li>
 
-                                                    
-
-
-
-
                                                 </ul>
                                             </div>
                                         </React.Fragment>
-
                                     );
                                 }}
                             </SidebarLinkGroup>
@@ -801,6 +794,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                                     ? "text-indigo-500"
                                                                     : "text-slate-400 hover:text-slate-200")
                                                             }
+
                                                         >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                 Vehicle Create
@@ -808,15 +802,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li>
 
-                                                    
-
-
-
-
                                                 </ul>
                                             </div>
                                         </React.Fragment>
-
                                     );
                                 }}
                             </SidebarLinkGroup>
@@ -916,6 +904,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                                     ? "text-indigo-500"
                                                                     : "text-slate-400 hover:text-slate-200")
                                                             }
+
                                                         >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                 Mission Create
@@ -923,15 +912,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li>
 
-                                                    
-
-
-
-
                                                 </ul>
                                             </div>
                                         </React.Fragment>
-
                                     );
                                 }}
                             </SidebarLinkGroup>
@@ -1021,7 +1004,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               </span>
                                                         </Link>
                                                     </li>
-
 
                                                 </ul>
                                             </div>
