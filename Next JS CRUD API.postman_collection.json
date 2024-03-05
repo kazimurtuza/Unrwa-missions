@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "8c1adaa9-043b-4449-afc1-d344331d15fd",
+		"name": "Next JS CRUD API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26281183"
+	},
+	"item": [
+		{
+			"name": "All Product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/products",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"name\":\"Note 11\",\r\n      \"price\":\"3000\",\r\n      \"color\":\"red\",\r\n      \"company\":\"samsung\",\r\n      \"category\":\"mobile\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/products",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"name\":\"Note 19 pro\",\r\n      \"price\":\"3000\",\r\n      \"color\":\"red\",\r\n      \"company\":\"samsung\",\r\n      \"category\":\"mobile\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/products/65680228dd2bb8b7ce06ffb6",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"products",
+						"65680228dd2bb8b7ce06ffb6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/products/65680228dd2bb8b7ce06ffb6",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"products",
+						"65680228dd2bb8b7ce06ffb6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/products/65680228dd2bb8b7ce06ffb6",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"products",
+						"65680228dd2bb8b7ce06ffb6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
