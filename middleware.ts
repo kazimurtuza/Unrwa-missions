@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server'
-import type {NextRequest} from 'next/server'
+import  {NextRequest} from 'next/server'
 import *as jose from "jose"
 import jwt from 'jsonwebtoken'
 import {setCookie} from 'cookies-next';
