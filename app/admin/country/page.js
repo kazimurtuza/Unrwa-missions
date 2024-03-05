@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
 
 function Country() {
-    const [vehicle, setVehicleList] = useState([]);
+    const [country, setCountryList] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axiosClient.get('vehicle');
-                setVehicleList(data.result);
+                const { data } = await axiosClient.get('country');
+                setCountryList(data.result);
             } catch (error) {
                 console.error('Error fetching vehicles:', error);
             }
@@ -20,8 +20,8 @@ function Country() {
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-    let tableName = "Vehicle";
-    const headName = ["Si", "Name", "Registration Number", "Vehicle Type", "Description", "Action"];
+    let tableName = "Country";
+    const headName = ["Si", "Name","Alpha 2", "Alpha 3", "Cuntry Code", "ISO Port","Region", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -37,7 +37,7 @@ function Country() {
 
     const body = (
         <>
-            {Array.isArray(vehicle) && vehicle.map((item, index) => (
+            {Array.isArray(country) && country.map((item, index) => (
 
                 <tr key={index}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -69,7 +69,7 @@ function Country() {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                            {item.registration_number}
+                            {item.alpha2}
                         </p>
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}
@@ -77,7 +77,7 @@ function Country() {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                            {item.vehicle_type}
+                            {item.alpha3}
                         </p>
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}
@@ -93,7 +93,25 @@ function Country() {
                     {/*</td>*/}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                            {item.description}
+                            {item.country_code}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.iso_port}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.region}
                         </p>
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}
@@ -114,4 +132,4 @@ function Country() {
     );
 }
 
-export default Vehicle;
+export default Country;

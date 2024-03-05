@@ -85,7 +85,8 @@ function Setting() {
       about_app_ar:aboutAr,
     };
 
-    if (Array.isArray(image) && image.length > 0) {
+    if (Array.isArray(image)) {
+      console.log("image");
         console.log(image);
         postData.app_logo = image;
     }
