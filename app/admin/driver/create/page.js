@@ -6,22 +6,33 @@ import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 
-function CategoryCreate() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [categoryName, setCategoryName] = useState("");
-  const [slug, setSlug] = useState("");
+function DriverCreate() {
+  const [driverName, setDriverName] = useState("");
+  const [driverID, setDriverID] = useState("");
+  const [jawwalPhone, setJawwalPhone] = useState("");
+  const [ooredoPhone, setOoredoPhone] = useState("");
+  const [whatsupNumber, setWhatsupNumber] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
 
 
-  const handleCategoryNameChange = (value) => {
-    setCategoryName(value);
+  const handleDriverNameChange = (value) => {
+    setDriverName(value);
+  };
+  const handleDriverIDChange = (value) => {
+    setDriverID(value);
   };
 
-  const handleSlugChange = (value) => {
-    setSlug(value);
+  const handleJawwalPhoneChange = (value) => {
+    setJawwalPhone(value);
+  };
+  const handleOoredoPhoneChange = (value) => {
+    setOoredoPhone(value);
+  };
+  const handleWhatsupNumberChange = (value) => {
+    setWhatsupNumber(value);
   };
 
   const handleSubmit = async (e) => {
@@ -31,19 +42,22 @@ function CategoryCreate() {
 
     // Prepare data for API request
     const postData = {
-      name: categoryName,
-      slug:slug
+      name: driverName,
+      driver_id:driverID,
+      jawwal_phone:jawwalPhone,
+      ooredo_phone:ooredoPhone,
+      whatsup_number:whatsupNumber
     };
 
     try {
 
-        const response = await axiosClient.post('categories', postData);
+        const response = await axiosClient.post('driver', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("Category Create Successfully");
+            setSuccessMessage("Driver Create Successfully");
             setCategoryName("");
             setSlug("");
             setErrorMessage("");
@@ -115,16 +129,35 @@ function CategoryCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Category Name
+                          Driver Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
                           placeholder="Enter your category name"
-                          value={categoryName}
+                          value={driverName}
                           onChange={(e) =>
-                            handleCategoryNameChange(e.target.value)
+                            handleDriverNameChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Email
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your category name"
+                          value={driverName}
+                          onChange={(e) =>
+                            handleDriverNameChange(e.target.value)
                           }
 
                         />
@@ -182,5 +215,5 @@ function extractErrors(errors) {
     return result;
 }
 
-export default CategoryCreate;
+export default DriverCreate;
 
