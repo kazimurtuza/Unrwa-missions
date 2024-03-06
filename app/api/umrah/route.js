@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import {connectionStr} from "@/lib/db";
 import {NextResponse} from "next/server";
 import {Umrah} from "../../../lib/model/umrah";
+import { PremiseType } from "@/lib/model/premiseType";
+import { Country } from "@/lib/model/country";
 
 export async function POST(request) {
     try {
@@ -19,10 +21,21 @@ export async function POST(request) {
 export async function GET() {
     try {
         await mongoose.connect(connectionStr);
-        let result = await Umrah.find({is_delete:0}).populate(['premise_type','country']);
+        let result = await Umrah.find({ is_delete: 0 }).populate([
+            {
+                path: 'premise_type',
+                model: 'PremiseType'
+            },
+            {
+                path: 'country',
+                model: 'Country'
+            },
+    
+        ])
+        .sort({created_at:-1});
         return NextResponse.json({result, success: true});
     } catch (error) {
-        return NextResponse.json({error, success: false});
+        return NextResponse.json({error:error.message, success: false});
     }
 
 }
