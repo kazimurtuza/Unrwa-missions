@@ -1,7 +1,7 @@
 :root{
 	--global-font: "Open Sans", sans-serif;
-	--line-border-fill:#7752FE;
-	--line-border-empty:#C2D9FF;
+	--line-border-fill:#01ADEE;
+	--line-border-empty:#01ADEE;
 }
 
 a {
@@ -241,6 +241,7 @@ a {
 	margin-bottom: 2em;
 	max-width: 100%;
 	width: 350px;
+	margin: 20px auto 40px;
   }
 
   .progress-container::before {
@@ -268,11 +269,11 @@ a {
   }
 
   .circle{
-	height: 40px;
-	width: 40px;
+	height:60px;
+	width: 60px;
 	border-radius: 50%;
 	background-color:#fff;
-	color: #190482;
+	color: var(--line-border-empty);
 	font-size: 20px;
 	font-weight:bold;
 	display:flex;
