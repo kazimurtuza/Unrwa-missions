@@ -6,41 +6,37 @@ import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 
-function DriverCreate() {
-  const [driverName, setDriverName] = useState("");
-  const [driverID, setDriverID] = useState("");
-  const [jawwalPhone, setJawwalPhone] = useState("");
-  const [ooredoPhone, setOoredoPhone] = useState("");
-  const [whatsupNumber, setWhatsupNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function CountryCreate() {
+  const [countryName, setCountryName] = useState("");
+  const [alpha2, setAlpha2] = useState("");
+  const [alpha3, setAlpha3] = useState("");
+  const [countryCode, setCountryCode] = useState("");
+  const [isoPort, setIsoPort] = useState("");
+  const [region, setRegion] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
 
 
-  const handleDriverNameChange = (value) => {
-    setDriverName(value);
+  const handleCountryNameChange = (value) => {
+    setCountryName(value);
   };
-  const handleEmailChange = (value) => {
-    setEmail(value);
+  const handleAhpha2change = (value) => {
+    setAlpha2(value);
   };
-  const handlePasswordChange = (value) => {
-    setPassword(value);
+  const handleAhpha3change = (value) => {
+    setAlpha3(value);
   };
-  const handleDriverIDChange = (value) => {
-    setDriverID(value);
+  const handleCountryCodeChange = (value) => {
+    setCountryCode(value);
   };
 
-  const handleJawwalPhoneChange = (value) => {
-    setJawwalPhone(value);
+  const handleIsoPortChange = (value) => {
+    setIsoPort(value);
   };
-  const handleOoredoPhoneChange = (value) => {
-    setOoredoPhone(value);
-  };
-  const handleWhatsupNumberChange = (value) => {
-    setWhatsupNumber(value);
+  const handleRegionChange = (value) => {
+    setRegion(value);
   };
 
   const handleSubmit = async (e) => {
@@ -50,31 +46,29 @@ function DriverCreate() {
 
     // Prepare data for API request
     const postData = {
-      name: driverName,
-      email:email,
-      password:password,
-      driver_id:driverID,
-      jawwal_phone:jawwalPhone,
-      ooredo_phone:ooredoPhone,
-      whatsup_number:whatsupNumber
+      name: countryName,
+      alpha2:alpha2,
+      alpha3:alpha3,
+      country_code:countryCode,
+      iso_port:isoPort,
+      region:region
     };
 
     try {
 
-        const response = await axiosClient.post('driver', postData);
+        const response = await axiosClient.post('country', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("Driver Create Successfully");
-            setDriverName("");
-            setDriverID("");
-            setEmail("");
-            setPassword("");
-            setJawwalPhone("");
-            setOoredoPhone("");
-            setWhatsupNumber("");
+            setSuccessMessage("Country Create Successfully");
+            setCountryName("");
+            setAlpha2("");
+            setAlpha3("");
+            setCountryCode("");
+            setIsoPort("");
+            setRegion("");
             setErrorMessage("");
           }
           else
@@ -89,7 +83,6 @@ function DriverCreate() {
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
             }
-            
           }
         } else {
           console.error('Response does not contain data:', response);
@@ -122,7 +115,7 @@ function DriverCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Driver Create
+                        Country Create
                       </p>
                       <br></br>
                       {successMessage && (
@@ -152,16 +145,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Driver Name
+                          Country Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your driver name"
-                          value={driverName}
+                          placeholder="Enter your country name"
+                          value={countryName}
                           onChange={(e) =>
-                            handleDriverNameChange(e.target.value)
+                            handleCountryNameChange(e.target.value)
                           }
 
                         />
@@ -171,16 +164,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Email
+                          Alpha2
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your email"
-                          value={email}
+                          placeholder="Enter your alpha2"
+                          value={alpha2}
                           onChange={(e) =>
-                            handleEmailChange(e.target.value)
+                            handleAhpha2change(e.target.value)
                           }
 
                         />
@@ -191,16 +184,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Password
+                          Alpha3
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="slug"
-                          type="password"
-                          placeholder="Enter your password"
-                          value={password}
+                          type="text"
+                          placeholder="Enter your alpha3"
+                          value={alpha3}
                           onChange={(e) =>
-                            handlePasswordChange(e.target.value)
+                            handleAhpha3change(e.target.value)
                           }
 
                         />
@@ -211,16 +204,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Driver ID
+                          Country Code
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your driver id"
-                          value={driverID}
+                          placeholder="Enter your country code"
+                          value={countryCode}
                           onChange={(e) =>
-                            handleDriverIDChange(e.target.value)
+                            handleCountryCodeChange(e.target.value)
                           }
 
                         />
@@ -231,16 +224,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Jawwal Phone
+                          ISO Port
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your jawwal phone"
-                          value={jawwalPhone}
+                          placeholder="Enter your iso port"
+                          value={isoPort}
                           onChange={(e) =>
-                            handleJawwalPhoneChange(e.target.value)
+                            handleIsoPortChange(e.target.value)
                           }
 
                         />
@@ -251,36 +244,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Ooredo Phone
+                          Region
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your ooredo phone"
-                          value={ooredoPhone}
+                          placeholder="Enter your region"
+                          value={region}
                           onChange={(e) =>
-                            handleOoredoPhoneChange(e.target.value)
-                          }
-
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Whatsapp Number
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your whatsapp number"
-                          value={whatsupNumber}
-                          onChange={(e) =>
-                            handleWhatsupNumberChange(e.target.value)
+                            handleRegionChange(e.target.value)
                           }
 
                         />
@@ -320,5 +293,5 @@ function extractErrors(errors) {
     return result;
 }
 
-export default DriverCreate;
+export default CountryCreate;
 
