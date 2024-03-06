@@ -1,8 +1,7 @@
 "use client";
-import Sidebar from "@/app/partials/Sidebar";
 import Header from "@/app/partials/Header";
-import WelcomeBanner from "@/app/partials/dashboard/WelcomeBanner";
-import {useState} from "react";
+import Sidebar from "@/app/partials/Sidebar";
+import { useState } from "react";
 
 function AdminLayout({children}) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -12,7 +11,7 @@ function AdminLayout({children}) {
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
 
             {/* Content area */}
-            <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+            <div className="relative flex flex-col flex-1">
                 {/*  Site header */}
                 <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
                 {children}
