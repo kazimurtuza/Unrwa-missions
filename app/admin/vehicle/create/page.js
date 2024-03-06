@@ -6,41 +6,28 @@ import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 
-function DriverCreate() {
-  const [driverName, setDriverName] = useState("");
-  const [driverID, setDriverID] = useState("");
-  const [jawwalPhone, setJawwalPhone] = useState("");
-  const [ooredoPhone, setOoredoPhone] = useState("");
-  const [whatsupNumber, setWhatsupNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function VehicleCreate() {
+  const [vehicleName, setVehicleName] = useState("");
+  const [regNumber, setRegNumber] = useState("");
+  const [vehicleType, setVehicleType] = useState("");
+  const [description, setDescription] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
 
 
-  const handleDriverNameChange = (value) => {
-    setDriverName(value);
+  const handleVehicleNameChange = (value) => {
+    setVehicleName(value);
   };
-  const handleEmailChange = (value) => {
-    setEmail(value);
+  const handleRegNumberchange = (value) => {
+    setRegNumber(value);
   };
-  const handlePasswordChange = (value) => {
-    setPassword(value);
+  const handleVehicleTypechange = (value) => {
+    setVehicleType(value);
   };
-  const handleDriverIDChange = (value) => {
-    setDriverID(value);
-  };
-
-  const handleJawwalPhoneChange = (value) => {
-    setJawwalPhone(value);
-  };
-  const handleOoredoPhoneChange = (value) => {
-    setOoredoPhone(value);
-  };
-  const handleWhatsupNumberChange = (value) => {
-    setWhatsupNumber(value);
+  const handleDescriptionChange = (value) => {
+    setDescription(value);
   };
 
   const handleSubmit = async (e) => {
@@ -50,32 +37,25 @@ function DriverCreate() {
 
     // Prepare data for API request
     const postData = {
-      name: driverName,
-      email:email,
-      password:password,
-      driver_id:driverID,
-      jawwal_phone:jawwalPhone,
-      ooredo_phone:ooredoPhone,
-      whatsup_number:whatsupNumber
+      name: vehicleName,
+      registration_number:regNumber,
+      vehicle_type:vehicleType,
+      description:description
     };
 
     try {
 
-        const response = await axiosClient.post('driver', postData);
+        const response = await axiosClient.post('vehicle', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("Driver Create Successfully");
-            setDriverName("");
-            setDriverID("");
-            setEmail("");
-            setPassword("");
-            setJawwalPhone("");
-            setOoredoPhone("");
-            setWhatsupNumber("");
-            setErrorMessage("");
+            setSuccessMessage("Vehicle Create Successfully");
+            setVehicleName("");
+            setRegNumber("");
+            setVehicleType("");
+            setDescription("");
           }
           else
           {
@@ -89,7 +69,6 @@ function DriverCreate() {
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
             }
-            
           }
         } else {
           console.error('Response does not contain data:', response);
@@ -122,7 +101,7 @@ function DriverCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Driver Create
+                        Vehicle Create
                       </p>
                       <br></br>
                       {successMessage && (
@@ -152,16 +131,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Driver Name
+                          Vehicle Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your driver name"
-                          value={driverName}
+                          placeholder="Enter your vehicle name"
+                          value={vehicleName}
                           onChange={(e) =>
-                            handleDriverNameChange(e.target.value)
+                            handleVehicleNameChange(e.target.value)
                           }
 
                         />
@@ -171,16 +150,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Email
+                          Reg Number
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your email"
-                          value={email}
+                          placeholder="Enter your reg number"
+                          value={regNumber}
                           onChange={(e) =>
-                            handleEmailChange(e.target.value)
+                            handleRegNumberchange(e.target.value)
                           }
 
                         />
@@ -191,16 +170,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Password
+                          Vehicle Type
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="slug"
-                          type="password"
-                          placeholder="Enter your password"
-                          value={password}
+                          type="text"
+                          placeholder="Enter your vehicle type"
+                          value={vehicleType}
                           onChange={(e) =>
-                            handlePasswordChange(e.target.value)
+                            handleVehicleTypechange(e.target.value)
                           }
 
                         />
@@ -211,76 +190,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Driver ID
+                          Description
                         </label>
-                        <input
+                        <textarea
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your driver id"
-                          value={driverID}
+                          placeholder="Enter your description"
+                          value={description}
                           onChange={(e) =>
-                            handleDriverIDChange(e.target.value)
-                          }
-
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Jawwal Phone
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your jawwal phone"
-                          value={jawwalPhone}
-                          onChange={(e) =>
-                            handleJawwalPhoneChange(e.target.value)
-                          }
-
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Ooredo Phone
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your ooredo phone"
-                          value={ooredoPhone}
-                          onChange={(e) =>
-                            handleOoredoPhoneChange(e.target.value)
-                          }
-
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Whatsapp Number
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your whatsapp number"
-                          value={whatsupNumber}
-                          onChange={(e) =>
-                            handleWhatsupNumberChange(e.target.value)
+                            handleDescriptionChange(e.target.value)
                           }
 
                         />
@@ -320,5 +239,5 @@ function extractErrors(errors) {
     return result;
 }
 
-export default DriverCreate;
+export default VehicleCreate;
 
