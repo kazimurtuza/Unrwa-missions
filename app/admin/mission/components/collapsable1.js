@@ -1,17 +1,22 @@
 import { useState } from "react";
 
-const Collapsable1 = () => {
+const Collapsable1 = ({setInfo,item}) => {
 	const [collapse, setCollapse] = useState(true);
 
 	const handleClick = () => {
 		setCollapse(!collapse)
 	}
 
+  const setdata = (e) => {
+    const { name, value } = e.target;
+    setInfo(name,value,item); // Pass the input value to the parent component
+  };
+
 return (
 	    <>
 		  <div className={`collapsable-item ${collapse ? "active": ""} `}>
             <div className="collapsable-item__header collapse-trigger" onClick={handleClick}>
-              <h3 className="collapsable-item__header-title">Movement Stops</h3>
+              <h3 className="collapsable-item__header-title">Movement Stops {item+1}</h3>
             </div>
             <div className="collapsable-item__body">
               <div className="collapsable-item__body-row flex-start-spb">
@@ -36,12 +41,13 @@ return (
                         className="form__select"
                         name="facility"
                         id="facility"
+                        onChange={setdata}
                       >
                         <option value="0" selected hidden>
                           Select
                         </option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
+                        <option value="1">Umrah</option>
+                        <option value="2">Non Umrah</option>
                       </select>
                     </div>
                   </div>
@@ -54,8 +60,9 @@ return (
                         className="form__select"
                         name="facility"
                         id="premise-type"
+                        onChange={setdata}
                       >
-                        <option value="0" selected hidden>
+                        <option value="0"  selected hidden>
                           Select
                         </option>
                         <option value="1">Option 1</option>

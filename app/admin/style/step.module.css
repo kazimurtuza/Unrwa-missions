@@ -1,0 +1,7 @@
+.btnbg{
+    background: #293c4a;
+}
+.btndiv{
+    display: flex;
+    justify-content: right;
+}

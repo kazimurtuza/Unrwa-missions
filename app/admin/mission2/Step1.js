@@ -1,18 +1,9 @@
-import Select from 'react-select'
+
 const Step1 = ({getdata}) => {
   // const { data, handleChange } = props;
-    const selectData = (selectedOption, { name }) => {
-      getdata(name,selectedOption.value); // Pass the input value to the parent component
+    const handleData = (e) => {
+      getdata(e,12); // Pass the input value to the parent component
     };
-  const setdata = (e) => {
-    const { name, value } = e.target;
-    getdata(name,value); // Pass the input value to the parent component
-  };
-
-    let options=[
-        {value:"1",label:"one"},
-        {value:"2",label:"two"}
-    ];
 
 
   return (
@@ -26,15 +17,19 @@ const Step1 = ({getdata}) => {
               <label htmlFor="focus-point" className="form__label">
                 Mission Focal Point
               </label>
-              <div className="">
-                <Select
-                  name="leader"
-                  options={options}
+              <div className="select-wrap">
+                <select
+                  name="focus_point"
+                  className="form__select"
                   id="focus-point"
-                  onChange={selectData}
-                  isSearchable
+                  onChange={handleData}
                 >
-                </Select>
+                  <option value="0" selected hidden>
+                    Select
+                  </option>
+                  <option value="1">Option 01</option>
+                  <option value="2">Option 02</option>
+                </select>
               </div>
             </div>
           </div>
@@ -85,13 +80,13 @@ const Step1 = ({getdata}) => {
                 Agencies
               </label>
               <div className="select-wrap">
-                <Select
-                    name="agency"
-                    options={options}
-                    onChange={selectData}
-                    isSearchable
-                >
-                </Select>
+                <select name="agencies" className="form__select" id="agencies">
+                  <option value="0" selected hidden>
+                    Select
+                  </option>
+                  <option value="1">Option 01</option>
+                  <option value="2">Option 02</option>
+                </select>
               </div>
             </div>
             <div className="form__field">
@@ -99,7 +94,7 @@ const Step1 = ({getdata}) => {
                 Movement Date
               </label>
               <div className="date-wrap">
-                <input type="date" onChange={setdata} name="movement_date" className="form__input" id="date" value="" />
+                <input type="date" className="form__input" id="date" value="" />
               </div>
             </div>
           </div>
@@ -110,8 +105,7 @@ const Step1 = ({getdata}) => {
               </label>
               <textarea
                 className="form__textarea"
-                name="mission_classification"
-                onChange={setdata}
+                name="classification"
                 id="classification"
               ></textarea>
             </div>
@@ -122,7 +116,6 @@ const Step1 = ({getdata}) => {
               <textarea
                 className="form__textarea"
                 name="purpose"
-                onChange={setdata}
                 id="purpose"
               ></textarea>
             </div>
@@ -135,7 +128,6 @@ const Step1 = ({getdata}) => {
               <textarea
                 className="form__textarea"
                 name="remarks"
-                onChange={setdata}
                 id="remarks"
               ></textarea>
             </div>
