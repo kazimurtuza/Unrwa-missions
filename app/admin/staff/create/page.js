@@ -6,12 +6,12 @@ import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 
-function DriverCreate() {
-  const [driverName, setDriverName] = useState("");
-  const [driverID, setDriverID] = useState("");
-  const [jawwalPhone, setJawwalPhone] = useState("");
-  const [ooredoPhone, setOoredoPhone] = useState("");
+function StaffCreate() {
+  const [staffName, setStaffName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [statelitePhone, setJStatelitePhone] = useState("");
   const [whatsupNumber, setWhatsupNumber] = useState("");
+  const [callSignIn, setCallSignin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   //success message
@@ -20,8 +20,8 @@ function DriverCreate() {
 
 
 
-  const handleDriverNameChange = (value) => {
-    setDriverName(value);
+  const handleStaffNameChange = (value) => {
+    setStaffName(value);
   };
   const handleEmailChange = (value) => {
     setEmail(value);
@@ -29,18 +29,18 @@ function DriverCreate() {
   const handlePasswordChange = (value) => {
     setPassword(value);
   };
-  const handleDriverIDChange = (value) => {
-    setDriverID(value);
+  const handlePhoneChange = (value) => {
+    setPhone(value);
   };
 
-  const handleJawwalPhoneChange = (value) => {
-    setJawwalPhone(value);
-  };
-  const handleOoredoPhoneChange = (value) => {
-    setOoredoPhone(value);
+  const handleStatelitePhoneChange = (value) => {
+    setJStatelitePhone(value);
   };
   const handleWhatsupNumberChange = (value) => {
     setWhatsupNumber(value);
+  };
+  const handleCallSignInChange = (value) => {
+    setCallSignin(value);
   };
 
   const handleSubmit = async (e) => {
@@ -50,31 +50,31 @@ function DriverCreate() {
 
     // Prepare data for API request
     const postData = {
-      name: driverName,
+      name: staffName,
       email:email,
       password:password,
-      driver_id:driverID,
-      jawwal_phone:jawwalPhone,
-      ooredo_phone:ooredoPhone,
-      whatsup_number:whatsupNumber
+      phone:phone,
+      statelite_phone:statelitePhone,
+      whatsup_number:whatsupNumber,
+      call_signin:callSignIn
     };
 
     try {
 
-        const response = await axiosClient.post('driver', postData);
+        const response = await axiosClient.post('staff', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("Driver Create Successfully");
-            setDriverName("");
-            setDriverID("");
+            setSuccessMessage("Staff Create Successfully");
+            setStaffName("");
+            setPhone("");
             setEmail("");
             setPassword("");
-            setJawwalPhone("");
-            setOoredoPhone("");
+            setJStatelitePhone("");
             setWhatsupNumber("");
+            setCallSignin("");
             setErrorMessage("");
           }
           else
@@ -89,7 +89,6 @@ function DriverCreate() {
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
             }
-            
           }
         } else {
           console.error('Response does not contain data:', response);
@@ -122,7 +121,7 @@ function DriverCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Driver Create
+                        Staff Create
                       </p>
                       <br></br>
                       {successMessage && (
@@ -152,16 +151,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Driver Name
+                          Staff Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your driver name"
-                          value={driverName}
+                          placeholder="Enter your staff name"
+                          value={staffName}
                           onChange={(e) =>
-                            handleDriverNameChange(e.target.value)
+                            handleStaffNameChange(e.target.value)
                           }
 
                         />
@@ -211,16 +210,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Driver ID
+                          Phone
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your driver id"
-                          value={driverID}
+                          placeholder="Enter your phone"
+                          value={phone}
                           onChange={(e) =>
-                            handleDriverIDChange(e.target.value)
+                            handlePhoneChange(e.target.value)
                           }
 
                         />
@@ -231,36 +230,16 @@ function DriverCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Jawwal Phone
+                          Statelite Phone
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your jawwal phone"
-                          value={jawwalPhone}
+                          placeholder="Enter your statelite phone"
+                          value={statelitePhone}
                           onChange={(e) =>
-                            handleJawwalPhoneChange(e.target.value)
-                          }
-
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Ooredo Phone
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your ooredo phone"
-                          value={ooredoPhone}
-                          onChange={(e) =>
-                            handleOoredoPhoneChange(e.target.value)
+                            handleStatelitePhoneChange(e.target.value)
                           }
 
                         />
@@ -281,6 +260,26 @@ function DriverCreate() {
                           value={whatsupNumber}
                           onChange={(e) =>
                             handleWhatsupNumberChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Call Sign in
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your call sign in"
+                          value={callSignIn}
+                          onChange={(e) =>
+                            handleCallSignInChange(e.target.value)
                           }
 
                         />
@@ -320,5 +319,5 @@ function extractErrors(errors) {
     return result;
 }
 
-export default DriverCreate;
+export default StaffCreate;
 

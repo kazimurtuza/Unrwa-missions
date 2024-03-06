@@ -32,14 +32,14 @@ export async function POST(request) {
     try {
         const payload = await request.json();
         if (!validator.isEmail(payload.email)) {
-            return new NextResponse(JSON.stringify({ msg: 'Invalid email address' }), { status: 400 });
+            return new NextResponse(JSON.stringify({ msg: 'Invalid email address',success:false }), { status: 400 });
         }
         await mongoose.connect(connectionStr);
 
         const record = {email: payload.email};
         const is_findEmail = await User.findOne(record);
         if (is_findEmail) {
-            return NextResponse.json({msg: 'user is already present'}, {status: 409});
+            return NextResponse.json({msg: 'user is already present',success:false }, {status: 409});
         }
         await mongoose.connect(connectionStr);
         //password hashing

@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
                 }
 
             }catch (error){
-                return NextResponse.redirect(new URL('/login', request.nextUrl))
+                return NextResponse.redirect(new URL('/login', request.nextUrl)).clone
             }
 
 
