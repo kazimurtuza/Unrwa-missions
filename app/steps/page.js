@@ -7,7 +7,6 @@ import Sidebar from "../partials/Sidebar";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
-import Step4 from "./Step4";
 import "./steps.css";
 
 function Steps() {
@@ -35,8 +34,8 @@ function Steps() {
         <Step1 data={data} handleChange={handleChange} />,
         <Step2 data={data} handleChange={handleChange} />,
 
-        <Step3 data={data} handleChange={handleChange} />,
-        <Step4 data={data} setData={setData} />,
+        <Step3 data={data} setData={setData} />,
+        // <Step4 data={data} setData={setData} />,
     ];
 
     return (
