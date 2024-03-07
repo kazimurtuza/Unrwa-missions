@@ -19,6 +19,7 @@ export async function POST(request) {
         const missionAdd = await new Mission(payload);
         const missionId = await missionAdd._id;
         missionAdd.save();
+        result=missionAdd;
         let length = vehicle_list.length;
         if (location_list.length > 0) {
             location_list.map(async (item, index) => {
@@ -34,7 +35,7 @@ export async function POST(request) {
                 missionVehicle.save();
             })
         }
-        return NextResponse.json({length, success: true});
+        return NextResponse.json({result, success: true});
     } catch (error) {
         return NextResponse.json({error: error.message, success: false});
     }

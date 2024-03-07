@@ -3,11 +3,9 @@ import {useEffect, useState} from "react";
 import axiosClient from "@/app/axiosClient";
 
 const Step1 = ({getdata}) => {
-    // const { data, handleChange } = props;
     const selectData = (selectedOption, {name}) => {
         if(name=='leader'){
             setAdminInfo(selectedOption.list);
-            console.log(selectedOption.list)
         }
         getdata(name, selectedOption.value); // Pass the input value to the parent component
     };
@@ -15,7 +13,6 @@ const Step1 = ({getdata}) => {
         const {name, value} = e.target;
         getdata(name, value); // Pass the input value to the parent component
     };
-
     const [staff, setStaff] = useState([]);
     const [staffList, setStaffList] = useState([]);
     const [agencyList, setAgencyList] = useState([]);

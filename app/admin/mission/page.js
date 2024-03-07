@@ -9,6 +9,7 @@ import Step3 from "./Step3";
 import Step4 from "./Step4";
 import "./steps.css";
 import React from "react";
+import axiosClient from "@/app/axiosClient";
 
 function Steps() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -45,6 +46,7 @@ function Steps() {
             "arrival_longitude": ""
         }],
         "vehicle_list": [{
+            "index_no":0,
             "mission": "",
             "vehicle": "",
             "driver": "",
@@ -57,12 +59,28 @@ function Steps() {
     const handleChange = (name, value) => {
         let update = {...storeData, [name]: value};
         setStoreData(update);
-        console.log(storeData);
     };
     const locationStore = (value) => {
         let update = {...storeData, location_list: value};
-        setStoreData(update);
+        setStoreData(old=> update);
     };
+    const vehicleSet = (value) => {
+        let update = {...storeData, vehicle_list: value};
+        setStoreData(old=> update);
+    };
+
+    async function saveMission(){
+        try {
+            const response = await axiosClient.post('mission', storeData);
+            if(response.data.success==true){
+                alert("Successfully Created")
+
+            }
+        }catch (error){
+        }
+
+
+    }
 
     const [activeTab, setActiveTab] = useState(0);
 
@@ -70,7 +88,7 @@ function Steps() {
         <Step1 data={data} getdata={handleChange}/>,
         <Step2 data={storeData.location_list} locationSet={locationStore} />,
 
-        <Step3 data={data} handleChange={handleChange}/>,
+        <Step3 data={storeData.vehicle_list} vehicleStore={vehicleSet}/>,
         <Step4 data={data} setData={setData}/>,
     ];
 
@@ -89,7 +107,7 @@ function Steps() {
                                         <div className='circle active '>1</div>
                                         <div className='circle'>2</div>
                                         <div className='circle'>3</div>
-                                        <div className='circle'>4</div>
+                                        {/*<div className='circle'>4</div>*/}
                                     </div>
                                     <div>{formElements[activeTab]}</div>
                                     <div
@@ -114,17 +132,17 @@ function Steps() {
 
                                             onClick={() => setActiveTab((prev) => prev + 1)}
                                             className={`px-4 py-2 rounded bg-black text-white transition duration-300 ${
-                                                activeTab === formElements.length - 1
+                                                activeTab === formElements.length - 2
                                                     ? "hidden"
                                                     : "opacity-100 hover:shadow-[0_0_15px_0_rgba(0,0,0,.5)]"
                                                 }`}
                                         >
                                             Next
                                         </button>
-                                        {activeTab === formElements.length - 1 ? (
+                                        {activeTab === formElements.length - 2 ? (
                                             <button
                                                 className='px-4 py-2 rounded bg-black transition duration-300 text-white  hover:shadow-[0_0_15px_0_rgba(0,0,0,.5)]'
-                                                onClick={() => console.log(data)}
+                                                onClick={saveMission}
                                             >
                                                 Save
                                             </button>
