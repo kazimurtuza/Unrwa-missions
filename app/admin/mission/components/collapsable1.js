@@ -39,7 +39,7 @@ return (
                     <div className="select-wrap">
                       <select
                         className="form__select"
-                        name="facility"
+                        name="departure_umrah_type"
                         id="facility"
                         onChange={setdata}
                       >
@@ -47,7 +47,7 @@ return (
                           Select
                         </option>
                         <option value="1">Umrah</option>
-                        <option value="2">Non Umrah</option>
+                        <option value="0">Non Umrah</option>
                       </select>
                     </div>
                   </div>
@@ -134,14 +134,11 @@ return (
                     <div className="select-wrap">
                       <select
                         className="form__select"
-                        name="facility"
+                        name="arrival_umrah_type"
                         id="facility2"
                       >
-                        <option value="0" selected hidden>
-                          Select
-                        </option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
+                        <option value="1">Umrah</option>
+                        <option value="0">Non Umrah</option>
                       </select>
                     </div>
                   </div>

@@ -36,7 +36,7 @@ const Step1 = ({data,locationSet}) => {
 
     const handleClick = () => {
         // setitems([...items, items[0]]);
-        let newdata = [...locationList, {index_no: locationList.length}];
+        let newdata = [...locationList, {index_no: locationList.length,}];
         setLocationList(newdata);
         locationSet(newdata);
     }

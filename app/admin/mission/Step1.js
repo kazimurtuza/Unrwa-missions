@@ -5,6 +5,10 @@ import axiosClient from "@/app/axiosClient";
 const Step1 = ({getdata}) => {
     // const { data, handleChange } = props;
     const selectData = (selectedOption, {name}) => {
+        if(name=='leader'){
+            setAdminInfo(selectedOption.list);
+            console.log(selectedOption.list)
+        }
         getdata(name, selectedOption.value); // Pass the input value to the parent component
     };
     const setdata = (e) => {
@@ -15,6 +19,7 @@ const Step1 = ({getdata}) => {
     const [staff, setStaff] = useState([]);
     const [staffList, setStaffList] = useState([]);
     const [agencyList, setAgencyList] = useState([]);
+    const [adminInfo, setAdminInfo] = useState();
 
     const staffListSet = async () => {
         try {
@@ -22,7 +27,8 @@ const Step1 = ({getdata}) => {
             if (data.success === true) {
                 const updatedStaffList = data.result.map(item => ({
                     value: item._id,
-                    label: item.name
+                    label: item.name,
+                    list:item,
                 }));
                 setStaffList(prevStaffList => [...updatedStaffList]);
             }
@@ -37,7 +43,6 @@ const Step1 = ({getdata}) => {
                 const updatedAgencyList = data.result.map(item => ({
                     value: item._id,
                     label: item.name,
-                    list:item,
                 }));
                 setAgencyList(prevStaffList => [...updatedAgencyList]);
             }
@@ -81,7 +86,7 @@ const Step1 = ({getdata}) => {
                             </div>
                         </div>
                     </div>
-                    <div className="form__info-box">
+                    {adminInfo?<div className="form__info-box">
                         <h3 className="form__info-box__title">
                             Mission Focal Point Contact Details
                         </h3>
@@ -90,13 +95,13 @@ const Step1 = ({getdata}) => {
                                 <p>
                                     <b>Name</b>
                                 </p>
-                                <p>Joel Peris</p>
+                                <p>{adminInfo.name}</p>
                             </div>
                             <div className="form__col">
                                 <p>
                                     <b>Satellite Phone</b>
                                 </p>
-                                <p>+00 223456789</p>
+                                <p>{adminInfo.statelite_phone}</p>
                             </div>
                         </div>
                         <div className="form__row flex-ctr-spb">
@@ -104,13 +109,13 @@ const Step1 = ({getdata}) => {
                                 <p>
                                     <b>Phone</b>
                                 </p>
-                                <p>+00 223456789</p>
+                                <p>{adminInfo.phone}</p>
                             </div>
                             <div className="form__col">
                                 <p>
                                     <b>Email Address</b>
                                 </p>
-                                <p>user@yourmai.com</p>
+                                <p>{adminInfo.user.email}</p>
                             </div>
                         </div>
                         <div className="form__row flex-ctr-spb">
@@ -118,10 +123,11 @@ const Step1 = ({getdata}) => {
                                 <p>
                                     <b>Whatsapp</b>
                                 </p>
-                                <p>+00 223456789</p>
+                                <p>{adminInfo.whatsup_number}</p>
                             </div>
                         </div>
-                    </div>
+                    </div>:''}
+
                     <div className="form__row flex-start-spb">
                         <div className="form__field">
                             <label htmlFor="agencies" className="form__label">
@@ -149,17 +155,6 @@ const Step1 = ({getdata}) => {
                     </div>
                     <div className="form__row flex-start-spb">
                         <div className="form__field">
-                            <label htmlFor="classification" className="form__label">
-                                Mission Classification
-                            </label>
-                            <textarea
-                                className="form__textarea"
-                                name="mission_classification"
-                                onChange={setdata}
-                                id="classification"
-                            ></textarea>
-                        </div>
-                        <div className="form__field">
                             <label htmlFor="purpose" className="form__label">
                                 Purpose
                             </label>
@@ -170,8 +165,6 @@ const Step1 = ({getdata}) => {
                                 id="purpose"
                             ></textarea>
                         </div>
-                    </div>
-                    <div className="form__row flex-start-spb">
                         <div className="form__field">
                             <label htmlFor="remarks" className="form__label">
                                 Remarks
@@ -182,6 +175,22 @@ const Step1 = ({getdata}) => {
                                 onChange={setdata}
                                 id="remarks"
                             ></textarea>
+                        </div>
+                    </div>
+                    <div className="form__row flex-start-spb">
+                        <div className="form__field">
+                            <label htmlFor="classification" className="form__label">
+                                Mission Classification
+                            </label>
+                            <div className="select-wrap">
+                                <Select
+                                    name="agency"
+                                    options={agencyList}
+                                    onChange={selectData}
+                                    isSearchable
+                                >
+                                </Select>
+                            </div>
                         </div>
                     </div>
                 </div>
