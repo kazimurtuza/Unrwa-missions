@@ -1,7 +1,21 @@
+
 import { useState } from "react";
+import DualListBox from "react-dual-listbox";
+import 'react-dual-listbox/lib/react-dual-listbox.css';
+
+const options = [
+  { value: "1", label: "Staff One" },
+  { value: "2", label: "Staff Two" },
+  { value: "3", label: "Staff Three" },
+  { value: "4", label: "Staff Four" },
+  { value: "5", label: "Staff Five" },
+  { value: "6", label: "Staff Six" },
+  { value: "7", label: "Staff Seven" },
+];
+
 const Collapsable2 = () => {
 	const [collapse, setCollapse] = useState(true);
-
+  const [selected, setSelected] = useState([]);
 	const handleClick = () => {
 		setCollapse(!collapse)
 	}
@@ -92,6 +106,28 @@ const Collapsable2 = () => {
               </div>
             </div>
           </div>
+
+          <div className='staff-list mt-4'>
+                    <DualListBox
+                        canFilter
+                        selected={selected}
+                        onChange={(newValue) => setSelected(newValue)}
+                        filterCallback={(
+                            option,
+                            filterInput,
+                            { getOptionLabel }
+                        ) => {
+                            if (filterInput === "") {
+                                return true;
+                            }
+
+                            return new RegExp(filterInput, "i").test(
+                                getOptionLabel(option)
+                            );
+                        }}
+                        options={options}
+                    />
+                </div>
         </div>
 		</>
 	)
