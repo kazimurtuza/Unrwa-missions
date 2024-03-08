@@ -50,6 +50,14 @@ export async function GET() {
         let result = await Mission.aggregate([
             {
                 $lookup: {
+                    from: "staffs",
+                    localField: "leader",
+                    foreignField: "_id",
+                    as: "leader_details"
+                }
+            },
+            {
+                $lookup: {
                     from: "missionvehicles",
                     localField: "_id",
                     foreignField: "mission",
@@ -72,6 +80,14 @@ export async function GET() {
                     localField: "vehicle_list.staff.staff_id",
                     foreignField: "_id",
                     as: "staff_details"
+                }
+            },
+            {
+                $lookup: {
+                    from: "missiondeparturearrivals",
+                    localField: "_id",
+                    foreignField: "mission",
+                    as: "depature_arrival_details"
                 }
             }
         ]) // Adjust this line

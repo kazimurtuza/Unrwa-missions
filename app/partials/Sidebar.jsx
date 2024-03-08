@@ -911,7 +911,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             />
                                                         </svg>
                                                         <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                            Umrah
+                                                            Unrwa
                                                         </span>
                                                     </div>
                                                     {/* Icon */}
@@ -940,7 +940,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                         >
                                                             <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Umrah List
+                                                                Unrwa List
                                                             </span>
                                                         </Link>
                                                     </li>
@@ -956,7 +956,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                         >
                                                             <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Create Umrah
+                                                                Create Unrwa
                                                             </span>
                                                         </Link>
                                                     </li>

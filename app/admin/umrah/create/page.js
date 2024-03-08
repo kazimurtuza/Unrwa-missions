@@ -193,7 +193,7 @@ useEffect(() => {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Umrah Create
+                        Unrwa Create
                       </p>
                       <br></br>
                       {successMessage && (

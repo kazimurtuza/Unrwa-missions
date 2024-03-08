@@ -9,7 +9,7 @@ export async function POST(request) {
     try {
         const {name, email, password, user_type} = await (request.json());
 
-        if (!email || !password || !user_type) {
+        if (!email || !password) {
             return NextResponse.json({msg: 'invalid fields'}, {status: 400});
         }
         await mongoose.connect(connectionStr);
@@ -19,6 +19,8 @@ export async function POST(request) {
         if (user) {
             let id = user.id;
             let is_user = await bcrypt.compare(password, user.password);
+            const name=user.name;
+            const user_type=user.user_type;
             if (is_user) {
                 // let token = jwt.sign({name, email, id,user_type}, srcky,{ expiresIn: '1h' });
                 let token = jwt.sign({name, email, id,user_type}, srcky);
