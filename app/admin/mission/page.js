@@ -1,5 +1,5 @@
 "use client";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import Header from "@/app/partials/Header";
 import Sidebar from "@/app/partials/Sidebar";
@@ -54,11 +54,13 @@ function Steps() {
             "staff": [{}]
         }]
     });
-
+    const [staffList, setStaffList] = useState([]);
+    const [agencyList, setAgencyList] = useState([]);
+    const [classification, setClassification] = useState([]);
 
     const handleChange = (name, value) => {
         let update = {...storeData, [name]: value};
-        setStoreData(update);
+        setStoreData(old=>update);
     };
     const locationStore = (value) => {
         let update = {...storeData, location_list: value};
@@ -69,14 +71,82 @@ function Steps() {
         setStoreData(old=> update);
     };
 
-    async function saveMission(){
+    const agenciesSet = async () => {
         try {
-            const response = await axiosClient.post('mission', storeData);
+            const {data} = await axiosClient.get('agency');
+            if (data.success === true) {
+                const updatedAgencyList = data.result.map(item => ({
+                    value: item._id,
+                    label: item.name,
+                }));
+                setAgencyList(prevStaffList => [...updatedAgencyList]);
+            }
+        } catch (error) {
+            setAgencyList([]);
+        }
+    };
+    const classificationListSet = async () => {
+        try {
+            const {data} = await axiosClient.get('misson-classification');
+            if (data.success === true) {
+                const updatedClassificationList = data.result.map(item => ({
+                    value: item._id,
+                    label: item.name,
+                }));
+                setClassification(prevStaffList => [...updatedClassificationList]);
+            }
+        } catch (error) {
+            setAgencyList([]);
+        }
+    };
+
+
+    const staffListSet = async () => {
+        try {
+            const {data} = await axiosClient.get('staff');
+            if (data.success === true) {
+                const updatedStaffList = data.result.map(item => ({
+                    value: item._id,
+                    label: item.name,
+                    list:item,
+                }));
+
+                setStaffList(prevStaffList => [...updatedStaffList]);
+            }
+        } catch (error) {
+            setStaffList([]);
+        }
+    };
+
+    useEffect(() => {
+        agenciesSet();
+        staffListSet();
+        classificationListSet();
+    }, []);
+
+
+
+
+
+
+
+
+
+    async function saveMission(){
+        // console.log(storeData)
+        try {
+            const response = await axiosClient.post('mission', storeData).then(function (response) {
+                console.log(response.data);
+            })
+                .catch(function (error) {
+                    console.log(error.message);
+                });
             if(response.data.success==true){
                 alert("Successfully Created")
 
             }
         }catch (error){
+            console.log(error.message)
         }
 
 
@@ -85,7 +155,7 @@ function Steps() {
     const [activeTab, setActiveTab] = useState(0);
 
     const formElements = [
-        <Step1 data={data} getdata={handleChange}/>,
+        <Step1 data={data} storeData={storeData} classification={classification} staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
         <Step2 data={storeData.location_list} locationSet={locationStore} />,
 
         <Step3 data={storeData.vehicle_list} vehicleStore={vehicleSet}/>,

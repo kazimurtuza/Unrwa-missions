@@ -16,11 +16,14 @@ export async function POST(request) {
         const mission = payload;
         delete mission.location_list;
         delete mission.vehicle_list;
-        const missionAdd = await new Mission(payload);
-        const missionId = await missionAdd._id;
+        // return NextResponse.json({mission, success: true});
+        const missionAdd = await new Mission(mission);
         missionAdd.save();
         result=missionAdd;
+        const missionId = await missionAdd._id;
         let length = vehicle_list.length;
+
+        return NextResponse.json({location_list, success: true});
         if (location_list.length > 0) {
             location_list.map(async (item, index) => {
                 item.mission = await missionId;

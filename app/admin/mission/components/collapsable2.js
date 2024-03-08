@@ -16,9 +16,6 @@ const options = [
 
 const Collapsable2 = ({info, setInfo, item}) => {
 
-    const selectData = (selectedOption, {name}) => {
-        setInfo(name, selectedOption.value); // Pass the input value to the parent component
-    };
     const setdata = (e) => {
         const {name, value} = e.target;
         setInfo(name, value, item); // Pass the input value to the parent component
@@ -28,6 +25,18 @@ const Collapsable2 = ({info, setInfo, item}) => {
     const [driverList, setDriverList] = useState([]);
     const [staffList, setStaffList] = useState([]);
     const [vehicleList, setVehicleList] = useState([]);
+    const [vehicleType, setvehicleType] = useState();
+    const [vehicleDetails, setvehicleDetails] = useState();
+    const [seletVicleInfo, setseletVicleInfo] = useState();
+
+    const selectData = (selectedOption, {name}) => {
+
+        setInfo(name, selectedOption.value,item); // Pass the input value to the parent component
+        if(name==='vehicle'){
+            setSelectedVehicleInfo();
+        }
+    };
+
     const agencyListSet = async () => {
         try {
             const {data} = await axiosClient.get('agency');
@@ -90,6 +99,14 @@ const Collapsable2 = ({info, setInfo, item}) => {
             setVehicleList([]);
         }
     };
+    async function setSelectedVehicleInfo(){
+        const seletVicleInfoData = await  vehicleList.find(option => option.value === info.vehicle)
+
+        if (seletVicleInfoData) {
+            console.log(seletVicleInfoData.list);
+            setseletVicleInfo(old=>seletVicleInfoData.list);
+        }
+    }
 
 
     useEffect(() => {
@@ -97,6 +114,9 @@ const Collapsable2 = ({info, setInfo, item}) => {
         driverListSet();
         staffListSet();
         vehicleListSet();
+        if(info.vehicle){
+            setSelectedVehicleInfo();
+        }
     }, []);
 
 
@@ -135,6 +155,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                 <div className="select-wrap">
                                     <Select
                                         name="agency"
+                                        value={agencyList.find(option => option.value === info.agency)}
                                         options={agencyList}
                                         id="focus-point"
                                         onChange={selectData}
@@ -151,6 +172,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                 <Select
                                     name="driver"
                                     options={driverList}
+                                    value={driverList.find(option => option.value === info.driver)}
                                     id="focus-point"
                                     onChange={selectData}
                                     isSearchable
@@ -169,6 +191,8 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                     <Select
                                         name="vehicle"
                                         options={vehicleList}
+                                        value={vehicleList.find(option => option.value === info.vehicle)}
+
                                         id="focus-point"
                                         onChange={selectData}
                                         isSearchable
@@ -181,7 +205,8 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                     Vehicle Type (Model)
                                 </label>
                                 <div className="select-wrap">
-                                    <input type="text" className="form__input" id="dsc"/>
+
+                                    <input type="text" value={seletVicleInfo?seletVicleInfo.vehicle_type:""} className="form__input" id="dsc"/>
                                 </div>
                             </div>
 
@@ -189,7 +214,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                 <label htmlFor="dsc" className="form__label">
                                     Vehicle Body Description
                                 </label>
-                                <input type="text" className="form__input" id="dsc"/>
+                                <input type="text" value={seletVicleInfo?seletVicleInfo.description:""} className="form__input" id="dsc"/>
                             </div>
                         </div>
                     </div>

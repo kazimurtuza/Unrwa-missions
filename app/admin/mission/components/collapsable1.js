@@ -15,7 +15,7 @@ const Collapsable1 = ({info,setInfo, item}) => {
         setCollapse(!collapse)
     }
     const selectData = (selectedOption, {name}) => {
-        setInfo(name, selectedOption.value); // Pass the input value to the parent component
+        setInfo(name, selectedOption.value,item); // Pass the input value to the parent component
     };
     const setdata = (e) => {
         const {name, value} = e.target;
@@ -76,8 +76,9 @@ const Collapsable1 = ({info,setInfo, item}) => {
                                     Departure Time
                                 </label>
                                 <input
-                                    type="time"
+                                    type="date"
                                     name="departure_time"
+                                    value={info.departure_time}
                                     onChange={setdata}
                                     className="form__input"
                                     id="departure-time"
@@ -95,11 +96,8 @@ const Collapsable1 = ({info,setInfo, item}) => {
                                         value={info.departure_umrah_type}
                                         onChange={setdata}
                                     >
-                                        <option value="0" selected hidden>
-                                            Select
-                                        </option>
-                                        <option value="1">Umrah</option>
-                                        <option value="0">Non Umrah</option>
+                                        <option value="1">UNRWA</option>
+                                        <option value="0">NOT UNRWA</option>
                                     </select>
                                 </div>
                             </div>
@@ -110,6 +108,7 @@ const Collapsable1 = ({info,setInfo, item}) => {
                                 <div className="select-wrap">
                                     <Select
                                         name="departure_premise_type"
+                                        value={premiseTypeList.find(option => option.value === info.departure_premise_type)}
                                         options={premiseTypeList}
                                         id="focus-point"
                                         onChange={selectData}
@@ -127,6 +126,8 @@ const Collapsable1 = ({info,setInfo, item}) => {
                                         <Select
                                             name="departure_umrah_id"
                                             options={arrivalInstallationList}
+                                            value={arrivalInstallationList.find(option => option.value === info.departure_umrah_id)}
+
                                             id="focus-point"
                                             onChange={selectData}
                                             isSearchable
@@ -164,7 +165,7 @@ const Collapsable1 = ({info,setInfo, item}) => {
                                 <label htmlFor="arrival-time" className="form__label">
                                     Departure Time
                                 </label>
-                                <input type="time" className="form__input" id="arrival-time"/>
+                                <input type="time" value={info.arrival_time}     onChange={setdata} name='arrival_time' className="form__input" id="arrival-time"/>
                             </div>
                             <div className="form__field collapsable-item__field">
                                 <label htmlFor="facility2" className="form__label">
@@ -178,8 +179,8 @@ const Collapsable1 = ({info,setInfo, item}) => {
                                         id="facility2"
                                         onChange={setdata}
                                     >
-                                        <option value="1">Umrah</option>
-                                        <option value="0">Non Umrah</option>
+                                        <option value="1">UNRWA</option>
+                                        <option value="0">NOT UNRWA</option>
                                     </select>
 
                                 </div>
@@ -193,6 +194,7 @@ const Collapsable1 = ({info,setInfo, item}) => {
                                     <Select
                                         name="arrival_premise_type"
                                         options={premiseTypeList}
+                                        value={premiseTypeList.find(option => option.value === info.arrival_premise_type)}
                                         id="focus-point"
                                         onChange={selectData}
                                         isSearchable
@@ -211,6 +213,7 @@ const Collapsable1 = ({info,setInfo, item}) => {
                                         <Select
                                             name="arrival_umrah_id"
                                             options={arrivalInstallationList}
+                                            value={arrivalInstallationList.find(option => option.value === info.arrival_umrah_id)}
                                             // options={departureUmraheList}
                                             id="focus-point"
                                             onChange={selectData}
