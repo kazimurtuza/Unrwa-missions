@@ -17,11 +17,9 @@ const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
 
     const getSelectedData = async () => {
         const selectedStaff = await staffList.find(option => option.value === storeData.leader)
-
         if (selectedStaff) {
             setAdminInfo(selectedStaff.list);
         }
-
     };
 
     useEffect(() => {
@@ -33,7 +31,6 @@ const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
         {value: "1", label: "one"},
         {value: "2", label: "two"}
     ];
-
 
     return (
         <div className=" w-full mx-auto">

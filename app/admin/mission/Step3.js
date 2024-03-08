@@ -23,7 +23,9 @@ const Step3 = ({data,vehicleStore}) => {
   };
 
   const handleClick = () => {
-    setitems([...items, {}]);
+    let newdata = [...vehicleList, {index_no: vehicleList.length,}];
+    setvehicleList(newdata);
+    vehicleStore(newdata);
   }
 
   return (

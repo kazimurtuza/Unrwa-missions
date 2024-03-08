@@ -11,8 +11,8 @@ export async function POST(request) {
         var result;
         await mongoose.connect(connectionStr);
         let payload = await request.json();
-        const location_list = payload.location_list;
-        const vehicle_list = payload.vehicle_list;
+        const location_list = await payload.location_list;
+        const vehicle_list = await payload.vehicle_list;
         const mission = payload;
         delete mission.location_list;
         delete mission.vehicle_list;
@@ -21,14 +21,12 @@ export async function POST(request) {
         missionAdd.save();
         result=missionAdd;
         const missionId = await missionAdd._id;
-        let length = vehicle_list.length;
 
-        return NextResponse.json({location_list, success: true});
         if (location_list.length > 0) {
             location_list.map(async (item, index) => {
                 item.mission = await missionId;
                 const missionLocation = await new MissionDepartureArrival(item);
-                missionLocation.save();
+                 missionLocation.save();
             })
         }
         if (vehicle_list.length > 0) {

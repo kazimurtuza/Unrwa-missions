@@ -1,5 +1,6 @@
 "use client";
 import {useEffect, useState} from "react";
+import Swal from 'sweetalert2'
 
 import Header from "@/app/partials/Header";
 import Sidebar from "@/app/partials/Sidebar";
@@ -21,39 +22,41 @@ function Steps() {
         gender: "male",
         address: "",
     });
-    const [storeData, setStoreData] = useState({
-        "leader": "",
-        "agency": "",
-        "mission_classification": "",
+    const dataObject={
+        "leader": null,
+        "agency": null,
+        "mission_classification": null,
         "movement_date": "",
         "purpose": "",
         "remarks": "",
         "location_list": [{
             "index_no":0,
-            "departure_premise_type": "",
+            "departure_premise_type":null,
             "departure_installation_name": "",
-            "departure_umrah_id":"",
+            "departure_umrah_id":null,
             "departure_umrah_type":1,
             "departure_time": "",
             "departure_latitude": "",
             "departure_longitude": "",
             "arrival_umrah_type":1,
             "arrival_time": "",
-            "arrival_premise_type": "",
-            "arrival_umrah_id":'',
+            "arrival_premise_type":null,
+            "arrival_umrah_id":null,
             "arrival_installation_name": "",
             "arrival_latitude": "",
             "arrival_longitude": ""
         }],
         "vehicle_list": [{
             "index_no":0,
-            "mission": "",
-            "vehicle": "",
-            "driver": "",
-            "agency": "",
+            "mission": null,
+            "vehicle": null,
+            "driver": null,
+            "agency": null,
             "staff": [{}]
         }]
-    });
+    }
+
+    const [storeData, setStoreData] = useState(dataObject);
     const [staffList, setStaffList] = useState([]);
     const [agencyList, setAgencyList] = useState([]);
     const [classification, setClassification] = useState([]);
@@ -133,10 +136,18 @@ function Steps() {
 
 
     async function saveMission(){
-        // console.log(storeData)
+        console.log('storedata='+storeData)
         try {
             const response = await axiosClient.post('mission', storeData).then(function (response) {
-                console.log(response.data);
+
+                Swal.fire({
+                    title: 'success',
+                    text: 'Successfully Mission Created',
+                    icon: 'success',
+                    // confirmButtonText: 'Cool'
+                })
+                setStoreData(old=>dataObject);
+                setActiveTab(old=>0);
             })
                 .catch(function (error) {
                     console.log(error.message);
