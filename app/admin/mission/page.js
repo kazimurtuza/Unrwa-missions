@@ -22,7 +22,7 @@ function Steps() {
         gender: "male",
         address: "",
     });
-    const dataObject={
+    const dataObject = {
         "leader": null,
         "agency": null,
         "mission_classification": null,
@@ -30,29 +30,33 @@ function Steps() {
         "purpose": "",
         "remarks": "",
         "location_list": [{
-            "index_no":0,
-            "departure_premise_type":null,
+            "index_no": 0,
+            "departure_premise_type": null,
             "departure_installation_name": "",
-            "departure_umrah_id":null,
-            "departure_umrah_type":1,
+            "departure_umrah_id": null,
+            "departure_umrah_type": 1,
             "departure_time": "",
+            "departure_building_code": "",
             "departure_latitude": "",
             "departure_longitude": "",
-            "arrival_umrah_type":1,
+            "arrival_umrah_type": 1,
             "arrival_time": "",
-            "arrival_premise_type":null,
-            "arrival_umrah_id":null,
+            "arrival_premise_type": null,
+            "arrival_umrah_id": null,
             "arrival_installation_name": "",
             "arrival_latitude": "",
-            "arrival_longitude": ""
+            "arrival_longitude": "",
+            "arrival_building_code": "",
         }],
         "vehicle_list": [{
-            "index_no":0,
+            "index_no": 0,
             "mission": null,
             "vehicle": null,
             "driver": null,
             "agency": null,
-            "staff": [{}]
+            "vehicle_type": "",
+            "vehicle_body": "",
+            "staff":[],
         }]
     }
 
@@ -60,18 +64,19 @@ function Steps() {
     const [staffList, setStaffList] = useState([]);
     const [agencyList, setAgencyList] = useState([]);
     const [classification, setClassification] = useState([]);
+    const [checkValidation, setCheckValidation] = useState(0);
 
     const handleChange = (name, value) => {
         let update = {...storeData, [name]: value};
-        setStoreData(old=>update);
+        setStoreData(old => update);
     };
     const locationStore = (value) => {
         let update = {...storeData, location_list: value};
-        setStoreData(old=> update);
+        setStoreData(old => update);
     };
     const vehicleSet = (value) => {
         let update = {...storeData, vehicle_list: value};
-        setStoreData(old=> update);
+        setStoreData(old => update);
     };
 
     const agenciesSet = async () => {
@@ -111,7 +116,7 @@ function Steps() {
                 const updatedStaffList = data.result.map(item => ({
                     value: item._id,
                     label: item.name,
-                    list:item,
+                    list: item,
                 }));
 
                 setStaffList(prevStaffList => [...updatedStaffList]);
@@ -128,15 +133,12 @@ function Steps() {
     }, []);
 
 
-
-
-
-
-
-
-
-    async function saveMission(){
-        console.log('storedata='+storeData)
+    async function saveMission() {
+        var validationError =await checkStep3()
+        if (validationError == 1) {
+            setCheckValidation(1)
+            return false;
+        }
         try {
             const response = await axiosClient.post('mission', storeData).then(function (response) {
 
@@ -146,17 +148,17 @@ function Steps() {
                     icon: 'success',
                     // confirmButtonText: 'Cool'
                 })
-                setStoreData(old=>dataObject);
-                setActiveTab(old=>0);
+                setStoreData(old => dataObject);
+                setActiveTab(old => 0);
             })
                 .catch(function (error) {
                     console.log(error.message);
                 });
-            if(response.data.success==true){
+            if (response.data.success == true) {
                 alert("Successfully Created")
 
             }
-        }catch (error){
+        } catch (error) {
             console.log(error.message)
         }
 
@@ -166,12 +168,98 @@ function Steps() {
     const [activeTab, setActiveTab] = useState(0);
 
     const formElements = [
-        <Step1 data={data} storeData={storeData} classification={classification} staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
-        <Step2 data={storeData.location_list} locationSet={locationStore} />,
-
-        <Step3 data={storeData.vehicle_list} vehicleStore={vehicleSet}/>,
+        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} classification={classification}
+               staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
+        <Step2 data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
+               checkValidation={checkValidation} locationSet={locationStore}/>,
+        <Step3 data={storeData.vehicle_list} emptyVehicle={dataObject.vehicle_list[0]} checkValidation={checkValidation}
+               vehicleStore={vehicleSet}/>,
         <Step4 data={data} setData={setData}/>,
     ];
+    const nextPage = async () => {
+        let validationError = 0;
+        if (activeTab == 0) validationError = await checkStep1()
+        if (activeTab == 1) validationError = await checkStep2()
+        if (validationError == 0) {
+            setCheckValidation(0)
+            setActiveTab((prev) => prev + 1);
+        }
+
+    }
+
+    function checkStep1() {
+        if (storeData.leader == null ||
+            storeData.agency == null ||
+            storeData.mission_classification == null ||
+            storeData.movement_date == "" ||
+            storeData.purpose == "" ||
+            storeData.remarks == "") {
+            setCheckValidation(old => 1)
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    async function checkStep2() {
+        var result = 0;
+        await storeData.location_list.forEach((item) => {
+            if (item.departure_umrah_type == 1) {
+                if (item.departure_umrah_id == null || item.departure_building_code == "" || item.departure_premise_type == null) {
+                    setCheckValidation(old => 1)
+                    result = 1;
+                }
+            }
+            if (item.arrival_umrah_type == 1) {
+                if (item.arrival_umrah_id == null || item.arrival_premise_type == null || item.arrival_building_code == "") {
+                    setCheckValidation(old => 1)
+                    result = 1;
+                }
+            }
+            if (
+                // item.departure_installation_name == "" ||
+                item.departure_time == "" ||
+                item.departure_latitude == "" ||
+                item.departure_longitude == "" ||
+                item.arrival_time == "" ||
+                // item.arrival_installation_name == "" ||
+                item.arrival_latitude == "" ||
+                item.arrival_longitude == ""
+            ) {
+                result = 1;
+            }
+
+        })
+        if (result == 1) {
+            setCheckValidation(old => 1)
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    async function checkStep3() {
+        var result = 0;
+        await storeData.vehicle_list.forEach((item) => {
+            if (
+                // item.departure_installation_name == "" ||
+                item.vehicle == null ||
+                item.driver == null ||
+                item.agency == null ||
+                item.staff.length == 0
+
+            ) {
+                result = 1;
+            }
+
+        })
+        if (result == 1) {
+            setCheckValidation(old => 1)
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
     return (
 
@@ -185,9 +273,9 @@ function Steps() {
                                 <div className='px-4 sm:px-6 lg:px-8 py-8 w-full mx-auto'>
                                     <div className='progress-container'>
                                         <div className='progress-bar' id='progress'></div>
-                                        <div className='circle active '>1</div>
-                                        <div className='circle'>2</div>
-                                        <div className='circle'>3</div>
+                                        <div className={'circle ' + (activeTab >= 0 ? 'active' : '')}>1</div>
+                                        <div className={'circle ' + (activeTab >= 1 ? 'active' : '')}>2</div>
+                                        <div className={'circle ' + (activeTab >= 2 ? 'active' : '')}>3</div>
                                         {/*<div className='circle'>4</div>*/}
                                     </div>
                                     <div>{formElements[activeTab]}</div>
@@ -211,7 +299,7 @@ function Steps() {
                                                     : ""
                                             }
 
-                                            onClick={() => setActiveTab((prev) => prev + 1)}
+                                            onClick={nextPage}
                                             className={`px-4 py-2 rounded bg-black text-white transition duration-300 ${
                                                 activeTab === formElements.length - 2
                                                     ? "hidden"

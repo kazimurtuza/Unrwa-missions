@@ -14,7 +14,16 @@ const options = [
     {value: "7", label: "Staff Seven"},
 ];
 
-const Collapsable2 = ({info, setInfo, item}) => {
+const customStyles = {
+    color: 'red',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    // Add more styles as needed
+};
+
+let errorTxt = <p style={customStyles}>This field is required.</p>
+
+const Collapsable2 = ({info, setInfo, item,checkValidation}) => {
 
     const setdata = (e) => {
         const {name, value} = e.target;
@@ -30,11 +39,12 @@ const Collapsable2 = ({info, setInfo, item}) => {
     const [seletVicleInfo, setseletVicleInfo] = useState();
 
     const selectData = (selectedOption, {name}) => {
-
-        setInfo(name, selectedOption.value,item); // Pass the input value to the parent component
-        if(name==='vehicle'){
-            setSelectedVehicleInfo();
+        // Pass the input value to the parent component
+        var value=selectedOption.value;
+        if(name=='vehicle'){
+             value=selectedOption;
         }
+        setInfo(name,value,item);
     };
 
     const agencyListSet = async () => {
@@ -162,6 +172,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                         isSearchable
                                     >
                                     </Select>
+                                    {(checkValidation && info.agency == null) ? errorTxt: ""}
                                 </div>
                             </div>
 
@@ -178,6 +189,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                     isSearchable
                                 >
                                 </Select>
+                                {(checkValidation && info.driver == null) ? errorTxt: ""}
                             </div>
                         </div>
                         <div className="collapsable-item__body-col">
@@ -198,6 +210,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                         isSearchable
                                     >
                                     </Select>
+                                    {(checkValidation && info.vehicle == null) ? errorTxt: ""}
                                 </div>
                             </div>
                             <div className="form__field collapsable-item__field">
@@ -206,7 +219,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                 </label>
                                 <div className="select-wrap">
 
-                                    <input type="text" value={seletVicleInfo?seletVicleInfo.vehicle_type:""} className="form__input" id="dsc"/>
+                                    <input type="text" value={info.vehicle_type} className="form__input" id="dsc"/>
                                 </div>
                             </div>
 
@@ -214,7 +227,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                 <label htmlFor="dsc" className="form__label">
                                     Vehicle Body Description
                                 </label>
-                                <input type="text" value={seletVicleInfo?seletVicleInfo.description:""} className="form__input" id="dsc"/>
+                                <input type="text" value={info.vehicle_body} className="form__input" id="dsc"/>
                             </div>
                         </div>
                     </div>
@@ -240,6 +253,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                         }}
                         options={staffList}
                     />
+                    {(checkValidation && info.staff.length == 0) ? errorTxt: ""}
                 </div>
             </div>
         </>

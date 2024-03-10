@@ -2,7 +2,7 @@ import Select from 'react-select'
 import {useEffect, useState} from "react";
 import axiosClient from "@/app/axiosClient";
 
-const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
+const Step1 = ({getdata, storeData, staffList, agencyList, classification, checkValidation}) => {
     const selectData = (selectedOption, {name}) => {
         if (name == 'leader') {
             setAdminInfo(selectedOption.list);
@@ -25,6 +25,15 @@ const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
     useEffect(() => {
         getSelectedData();
     }, []);
+
+    const customStyles = {
+        color: 'red',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        // Add more styles as needed
+    };
+
+    let errorTxt = <p style={customStyles}>This field is required.</p>
 
 
     let options = [
@@ -53,6 +62,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
                                     isSearchable
                                 >
                                 </Select>
+                                {(checkValidation && storeData.leader == null) ? errorTxt: ""}
                             </div>
                         </div>
                     </div>
@@ -113,6 +123,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
                                     isSearchable
                                 >
                                 </Select>
+                                {(checkValidation && storeData.agency == null) ? errorTxt: ""}
                             </div>
                         </div>
                         <div className="form__field">
@@ -122,6 +133,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
                             <div className="date-wrap">
                                 <input type="date" onChange={setdata} name="movement_date" className="form__input"
                                        id="date" value={storeData.movement_date}/>
+                                {(checkValidation && storeData.movement_date == '') ? errorTxt: ""}
                             </div>
                         </div>
                     </div>
@@ -136,6 +148,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
                                 onChange={setdata}
                                 id="purpose"
                             >{storeData.purpose}</textarea>
+                            {(checkValidation && storeData.purpose == '') ? errorTxt: ""}
                         </div>
                         <div className="form__field">
                             <label htmlFor="remarks" className="form__label">
@@ -147,6 +160,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
                                 onChange={setdata}
                                 id="remarks"
                             >{storeData.remarks}</textarea>
+                            {(checkValidation && storeData.remarks == '') ? errorTxt: ""}
                         </div>
                     </div>
                     <div className="form__row flex-start-spb">
@@ -162,6 +176,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList,classification}) => {
                                     isSearchable
                                 >
                                 </Select>
+                                {(checkValidation && storeData.mission_classification == null) ? errorTxt: ""}
                             </div>
                         </div>
                     </div>
