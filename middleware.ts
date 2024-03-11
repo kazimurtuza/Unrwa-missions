@@ -60,7 +60,7 @@ export const config = {
         '/api/notification-clear',
         '/api/product-review',
         '/admin/:path*',
-        '/api/mission/:path*',
+        // '/api/mission/:path*',
         '/api/staff/:path*',
         '/api/driver/:path*',
         '/api/vehicle/:path*',

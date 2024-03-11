@@ -14,11 +14,17 @@ const options = [
     {value: "7", label: "Staff Seven"},
 ];
 
-const Collapsable2 = ({info, setInfo, item}) => {
+const customStyles = {
+    color: 'red',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    // Add more styles as needed
+};
 
-    const selectData = (selectedOption, {name}) => {
-        setInfo(name, selectedOption.value); // Pass the input value to the parent component
-    };
+let errorTxt = <p style={customStyles}>This field is required.</p>
+
+const Collapsable2 = ({info, setInfo, item,checkValidation}) => {
+
     const setdata = (e) => {
         const {name, value} = e.target;
         setInfo(name, value, item); // Pass the input value to the parent component
@@ -28,6 +34,19 @@ const Collapsable2 = ({info, setInfo, item}) => {
     const [driverList, setDriverList] = useState([]);
     const [staffList, setStaffList] = useState([]);
     const [vehicleList, setVehicleList] = useState([]);
+    const [vehicleType, setvehicleType] = useState();
+    const [vehicleDetails, setvehicleDetails] = useState();
+    const [seletVicleInfo, setseletVicleInfo] = useState();
+
+    const selectData = (selectedOption, {name}) => {
+        // Pass the input value to the parent component
+        var value=selectedOption.value;
+        if(name=='vehicle'){
+             value=selectedOption;
+        }
+        setInfo(name,value,item);
+    };
+
     const agencyListSet = async () => {
         try {
             const {data} = await axiosClient.get('agency');
@@ -90,6 +109,14 @@ const Collapsable2 = ({info, setInfo, item}) => {
             setVehicleList([]);
         }
     };
+    async function setSelectedVehicleInfo(){
+        const seletVicleInfoData = await  vehicleList.find(option => option.value === info.vehicle)
+
+        if (seletVicleInfoData) {
+            console.log(seletVicleInfoData.list);
+            setseletVicleInfo(old=>seletVicleInfoData.list);
+        }
+    }
 
 
     useEffect(() => {
@@ -97,6 +124,9 @@ const Collapsable2 = ({info, setInfo, item}) => {
         driverListSet();
         staffListSet();
         vehicleListSet();
+        if(info.vehicle){
+            setSelectedVehicleInfo();
+        }
     }, []);
 
 
@@ -135,12 +165,14 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                 <div className="select-wrap">
                                     <Select
                                         name="agency"
+                                        value={agencyList.find(option => option.value === info.agency)}
                                         options={agencyList}
                                         id="focus-point"
                                         onChange={selectData}
                                         isSearchable
                                     >
                                     </Select>
+                                    {(checkValidation && info.agency == null) ? errorTxt: ""}
                                 </div>
                             </div>
 
@@ -151,11 +183,13 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                 <Select
                                     name="driver"
                                     options={driverList}
+                                    value={driverList.find(option => option.value === info.driver)}
                                     id="focus-point"
                                     onChange={selectData}
                                     isSearchable
                                 >
                                 </Select>
+                                {(checkValidation && info.driver == null) ? errorTxt: ""}
                             </div>
                         </div>
                         <div className="collapsable-item__body-col">
@@ -169,11 +203,14 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                     <Select
                                         name="vehicle"
                                         options={vehicleList}
+                                        value={vehicleList.find(option => option.value === info.vehicle)}
+
                                         id="focus-point"
                                         onChange={selectData}
                                         isSearchable
                                     >
                                     </Select>
+                                    {(checkValidation && info.vehicle == null) ? errorTxt: ""}
                                 </div>
                             </div>
                             <div className="form__field collapsable-item__field">
@@ -181,7 +218,8 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                     Vehicle Type (Model)
                                 </label>
                                 <div className="select-wrap">
-                                    <input type="text" className="form__input" id="dsc"/>
+
+                                    <input type="text" value={info.vehicle_type} className="form__input" id="dsc"/>
                                 </div>
                             </div>
 
@@ -189,7 +227,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                                 <label htmlFor="dsc" className="form__label">
                                     Vehicle Body Description
                                 </label>
-                                <input type="text" className="form__input" id="dsc"/>
+                                <input type="text" value={info.vehicle_body} className="form__input" id="dsc"/>
                             </div>
                         </div>
                     </div>
@@ -215,6 +253,7 @@ const Collapsable2 = ({info, setInfo, item}) => {
                         }}
                         options={staffList}
                     />
+                    {(checkValidation && info.staff.length == 0) ? errorTxt: ""}
                 </div>
             </div>
         </>

@@ -841,7 +841,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/mission/create"
+                                                            href="/admin/mission"
                                                             className={({ isActive }) =>
                                                                 "text-slate-200 block transition duration-150 truncate " +
                                                                 (isActive

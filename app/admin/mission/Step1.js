@@ -2,9 +2,9 @@ import Select from 'react-select'
 import {useEffect, useState} from "react";
 import axiosClient from "@/app/axiosClient";
 
-const Step1 = ({getdata}) => {
+const Step1 = ({getdata, storeData, staffList, agencyList, classification, checkValidation}) => {
     const selectData = (selectedOption, {name}) => {
-        if(name=='leader'){
+        if (name == 'leader') {
             setAdminInfo(selectedOption.list);
         }
         getdata(name, selectedOption.value); // Pass the input value to the parent component
@@ -13,52 +13,33 @@ const Step1 = ({getdata}) => {
         const {name, value} = e.target;
         getdata(name, value); // Pass the input value to the parent component
     };
-    const [staff, setStaff] = useState([]);
-    const [staffList, setStaffList] = useState([]);
-    const [agencyList, setAgencyList] = useState([]);
     const [adminInfo, setAdminInfo] = useState();
 
-    const staffListSet = async () => {
-        try {
-            const {data} = await axiosClient.get('staff');
-            if (data.success === true) {
-                const updatedStaffList = data.result.map(item => ({
-                    value: item._id,
-                    label: item.name,
-                    list:item,
-                }));
-                setStaffList(prevStaffList => [...updatedStaffList]);
-            }
-        } catch (error) {
-            setStaffList([]);
-        }
-    };
-    const agenciesSet = async () => {
-        try {
-            const {data} = await axiosClient.get('agency');
-            if (data.success === true) {
-                const updatedAgencyList = data.result.map(item => ({
-                    value: item._id,
-                    label: item.name,
-                }));
-                setAgencyList(prevStaffList => [...updatedAgencyList]);
-            }
-        } catch (error) {
-            setAgencyList([]);
+    const getSelectedData = async () => {
+        const selectedStaff = await staffList.find(option => option.value === storeData.leader)
+        if (selectedStaff) {
+            setAdminInfo(selectedStaff.list);
         }
     };
 
     useEffect(() => {
-        staffListSet();
-        agenciesSet();
+        getSelectedData();
     }, []);
+
+    const customStyles = {
+        color: 'red',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        // Add more styles as needed
+    };
+
+    let errorTxt = <p style={customStyles}>This field is required.</p>
 
 
     let options = [
         {value: "1", label: "one"},
         {value: "2", label: "two"}
     ];
-
 
     return (
         <div className=" w-full mx-auto">
@@ -69,21 +50,23 @@ const Step1 = ({getdata}) => {
                     <div className="form__row flex-start-spb">
                         <div className="form__field">
                             <label htmlFor="focus-point" className="form__label">
-                                Mission Focal Point
+                                Mission Leader
                             </label>
                             <div className="">
                                 <Select
                                     name="leader"
                                     options={staffList}
+                                    value={staffList.find(option => option.value === storeData.leader)}
                                     id="focus-point"
                                     onChange={selectData}
                                     isSearchable
                                 >
                                 </Select>
+                                {(checkValidation && storeData.leader == null) ? errorTxt: ""}
                             </div>
                         </div>
                     </div>
-                    {adminInfo?<div className="form__info-box">
+                    {adminInfo ? <div className="form__info-box">
                         <h3 className="form__info-box__title">
                             Mission Focal Point Contact Details
                         </h3>
@@ -123,7 +106,7 @@ const Step1 = ({getdata}) => {
                                 <p>{adminInfo.whatsup_number}</p>
                             </div>
                         </div>
-                    </div>:''}
+                    </div> : ''}
 
                     <div className="form__row flex-start-spb">
                         <div className="form__field">
@@ -133,11 +116,14 @@ const Step1 = ({getdata}) => {
                             <div className="select-wrap">
                                 <Select
                                     name="agency"
+                                    value={agencyList.find(option => option.value === storeData.agency)}
+
                                     options={agencyList}
                                     onChange={selectData}
                                     isSearchable
                                 >
                                 </Select>
+                                {(checkValidation && storeData.agency == null) ? errorTxt: ""}
                             </div>
                         </div>
                         <div className="form__field">
@@ -146,7 +132,8 @@ const Step1 = ({getdata}) => {
                             </label>
                             <div className="date-wrap">
                                 <input type="date" onChange={setdata} name="movement_date" className="form__input"
-                                       id="date" value=""/>
+                                       id="date" value={storeData.movement_date}/>
+                                {(checkValidation && storeData.movement_date == '') ? errorTxt: ""}
                             </div>
                         </div>
                     </div>
@@ -160,7 +147,8 @@ const Step1 = ({getdata}) => {
                                 name="purpose"
                                 onChange={setdata}
                                 id="purpose"
-                            ></textarea>
+                            >{storeData.purpose}</textarea>
+                            {(checkValidation && storeData.purpose == '') ? errorTxt: ""}
                         </div>
                         <div className="form__field">
                             <label htmlFor="remarks" className="form__label">
@@ -171,7 +159,8 @@ const Step1 = ({getdata}) => {
                                 name="remarks"
                                 onChange={setdata}
                                 id="remarks"
-                            ></textarea>
+                            >{storeData.remarks}</textarea>
+                            {(checkValidation && storeData.remarks == '') ? errorTxt: ""}
                         </div>
                     </div>
                     <div className="form__row flex-start-spb">
@@ -181,12 +170,13 @@ const Step1 = ({getdata}) => {
                             </label>
                             <div className="select-wrap">
                                 <Select
-                                    name="agency"
-                                    options={agencyList}
+                                    name="mission_classification"
+                                    options={classification}
                                     onChange={selectData}
                                     isSearchable
                                 >
                                 </Select>
+                                {(checkValidation && storeData.mission_classification == null) ? errorTxt: ""}
                             </div>
                         </div>
                     </div>
