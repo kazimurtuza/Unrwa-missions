@@ -1,22 +1,25 @@
 import {NextResponse} from "next/server";
 import mongoose from "mongoose";
-import {Product} from "@/lib/model/product";
 import {connectionStr} from "@/lib/db"
 import {User} from "@/lib/model/users";
-import bcrypt from "bcrypt";
-import {v4 as uuidv4} from "uuid";
-import path from "path";
-import fs from "fs";
+import { AuthUser } from "@/app/helper";
 
-export async function PUT(request, content) {
+export async function PUT(request) {
     try {
-        const userId = content.params.userid;
-        const filter = { _id: userId };
+
+        const user = await AuthUser();
+
+       
+        
+        const filter = { _id: user.id };
         
         const payload = await request.json();
 
+       
+
         await mongoose.connect(connectionStr);
         const userInfo = await User.findById(filter);
+
 
         if (!userInfo) {
             return NextResponse.json({ error: 'User not found', success: false });
@@ -27,10 +30,10 @@ export async function PUT(request, content) {
 
         const result = await userInfo.save();
     } catch (error) {
-        return NextResponse.json({ error, success: false });
+        return NextResponse.json({ error:error.message, success: false });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ msg:"Account Delete Successfully",success: true });
 }
 
 

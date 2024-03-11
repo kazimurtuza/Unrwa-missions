@@ -4,7 +4,7 @@ import axiosClient from "@/app/axiosClient";
 import { useRouter } from 'next/navigation'; // Changed from 'next/navigation' to 'next/router'
 import { NextResponse } from "next/server"; // Unclear use, consider removing if not needed
 import { now } from "mongoose"; // Unused import, consider removing
-import { getCookie, setCookie } from 'cookies-next';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 
 function Login() {
     const router = useRouter();
@@ -45,13 +45,19 @@ function Login() {
         try {
             const { data } = await axiosClient.post("login", info);
 
+            console.log("token");
+
+            // if (data.status === 422) {
+            //     setErrorMessage('Invalid Credentials');
+            // }
             if (data.status === 422) {
                 setErrorMessage('Invalid Credentials');
-            } else if (data.token && data.user.user_type === "admin") {
+            } else if (data.token) {
+                setCookie('authUserType',data.user.user_type);
                 setCookie('authToken', data.token);
                 router.push('/admin/dashboard', { scroll: false });
             } else {
-                setErrorMessage('Invalid Credentials');
+                setErrorMessage(data.message);
             }
         } catch (error) {
             console.error("Error occurred during login:", error);
