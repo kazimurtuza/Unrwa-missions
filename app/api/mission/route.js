@@ -82,7 +82,7 @@ export async function GET() {
             },
             {
                 $lookup: {
-                    from: "missiondeparturearrivals",
+                    from: "missiondeparturearrivallists",
                     localField: "_id",
                     foreignField: "mission",
                     as: "depature_arrival_details"
