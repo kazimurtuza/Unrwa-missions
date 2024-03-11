@@ -10,13 +10,17 @@ export async function POST(request) {
         const {name, email, password, user_type} = await (request.json());
 
         if (!email || !password) {
-            return NextResponse.json({msg: 'invalid fields'}, {status: 400});
+            return NextResponse.json({message: 'invalid fields'}, {status: 400});
         }
         await mongoose.connect(connectionStr);
         const srcky=process.env.JWT_SECRET
         const record = {email: email};
         const user = await User.findOne(record);
         if (user) {
+            if(user.is_delete==1)
+            {
+                return NextResponse.json({'message': 'Account Already Deleted',success:false}, {status: 401});
+            }
             let id = user.id;
             let is_user = await bcrypt.compare(password, user.password);
             const name=user.name;
@@ -30,7 +34,7 @@ export async function POST(request) {
     } catch (error) {
         return NextResponse.json(error);
     }
-    return NextResponse.json({'msg': 'Email or Password is incorrect'}, {status: 401});
+    return NextResponse.json({'message': 'Email or Password is incorrect',success:false}, {status: 401});
 }
 
 

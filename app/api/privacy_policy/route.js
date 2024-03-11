@@ -19,7 +19,7 @@ export async function POST(request) {
         }
         return NextResponse.json({privacyPolicy, success: true});
     } catch (error) {
-        return NextResponse.json({error, success: true});
+        return NextResponse.json({error:error.message, success: true});
     }
 }
 export async function GET() {
