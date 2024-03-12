@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import axios from "axios";
 import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
@@ -8,15 +8,65 @@ import axiosClient from "@/app/axiosClient";
 
 function AgencyCreate() {
   const [agencyName, setAgencyName] = useState("");
-
+  const [agency_name_acroynm, setAgency_name_acroynm] = useState("");
+  const [agency_head, setAgency_head] = useState("");
+  const [agency_phone, setAgency_phone] = useState("");
+  const [agency_email, setAgency_email] = useState("");
+  const [agency_physical_address, setAgency_physical_address] = useState("");
+  const [agency_cluster, setAgency_cluster] = useState("");
+  const [agency_website, setAgency_website] = useState("");
+  const [agency_logo, setAgency_logo] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
 
+  const inputFile = useRef(null);
+
 
   const handleAgencyNameChange = (value) => {
     setAgencyName(value);
+  };
+  const handleAgencyNameAcronoym = (value) => {
+    setAgency_name_acroynm(value);
+  };
+  const handleAgencyheadChange = (value) => {
+    setAgency_head(value);
+  };
+  const handleAgencyPhoneChange = (value) => {
+    setAgency_phone(value);
+  };
+
+  const handleAgencyEmail = (value) => {
+    setAgency_email(value);
+  };
+
+  const handlePhyAddress = (value) => {
+    setAgency_physical_address(value);
+  };
+
+  const handleClusterChange = (value) => {
+    setAgency_cluster(value);
+  };
+
+  const handleWebChange = (value) => {
+    setAgency_website(value);
+  };
+
+
+  const handleAgency_logoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        // Once the FileReader has read the file, set the base64 data
+        setAgency_logo(reader.result);
+      };
+
+      // Read the file as a data URL (base64)
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -27,6 +77,16 @@ function AgencyCreate() {
     // Prepare data for API request
     const postData = {
       name: agencyName,
+      agency_name_acroynm:agency_name_acroynm,
+      agency_head:agency_head,
+      agency_phone:agency_phone,
+      agency_email:agency_email,
+      agency_physical_address:agency_physical_address,
+      agency_cluster:agency_cluster,
+      agency_website:agency_website,
+      agency_logo:agency_logo
+  
+
     };
 
     try {
@@ -39,6 +99,13 @@ function AgencyCreate() {
           {
             setSuccessMessage("Agency Create Successfully");
             setAgencyName("");
+            setAgency_name_acroynm("");
+            setAgency_email("");
+            setAgency_head("");
+            setAgency_phone("");
+            setAgency_physical_address("");
+            setAgency_website("");
+            setAgency_cluster("");
             setErrorMessage("");
           }
           else
@@ -123,6 +190,164 @@ function AgencyCreate() {
                           }
 
                         />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Agency Name Acroynm
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your agency acroymn name"
+                          value={agency_name_acroynm}
+                          onChange={(e) =>
+                            handleAgencyNameAcronoym(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Agency Head
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your agency head name"
+                          value={agency_head}
+                          onChange={(e) =>
+                            handleAgencyheadChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Agency Phone
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your agency phone"
+                          value={agency_phone}
+                          onChange={(e) =>
+                            handleAgencyPhoneChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Agency Email
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="email"
+                          placeholder="Enter your agency email"
+                          value={agency_email}
+                          onChange={(e) =>
+                            handleAgencyEmail(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Agency Physical Address
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your agency phy address"
+                          value={agency_physical_address}
+                          onChange={(e) =>
+                            handlePhyAddress(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Agency Cluster
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your agency cluster"
+                          value={agency_cluster}
+                          onChange={(e) =>
+                            handleClusterChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Agency Website
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your agency website"
+                          value={agency_website}
+                          onChange={(e) =>
+                            handleWebChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                  
+
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                                Agency Logo Change
+                              </label>
+                              <input
+                                type="file"
+                                className="upload-field"
+                                ref={inputFile}
+                                onChange={handleAgency_logoChange}
+                              />
                       </div>
 
 

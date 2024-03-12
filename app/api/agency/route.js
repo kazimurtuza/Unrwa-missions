@@ -5,6 +5,7 @@ import { User } from "@/lib/model/users";
 import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
+import { uploadBase64Img } from "@/app/helper";
 
 export async function GET(){
  
@@ -27,6 +28,15 @@ export async function POST(request) {
         const payload = await request.json();
 
         await mongoose.connect(connectionStr);
+
+        if(payload.agency_logo)
+        {
+            try {
+                payload.agency_logo = await uploadBase64Img(payload.agency_logo);
+            } catch (e) {
+                return NextResponse.json({e, success: 'img upload error found'});
+            }
+        }
 
         //agency create
         let agency = new Agency(payload);

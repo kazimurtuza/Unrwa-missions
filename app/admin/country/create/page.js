@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
@@ -11,13 +11,37 @@ function CountryCreate() {
   const [alpha2, setAlpha2] = useState("");
   const [alpha3, setAlpha3] = useState("");
   const [countryCode, setCountryCode] = useState("");
+  const [iso3166, setIso3166] = useState("");
   const [isoPort, setIsoPort] = useState("");
   const [region, setRegion] = useState("");
+  const [countries, setCountries] = useState([]);
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
 
+  useEffect(() => {
+    // Function to fetch countries from REST Countries API
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const data = await response.json();
+        setCountries(data);
+        // Assuming the API response is an array of country objects
+        // Log country names to the console
+        data.forEach(country => {
+          console.log(country.name.common);
+        });
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      }
+    };
+  
+    // Call the function to fetch countries when the component mounts
+    fetchCountries();
+  }, []); //
+
+// Empty de
 
   const handleCountryNameChange = (value) => {
     setCountryName(value);
@@ -27,6 +51,9 @@ function CountryCreate() {
   };
   const handleAhpha3change = (value) => {
     setAlpha3(value);
+  };
+  const handleIso_3166 = (value) => {
+    setIso3166(value);
   };
   const handleCountryCodeChange = (value) => {
     setCountryCode(value);
@@ -51,7 +78,8 @@ function CountryCreate() {
       alpha3:alpha3,
       country_code:countryCode,
       iso_port:isoPort,
-      region:region
+      region:region,
+      iso3166:iso3166
     };
 
     try {
@@ -68,6 +96,7 @@ function CountryCreate() {
             setAlpha3("");
             setCountryCode("");
             setIsoPort("");
+            setIso3166("");
             setRegion("");
             setErrorMessage("");
           }
@@ -141,24 +170,35 @@ function CountryCreate() {
                                                 </div>
                                             )}
                       <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Country Name
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your country name"
-                          value={countryName}
-                          onChange={(e) =>
-                            handleCountryNameChange(e.target.value)
-                          }
+                      <label
+                        className="block text-grey-darker text-sm font-bold mb-2"
+                        htmlFor="questionName"
+                      >
+                        Country Name
+                      </label>
+                      {/* <input
+                        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                        id="categoryName"
+                        type="text"
+                        placeholder="Enter your country name"
+                        value={countryName}
+                        onChange={(e) => handleCountryNameChange(e.target.value)}
+                      /> */}
 
-                        />
-                      </div>
+                      {/* Dropdown for countries */}
+                      <select
+                        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker mt-2"
+                        id="countryDropdown"
+                        onChange={(e) => handleCountryNameChange(e.target.value)}
+                      >
+                        <option value="">Select a country</option>
+                        {countries && countries.map((country) => (
+                          <option key={country.id} value={country.name.common}>
+                            {country.name.common}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -174,6 +214,25 @@ function CountryCreate() {
                           value={alpha2}
                           onChange={(e) =>
                             handleAhpha2change(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Iso3166-2
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your iso3166-2"
+                          value={iso3166}
+                          onChange={(e) =>
+                            handleIso_3166(e.target.value)
                           }
 
                         />
