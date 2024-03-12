@@ -1,7 +1,7 @@
 import {useState} from "react";
 import Collapsable2 from "./components/collapsable2";
 
-const Step3 = ({data, vehicleStore,emptyVehicle,checkValidation}) => {
+const Step3 = ({data, vehicleStore,emptyVehicle,checkValidation,vehicleStaff}) => {
     const [items, setitems] = useState([{}]);
     const [vehicleList, setvehicleList] = useState(data);
     const handleChange = async (name, value, index_no) => {
@@ -42,7 +42,7 @@ const Step3 = ({data, vehicleStore,emptyVehicle,checkValidation}) => {
     return (
         <div className="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14">
 
-            {vehicleList.map((item, index) => <Collapsable2 info={item} checkValidation={checkValidation} setInfo={handleChange} item={index}/>)}
+            {vehicleList.map((item, index) => <Collapsable2 info={item} vehicleStaff={vehicleStaff} checkValidation={checkValidation} setInfo={handleChange} item={index}/>)}
 
             <div className="collapsable-item__btn">
                 <button type="button" className="add-btn" onClick={handleClick}>

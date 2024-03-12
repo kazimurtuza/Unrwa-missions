@@ -109,7 +109,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                     Departure Time
                                 </label>
                                 <input
-                                    type="date"
+                                    type="datetime-local"
                                     name="departure_time"
                                     value={info.departure_time}
                                     onChange={setdata}
@@ -214,7 +214,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                 <label htmlFor="arrival-time" className="form__label">
                                     Arrival Time
                                 </label>
-                                <input type="date" value={info.arrival_time} onChange={setdata} name='arrival_time'
+                                <input   type="datetime-local"  value={info.arrival_time} onChange={setdata} name='arrival_time'
                                        className="form__input" id="arrival-time"/>
                                 {(checkValidation && info.arrival_time == "") ? errorTxt: ""}
                             </div>

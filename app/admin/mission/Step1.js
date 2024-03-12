@@ -3,9 +3,13 @@ import {useEffect, useState} from "react";
 import axiosClient from "@/app/axiosClient";
 
 const Step1 = ({getdata, storeData, staffList, agencyList, classification, checkValidation}) => {
-    const selectData = (selectedOption, {name}) => {
+    const selectData = async (selectedOption, {name}) => {
         if (name == 'leader') {
             setAdminInfo(selectedOption.list);
+        }
+        if(name=='agency'){
+
+            selectedOption.value = await selectedOption.map(item=>({agency_id:item.value,value:item.value,label:item.label}))
         }
         getdata(name, selectedOption.value); // Pass the input value to the parent component
     };
@@ -116,14 +120,15 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                             <div className="select-wrap">
                                 <Select
                                     name="agency"
-                                    value={agencyList.find(option => option.value === storeData.agency)}
-
+                                    value={storeData.agency}
+                                    isMulti
                                     options={agencyList}
                                     onChange={selectData}
+                                    className="basic-multi-select"
                                     isSearchable
                                 >
                                 </Select>
-                                {(checkValidation && storeData.agency == null) ? errorTxt: ""}
+                                {(checkValidation && storeData.agency.length == 0) ? errorTxt: ""}
                             </div>
                         </div>
                         <div className="form__field">
@@ -163,23 +168,23 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                             {(checkValidation && storeData.remarks == '') ? errorTxt: ""}
                         </div>
                     </div>
-                    <div className="form__row flex-start-spb">
-                        <div className="form__field">
-                            <label htmlFor="classification" className="form__label">
-                                Mission Classification
-                            </label>
-                            <div className="select-wrap">
-                                <Select
-                                    name="mission_classification"
-                                    options={classification}
-                                    onChange={selectData}
-                                    isSearchable
-                                >
-                                </Select>
-                                {(checkValidation && storeData.mission_classification == null) ? errorTxt: ""}
-                            </div>
-                        </div>
-                    </div>
+                    {/*<div className="form__row flex-start-spb">*/}
+                    {/*    <div className="form__field">*/}
+                    {/*        <label htmlFor="classification" className="form__label">*/}
+                    {/*            Mission Classification*/}
+                    {/*        </label>*/}
+                    {/*        <div className="select-wrap">*/}
+                    {/*            <Select*/}
+                    {/*                name="mission_classification"*/}
+                    {/*                options={classification}*/}
+                    {/*                onChange={selectData}*/}
+                    {/*                isSearchable*/}
+                    {/*            >*/}
+                    {/*            </Select>*/}
+                    {/*            {(checkValidation && storeData.mission_classification == null) ? errorTxt: ""}*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </div>

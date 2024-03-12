@@ -24,7 +24,7 @@ function Steps() {
     });
     const dataObject = {
         "leader": null,
-        "agency": null,
+        "agency": [{agency_id:'456546456'}],
         "mission_classification": null,
         "movement_date": "",
         "purpose": "",
@@ -62,9 +62,12 @@ function Steps() {
 
     const [storeData, setStoreData] = useState(dataObject);
     const [staffList, setStaffList] = useState([]);
+    const [selectedStaffList, setSelectedStaffList] = useState();
     const [agencyList, setAgencyList] = useState([]);
     const [classification, setClassification] = useState([]);
     const [checkValidation, setCheckValidation] = useState(0);
+
+    const [vehicleStaff, setVehicleStaff] = useState([]);
 
     const handleChange = (name, value) => {
         let update = {...storeData, [name]: value};
@@ -74,7 +77,15 @@ function Steps() {
         let update = {...storeData, location_list: value};
         setStoreData(old => update);
     };
-    const vehicleSet = (value) => {
+    const vehicleSet = async (value) => {
+        console.log('-------list------');
+        // let stafList= [...value.map((item) =>...item.staff)];
+
+        const stafList = value.map((item) => item.staff.map((staffItem) => {
+            return staffItem.staff_id
+                ; // You might do some processing here
+        })).flat();
+        setVehicleStaff(stafList);
         let update = {...storeData, vehicle_list: value};
         setStoreData(old => update);
     };
@@ -172,7 +183,7 @@ function Steps() {
                staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
         <Step2 data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
                checkValidation={checkValidation} locationSet={locationStore}/>,
-        <Step3 data={storeData.vehicle_list} emptyVehicle={dataObject.vehicle_list[0]} checkValidation={checkValidation}
+        <Step3 data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]} checkValidation={checkValidation}
                vehicleStore={vehicleSet}/>,
         <Step4 data={data} setData={setData}/>,
     ];
@@ -188,9 +199,10 @@ function Steps() {
     }
 
     function checkStep1() {
+
         if (storeData.leader == null ||
-            storeData.agency == null ||
-            storeData.mission_classification == null ||
+            storeData.agency.length==0 ||
+            // storeData.mission_classification == null ||
             storeData.movement_date == "" ||
             storeData.purpose == "" ||
             storeData.remarks == "") {
