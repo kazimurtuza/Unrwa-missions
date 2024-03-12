@@ -212,9 +212,9 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                             <h3 className="collapsable-item__body-title">Arrival</h3>
                             <div className="form__field collapsable-item__field">
                                 <label htmlFor="arrival-time" className="form__label">
-                                    Departure Time
+                                    Arrival Time
                                 </label>
-                                <input type="time" value={info.arrival_time} onChange={setdata} name='arrival_time'
+                                <input type="date" value={info.arrival_time} onChange={setdata} name='arrival_time'
                                        className="form__input" id="arrival-time"/>
                                 {(checkValidation && info.arrival_time == "") ? errorTxt: ""}
                             </div>
