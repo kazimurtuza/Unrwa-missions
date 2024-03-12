@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
@@ -10,10 +10,37 @@ function VehicleCreate() {
   const [vehicleName, setVehicleName] = useState("");
   const [regNumber, setRegNumber] = useState("");
   const [vehicleType, setVehicleType] = useState("");
+  const [vehicle_plate_number, setVehicle_Plate_number] = useState("");
+  const [capacity, setCapacity] = useState("");
+  const [brand_name, setBrand_name] = useState("");
+  const [brand_type, setBrandType] = useState("");
+  const [armouted, setArmoured] = useState("");
+  const [fuel_type, setFuelType] = useState("");
+  const [agency,setAgencyList]=useState("");
+  const [agencyID,setAgencyID]=useState("");
+  const [color, setColor] = useState("");
+  
   const [description, setDescription] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
+
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('agency');
+            setAgencyList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+
+    fetchData();
+}, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
 
 
@@ -22,6 +49,10 @@ function VehicleCreate() {
   };
   const handleRegNumberchange = (value) => {
     setRegNumber(value);
+    
+  };
+  const handleAgencyChange = (value) => {
+    setAgencyID(value);
   };
   const handleVehicleTypechange = (value) => {
     setVehicleType(value);
@@ -29,6 +60,30 @@ function VehicleCreate() {
   const handleDescriptionChange = (value) => {
     setDescription(value);
   };
+  const handleVehiclePlateChange = (value) => {
+    setVehicle_Plate_number(value);
+  };
+  const handleCapacityChange = (value) => {
+    setCapacity(value);
+  };
+  const handleBrandNameChange = (value) => {
+    setBrand_name(value);
+  };
+  const handleBrandTypeChange = (value) => {
+    setBrandType(value);
+  };
+  const handleArmouted = (value) => {
+    setArmoured(value);
+  };
+  const handleFuelTypeChange = (value) => {
+    setFuelType(value);
+  };
+  const handleColorChange = (value) => {
+    setColor(value);
+  };
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +95,14 @@ function VehicleCreate() {
       name: vehicleName,
       registration_number:regNumber,
       vehicle_type:vehicleType,
-      description:description
+      description:description,
+      vehicle_plate_number:vehicle_plate_number,
+      brand_name:brand_name,
+      brand_type:brand_type,
+      armouted:armouted,
+      fuel_type:fuel_type,
+      color:color,
+      agency:agencyID
     };
 
     try {
@@ -56,6 +118,12 @@ function VehicleCreate() {
             setRegNumber("");
             setVehicleType("");
             setDescription("");
+            setVehicle_Plate_number("");
+            setBrandType("");
+            setBrand_name("");
+            setArmoured("");
+            setFuelType("");
+            setColor("");
           }
           else
           {
@@ -126,6 +194,29 @@ function VehicleCreate() {
                                                 </span>
                                                 </div>
                                             )}
+
+                      <div className="mb-4">
+                                        <label
+                                          className="block text-grey-darker text-sm font-bold mb-2"
+                                          htmlFor="questionName"
+                                        >
+                                          Agency
+                                        </label>
+                                        <select
+                                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                                          value={agencyID}
+                                          onChange={(e) => handleAgencyChange(e.target.value)}
+                                        >
+                                          <option value="" disabled hidden>
+                                            Select Agency
+                                          </option>
+                                          {Array.isArray(agency) && agency.map((val) => (
+                                            <option key={val.id} value={val._id}>
+                                              {val.name}
+                                            </option>
+                                          ))}
+                                        </select>
+                        </div>
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -184,6 +275,147 @@ function VehicleCreate() {
 
                         />
                       </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Vehicle Plate Number
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="slug"
+                          type="text"
+                          placeholder="Enter your vehicle type"
+                          value={vehicle_plate_number}
+                          onChange={(e) =>
+                            handleVehiclePlateChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Capacity
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="slug"
+                          type="text"
+                          placeholder="Enter your vehicle type"
+                          value={capacity}
+                          onChange={(e) =>
+                            handleCapacityChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                         Brand Name
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="slug"
+                          type="text"
+                          placeholder="Enter your vehicle type"
+                          value={brand_name}
+                          onChange={(e) =>
+                            handleBrandNameChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                         Brand Type
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="slug"
+                          type="text"
+                          placeholder="Enter your vehicle type"
+                          value={brand_type}
+                          onChange={(e) =>
+                            handleBrandTypeChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                         Armoured
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="slug"
+                          type="text"
+                          placeholder="Enter your vehicle type"
+                          value={armouted}
+                          onChange={(e) =>
+                            handleArmouted(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                         Fuel Type
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="slug"
+                          type="text"
+                          placeholder="Enter your vehicle type"
+                          value={fuel_type}
+                          onChange={(e) =>
+                            handleFuelTypeChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                         Color
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="slug"
+                          type="text"
+                          placeholder="Enter your vehicle type"
+                          value={color}
+                          onChange={(e) =>
+                            handleColorChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+
 
                       <div className="mb-4">
                         <label

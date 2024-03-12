@@ -21,7 +21,7 @@ function Driver() {
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Driver";
-    const headName = ["Si", "Name", "Email", "Driver ID", "Jawwal Phone", "Ooredo Phone", "Whatsapp Number", "Action"];
+    const headName = ["Si", "Name", "Email", "Agency","Driver ID","Vehicle Plate Number","Capacity", "Color","Brand Name","Body Type","Armoured","Fuel Type","Jawwal Phone", "Ooredo Phone", "Whatsapp Number", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -77,12 +77,77 @@ function Driver() {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
+                            {item.agency && item.agency.name}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
                             {item.driver_id}
                         </p>
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}
                         {/*</p>*/}
                     </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.vehicle_plate_number}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.brand_name}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.capacity}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.color}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.body_type}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.fuel_type}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.armoured}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                 
                     {/*<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">*/}
                     {/*    <p className="text-gray-900 whitespace-no-wrap">*/}
                     {/*        Sept 28, 2019*/}

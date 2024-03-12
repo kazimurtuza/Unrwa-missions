@@ -39,8 +39,8 @@ function UmrahList() {
         "building_code",
         "department",
         "ownership",
-        // "cls_list",
-        // "des",
+        "cls_list",
+        "des",
         "status",
         "Action"
     ];
@@ -124,6 +124,17 @@ function UmrahList() {
                             {item.ownership}
                         </p>
                     </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.cls_list}
+                        </p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.des}
+                        </p>
+                    </td>
+                 
 
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">

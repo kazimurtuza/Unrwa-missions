@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { Driver } from "@/lib/model/driver";
 import { User } from "@/lib/model/users";
+import { Agency } from "@/lib/model/agency";
 import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
@@ -14,10 +15,16 @@ export async function GET(){
         await mongoose.connect(connectionStr);
         data = await Driver
         .find({is_delete:0})
-        .populate({
-            path: 'user',
-            model: 'User'
-        })
+        .populate([
+            {
+                path: 'user',
+                model: 'User'
+            },
+            {
+                path: 'agency',
+                model: 'Agency'
+            }
+        ])
         .sort({ created_at: -1 })
         .exec();
     }

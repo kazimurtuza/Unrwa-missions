@@ -21,7 +21,7 @@ function Country() {
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Country";
-    const headName = ["Si", "Name","Alpha 2", "Alpha 3", "Cuntry Code", "ISO Port","Region", "Action"];
+    const headName = ["Si", "Name","Alpha 2", "Iso 3166 -2","Alpha 3", "Cuntry Code", "ISO Port","Region", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -70,6 +70,14 @@ function Country() {
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.alpha2}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.iso3166}
                         </p>
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}

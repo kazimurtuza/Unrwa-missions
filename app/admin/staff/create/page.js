@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import axios from "axios";
 import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
@@ -8,20 +8,64 @@ import axiosClient from "@/app/axiosClient";
 
 function StaffCreate() {
   const [staffName, setStaffName] = useState("");
+  const [agency,setAgencyList]=useState("");
+  const [classification,setClassificationList]=useState("");
+  const [agencyID,setAgencyID]=useState("");
   const [phone, setPhone] = useState("");
   const [statelitePhone, setJStatelitePhone] = useState("");
   const [whatsupNumber, setWhatsupNumber] = useState("");
   const [callSignIn, setCallSignin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+
+  const [familyName, setFamilyName] = useState("");
+  const [otherName, setOtherName] = useState("");
+  const [title, setTitle] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
+  const [classificationId, setClassificationId] = useState("");
+  const [nationalId, setNationalId] = useState("");
+  const [passportNumberOrginal, setPassportNumberOrginal] = useState("");
+  const [passportNumberDuplicate, setPassportDuplicate] = useState("");
+  const [gender, setGender] = useState("");
+  const [department, setDepartment] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [bloodType, setBloodType] = useState("");
+  const [phoneNumberOne, setPhoneNumberOne] = useState("");
+  const [phoneNumberTwo, setPhoneNumberTwo] = useState("");
+  const [signalNumber, setSignalNumber] = useState("");
+  const [staffPhoto, setStaffPhoto] = useState("");
+  const [passportOrginalAttachment, setPassportOrginalAttachment] = useState("");
+  const [passportDuplicateAttachment, setPassportDuplicateAttachment] = useState("");
+  const [nationaltyAttachment, setNationalityAttachment] = useState("");
+  const [nationlity, setNationlity] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('agency');
+            setAgencyList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+
+    fetchData();
+}, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+
+const inputFile = useRef(null);
 
 
   const handleStaffNameChange = (value) => {
     setStaffName(value);
+  };
+  const handleAgencyChange = (value) => {
+    setAgencyID(value);
   };
   const handleEmailChange = (value) => {
     setEmail(value);
@@ -42,6 +86,110 @@ function StaffCreate() {
   const handleCallSignInChange = (value) => {
     setCallSignin(value);
   };
+  const handleFamilyName = (value) => {
+    setFamilyName(value);
+  };
+  const handleOtherName = (value) => {
+    setOtherName(value);
+  };
+  const handleTitle = (value) => {
+    setTitle(value);
+  };
+  const handleEmployeeId = (value) => {
+    setEmployeeId(value);
+  };
+  const handleNationalId = (value) => {
+    setNationalId(value);
+  };
+  const handlePassportNumberOrginal = (value) => {
+    setPassportNumberOrginal(value);
+  };
+  const handlePassportNumberDuplicate = (value) => {
+    setPassportDuplicate(value);
+  };
+  const handleGender = (value) => {
+    setGender(value);
+  };
+  const handleClassificationChange = (value) => {
+    setClassificationId(value);
+  };
+  const handleDepartmentChange = (value) => {
+    setDepartment(value);
+  };
+  const handleDateOfBirth = (value) => {
+    setDateOfBirth(value);
+  };
+  const handleBloodTypeChange = (value) => {
+    setBloodType(value);
+  };
+  const handlePhoneNumberOneChange = (value) => {
+    setPhoneNumberOne(value);
+  };
+  const handlePhoneNumberTwoChange = (value) => {
+    setPhoneNumberTwo(value);
+  };
+  const handleSignalNumberChange = (value) => {
+    setSignalNumber(value);
+  };
+  const handlePassportOrginalAttachment = (value) => {
+    setSignalNumber(value);
+  };
+  const handlePassportDuplicateAttachment = (value) => {
+    setSignalNumber(value);
+  };
+  const handleNationalIdAttachment = (value) => {
+    setSignalNumber(value);
+  };
+  const handleNationality = (value) => {
+    setSignalNumber(value);
+  };
+
+  const handleStaffPhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        // Once the FileReader has read the file, set the base64 data
+        setStaffPhoto(reader.result);
+      };
+
+      // Read the file as a data URL (base64)
+      reader.readAsDataURL(file);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('agency');
+            setAgencyList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+
+    fetchData();
+}, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+
+useEffect(() => {
+  const fetchData = async () => {
+      try {
+          const { data } = await axiosClient.get('misson-classification');
+          setClassificationList(data.result);
+          console.log(data.result);
+      } catch (error) {
+          console.error('Error fetching agencies:', error);
+      }
+  };
+
+  fetchData();
+}, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +204,26 @@ function StaffCreate() {
       phone:phone,
       statelite_phone:statelitePhone,
       whatsup_number:whatsupNumber,
-      call_signin:callSignIn
+      agency:agencyID,
+      call_signin:callSignIn,
+      family_name:familyName,
+      other_name:otherName,
+      title:title,
+      employee_id:employeeId,
+      national_id:nationalId,
+      passport_number_orginal:passportNumberOrginal,
+      passport_number_duplicate:passportNumberDuplicate,
+      gender:gender,
+      classification:classificationId,
+      department:department,
+      date_of_birth:dateOfBirth,
+      blood_type:bloodType,
+      phone_number_one:phoneNumberOne,
+      phone_number_two:phoneNumberTwo,
+      signal_number:signalNumber,
+      nationlity:nationlity,
+      staff_photo:staffPhoto
+
     };
 
     try {
@@ -76,6 +243,22 @@ function StaffCreate() {
             setWhatsupNumber("");
             setCallSignin("");
             setErrorMessage("");
+            setBloodType("");
+            setDateOfBirth("");
+            setDepartment("");
+            setEmployeeId("");
+            setPhoneNumberOne("");
+            setPhoneNumberTwo("");
+            setNationlity("");
+            setNationalId("");
+            setSignalNumber("");
+            setGender("");
+            setTitle("");
+            setFamilyName("");
+            setOtherName("");
+            setPassportNumberOrginal("");
+            setPassportDuplicate("");
+          
           }
           else
           {
@@ -146,6 +329,50 @@ function StaffCreate() {
                                                 </span>
                                                 </div>
                                             )}
+                       <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Agency
+                        </label>
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                          value={agencyID}
+                          onChange={(e) => handleAgencyChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Agency
+                          </option>
+                          {Array.isArray(agency) && agency.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
+                        </select>
+                        </div>
+                        <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Mission Classification
+                        </label>
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                          value={classificationId}
+                          onChange={(e) => handleClassificationChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Classification
+                          </option>
+                          {Array.isArray(classification) && classification.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -161,6 +388,272 @@ function StaffCreate() {
                           value={staffName}
                           onChange={(e) =>
                             handleStaffNameChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Family Name
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your family name"
+                          value={familyName}
+                          onChange={(e) =>
+                            handleFamilyName(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Other Name
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your other name"
+                          value={otherName}
+                          onChange={(e) =>
+                            handleOtherName(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Title
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your title"
+                          value={title}
+                          onChange={(e) =>
+                            handleTitle(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Employee Id
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your employee id"
+                          value={employeeId}
+                          onChange={(e) =>
+                            handleEmployeeId(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          National Id
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your national id"
+                          value={nationalId}
+                          onChange={(e) =>
+                            handleNationalId(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Passport Number Orginal
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your passport number orginal"
+                          value={passportNumberOrginal}
+                          onChange={(e) =>
+                            handlePassportNumberOrginal(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Passport Number Duplicate
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your passport number duplicate"
+                          value={passportNumberDuplicate}
+                          onChange={(e) =>
+                            handlePassportNumberDuplicate(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="genderSelect"
+                        >
+                          Gender
+                        </label>
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="genderSelect"
+                          value={gender}
+                          onChange={(e) => handleGender(e.target.value)}
+                        >
+                          <option value="" disabled>Select your gender</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                        </select>
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Department
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your department"
+                          value={department}
+                          onChange={(e) =>
+                            handleDepartmentChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Date of Birth
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="date"
+                          placeholder="Enter your date of birth"
+                          value={dateOfBirth}
+                          onChange={(e) =>
+                            handleDateOfBirth(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="bloodTypeSelect"
+                        >
+                          Blood Type
+                        </label>
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="bloodTypeSelect"
+                          value={bloodType}
+                          onChange={(e) => handleBloodTypeChange(e.target.value)}
+                        >
+                          <option value="" disabled>Select your blood type</option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="AB">AB</option>
+                          <option value="O">O</option>
+                        </select>
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Phone Number One
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your passport number one"
+                          value={phoneNumberOne}
+                          onChange={(e) =>
+                            handlePhoneNumberOneChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Phone Number Two
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your passport number one"
+                          value={phoneNumberTwo}
+                          onChange={(e) =>
+                            handlePhoneNumberTwoChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Signal Number
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your signal number"
+                          value={signalNumber}
+                          onChange={(e) =>
+                            handleSignalNumberChange(e.target.value)
                           }
 
                         />
@@ -284,6 +777,25 @@ function StaffCreate() {
 
                         />
                       </div>
+
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                                Staff Photo Change
+                              </label>
+                              <input
+                                type="file"
+                                className="upload-field"
+                                ref={inputFile}
+                                onChange={handleStaffPhotoChange}
+                              />
+                      </div>
+
+          
+
+            
 
 
 

@@ -8,6 +8,8 @@ import axiosClient from "@/app/axiosClient";
 
 function MissionClassificationCreate() {
   const [missionClassificationName, setMissionClassificationName] = useState("");
+  const [requests_classifications, setRequests_classifications] = useState("");
+  const [abbreviation, setAbbreviation] = useState("");
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -18,6 +20,12 @@ function MissionClassificationCreate() {
   const handleMissionClassificationChange = (value) => {
     setMissionClassificationName(value);
   };
+  const handlerequestClassificationChange = (value) => {
+    setRequests_classifications(value);
+  };
+  const handleAbbrivationChange = (value) => {
+    setAbbreviation(value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +35,8 @@ function MissionClassificationCreate() {
     // Prepare data for API request
     const postData = {
       name: missionClassificationName,
+      requests_classifications:requests_classifications,
+      abbreviation:abbreviation
     };
 
     try {
@@ -39,6 +49,8 @@ function MissionClassificationCreate() {
           {
             setSuccessMessage("Mission Classification Create Successfully");
             setMissionClassificationName("");
+            setRequests_classifications("");
+            setAbbreviation("");
             setErrorMessage("");
           }
           else
@@ -125,6 +137,44 @@ function MissionClassificationCreate() {
                           value={missionClassificationName}
                           onChange={(e) =>
                             handleMissionClassificationChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Request Classification
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your request classification name"
+                          value={requests_classifications}
+                          onChange={(e) =>
+                            handlerequestClassificationChange(e.target.value)
+                          }
+
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Abbreviation
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your abbrevation"
+                          value={abbreviation}
+                          onChange={(e) =>
+                            handleAbbrivationChange(e.target.value)
                           }
 
                         />
