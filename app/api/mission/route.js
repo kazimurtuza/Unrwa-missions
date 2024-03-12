@@ -4,10 +4,29 @@ import {NextResponse} from "next/server";
 import {Mission} from "@/lib/model/mission";
 import {MissionDepartureArrival} from "@/lib/model/missionDepartureArrival";
 import {MissionVehicle} from "@/lib/model/missionVehicle";
+import nodemailer from "nodemailer";
 
 
 export async function POST(request) {
     try {
+
+        const transporter = await nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true, // Set to false for explicit TLS
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD,
+            },
+            tls: {
+                // Do not fail on invalid certificates
+                //rejectUnauthorized: false,
+            },
+        });
+        const mailOptions={};
+
+
+
         var result;
         await mongoose.connect(connectionStr);
         let payload = await request.json();
@@ -36,6 +55,23 @@ export async function POST(request) {
                 missionVehicle.save();
             })
         }
+
+
+        const mailContent = `New Mission Created `;
+        // Set up email options
+        // let user=User.findOne({user_type:'admin'}).email;
+        if(1){
+            mailOptions.to = 'kazimurtuza11@gmail.com';
+            mailOptions.subject = "UNRWA New Mission Created";
+            mailOptions.text = mailContent;
+            // Send the email
+            await transporter.sendMail(mailOptions);
+        }
+
+
+
+
+
         return NextResponse.json({result, success: true});
     } catch (error) {
         return NextResponse.json({error: error.message, success: false});

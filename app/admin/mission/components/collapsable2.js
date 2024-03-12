@@ -23,7 +23,7 @@ const customStyles = {
 
 let errorTxt = <p style={customStyles}>This field is required.</p>
 
-const Collapsable2 = ({info, setInfo, item,checkValidation}) => {
+const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff}) => {
 
     const setdata = (e) => {
         const {name, value} = e.target;
@@ -37,6 +37,8 @@ const Collapsable2 = ({info, setInfo, item,checkValidation}) => {
     const [vehicleType, setvehicleType] = useState();
     const [vehicleDetails, setvehicleDetails] = useState();
     const [seletVicleInfo, setseletVicleInfo] = useState();
+    const [collapse, setCollapse] = useState(true);
+    const [selected, setSelected] = useState([]);
 
     const selectData = (selectedOption, {name}) => {
         // Pass the input value to the parent component
@@ -113,13 +115,17 @@ const Collapsable2 = ({info, setInfo, item,checkValidation}) => {
         const seletVicleInfoData = await  vehicleList.find(option => option.value === info.vehicle)
 
         if (seletVicleInfoData) {
-            console.log(seletVicleInfoData.list);
             setseletVicleInfo(old=>seletVicleInfoData.list);
         }
+    }
+    async function selectedStaffSet() {
+        let selectedStaffList=await info.staff.map(item=>item.staff_id);
+        setSelected(old=>selectedStaffList)
     }
 
 
     useEffect(() => {
+        selectedStaffSet()
         agencyListSet();
         driverListSet();
         staffListSet();
@@ -129,9 +135,6 @@ const Collapsable2 = ({info, setInfo, item,checkValidation}) => {
         }
     }, []);
 
-
-    const [collapse, setCollapse] = useState(true);
-    const [selected, setSelected] = useState([]);
     const handleClick = () => {
         setCollapse(!collapse)
     }
@@ -231,30 +234,30 @@ const Collapsable2 = ({info, setInfo, item,checkValidation}) => {
                             </div>
                         </div>
                     </div>
+                    <div className='staff-list mt-4'>
+                        <DualListBox
+                            canFilter
+                            selected={selected}
+                            onChange={(newValue) => employeeSet(newValue)}
+                            filterCallback={(
+                                option,
+                                filterInput,
+                                {getOptionLabel}
+                            ) => {
+                                if (filterInput === "") {
+                                    return true;
+                                }
+
+                                return new RegExp(filterInput, "i").test(
+                                    getOptionLabel(option)
+                                );
+                            }}
+                            options={staffList}
+                        />
+                        {(checkValidation && info.staff.length == 0) ? errorTxt: ""}
+                    </div>
                 </div>
 
-                <div className='staff-list mt-4'>
-                    <DualListBox
-                        canFilter
-                        selected={selected}
-                        onChange={(newValue) => employeeSet(newValue)}
-                        filterCallback={(
-                            option,
-                            filterInput,
-                            {getOptionLabel}
-                        ) => {
-                            if (filterInput === "") {
-                                return true;
-                            }
-
-                            return new RegExp(filterInput, "i").test(
-                                getOptionLabel(option)
-                            );
-                        }}
-                        options={staffList}
-                    />
-                    {(checkValidation && info.staff.length == 0) ? errorTxt: ""}
-                </div>
             </div>
         </>
     )
