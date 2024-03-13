@@ -121,6 +121,21 @@ function Steps() {
         }
     };
 
+    const missionClaster = async () => {
+        try {
+            const {data} = await axiosClient.get('misson-c');
+            if (data.success === true) {
+                const updatedClassificationList = data.result.map(item => ({
+                    value: item._id,
+                    label: item.name,
+                }));
+                setClassification(prevStaffList => [...updatedClassificationList]);
+            }
+        } catch (error) {
+            setAgencyList([]);
+        }
+    };
+
 
     const staffListSet = async () => {
         try {
@@ -142,6 +157,7 @@ function Steps() {
     useEffect(() => {
         agenciesSet();
         staffListSet();
+        missionClaster();
         classificationListSet();
     }, []);
 
