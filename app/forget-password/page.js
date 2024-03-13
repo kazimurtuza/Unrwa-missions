@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'; // Changed from 'next/navigation' t
 import { NextResponse } from "next/server"; // Unclear use, consider removing if not needed
 import { now } from "mongoose"; // Unused import, consider removing
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
-import Link from 'next/link';
 
 function Login() {
     const router = useRouter();
@@ -13,6 +12,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -38,27 +38,24 @@ function Login() {
         setErrorMessage('');
 
         const info = {
-            email: email,
-            password: password,
-            user_type: "admin",
+            email: email
         };
 
         try {
-            const { data } = await axiosClient.post("login", info);
+            const response = await axiosClient.post("forget-password", info);
 
-            console.log("token");
+            console.log(response.data);
 
             // if (data.status === 422) {
             //     setErrorMessage('Invalid Credentials');
             // }
-            if (data.status === 422) {
-                setErrorMessage('Invalid Credentials');
-            } else if (data.token) {
-                setCookie('authUserType',data.user.user_type);
-                setCookie('authToken', data.token);
-                router.push('/admin/dashboard', { scroll: false });
-            } else {
-                setErrorMessage(data.message);
+            if (response.data.code) {
+                setSuccessMessage(response.data.result);
+                setCookie("forgetPasswordEmail",email);
+                router.push('/forget-password/email-verify', { scroll: false });
+            }
+             else {
+                setErrorMessage(response.data.error);
             }
         } catch (error) {
             console.error("Error occurred during login:", error);
@@ -93,8 +90,14 @@ function Login() {
                                             )}
                                             </a>
                                             <h2 className='text-[24px] sm:text-[28px] text-grey-darker text-center mb-10'>
-                                                Login
+                                                Forgot Password
                                             </h2>
+                                            {successMessage && (
+                                                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4" role="alert">
+                                                    <strong className="font-bold">Success!</strong>
+                                                    <span className="block sm:inline">{successMessage}</span>
+                                                </div>
+                                            )}
                                             {errorMessage && (
                                                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
                                                     <strong className="font-bold">Error!</strong>
@@ -116,30 +119,10 @@ function Login() {
                                                     />
                                                 </div>
 
-                                                <div className='mb-4'>
-                                                    <label className='block text-grey-darker text-sm font-bold mb-2' htmlFor='password'>
-                                                        Password
-                                                    </label>
-                                                    <input
-                                                        className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
-                                                        id='password'
-                                                        type='password'
-                                                        placeholder='Your secure password'
-                                                        value={password}
-                                                        onChange={e => setPassword(e.target.value)}
-                                                    />
-                                                </div>
                                                 <div className='flex items-center justify-between mt-8'>
                                                     <button className='bg-indigo-600 duration-300 leading-normal transition opacity-90 hover:opacity-100 text-white font-bold py-2 px-4 rounded' type="submit">
-                                                        Log in
+                                                        Send Email
                                                     </button>
-
-                                                    <Link
-                                                        href={{
-                                                            pathname: '/forget-password'
-                                                        }}
-                                                        className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
-                                                    > Forgot Password</Link>
                                                 </div>
                                             </form>
                                         </div>

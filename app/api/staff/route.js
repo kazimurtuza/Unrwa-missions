@@ -8,6 +8,7 @@ import validator from 'validator';
 import { uploadBase64Img } from "@/app/helper";
 import { Agency } from "@/lib/model/agency";
 import { MissionClassification } from "@/lib/model/missionClassification";
+import nodemailer from "nodemailer";
 
 export async function GET(){
  
@@ -24,10 +25,6 @@ export async function GET(){
         {
             path: 'agency',
             model: 'Agency'
-        },
-        {
-            path: 'classification',
-            model: 'MissionClassification'
         }
         ])
         .sort({ created_at: -1 })
@@ -68,7 +65,7 @@ export async function POST(request) {
         if(payload.passport_original_attachment)
         {
             try {
-                payload.passport_original_attachment = await uploadBase64Img(passport_original_attachment);
+                payload.passport_original_attachment = await uploadBase64Img(payload.passport_original_attachment);
             } catch (e) {
                 return NextResponse.json({e, success: 'img upload error found'});
             }
@@ -76,7 +73,7 @@ export async function POST(request) {
         if(payload.passport_duplicate_attachment)
         {
             try {
-                payload.passport_duplicate_attachment = await uploadBase64Img(passport_duplicate_attachment);
+                payload.passport_duplicate_attachment = await uploadBase64Img(payload.passport_duplicate_attachment);
             } catch (e) {
                 return NextResponse.json({e, success: 'img upload error found'});
             }
@@ -89,6 +86,7 @@ export async function POST(request) {
                 return NextResponse.json({e, success: 'img upload error found'});
             }
         }
+        payload.password=generateRandomCode(8);
         await mongoose.connect(connectionStr);
         //password hashing
         const hashPassword = await bcrypt.hash(payload.password, 10);
@@ -96,7 +94,7 @@ export async function POST(request) {
                 'name': payload.name,
                 'email': payload.email,
                 'password': hashPassword,
-                'user_type': 'staff',
+                'user_type': payload.staff_role,
                 "phone": payload.whatsup_number
         };
         //user create
@@ -107,10 +105,52 @@ export async function POST(request) {
         payload.user=user._id;
         let staff = new Staff(payload);
         result = await staff.save();
+        const mailOptions={};
+
+
+        
+        const transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 465,
+                secure: true, // Set to false for explicit TLS
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASSWORD,
+                },
+                tls: {
+                    // Do not fail on invalid certificates
+                    //rejectUnauthorized: false,
+                },
+        });
+
+        const password = payload.password;
+        const mailContent = `Your password: ${password}`;
+
+        // Set up email options
+        mailOptions.to = payload.email;
+        mailOptions.subject = "User Creation Email";
+        mailOptions.text = mailContent;
+
+        // Send the email
+        await transporter.sendMail(mailOptions);
+
         return NextResponse.json({ result, success: true });
     } catch (error) {
         return NextResponse.json({ error: error.message, success: false }, { status: 500 });
     } finally {
         await mongoose.disconnect();
     }
+}
+
+
+function generateRandomCode(length) {
+    const charset = "0123456789";
+    let randomCode = "";
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        randomCode += charset.charAt(randomIndex);
+    }
+
+    return randomCode;
 }
