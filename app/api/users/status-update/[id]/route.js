@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import {v4 as uuidv4} from "uuid";
 import path from "path";
 import fs from "fs";
+import nodemailer from "nodemailer";
 
 export async function PUT(request, content) {
     let result = [];
@@ -26,8 +27,46 @@ export async function PUT(request, content) {
         {
             payload.status=0;
         }
+        // if(userInfo.status==0)
+        // {
+            const newPassword=generateRandomCode(8);
+            payload.password= await bcrypt.hash(newPassword, 10);
+        //}
+        
         const updatedata={...oldData,...payload}
         result = await User.findOneAndUpdate(filter, updatedata);
+        const mailOptions={};
+
+        
+        // if(userInfo.status==0)
+        // {
+        
+        const transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 465,
+                secure: true, // Set to false for explicit TLS
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASSWORD,
+                },
+                tls: {
+                    // Do not fail on invalid certificates
+                    //rejectUnauthorized: false,
+                },
+        });
+
+        const password = newPassword;
+        const mailContent = `Your password: ${password}`;
+
+        // Set up email options
+        mailOptions.to = userInfo.email;
+        mailOptions.subject = "User Creation Email";
+        mailOptions.text = mailContent;
+
+        // Send the email
+        await transporter.sendMail(mailOptions);
+
+        //}
     } catch (error) {
         return NextResponse.json({error:error.message, success: 'error found'});
     }
@@ -35,3 +74,14 @@ export async function PUT(request, content) {
 }
 
 
+function generateRandomCode(length) {
+    const charset = "0123456789";
+    let randomCode = "";
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        randomCode += charset.charAt(randomIndex);
+    }
+
+    return randomCode;
+}
