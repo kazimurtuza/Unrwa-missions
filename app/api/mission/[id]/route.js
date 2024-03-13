@@ -12,12 +12,13 @@ export async function GET(request, content) {
     try {
         const id = content.params.id;
         await mongoose.connect(connectionStr);
-        let mission=await Mission.findOne({_id:id}).populate('agency.agency_id');
+        let mission=await Mission.findOne({_id:id}).populate('agency.agency_id').populate('leader');;
         let missionLocation=await MissionDepartureArrival.find({mission:id})
             .populate('departure_umrah_id')
             .populate('departure_premise_type')
             .populate('arrival_premise_type')
-            .populate('arrival_umrah_id');
+            .populate('arrival_umrah_id')
+
 
         let missionVehicle= await MissionVehicle.find({mission:id})
             .populate('staff.staff_id')

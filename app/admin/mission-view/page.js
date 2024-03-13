@@ -1,9 +1,43 @@
 "use client";
-// import {MissionPDF} from "./components/missionPdf";
+
+import {MissionPDF} from "@/app/admin/mission/components/missionPdf";
+import { PDFDownloadLink} from '@react-pdf/renderer';
+import { useRouter, useSearchParams } from "next/navigation";
 
 import "./style.css";
+import {useEffect, useState} from "react";
+import axiosClient from "@/app/axiosClient";
 
 function MissionVIew() {
+    const router = useRouter();
+    const searchParames = useSearchParams();
+    const mission_id = searchParames.get("id");
+    const [mission,setMission]=useState()
+    const [places,setplaces]=useState([])
+    const [vehicles,setvehicles]=useState([])
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const id= await mission_id;
+                const url= `mission/${id}`
+
+                const { data } = await axiosClient.get(url);
+                if(data.success){
+                    setMission(data.result.mission);
+                    setplaces(data.result.places);
+                    setplaces(data.result.setvehicles);
+                }
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
     return (
         <div className='flex h-screen overflow-hidden'>
             <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
@@ -11,6 +45,14 @@ function MissionVIew() {
                     <div className='container mx-auto px-4 sm:px-8'>
                         <div className='py-8'>
                             <main>
+                                <div>
+                                <PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'} />} fileName="example.pdf">
+                                {({ blob, url, loading, error }) =>
+                                loading ? 'Loading document...' : 'Download PDF'
+                                }
+                                </PDFDownloadLink>
+
+                                </div>
                                 <div className='px-4 sm:px-6 lg:px-8 py-8 w-full mx-auto'>
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
@@ -26,13 +68,13 @@ function MissionVIew() {
                                                     <p>
                                                         <b>Name</b>
                                                     </p>
-                                                    <p>Robin Courso</p>
+                                                    <p>{mission && mission.leader.name}</p>
                                                 </div>
                                                 <div className='form__col'>
                                                     <p>
                                                         <b>Satellite Phone</b>
                                                     </p>
-                                                    <p>343434343434</p>
+                                                    <p>{mission && mission.leader.statelite_phone}</p>
                                                 </div>
                                             </div>
                                             <div className='form__row flex-ctr-spb'>
@@ -40,14 +82,14 @@ function MissionVIew() {
                                                     <p>
                                                         <b>Phone</b>
                                                     </p>
-                                                    <p>343434343434</p>
+                                                    <p>{mission && mission.leader.phone}</p>
                                                 </div>
                                                 <div className='form__col'>
                                                     <p>
                                                         <b>Email Address</b>
                                                     </p>
                                                     <p>
-                                                        sajeeb2@technovicinity.com
+                                                        eb2@technovicinity.com
                                                     </p>
                                                 </div>
                                             </div>
@@ -56,7 +98,7 @@ function MissionVIew() {
                                                     <p>
                                                         <b>Whatsapp</b>
                                                     </p>
-                                                    <p>656565656565</p>
+                                                    <p>{mission && mission.leader.whatsup_number}</p>
                                                 </div>
                                             </div>
                                         </div>

@@ -3,6 +3,7 @@ import TableExample from "@/app/example-table/page";
 import ActionDropdown from "@/app/components/actionDropdown";
 import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import Link from 'next/link';
 function MissionList() {
     const [mission, setMissionList] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -129,7 +130,13 @@ function MissionList() {
 
                     </td>
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                        <ActionDropdown />
+                        <Link
+                            href={{
+                                pathname: '/admin/mission-view',
+                                query: { id: item._id },
+                            }}
+                            className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                        > Details</Link>
                     </td>
                 </tr>
             ))}

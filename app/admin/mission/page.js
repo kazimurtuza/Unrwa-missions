@@ -148,7 +148,7 @@ function Steps() {
 
     async function saveMission() {
         var validationError =await checkStep3()
-        console.log(storeData);
+        // console.log(storeData);
         if (validationError == 1) {
             setCheckValidation(1)
             return false;
@@ -170,6 +170,7 @@ function Steps() {
                 });
             if (response.data.success == true) {
                 alert("Successfully Created")
+
             }
         } catch (error) {
             console.log(error.message)
@@ -319,7 +320,6 @@ function Steps() {
                                                     ? "disabled"
                                                     : ""
                                             }
-
                                             onClick={nextPage}
                                             className={`px-4 py-2 rounded bg-black text-white transition duration-300 ${
                                                 activeTab === formElements.length - 2
