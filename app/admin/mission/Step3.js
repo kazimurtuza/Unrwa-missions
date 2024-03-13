@@ -6,6 +6,7 @@ const Step3 = ({data, vehicleStore,emptyVehicle,checkValidation,vehicleStaff}) =
     const [vehicleList, setvehicleList] = useState(data);
     const handleChange = async (name, value, index_no) => {
         let isAdd = 1;
+
         const updatedvehicle_list = await vehicleList.map((item, index) => {
             if (item.index_no === index_no) {
                 isAdd = 0;

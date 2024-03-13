@@ -1,6 +1,8 @@
 "use client";
 import {useEffect, useState} from "react";
 import Swal from 'sweetalert2'
+import { PDFDownloadLink} from '@react-pdf/renderer';
+// import {MissionPDF} from "./components/missionPdf";
 
 import Header from "@/app/partials/Header";
 import Sidebar from "@/app/partials/Sidebar";
@@ -24,7 +26,7 @@ function Steps() {
     });
     const dataObject = {
         "leader": null,
-        "agency": [{agency_id:'456546456'}],
+        "agency": [],
         "mission_classification": null,
         "movement_date": "",
         "purpose": "",
@@ -81,13 +83,13 @@ function Steps() {
         console.log('-------list------');
         // let stafList= [...value.map((item) =>...item.staff)];
 
-        const stafList = value.map((item) => item.staff.map((staffItem) => {
+        const stafList =await value.map((item) => item.staff.map((staffItem) => {
             return staffItem.staff_id
                 ; // You might do some processing here
         })).flat();
         setVehicleStaff(stafList);
-        let update = {...storeData, vehicle_list: value};
-        setStoreData(old => update);
+        // let update =await {...storeData, vehicle_list: value};
+      await  setStoreData(old => ({...old, vehicle_list: value}));
     };
 
     const agenciesSet = async () => {
@@ -290,6 +292,13 @@ function Steps() {
                                         <div className={'circle ' + (activeTab >= 2 ? 'active' : '')}>3</div>
                                         {/*<div className='circle'>4</div>*/}
                                     </div>
+                                    {/*<div>*/}
+                                        {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'} />} fileName="example.pdf">*/}
+                                            {/*{({ blob, url, loading, error }) =>*/}
+                                                {/*loading ? 'Loading document...' : 'Download PDF'*/}
+                                            {/*}*/}
+                                        {/*</PDFDownloadLink>*/}
+                                    {/*</div>*/}
                                     <div>{formElements[activeTab]}</div>
                                     <div
                                         className='flex flex-wrap gap-x-6 py-2.5 px-8  fixed bottom-0 right-[18px] justify-end w-[calc(100%-275px)] bg-white z-20 shadow-[0_-3px_3px_0_rgba(0,0,0,.05)]'>

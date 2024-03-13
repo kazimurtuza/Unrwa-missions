@@ -119,6 +119,7 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff}) => {
         }
     }
     async function selectedStaffSet() {
+
         let selectedStaffList=await info.staff.map(item=>item.staff_id);
         setSelected(old=>selectedStaffList)
     }
