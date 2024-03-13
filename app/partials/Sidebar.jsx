@@ -398,7 +398,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                 }}
                             </SidebarLinkGroup>
 
-
                             <SidebarLinkGroup
                                 activecondition={pathname.includes("ecommerce")}
                             >
@@ -486,8 +485,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                 }}
                             </SidebarLinkGroup>
 
-
-
                             <SidebarLinkGroup
                                 activecondition={pathname.includes("ecommerce")}
                             >
@@ -574,10 +571,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                     );
                                 }}
                             </SidebarLinkGroup>
-
-
-
-
 
                             <SidebarLinkGroup
                                 activecondition={pathname.includes("ecommerce")}
@@ -862,7 +855,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                     );
                                 }}
                             </SidebarLinkGroup>
-                            
+
                             <SidebarLinkGroup
                                 activecondition={pathname.includes("ecommerce")}
                             >
