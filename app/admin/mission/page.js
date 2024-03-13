@@ -45,6 +45,7 @@ function Steps() {
             "arrival_time": "",
             "arrival_premise_type": null,
             "arrival_umrah_id": null,
+            "mission_cluster":null,
             "arrival_installation_name": "",
             "arrival_latitude": "",
             "arrival_longitude": "",
@@ -67,6 +68,7 @@ function Steps() {
     const [selectedStaffList, setSelectedStaffList] = useState();
     const [agencyList, setAgencyList] = useState([]);
     const [classification, setClassification] = useState([]);
+    const [cluster, setcluster] = useState([]);
     const [checkValidation, setCheckValidation] = useState(0);
 
     const [vehicleStaff, setVehicleStaff] = useState([]);
@@ -121,15 +123,16 @@ function Steps() {
         }
     };
 
-    const missionClaster = async () => {
+    const missionCluster = async () => {
         try {
-            const {data} = await axiosClient.get('misson-c');
+            const {data} = await axiosClient.get('mission-cluster');
+            console.log(data);
             if (data.success === true) {
                 const updatedClassificationList = data.result.map(item => ({
                     value: item._id,
                     label: item.name,
                 }));
-                setClassification(prevStaffList => [...updatedClassificationList]);
+                setcluster(prevStaffList => [...updatedClassificationList]);
             }
         } catch (error) {
             setAgencyList([]);
@@ -157,7 +160,7 @@ function Steps() {
     useEffect(() => {
         agenciesSet();
         staffListSet();
-        missionClaster();
+        missionCluster();
         classificationListSet();
     }, []);
 
@@ -198,7 +201,7 @@ function Steps() {
     const [activeTab, setActiveTab] = useState(0);
 
     const formElements = [
-        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} classification={classification}
+        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster} classification={classification}
                staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
         <Step2 data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
                checkValidation={checkValidation} locationSet={locationStore}/>,
@@ -224,7 +227,10 @@ function Steps() {
             // storeData.mission_classification == null ||
             storeData.movement_date == "" ||
             storeData.purpose == "" ||
-            storeData.remarks == "") {
+            storeData.remarks == "" ||
+            storeData.mission_cluster == null
+
+        ) {
             setCheckValidation(old => 1)
             return 1;
         } else {
