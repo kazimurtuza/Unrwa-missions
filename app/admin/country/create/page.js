@@ -278,7 +278,7 @@ function CountryCreate() {
                         />
                       </div>
 
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
@@ -296,26 +296,40 @@ function CountryCreate() {
                           }
 
                         />
-                      </div>
+                      </div> */}
 
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Region
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your region"
-                          value={region}
-                          onChange={(e) =>
-                            handleRegionChange(e.target.value)
-                          }
+                   
 
-                        />
+                  <div className="mb-4">
+                      <label
+                        className="block text-grey-darker text-sm font-bold mb-2"
+                        htmlFor="questionName"
+                      >
+                        Region
+                      </label>
+                      {/* <input
+                        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                        id="categoryName"
+                        type="text"
+                        placeholder="Enter your country name"
+                        value={countryName}
+                        onChange={(e) => handleCountryNameChange(e.target.value)}
+                      /> */}
+
+                      {/* Dropdown for countries */}
+                      <select
+                        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker mt-2"
+                        id="countryDropdown"
+                        onChange={(e) => handleRegionChange(e.target.value)}
+                      >
+                        <option value="Asia">Asia</option>
+                        <option value="Europe">Europe</option>
+                        <option value="Oceania">Oceania</option>
+                        <option value="Africa">Africa</option>
+                        <option value="Americas">Americas</option>
+                        
+                      </select>
+                    
                       </div>
 
 

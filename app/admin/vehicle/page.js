@@ -21,7 +21,7 @@ function Vehicle() {
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Vehicle";
-    const headName = ["Si","Agency", "Name","Vehicle plate number","brand name","brand type","armouted","fuel type", "Registration Number", "Vehicle Type", "Description", "Action"];
+    const headName = ["Si","Agency", "Name","Vehicle plate number","brand name","brand type","armouted","fuel type","carry out", "Registration Number", "Vehicle Type", "Description", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -121,6 +121,14 @@ function Vehicle() {
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.fuel_type}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.carry_out}
                         </p>
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}

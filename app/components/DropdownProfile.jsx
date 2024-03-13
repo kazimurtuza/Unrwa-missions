@@ -95,7 +95,7 @@ function DropdownProfile({
                   handleSignOut();
                 }}
               >
-                Sign Out
+                Log Out
               </a>
             </li>
           </ul>

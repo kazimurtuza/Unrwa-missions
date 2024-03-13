@@ -1,6 +1,5 @@
 import {NextResponse} from "next/server";
 import mongoose from "mongoose";
-import {Product} from "@/lib/model/product";
 import {connectionStr} from "@/lib/db"
 import {User} from "@/lib/model/users";
 import bcrypt from "bcrypt";

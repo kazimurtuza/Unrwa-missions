@@ -21,6 +21,10 @@ export async function POST(request) {
             {
                 return NextResponse.json({'message': 'Account Already Deleted',success:false}, {status: 401});
             }
+            if(user.status==0)
+            {
+                return NextResponse.json({'message': 'Account Already Blocked',success:false}, {status: 401});
+            }
             let id = user.id;
             let is_user = await bcrypt.compare(password, user.password);
             const name=user.name;
