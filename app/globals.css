@@ -36,29 +36,10 @@ body {
   background-color: var(--main-color);
 }
 
-/* Select 2 Customization*/
-.select2-container .selection{
-  display: block;
-}
-
-.select2-container{
-  width: 100%!important;
-}
-
-.select2-container .select2-selection--single{
-  height: 40px!important;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__rendered{
-  line-height: 37px!important;
-  padding-left: 14px!important;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-  height: 35px!important;
-  right: 8px!important;
-}
-
-.select2-container--default .select2-results__option--highlighted[aria-selected]{
-  background-color: var(--main-color)!important;
+ul .menu-legend {
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 20px 0 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, .2);
+  padding-bottom: 4px;
 }
