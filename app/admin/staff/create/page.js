@@ -7,6 +7,7 @@ import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 
 function StaffCreate() {
+  const [countries, setCountries] = useState([]);
   const [staffName, setStaffName] = useState("");
   const [agency,setAgencyList]=useState("");
   const [classification,setClassificationList]=useState("");
@@ -17,6 +18,7 @@ function StaffCreate() {
   const [callSignIn, setCallSignin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [staffRole, setStaffRole] = useState("");
 
 
   const [familyName, setFamilyName] = useState("");
@@ -57,8 +59,35 @@ function StaffCreate() {
     fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
+useEffect(() => {
+  // Function to fetch countries from REST Countries API
+  const fetchCountries = async () => {
+    try {
+      const response = await fetch('https://restcountries.com/v3.1/all');
+      const data = await response.json();
+      setCountries(data);
+      // Assuming the API response is an array of country objects
+      // Log country names to the console
+      data.forEach(country => {
+        console.log(country.name.common);
+      });
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+    }
+  };
+
+  // Call the function to fetch countries when the component mounts
+  fetchCountries();
+}, []); //
+
 
 const inputFile = useRef(null);
+
+const inputFile2 = useRef(null);
+
+const inputFile3 = useRef(null);
+
+const inputFile4 = useRef(null);
 
 
   const handleStaffNameChange = (value) => {
@@ -131,17 +160,14 @@ const inputFile = useRef(null);
   const handleSignalNumberChange = (value) => {
     setSignalNumber(value);
   };
-  const handlePassportOrginalAttachment = (value) => {
-    setSignalNumber(value);
+
+  const handleStaffRole = (value) => {
+    setStaffRole(value);
   };
-  const handlePassportDuplicateAttachment = (value) => {
-    setSignalNumber(value);
-  };
-  const handleNationalIdAttachment = (value) => {
-    setSignalNumber(value);
-  };
+
+  
   const handleNationality = (value) => {
-    setSignalNumber(value);
+    setNationlity(value);
   };
 
   const handleStaffPhotoChange = (e) => {
@@ -152,6 +178,50 @@ const inputFile = useRef(null);
       reader.onloadend = () => {
         // Once the FileReader has read the file, set the base64 data
         setStaffPhoto(reader.result);
+      };
+
+      // Read the file as a data URL (base64)
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePassportOrginalAttachment = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        // Once the FileReader has read the file, set the base64 data
+        setPassportOrginalAttachment(reader.result);
+      };
+
+      // Read the file as a data URL (base64)
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePassportDuplicateAttachment = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        // Once the FileReader has read the file, set the base64 data
+        setPassportDuplicateAttachment(reader.result);
+      };
+
+      // Read the file as a data URL (base64)
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleNationalIdAttachment = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        // Once the FileReader has read the file, set the base64 data
+        setNationalityAttachment(reader.result);
       };
 
       // Read the file as a data URL (base64)
@@ -222,7 +292,11 @@ useEffect(() => {
       phone_number_two:phoneNumberTwo,
       signal_number:signalNumber,
       nationlity:nationlity,
-      staff_photo:staffPhoto
+      staff_photo:staffPhoto,
+      staff_role:staffRole,
+      passport_original_attachment:passportOrginalAttachment,
+      passport_duplicate_attachment:passportDuplicateAttachment,
+      national_id_attachment:nationaltyAttachment
 
     };
 
@@ -258,6 +332,8 @@ useEffect(() => {
             setOtherName("");
             setPassportNumberOrginal("");
             setPassportDuplicate("");
+            setNationlity("");
+            setStaffRole("");
           
           }
           else
@@ -277,7 +353,7 @@ useEffect(() => {
           console.error('Response does not contain data:', response);
         }
       } catch (error) {
-        console.error('Error during API call:', error);
+        console.error('Error during API call:', error.message);
       }
   };
 
@@ -356,21 +432,43 @@ useEffect(() => {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Mission Classification
+                          Classification
                         </label>
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={classificationId}
                           onChange={(e) => handleClassificationChange(e.target.value)}
                         >
-                          <option value="" disabled hidden>
-                            Select Classification
+                          <option value="National Staff">
+                            National Staff
                           </option>
-                          {Array.isArray(classification) && classification.map((val) => (
-                            <option key={val.id} value={val._id}>
-                              {val.name}
-                            </option>
-                          ))}
+                          <option value="International Staff">
+                            International Staff
+                          </option>
+                        </select>
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Staff Role
+                        </label>
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                          value={staffRole}
+                          onChange={(e) => handleStaffRole(e.target.value)}
+                        >
+                          <option value="Driver">
+                            Driver
+                          </option>
+                          <option value="Operational Staff">
+                          Operational Staff
+                          </option>
+                          <option value="Complimentary Staff">
+                          Complimentary Staff
+                          </option>
                         </select>
                       </div>
                       <div className="mb-4">
@@ -595,10 +693,14 @@ useEffect(() => {
                           onChange={(e) => handleBloodTypeChange(e.target.value)}
                         >
                           <option value="" disabled>Select your blood type</option>
-                          <option value="A">A</option>
-                          <option value="B">B</option>
-                          <option value="AB">AB</option>
-                          <option value="O">O</option>
+                          <option value="A+">A+</option>
+                          <option value="A-">A-</option>
+                          <option value="B+">B+</option>
+                          <option value="B-">B-</option>
+                          <option value="AB+">AB+</option>
+                          <option value="AB-">AB-</option>
+                          <option value="O+">O+</option>
+                          <option value="O-">O-</option>
                         </select>
                       </div>
                       <div className="mb-4">
@@ -678,7 +780,7 @@ useEffect(() => {
                         />
                       </div>
 
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
@@ -696,7 +798,7 @@ useEffect(() => {
                           }
 
                         />
-                      </div>
+                      </div> */}
 
                       <div className="mb-4">
                         <label
@@ -763,7 +865,7 @@ useEffect(() => {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Call Sign in
+                          Call Sign
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -779,11 +881,42 @@ useEffect(() => {
                       </div>
 
                       <div className="mb-4">
+                      <label
+                        className="block text-grey-darker text-sm font-bold mb-2"
+                        htmlFor="questionName"
+                      >
+                        Nationality
+                      </label>
+                      {/* <input
+                        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                        id="categoryName"
+                        type="text"
+                        placeholder="Enter your country name"
+                        value={countryName}
+                        onChange={(e) => handleCountryNameChange(e.target.value)}
+                      /> */}
+
+                      {/* Dropdown for countries */}
+                      <select
+                        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker mt-2"
+                        id="countryDropdown"
+                        onChange={(e) => handleNationality(e.target.value)}
+                      >
+                        <option value="">Select a country</option>
+                        {countries && countries.map((country) => (
+                          <option key={country.id} value={country.name.common}>
+                            {country.name.common}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                      <div className="mb-4">
                             <label
                                 className="block text-grey-darker text-sm font-bold mb-2"
                                 htmlFor="questionName"
                               >
-                                Staff Photo Change
+                                Staff Photo
                               </label>
                               <input
                                 type="file"
@@ -793,7 +926,53 @@ useEffect(() => {
                               />
                       </div>
 
-          
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                                Passport Orginal Attachment
+                              </label>
+                              <input
+                                type="file"
+                                className="upload-field"
+                                ref={inputFile2}
+                                onChange={handlePassportOrginalAttachment}
+                              />
+                      </div>
+
+
+
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                                Passport Duplicate Attachment
+                              </label>
+                              <input
+                                type="file"
+                                className="upload-field"
+                                ref={inputFile2}
+                                onChange={handlePassportDuplicateAttachment}
+                              />
+                      </div>
+
+
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                                National Id Attachment
+                              </label>
+                              <input
+                                type="file"
+                                className="upload-field"
+                                ref={inputFile4}
+                                onChange={handleNationalIdAttachment}
+                              />
+                      </div>
 
             
 

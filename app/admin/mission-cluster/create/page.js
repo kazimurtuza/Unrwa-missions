@@ -6,10 +6,8 @@ import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 
-function MissionClassificationCreate() {
-  const [missionClassificationName, setMissionClassificationName] = useState("");
-  const [requests_classifications, setRequests_classifications] = useState("");
-  const [abbreviation, setAbbreviation] = useState("");
+function MissionClusterCreate() {
+  const [missionClusterName, setMissionClusterName] = useState("");
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -17,14 +15,8 @@ function MissionClassificationCreate() {
 
 
 
-  const handleMissionClassificationChange = (value) => {
-    setMissionClassificationName(value);
-  };
-  const handlerequestClassificationChange = (value) => {
-    setRequests_classifications(value);
-  };
-  const handleAbbrivationChange = (value) => {
-    setAbbreviation(value);
+  const handleMissionClusterChange = (value) => {
+    setMissionClusterName(value);
   };
 
   const handleSubmit = async (e) => {
@@ -34,23 +26,19 @@ function MissionClassificationCreate() {
 
     // Prepare data for API request
     const postData = {
-      name: missionClassificationName,
-      requests_classifications:requests_classifications,
-      abbreviation:abbreviation
+      name: missionClusterName,
     };
 
     try {
 
-        const response = await axiosClient.post('misson-classification', postData);
+        const response = await axiosClient.post('mission-cluster', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("Mission Classification Create Successfully");
+            setSuccessMessage("Mission Cluster Create Successfully");
             setMissionClassificationName("");
-            setRequests_classifications("");
-            setAbbreviation("");
             setErrorMessage("");
           }
           else
@@ -97,7 +85,7 @@ function MissionClassificationCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Mission Classification Create
+                        Mission Cluster Create
                       </p>
                       <br></br>
                       {successMessage && (
@@ -127,67 +115,21 @@ function MissionClassificationCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Mission Classification Name
+                          Mission Cluster Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
                           placeholder="Enter your mission classification name"
-                          value={missionClassificationName}
+                          value={missionClusterName}
                           onChange={(e) =>
-                            handleMissionClassificationChange(e.target.value)
+                            handleMissionClusterChange(e.target.value)
                           }
 
                         />
                       </div>
-                     
 
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Request Classification
-                        </label>
-                        <select
-                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
-                          value={requests_classifications}
-                          onChange={(e) => handlerequestClassificationChange(e.target.value)}
-                        >
-                          <option value="Coordination Request">
-                            Coordination Request
-                          </option>
-
-                          <option value="Notification Request">
-                              Notification Request
-                          </option>
-                         
-                        </select>
-                      </div>
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Abbreviation
-                        </label>
-                        <select
-                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
-                          value={abbreviation}
-                          onChange={(e) => handleAbbrivationChange(e.target.value)}
-                        >
-                          <option value="CRQ">
-                            CRQ
-                          </option>
-
-                          <option value="NRQ">
-                              NRQ
-                          </option>
-                         
-                        </select>
-                      </div>
-                  
 
                       <div className="flex items-center justify-between mt-8">
                         <button
@@ -221,5 +163,5 @@ function extractErrors(errors) {
     return result;
 }
 
-export default MissionClassificationCreate;
+export default MissionClusterCreate;
 

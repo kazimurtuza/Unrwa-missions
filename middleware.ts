@@ -65,5 +65,6 @@ export const config = {
         '/api/driver/:path*',
         '/api/vehicle/:path*',
         '/api/agency/:path*',
+        '/api/mission-cluster/:path*',
     ]
 }

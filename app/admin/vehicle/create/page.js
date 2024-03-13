@@ -16,6 +16,7 @@ function VehicleCreate() {
   const [brand_type, setBrandType] = useState("");
   const [armouted, setArmoured] = useState("");
   const [fuel_type, setFuelType] = useState("");
+  const [carryOut, setCarryOut] = useState("");
   const [agency,setAgencyList]=useState("");
   const [agencyID,setAgencyID]=useState("");
   const [color, setColor] = useState("");
@@ -81,6 +82,9 @@ function VehicleCreate() {
   const handleColorChange = (value) => {
     setColor(value);
   };
+  const handleCarryOut = (value) => {
+    setCarryOut(value);
+  };
 
 
 
@@ -102,7 +106,8 @@ function VehicleCreate() {
       armouted:armouted,
       fuel_type:fuel_type,
       color:color,
-      agency:agencyID
+      agency:agencyID,
+      carry_out:carryOut
     };
 
     try {
@@ -124,6 +129,7 @@ function VehicleCreate() {
             setArmoured("");
             setFuelType("");
             setColor("");
+            setCarryOut("");
           }
           else
           {
@@ -287,7 +293,7 @@ function VehicleCreate() {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="slug"
                           type="text"
-                          placeholder="Enter your vehicle type"
+                          placeholder="Enter your vehicle plate number"
                           value={vehicle_plate_number}
                           onChange={(e) =>
                             handleVehiclePlateChange(e.target.value)
@@ -301,13 +307,49 @@ function VehicleCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
+                          What is being carried out?
+                        </label>
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                          value={carryOut}
+                          onChange={(e) => handleCarryOut(e.target.value)}
+                        >
+                          <option value="Passengers">
+                            Passengers
+                          </option>
+
+                          <option value="Fuel">
+                            Fuel
+                          </option>
+
+                          <option value="Medicine">
+                            Medicine
+                          </option>
+
+                          <option value="Food">
+                            Food
+                          </option>
+
+                          <option value="Mixed Emergency Response Items">
+                            Mixed Emergency Response Items
+                          </option>
+                         
+                        </select>
+                      </div>
+                  
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
                           Capacity
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="slug"
                           type="text"
-                          placeholder="Enter your vehicle type"
+                          placeholder="Enter your vehicle capacity"
                           value={capacity}
                           onChange={(e) =>
                             handleCapacityChange(e.target.value)
@@ -327,7 +369,7 @@ function VehicleCreate() {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="slug"
                           type="text"
-                          placeholder="Enter your vehicle type"
+                          placeholder="Enter your brand name"
                           value={brand_name}
                           onChange={(e) =>
                             handleBrandNameChange(e.target.value)
@@ -347,7 +389,7 @@ function VehicleCreate() {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="slug"
                           type="text"
-                          placeholder="Enter your vehicle type"
+                          placeholder="Enter your brand type"
                           value={brand_type}
                           onChange={(e) =>
                             handleBrandTypeChange(e.target.value)
@@ -356,46 +398,54 @@ function VehicleCreate() {
                         />
                       </div>
 
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                         Armoured
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="slug"
-                          type="text"
-                          placeholder="Enter your vehicle type"
-                          value={armouted}
-                          onChange={(e) =>
-                            handleArmouted(e.target.value)
-                          }
-
-                        />
-                      </div>
+                     
 
                       <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                         Fuel Type
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="slug"
-                          type="text"
-                          placeholder="Enter your vehicle type"
-                          value={fuel_type}
-                          onChange={(e) =>
-                            handleFuelTypeChange(e.target.value)
-                          }
+                                        <label
+                                          className="block text-grey-darker text-sm font-bold mb-2"
+                                          htmlFor="questionName"
+                                        >
+                                          Armoured
+                                        </label>
+                                        <select
+                                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                                          value={armouted}
+                                          onChange={(e) => handleArmouted(e.target.value)}
+                                        >
+                                          <option value="Yes">
+                                            Yes
+                                          </option>
+                                          <option value="No">
+                                            No
+                                          </option>
+                                        
+                                        </select>
+                        </div>
 
-                        />
-                      </div>
+                        <div className="mb-4">
+                                        <label
+                                          className="block text-grey-darker text-sm font-bold mb-2"
+                                          htmlFor="questionName"
+                                        >
+                                          Fuel Type
+                                        </label>
+                                        <select
+                                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                                          value={fuel_type}
+                                          onChange={(e) => handleFuelTypeChange(e.target.value)}
+                                        >
+                                          <option value="Petual">
+                                            Petual
+                                          </option>
+                                          <option value="Piesel">
+                                            Piesel
+                                          </option>
+                                        
+                                        </select>
+                        </div>
 
+
+                     
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"

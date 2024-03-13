@@ -7,15 +7,15 @@ export async function GET(){
 
     let result=[];
 
-    try{
+    try {
         await mongoose.connect(connectionStr);
-        result = await User.find();
+        const result = await User.find({ user_type: { $in: ['driver', 'staff'] } }).sort({created_at:-1});
+        return NextResponse.json(result);
+    } catch (error) {
+        // Handle the error appropriately
+        console.error("Error:", error);
+        return NextResponse.json({ error: "An error occurred" });
     }
-    catch(error)
-    {
-        result=error;
-    }
-    return NextResponse.json(result);
 
 }
 export async function POST(request) {
