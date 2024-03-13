@@ -2,11 +2,11 @@ import {NextResponse} from "next/server";
 import mongoose from "mongoose";
 import {connectionStr} from "@/lib/db"
 import {User} from "@/lib/model/users";
+import { MissionCluster } from "@/lib/model/missionCluster";
 import bcrypt from "bcrypt";
 import {v4 as uuidv4} from "uuid";
 import path from "path";
 import fs from "fs";
-import { Agency } from "@/lib/model/agency";
 
 export async function PUT(request, content) {
     let result = [];
@@ -16,11 +16,11 @@ export async function PUT(request, content) {
         const payload = await request.json();
         // return NextResponse.json(payload.password);
         await mongoose.connect(connectionStr);
-        const missionCluster=await Agency.findById(filter);
+        const missionCluster=await MissionCluster.findById(filter);
         const oldData=missionCluster._doc;
 
         const updatedata={...oldData,...payload}
-        result = await MissionClassification.findOneAndUpdate(filter, updatedata);
+        result = await MissionCluster.findOneAndUpdate(filter, updatedata);
     } catch (error) {
         return NextResponse.json({error:error.message, success: 'error found'});
     }
@@ -33,7 +33,7 @@ export async function GET(request, content) {
         const id = content.params.id;
         const record = {_id: id};
         await mongoose.connect(connectionStr);
-        const result = await Agency.findById(record);
+        const result = await MissionCluster.findById(record);
         return NextResponse.json({result, success: true});
     } catch (error) {
         result = error;
@@ -47,7 +47,7 @@ export async function DELETE(request, content) {
         const filter = { _id: id };
 
         await mongoose.connect(connectionStr);
-        const mission = await Agency.findById(filter);
+        const mission = await MissionCluster.findById(filter);
 
         // Update only the is_delete field to 1
         mission.is_delete = 1;

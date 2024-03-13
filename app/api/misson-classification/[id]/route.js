@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import {v4 as uuidv4} from "uuid";
 import path from "path";
 import fs from "fs";
-import { Agency } from "@/lib/model/agency";
+import { MissionClassification } from "@/lib/model/missionClassification";
 
 export async function PUT(request, content) {
     let result = [];
@@ -16,7 +16,7 @@ export async function PUT(request, content) {
         const payload = await request.json();
         // return NextResponse.json(payload.password);
         await mongoose.connect(connectionStr);
-        const missionCluster=await Agency.findById(filter);
+        const missionCluster=await MissionClassification.findById(filter);
         const oldData=missionCluster._doc;
 
         const updatedata={...oldData,...payload}
@@ -33,7 +33,7 @@ export async function GET(request, content) {
         const id = content.params.id;
         const record = {_id: id};
         await mongoose.connect(connectionStr);
-        const result = await Agency.findById(record);
+        const result = await MissionClassification.findById(record);
         return NextResponse.json({result, success: true});
     } catch (error) {
         result = error;
@@ -47,7 +47,7 @@ export async function DELETE(request, content) {
         const filter = { _id: id };
 
         await mongoose.connect(connectionStr);
-        const mission = await Agency.findById(filter);
+        const mission = await MissionClassification.findById(filter);
 
         // Update only the is_delete field to 1
         mission.is_delete = 1;
