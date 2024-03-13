@@ -3,16 +3,16 @@ import TableExample from "@/app/example-table/page";
 import ActionDropdown from "@/app/components/actionDropdown";
 import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
-function User() {
-    const [category, setCategoryList] = useState([]);
+function MissionList() {
+    const [mission, setMissionList] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axiosClient.get('users');
+                const { data } = await axiosClient.get('mission');
                 console.log(data);
-                setCategoryList(data);
+                setMissionList(data.result);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -21,8 +21,20 @@ function User() {
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
+    function convertDateFormat(dateString, newFormat) {
+        // Parse the input date string
+        let parsedDate = new Date(dateString);
+
+        // Format the date according to the new format
+        let formattedDate = parsedDate.toLocaleDateString(undefined, {dateStyle: 'medium'});
+
+        return formattedDate;
+    }
+
+    let newDateFormat = "DD/MM/YYYY"; // Example new format
+
     let tableName = "User";
-    const headName = ["Si", "Name", "Email", "Status", "Action"];
+    const headName = ["Si", "Name", "movement_date","purpose","remarks","Status", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -38,7 +50,7 @@ function User() {
 
     const body = (
         <>
-            {category.map((item, index) => (
+            {mission.map((item, index) => (
 
                 <tr key={index}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -60,7 +72,7 @@ function User() {
                             {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.name}
+                              --
                                 </p>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
@@ -70,7 +82,23 @@ function User() {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                            {item.email}
+                            {convertDateFormat(item.movement_date, newDateFormat)}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.purpose}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.remarks}
                         </p>
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}
@@ -84,8 +112,6 @@ function User() {
                     {/*        Due in 3 days*/}
                     {/*    </p>*/}
                     {/*</td>*/}
-
-
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         {item.status?(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                         <span
@@ -116,4 +142,4 @@ function User() {
     );
 }
 
-export default User;
+export default MissionList;

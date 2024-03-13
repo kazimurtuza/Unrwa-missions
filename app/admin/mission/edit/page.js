@@ -6,11 +6,11 @@ import { PDFDownloadLink} from '@react-pdf/renderer';
 
 import Header from "@/app/partials/Header";
 import Sidebar from "@/app/partials/Sidebar";
-import Step1 from "./Step1";
-import Step2 from "./Step2";
-import Step3 from "./Step3";
-import Step4 from "./Step4";
-import "./steps.css";
+import Step1 from "@/app/admin/mission/Step1";
+import Step2 from "@/app/admin/mission/Step2";
+import Step3 from "@/app/admin/mission/Step3";
+import Step4 from "@/app/admin/mission/Step4";
+import "../steps.css";
 import React from "react";
 import axiosClient from "@/app/axiosClient";
 
