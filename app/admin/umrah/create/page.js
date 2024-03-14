@@ -193,7 +193,7 @@ useEffect(() => {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Unrwa Create
+                        Facilities Create
                       </p>
                       <br></br>
                       {successMessage && (
@@ -278,6 +278,8 @@ useEffect(() => {
                         />
                       </div>
 
+                     
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -285,18 +287,28 @@ useEffect(() => {
                         >
                           Location Area
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your location area"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={locationArea}
-                          onChange={(e) =>
-                            handleLocaltionAreaChange(e.target.value)
-                          }
-
-                        />
+                          onChange={(e) => handleLocaltionAreaChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Area
+                          </option>
+                          <option value="Gaza">
+                            Gaza
+                          </option>
+                          <option value="Khan Younis">
+                            Khan Younis
+                          </option>
+                          <option value="Rafah">
+                            Rafah
+                          </option>
+                      
+                        </select>
                       </div>
+
+                     
 
                       <div className="mb-4">
                         <label
@@ -305,17 +317,28 @@ useEffect(() => {
                         >
                           Sub Area
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your sub area"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={subArea}
-                          onChange={(e) =>
-                            handleSubAreaChange(e.target.value)
-                          }
-
-                        />
+                          onChange={(e) => handleSubAreaChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Sub Area
+                          </option>
+                          <option value="Abasan">
+                            Abasan
+                          </option>
+                          <option value="Abu Tue’ma">
+                            Abu Tue’ma
+                          </option>
+                          <option value="Al Naser Area">
+                            Al Naser Area
+                          </option>
+                          <option value="Al Salam Area">
+                            Al Salam Area
+                          </option>
+                      
+                        </select>
                       </div>
 
                       <div className="mb-4">
@@ -385,19 +408,31 @@ useEffect(() => {
                         >
                           Department
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your department"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={department}
-                          onChange={(e) =>
-                            handleDepartmentChange(e.target.value)
-                          }
-
-                        />
+                          onChange={(e) => handleDepartmentChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select One
+                          </option>
+                          <option value=" Education">
+                            Education
+                          </option>
+                          <option value="Emergency">
+                            Emergency
+                          </option>
+                          <option value="Health">
+                            Health
+                          </option>
+                          <option value="ICIP">
+                            ICIP
+                          </option>
+                      
+                        </select>
                       </div>
 
+                      
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -405,17 +440,28 @@ useEffect(() => {
                         >
                           Ownership
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your ownership"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={ownership}
-                          onChange={(e) =>
-                            handleOwnershipChange(e.target.value)
-                          }
-
-                        />
+                          onChange={(e) => handleOwnershipChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select One
+                          </option>
+                          <option value=" Education">
+                              Deir balah
+                          </option>
+                          <option value="Rented">
+                            Rented
+                          </option>
+                          <option value="Rented-Gov">
+                            Rented-Gov
+                          </option>
+                          <option value="UNRWA Owned">
+                            UNRWA Owned
+                          </option>
+                      
+                        </select>
                       </div>
 
                       <div className="mb-4">
@@ -423,39 +469,51 @@ useEffect(() => {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                            Cls List
+                          CLS List
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your cls list"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={clsList}
-                          onChange={(e) =>
-                            handleClsListChange(e.target.value)
-                          }
-
-                        />
+                          onChange={(e) => handleClsListChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select One
+                          </option>
+                          <option value="Yes">
+                              Yes
+                          </option>
+                          <option value="No">
+                            No
+                          </option>
+                      
+                        </select>
                       </div>
+
 
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Des
+                          DES List
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your des"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={des}
-                          onChange={(e) =>
-                            handleDesChange(e.target.value)
-                          }
+                          onChange={(e) => handleDesChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select One
+                          </option>
+                          <option value="DES">
+                            DES
 
-                        />
+                          </option>
+                          <option value="Not DES">
+                            Not DES
+                          </option>
+                      
+                        </select>
                       </div>
 
 
