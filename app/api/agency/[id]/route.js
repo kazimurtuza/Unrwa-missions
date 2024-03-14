@@ -7,6 +7,7 @@ import {v4 as uuidv4} from "uuid";
 import path from "path";
 import fs from "fs";
 import { Agency } from "@/lib/model/agency";
+import { uploadBase64Img } from "@/app/helper";
 
 export async function PUT(request, content) {
     let result = [];
@@ -18,9 +19,17 @@ export async function PUT(request, content) {
         await mongoose.connect(connectionStr);
         const missionCluster=await Agency.findById(filter);
         const oldData=missionCluster._doc;
+        if(payload.agency_logo)
+        {
+            try {
+                payload.agency_logo = await uploadBase64Img(payload.agency_logo);
+            } catch (e) {
+                return NextResponse.json({e, success: 'img upload error found'});
+            }
+        }
 
         const updatedata={...oldData,...payload}
-        result = await MissionClassification.findOneAndUpdate(filter, updatedata);
+        result = await Agency.findOneAndUpdate(filter, updatedata);
     } catch (error) {
         return NextResponse.json({error:error.message, success: 'error found'});
     }

@@ -2,33 +2,43 @@ import {useEffect, useState} from "react";
 import Select from 'react-select'
 import axiosClient from "@/app/axiosClient";
 
-const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
+const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
     const [collapse, setCollapse] = useState(true);
     const [premiseTypeList, setPremiseTypeList] = useState([]);
-    const [departureUmrahInfo, setDepartureUmrahInfo] = useState();
-    const [arrivalUmrahInfo, setArrivalUmrahInfo] = useState();
+    const [unrahInfo, setumrahInfo] = useState([]);
     const [arrivalInstallationList, setarrivalInstallationList] = useState([]);
     const [departureInstallationList, setDepartureInstallationList] = useState([]);
+
+    const [usearrival_premise_type, setusearrival_premise_type] = useState([]);
+    const [userdeparture_premise_type, setdeparture_premise_type] = useState([]);
 
 
     const handleClick = () => {
         setCollapse(!collapse)
     }
-    const selectData =async (selectedOption, {name}) => {
+    const selectData = async (selectedOption, {name}) => {
         if ("arrival_umrah_id" == name || "departure_umrah_id" == name) {
-            var val= await selectedOption;
-        }else{
-            var val=await  selectedOption.value;
+            var val = await selectedOption;
+        } else {
+            var val = await selectedOption.value;
         }
-        setInfo(name, val, item); // Pass the input value to the parent component
+        if (name == 'arrival_premise_type') {
+            setArrivalInstallation(val)
+        }
+        if (name == 'departure_premise_type') {
+            setDepartureInstallation(val)
+        }
+        await setInfo(name, val, item); // Pass the input value to the parent component
+
+
+
+
     };
     const setdata = (e) => {
 
         const {name, value} = e.target;
-        // if("departure_latitude"==name){
-        //     setdiplet(old=>value)
-        // }
         setInfo(name, value, item); // Pass the input value to the parent component
+
 
     };
 
@@ -64,19 +74,17 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                     value: item._id,
                     label: item.installation_name,
                     info: {
-                        longitude:item.longitude,
-                        latitude:item.latitude,
-                        building_code:item.building_code,
+                        longitude: item.longitude,
+                        latitude: item.latitude,
+                        building_code: item.building_code,
                     },
                 }));
 
-                setarrivalInstallationList(updatedInstallatList);
-                setDepartureInstallationList(updatedInstallatList);
+                setumrahInfo(updatedInstallatList)
 
             }
         } catch (error) {
-            setarrivalInstallationList()
-            setDepartureInstallationList()
+            setumrahInfo([])
         }
     };
 
@@ -88,10 +96,52 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
         }
     };
 
+    async function setArrivalInstallation(id) {
+        if (id) {
+            let url = `premise-type-wise-installation/${id}`
+            const {data} = await axiosClient.get(url);
+            console.log(data);
+            if (data.success === true) {
+                const updatedInstallatList = data.result.map(item => ({
+                    value: item._id,
+                    label: item.installation_name,
+                    info: {
+                        longitude: item.longitude,
+                        latitude: item.latitude,
+                        building_code: item.building_code,
+                    },
+                }));
+
+                setarrivalInstallationList(old => updatedInstallatList);
+            }
+        }
+    }
+
+    async function setDepartureInstallation(id) {
+        if (id) {
+            let url = `premise-type-wise-installation/${id}`
+            const {data} = await axiosClient.get(url);
+            if (data.success === true) {
+                const updatedInstallatList = data.result.map(item => ({
+                    value: item._id,
+                    label: item.installation_name,
+                    info: {
+                        longitude: item.longitude,
+                        latitude: item.latitude,
+                        building_code: item.building_code,
+                    },
+                }));
+                setDepartureInstallationList(old => updatedInstallatList);
+            }
+        }
+    }
+
 
     useEffect(() => {
         premisetypeList();
-        setInstallation();
+         setInstallation();
+        // setArrivalInstallation();
+        // setDepartureInstallation();
     }, []);
 
     return (
@@ -116,7 +166,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                     className="form__input"
                                     id="departure-time"
                                 />
-                                {(checkValidation && info.departure_time == "") ? errorTxt: ""}
+                                {(checkValidation && info.departure_time == "") ? errorTxt : ""}
                             </div>
                             <div className="form__field collapsable-item__field">
                                 <label htmlFor="facility" className="form__label">
@@ -137,7 +187,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                             </div>
                             {info.departure_umrah_type == 1 ? <div className="form__field collapsable-item__field">
                                 <label htmlFor="premise-type" className="form__label">
-                                    Premise Type
+                                    Premise Type-
                                 </label>
                                 <div className="select-wrap">
                                     <Select
@@ -149,7 +199,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                         isSearchable
                                     >
                                     </Select>
-                                    {(checkValidation && info.departure_premise_type == null) ? errorTxt: ""}
+                                    {(checkValidation && info.departure_premise_type == null) ? errorTxt : ""}
                                 </div>
                             </div> : ''}
                             <div className="form__field collapsable-item__field">
@@ -159,23 +209,23 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                 <div className="select-wrap">
                                     {info.departure_umrah_type == 1 ?
                                         <>
-                                        <Select
-                                            name="departure_umrah_id"
-                                            options={arrivalInstallationList}
-                                            value={arrivalInstallationList.find(option => option.value === info.departure_umrah_id)}
+                                            <Select
+                                                name="departure_umrah_id"
+                                                options={departureInstallationList}
+                                                value={unrahInfo.find(option => option.value === info.departure_umrah_id)}
 
-                                            id="focus-point"
-                                            onChange={selectData}
-                                            isSearchable
-                                        >
-                                        </Select>
-                                        {(checkValidation && info.departure_umrah_id == null) ? errorTxt: ""}
+                                                id="focus-point"
+                                                onChange={selectData}
+                                                isSearchable
+                                            >
+                                            </Select>
+                                            {(checkValidation && info.departure_umrah_id == null) ? errorTxt : ""}
                                         </>
                                         : <div className="select-wrap">
                                             <input type="text" value={info.departure_installation_name}
                                                    name="departure_installation_name" onInput={setdata}
                                                    className="form__input" id="latitude"/>
-                                            {(checkValidation && info.departure_installation_name == "") ? errorTxt: ""}
+                                            {(checkValidation && info.departure_installation_name == "") ? errorTxt : ""}
                                         </div>}
                                 </div>
                             </div>
@@ -188,7 +238,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                     <input type="text" name="departure_building_code"
                                            value={info.departure_building_code} onInput={setdata}
                                            className="form__input" id="latitude"/>
-                                    {(checkValidation && info.departure_building_code == "") ? errorTxt: ""}
+                                    {(checkValidation && info.departure_building_code == "") ? errorTxt : ""}
                                 </div> : ""
                             }
                             <div className="form__field collapsable-item__field">
@@ -197,7 +247,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                 </label>
                                 <input type="text" name="departure_longitude" value={info.departure_longitude}
                                        onInput={setdata} className="form__input" id="longitude"/>
-                                {(checkValidation && info.departure_longitude == "") ? errorTxt: ""}
+                                {(checkValidation && info.departure_longitude == "") ? errorTxt : ""}
                             </div>
                             <div className="form__field collapsable-item__field">
                                 <label htmlFor="latitude" className="form__label">
@@ -205,7 +255,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                 </label>
                                 <input type="text" name="departure_latitude" value={info.departure_latitude}
                                        onInput={setdata} className="form__input" id="latitude"/>
-                                {(checkValidation && info.departure_latitude == "") ? errorTxt: ""}
+                                {(checkValidation && info.departure_latitude == "") ? errorTxt : ""}
                             </div>
                         </div>
                         <div className="collapsable-item__body-col">
@@ -214,9 +264,10 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                 <label htmlFor="arrival-time" className="form__label">
                                     Arrival Time
                                 </label>
-                                <input   type="datetime-local"  value={info.arrival_time} onChange={setdata} name='arrival_time'
+                                <input type="datetime-local" value={info.arrival_time} onChange={setdata}
+                                       name='arrival_time'
                                        className="form__input" id="arrival-time"/>
-                                {(checkValidation && info.arrival_time == "") ? errorTxt: ""}
+                                {(checkValidation && info.arrival_time == "") ? errorTxt : ""}
                             </div>
                             <div className="form__field collapsable-item__field">
                                 <label htmlFor="facility2" className="form__label">
@@ -251,7 +302,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                             isSearchable
                                         >
                                         </Select>
-                                        {(checkValidation && info.arrival_premise_type == null) ? errorTxt: ""}
+                                        {(checkValidation && info.arrival_premise_type == null) ? errorTxt : ""}
                                     </div>
                                 </div> : ''}
 
@@ -261,24 +312,24 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                 </label>
 
                                 <div className="select-wrap">
-                                    {info.arrival_umrah_type == 1 ?<>
-                                        <Select
-                                            name="arrival_umrah_id"
-                                            options={arrivalInstallationList}
-                                            value={arrivalInstallationList.find(option => option.value === info.arrival_umrah_id)}
-                                            // options={departureUmraheList}
-                                            id="focus-point"
-                                            onChange={selectData}
-                                            isSearchable
-                                        >
-                                        </Select>
-                                        {(checkValidation && info.arrival_umrah_id == null) ? errorTxt: ""}
+                                    {info.arrival_umrah_type == 1 ? <>
+                                            <Select
+                                                name="arrival_umrah_id"
+                                                options={arrivalInstallationList}
+                                                value={unrahInfo.find(option => option.value === info.arrival_umrah_id)}
+                                                // options={departureUmraheList}
+                                                id="focus-point"
+                                                onChange={selectData}
+                                                isSearchable
+                                            >
+                                            </Select>
+                                            {(checkValidation && info.arrival_umrah_id == null) ? errorTxt : ""}
                                         </>
                                         : <div className="select-wrap">
                                             <input type="text" value={info.arrival_installation_name}
                                                    name="arrival_installation_name" onInput={setdata}
                                                    className="form__input" id="latitude"/>
-                                            {(checkValidation && info.arrival_installation_name == "") ? errorTxt: ""}
+                                            {(checkValidation && info.arrival_installation_name == "") ? errorTxt : ""}
                                         </div>}
                                 </div>
 
@@ -293,7 +344,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                         <input type="text" name="arrival_building_code"
                                                value={info.arrival_building_code} onInput={setdata}
                                                className="form__input" id="latitude"/>
-                                          {(checkValidation && info.arrival_building_code == "") ? errorTxt: ""}
+                                        {(checkValidation && info.arrival_building_code == "") ? errorTxt : ""}
                                     </div>
                                 </div> : ""}
                             <div className="form__field collapsable-item__field">
@@ -310,7 +361,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
                                 </label>
                                 <input type="text" value={info.arrival_latitude} name="arrival_latitude"
                                        onInput={setdata} className="form__input" id="latitude2"/>
-                                {(checkValidation && info.arrival_latitude == "") ? errorTxt: ""}
+                                {(checkValidation && info.arrival_latitude == "") ? errorTxt : ""}
                             </div>
                         </div>
                     </div>

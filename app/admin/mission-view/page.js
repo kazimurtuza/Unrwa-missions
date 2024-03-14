@@ -3,6 +3,7 @@
 import {MissionPDF} from "@/app/admin/mission/components/missionPdf";
 import {PDFDownloadLink} from '@react-pdf/renderer';
 import {useRouter, useSearchParams} from "next/navigation";
+import { join } from 'path';
 
 
 import "./style.css";
@@ -10,6 +11,7 @@ import {useEffect, useState} from "react";
 import axiosClient from "@/app/axiosClient";
 import Select from "react-select";
 import DualListBox from "react-dual-listbox";
+import Link from "../mission/mission-list/page";
 
 function MissionVIew() {
     const router = useRouter();
@@ -83,6 +85,25 @@ function MissionVIew() {
         }
     }
 
+    async function downloadPdf(){
+        const {data} = await axiosClient.get('mission-pdf');
+        const fileName = 'test.pdf'; // Name of the file in the public folder
+        // Construct the URL to the file in the public folder
+        const url = new URL(fileName, window.location.origin + '/');
+        // Create a new anchor element
+        const a = document.createElement('a');
+        // Set the anchor's href attribute to the file path
+        a.href = url;
+        // Set the anchor's download attribute with the desired filename
+        a.download = 'mission.pdf';
+        // Append the anchor to the body
+        document.body.appendChild(a);
+        // Click the anchor to trigger the download
+        a.click();
+        // Remove the anchor from the body
+        document.body.removeChild(a);
+    }
+
 
 
     return (
@@ -93,12 +114,13 @@ function MissionVIew() {
                         <div className='py-8'>
                             <main>
                                 <div>
-                                    <PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'}/>}
-                                                     fileName="example.pdf">
-                                        {({blob, url, loading, error}) =>
-                                            loading ? 'Loading document...' : 'Download PDF'
-                                        }
-                                    </PDFDownloadLink>
+                                    <button onClick={downloadPdf}>download Pdf</button>
+                                    {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'}/>}*/}
+                                                     {/*fileName="example.pdf">*/}
+                                        {/*{({blob, url, loading, error}) =>*/}
+                                            {/*loading ? 'Loading document...' : 'Download PDF'*/}
+                                        {/*}*/}
+                                    {/*</PDFDownloadLink>*/}
 
                                 </div>
                                 <div className='px-4 sm:px-6 lg:px-8 py-8 w-full mx-auto'>
@@ -376,7 +398,7 @@ function MissionVIew() {
 
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
-                                        <h2>Updated Fild</h2>
+                                        <h2>Admin Mission Set</h2>
 
                                         {/*mission_classification:"",*/}
                                         {/*does_mission:"",*/}
@@ -389,10 +411,9 @@ function MissionVIew() {
                                         <div className="collapsable-item__body">
                                             <div className="collapsable-item__body-row flex-start-spb">
                                                 <div className="collapsable-item__body-col">
-                                                    <h3 className="collapsable-item__body-title">Driver</h3>
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="agency-name" className="form__label">
-                                                            mission_classification
+                                                            Mission Classification
                                                         </label>
                                                         <div className="select-wrap">
                                                             <select
@@ -411,15 +432,24 @@ function MissionVIew() {
 
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
-                                                            Driver Name
+                                                            Does Mission Require a Greenlight
                                                         </label>
-                                                        <input type="text"  value={adminData.does_mission} onInput={setdata}  name="does_mission" className="form__input" id="dsc"/>
-                                                        {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
+                                                        <select
+                                                            className="form__select"
+                                                            name="does_mission"
+                                                            id="facility"
+                                                            value={adminData.does_mission}
+                                                            onChange={setdata}
+                                                        >
+                                                            <option value="">Select</option>
+                                                            <option value="yes">Yes</option>
+                                                            <option value="no">No</option>
+                                                        </select>
                                                     </div>
 
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="agency-name" className="form__label">
-                                                            unops_acu_status
+                                                            Unops acu status
                                                         </label>
                                                         <div className="select-wrap">
                                                             <select
@@ -430,15 +460,16 @@ function MissionVIew() {
                                                                 onChange={setdata}
                                                             >
                                                                 <option value="">Select</option>
-                                                                <option value="yes">Yes</option>
-                                                                <option value="no">No</option>
+                                                                <option value="Submitted to CLA">Submitted to CLA</option>
+                                                                <option value="Recieved">Recieved</option>
+                                                                <option value="Denied by CLA">Denied by CLA</option>
                                                             </select>
                                                         </div>
                                                     </div>
 
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
-                                                            unops_acu
+                                                            Unops ACU
                                                         </label>
                                                         <input type="text" value={adminData.unops_acu} onInput={setdata} name="unops_acu" className="form__input" id="dsc"/>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
@@ -446,14 +477,14 @@ function MissionVIew() {
 
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
-                                                            cla
+                                                            CLA
                                                         </label>
                                                         <input type="text" value={adminData.cla} onInput={setdata} name="cla" className="form__input" />
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
                                                     </div>
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
-                                                            cla_decision
+                                                                CLA Decision
                                                         </label>
                                                         <div className="select-wrap">
                                                             <select
@@ -463,15 +494,16 @@ function MissionVIew() {
                                                                 value={adminData.cla_decision}
                                                                 onChange={setdata}
                                                             >
-                                                                <option value="yes">Yes</option>
-                                                                <option value="no">No</option>
+                                                                <option value="">Select</option>
+                                                                <option value="approved">Approved</option>
+                                                                <option value="denied">Denied</option>
                                                             </select>
                                                         </div>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
                                                     </div>
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
-                                                            request_status
+                                                            Request Status
                                                         </label>
                                                         <div className="select-wrap">
                                                             <select
@@ -481,8 +513,14 @@ function MissionVIew() {
                                                                 value={adminData.request_status}
                                                                 onChange={setdata}
                                                             >
-                                                                <option value="yes">Yes</option>
-                                                                <option value="no">No</option>
+                                                                <option value="">SELECT</option>
+                                                                <option value="Request Recieved">Request Recieved</option>
+                                                                <option value="Request submitted to CLA">Request submitted to CLA</option>
+                                                                <option value="Mission Completed">Mission Completed</option>
+                                                                <option value="Requestor Cancelled Request">Requestor Cancelled Request</option>
+                                                                <option value="Mission Postponed">Mission Postponed</option>
+                                                                <option value="Mission Pending">Mission Pending</option>
+                                                                <option value="Mission Aborted">Mission Aborted</option>
                                                             </select>
                                                         </div>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
@@ -497,7 +535,7 @@ function MissionVIew() {
                                                 </div>
                                             </div>
 
-                                            <div><button onClick={storeDate}>Submit</button></div>
+                                            <div><button  className="mt-4 px-4 py-2 mx-2 bg-green-500 text-white rounded" onClick={storeDate}>Submit</button></div>
 
                                         </div>
                                     </div>

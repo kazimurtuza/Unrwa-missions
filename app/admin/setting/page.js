@@ -5,12 +5,14 @@ import axios from "axios";
 import axiosClient from "@/app/axiosClient";
 import { useEffect } from "react";
 
+
 function Setting() {
   const [settings, setSettings] = useState([]);
   const [appName, setAppName] = useState([]);
   const [aboutEn, setAboutEn] = useState([]);
   const [aboutAr, setAboutAr] = useState([]);
   const [image, setImage] = useState([]);
+  const [app_logo, setApp_logo] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
@@ -35,15 +37,15 @@ function Setting() {
     console.log(e);
     const file = e.target.files[0];
     if (file) {
-        const reader = new FileReader();
-        console.log("hello");
-        reader.onloadend = () => {
-        // Once the FileReader has read the file, set the base64 data
-        setImage(reader.result);
-        };
+      const reader = new FileReader();
 
-        // Read the file as a data URL (base64)
-        reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        // Once the FileReader has read the file, set the base64 data
+        setApp_logo(reader.result);
+      };
+
+      // Read the file as a data URL (base64)
+      reader.readAsDataURL(file);
     }
     
     
@@ -51,22 +53,23 @@ function Setting() {
 
   const inputFile = useRef(null);
 
+  const fetchData = async () => {
+    try {
+        const { data } = await axiosClient.get('settings');
+        console.log(data);
+        setAppName(data.app_name);
+        setAboutEn(data.about_app_en);
+        setAboutAr(data.about_app_ar);
+        setSettings(data);
+        
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
+};
+
 
   useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const { data } = await axiosClient.get('settings');
-            console.log(data);
-            setAppName(data.app_name);
-            setAboutEn(data.about_app_en);
-            setAboutAr(data.about_app_ar);
-            setSettings(data);
-            
-        } catch (error) {
-            console.error('Error fetching categories:', error);
-        }
-    };
-
+    
     fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
@@ -83,12 +86,13 @@ function Setting() {
       app_name:appName,
       about_app_en: aboutEn,
       about_app_ar:aboutAr,
+      //app_logo:app_logo
     };
 
-    if (Array.isArray(image)) {
+    if (app_logo) {
       console.log("image");
-        console.log(image);
-        postData.app_logo = image;
+        console.log(app_logo);
+        postData.app_logo = app_logo;
     }
     
     try {
@@ -100,6 +104,8 @@ function Setting() {
           if(response.data.success==true)
           {
             setSuccessMessage("Settings Edited Successfully");
+            fetchData();
+            //appSetting();
           }
           else
           {
@@ -189,7 +195,7 @@ function Setting() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          About App (English)
+                          About App 
                         </label>
                         <textarea
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -204,7 +210,7 @@ function Setting() {
                         />
                       </div>
 
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
@@ -223,7 +229,7 @@ function Setting() {
 
                         />
                          
-                      </div>
+                      </div> */}
 
                       <div className="mb-4">
                             <label
@@ -245,7 +251,7 @@ function Setting() {
                             </>
                             )}
                        </div>
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                             <label
                             className="block text-grey-darker text-sm font-bold mb-2"
                             htmlFor="questionName"
@@ -261,7 +267,23 @@ function Setting() {
                             onChange={handleImage}
                             />
 
-                        </div>
+                        </div> */}
+
+                        
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                                New Logo
+                              </label>
+                              <input
+                                type="file"
+                                className="upload-field"
+                                ref={inputFile}
+                                onChange={handleImage}
+                              />
+                      </div> 
 
 
                       <div className="flex items-center justify-between mt-8">

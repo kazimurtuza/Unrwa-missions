@@ -5,8 +5,8 @@ const styles = StyleSheet.create({
     page: {
         flexDirection: "column",
         backgroundColor: "#E4E4E4",
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
     },
     section: {
         margin: 10,
@@ -25,9 +25,19 @@ const styles = StyleSheet.create({
     gridItemText: {
         fontSize: "10px",
     },
-    table: {},
-    tableRow: {},
-    tableColumn: {}
+
+    tableRow: {
+        flexDirection: "row",
+        width: "100%",
+    },
+    tableText: {
+        fontSize: "8px",
+        padding: "5px",
+        whiteSpace: "nowrap",
+    },
+    tableColumn: {
+        border: "1px solid #777777",
+    },
 });
 
 // Create PDF component
@@ -83,9 +93,7 @@ export const MissionPDF = (props) => (
                         <Text style={styles.gridItemText}>656565</Text>
                     </View>
                 </View>
-            </View>
 
-            <View style={styles.section}>
                 <Text
                     style={{
                         backgroundColor: "#000000",
@@ -177,9 +185,7 @@ export const MissionPDF = (props) => (
                         <Text style={styles.gridItemText}>Cluster</Text>
                     </View>
                 </View>
-            </View>
 
-            <View style={styles.section}>
                 <Text
                     style={{
                         backgroundColor: "#000000",
@@ -188,8 +194,7 @@ export const MissionPDF = (props) => (
                         fontSize: "13px",
                     }}
                 >
-                Movement Stops
-
+                    Movement Stops
                 </Text>
                 <Text
                     style={{
@@ -202,21 +207,27 @@ export const MissionPDF = (props) => (
                     Movement Stops
                 </Text>
 
-                <View style={styles.table}>
-                    <View style={styles.tableRow}>
-                        <View style={styles.tableColumn}>1</View>
-                        <View style={styles.tableColumn}>2</View>
-                        <View style={styles.tableColumn}>3</View>
-                        <View style={styles.tableColumn}>4</View>
-                        <View style={styles.tableColumn}>5</View>
-                        <View style={styles.tableColumn}>6</View>
-                        <View style={styles.tableColumn}>7</View>
-                        <View style={styles.tableColumn}>8</View>
-                        <View style={styles.tableColumn}>9</View>
-                        <View style={styles.tableColumn}>10</View>
+                <View>
+                    <View style={{ flexBasis: "100px" }}></View>
+                    <View style={{ flexBasis: 1 }}>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableColumn}>
+                                <Text style={styles.tableText}>
+                                    Departure DateTime
+                                </Text>
+                            </View>
+                            <View style={styles.tableColumn}>
+                                <Text style={styles.tableText}>Location</Text>
+                            </View>
+                            <View style={styles.tableColumn}>
+                                <Text style={styles.tableText}>Longitude</Text>
+                            </View>
+                            <View style={styles.tableColumn}>
+                                <Text style={styles.tableText}>Latitude</Text>
+                            </View>
+                        </View>
                     </View>
                 </View>
-
             </View>
         </Page>
     </Document>
