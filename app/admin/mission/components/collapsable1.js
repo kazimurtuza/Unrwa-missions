@@ -87,7 +87,7 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
             setAdminInfo(selectedStaff.list);
         }
     };
-    function setArrivalInstallation(){
+    async function setArrivalInstallation(){
         setarrivalInstallationList()
         const {data} = await axiosClient.get('premise-type-wise-installation');
         if (data.success === true) {
