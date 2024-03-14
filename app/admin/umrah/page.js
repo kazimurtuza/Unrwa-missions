@@ -26,7 +26,7 @@ function UmrahList() {
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-    let tableName = "Unrwa List";
+    let tableName = "Facilities List";
     const headName = [
         "Si",
         "installation_name",

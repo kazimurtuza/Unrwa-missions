@@ -8,9 +8,17 @@ export async function POST(request) {
     var result;
     try {
         const payload = await (request.json());
-        if (payload.app_logo) {
-            let path_name = await uploadBase64Img(payload.app_logo);
-            payload.app_logo = await path_name;
+        // if (payload.app_logo) {
+        //     let path_name = await uploadBase64Img(payload.app_logo);
+        //     payload.app_logo = await path_name;
+        // }
+        if(payload.app_logo)
+        {
+            try {
+                payload.app_logo = await uploadBase64Img(payload.app_logo);
+            } catch (e) {
+                return NextResponse.json({e, success: 'img upload error found'});
+            }
         }
         await mongoose.connect(connectionStr);
         let info = await AppSetting.findOne();

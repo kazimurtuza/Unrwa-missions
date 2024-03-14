@@ -24,6 +24,7 @@ function Login() {
                 console.log(data);
                 setSettings(data);
                 
+                
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }

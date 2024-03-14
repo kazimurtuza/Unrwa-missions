@@ -22,7 +22,7 @@ function AgencyList() {
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Agency";
-    const headName = ["Si","Logo", "Name","agency name acroynm","agency_head","agency phone","agency email","agency physical address","agency cluster","agency website", "Action"];
+    const headName = ["Si","Logo", "Name","intervision note","agency name acroynm","agency_head","agency phone","agency email","agency physical address","agency cluster","agency website", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -87,6 +87,25 @@ function AgencyList() {
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
                                     {item.name}
+                                </p>
+                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                                {/*    000004*/}
+                                {/*</p>*/}
+                            </div>
+                        </div>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <div className="flex">
+                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
+                            {/*    <img*/}
+                            {/*        className="w-full h-full rounded-full"*/}
+                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
+                            {/*        alt=""*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            <div className="ml-3">
+                                <p className="text-gray-900 whitespace-no-wrap">
+                                    {item.intervision_note}
                                 </p>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}

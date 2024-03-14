@@ -85,7 +85,9 @@ function VehicleCreate() {
   const handleCarryOut = (value) => {
     setCarryOut(value);
   };
-
+  const handleCapacity = (value) => {
+    setCapacity(value);
+  };
 
 
 
@@ -107,7 +109,8 @@ function VehicleCreate() {
       fuel_type:fuel_type,
       color:color,
       agency:agencyID,
-      carry_out:carryOut
+      carry_out:carryOut,
+      capacity:capacity
     };
 
     try {
@@ -223,7 +226,7 @@ function VehicleCreate() {
                                           ))}
                                         </select>
                         </div>
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
@@ -280,7 +283,7 @@ function VehicleCreate() {
                           }
 
                         />
-                      </div>
+                      </div> */}
 
                       <div className="mb-4">
                         <label
@@ -302,7 +305,7 @@ function VehicleCreate() {
                         />
                       </div>
 
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
@@ -335,7 +338,7 @@ function VehicleCreate() {
                           </option>
                          
                         </select>
-                      </div>
+                      </div> */}
                   
 
                       <div className="mb-4">
@@ -352,7 +355,7 @@ function VehicleCreate() {
                           placeholder="Enter your vehicle capacity"
                           value={capacity}
                           onChange={(e) =>
-                            handleCapacityChange(e.target.value)
+                            handleCapacity(e.target.value)
                           }
 
                         />
@@ -383,13 +386,13 @@ function VehicleCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                         Brand Type
+                         Body Type
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="slug"
                           type="text"
-                          placeholder="Enter your brand type"
+                          placeholder="Enter your body type"
                           value={brand_type}
                           onChange={(e) =>
                             handleBrandTypeChange(e.target.value)
@@ -457,7 +460,7 @@ function VehicleCreate() {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="slug"
                           type="text"
-                          placeholder="Enter your vehicle type"
+                          placeholder="Enter your color"
                           value={color}
                           onChange={(e) =>
                             handleColorChange(e.target.value)
@@ -467,7 +470,7 @@ function VehicleCreate() {
                       </div>
 
 
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
@@ -485,7 +488,7 @@ function VehicleCreate() {
                           }
 
                         />
-                      </div>
+                      </div> */}
 
 
 
