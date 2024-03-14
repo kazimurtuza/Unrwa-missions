@@ -87,11 +87,37 @@ const Collapsable1 = ({info, setInfo, item,checkValidation}) => {
             setAdminInfo(selectedStaff.list);
         }
     };
+    function setArrivalInstallation(){
+        setarrivalInstallationList()
+        const {data} = await axiosClient.get('premise-type-wise-installation');
+        if (data.success === true) {
+            const updatedInstallatList = data.result.map(item => ({
+                value: item._id,
+                label: item.installation_name,
+                info: {
+                    longitude:item.longitude,
+                    latitude:item.latitude,
+                    building_code:item.building_code,
+                },
+            }));
+
+            setarrivalInstallationList(updatedInstallatList);
+            setDepartureInstallationList(updatedInstallatList);
+
+        }
+    }
+
+    function setDepartureInstallation(){
+
+        setDepartureInstallationList()
+    }
 
 
     useEffect(() => {
         premisetypeList();
         setInstallation();
+        setArrivalInstallation();
+        setDepartureInstallation();
     }, []);
 
     return (
