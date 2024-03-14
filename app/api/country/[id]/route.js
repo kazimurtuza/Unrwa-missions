@@ -8,6 +8,7 @@ import path from "path";
 import fs from "fs";
 import { Agency } from "@/lib/model/agency";
 import { uploadBase64Img } from "@/app/helper";
+import { Country } from "@/lib/model/country";
 
 export async function PUT(request, content) {
     let result = [];
@@ -17,19 +18,12 @@ export async function PUT(request, content) {
         const payload = await request.json();
         // return NextResponse.json(payload.password);
         await mongoose.connect(connectionStr);
-        const missionCluster=await Agency.findById(filter);
-        const oldData=missionCluster._doc;
-        if(payload.agency_logo)
-        {
-            try {
-                payload.agency_logo = await uploadBase64Img(payload.agency_logo);
-            } catch (e) {
-                return NextResponse.json({e, success: 'img upload error found'});
-            }
-        }
+        const country=await Country.findById(filter);
+        const oldData=country._doc;
+
 
         const updatedata={...oldData,...payload}
-        result = await Agency.findOneAndUpdate(filter, updatedata);
+        result = await Country.findOneAndUpdate(filter, updatedata);
     } catch (error) {
         return NextResponse.json({error:error.message, success: 'error found'});
     }
@@ -42,10 +36,10 @@ export async function GET(request, content) {
         const id = content.params.id;
         const record = {_id: id};
         await mongoose.connect(connectionStr);
-        const result = await Agency.findById(record);
+        const result = await Country.findById(record);
         return NextResponse.json({result, success: true});
     } catch (error) {
-        result = error;
+        result = error.message;
     }
     return NextResponse.json(result);
 }
@@ -56,7 +50,7 @@ export async function DELETE(request, content) {
         const filter = { _id: id };
 
         await mongoose.connect(connectionStr);
-        const mission = await Agency.findById(filter);
+        const mission = await   Country.findById(filter);
 
         // Update only the is_delete field to 1
         mission.is_delete = 1;
