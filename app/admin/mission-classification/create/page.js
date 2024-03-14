@@ -10,6 +10,7 @@ function MissionClassificationCreate() {
   const [missionClassificationName, setMissionClassificationName] = useState("");
   const [requests_classifications, setRequests_classifications] = useState("");
   const [abbreviation, setAbbreviation] = useState("");
+  const [isVisible, setIsVisible] = useState(true);
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -22,6 +23,15 @@ function MissionClassificationCreate() {
   };
   const handlerequestClassificationChange = (value) => {
     setRequests_classifications(value);
+    if (value === 'Coordination Request') {
+      setAbbreviation('CRQ');
+    } else if (value === 'Notification Request') {
+      setAbbreviation('NRQ');
+    } else {
+      setAbbreviation(''); // Clear abbreviation if no classification is selected
+      setIsVisible(false);
+    }
+    setIsVisible(true);
   };
   const handleAbbrivationChange = (value) => {
     setAbbreviation(value);
@@ -34,7 +44,7 @@ function MissionClassificationCreate() {
 
     // Prepare data for API request
     const postData = {
-      name: missionClassificationName,
+      //name: missionClassificationName,
       requests_classifications:requests_classifications,
       abbreviation:abbreviation
     };
@@ -122,7 +132,7 @@ function MissionClassificationCreate() {
                                                 </span>
                                                 </div>
                                             )}
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
@@ -140,7 +150,7 @@ function MissionClassificationCreate() {
                           }
 
                         />
-                      </div>
+                      </div> */}
                      
 
                       <div className="mb-4">
@@ -153,8 +163,12 @@ function MissionClassificationCreate() {
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={requests_classifications}
+                          
                           onChange={(e) => handlerequestClassificationChange(e.target.value)}
                         >
+                          <option value="">
+                            Select One
+                          </option>
                           <option value="Coordination Request">
                             Coordination Request
                           </option>
@@ -165,29 +179,28 @@ function MissionClassificationCreate() {
                          
                         </select>
                       </div>
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Abbreviation
-                        </label>
-                        <select
-                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                        {/* Display the select element only when isVisible is true */}
+                      {isVisible && (
+                        <div className="mb-4">
+                          <label
+                            className="block text-grey-darker text-sm font-bold mb-2"
+                            htmlFor="abbreviation"
+                          >
+                            Abbreviation
+                          </label>
+                          <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Please First Select Request Classification"
                           value={abbreviation}
-                          onChange={(e) => handleAbbrivationChange(e.target.value)}
-                        >
-                          <option value="CRQ">
-                            CRQ
-                          </option>
-
-                          <option value="NRQ">
-                              NRQ
-                          </option>
-                         
-                        </select>
-                      </div>
-                  
+                          // onChange={(e) =>
+                          //   handleMissionClassificationChange(e.target.value)
+                          // }
+                          />
+                        </div>
+                      )}
+                                  
 
                       <div className="flex items-center justify-between mt-8">
                         <button

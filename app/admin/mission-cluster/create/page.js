@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
@@ -8,15 +8,51 @@ import axiosClient from "@/app/axiosClient";
 
 function MissionClusterCreate() {
   const [missionClusterName, setMissionClusterName] = useState("");
+  const [leadOfficeName, setOfficeName] = useState("");
+  const [leadOfficePhone, setOfficePhone] = useState("");
+  const [leadOfficeEmail, setOfficeEmail] = useState("");
+  const [agency,setAgencyList]=useState("");
+  const [agencyID,setAgencyID]=useState("");
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
+  
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('agency');
+            setAgencyList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+
+    fetchData();
+}, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+
+const handleAgencyChange = (value) => {
+  setAgencyID(value);
+};
 
 
   const handleMissionClusterChange = (value) => {
     setMissionClusterName(value);
+  };
+  
+  const handleLeadOfficePhone = (value) => {
+    setOfficePhone(value);
+  };
+  
+  const handleLeadOfficeEmail = (value) => {
+    setOfficeEmail(value);
+  };
+  
+  const handleLeadOfficeName = (value) => {
+    setOfficeName(value);
   };
 
   const handleSubmit = async (e) => {
@@ -27,6 +63,10 @@ function MissionClusterCreate() {
     // Prepare data for API request
     const postData = {
       name: missionClusterName,
+      lead_office_name:leadOfficeName,
+      lead_office_email:leadOfficeEmail,
+      lead_office_phone:leadOfficePhone,
+      agency:agencyID,
     };
 
     try {
@@ -39,6 +79,10 @@ function MissionClusterCreate() {
           {
             setSuccessMessage("Mission Cluster Create Successfully");
             setMissionClassificationName("");
+            setAgencyID("");
+            setOfficeEmail("");
+            setOfficeName("");
+            setOfficePhone("");
             setErrorMessage("");
           }
           else
@@ -110,18 +154,41 @@ function MissionClusterCreate() {
                                                 </span>
                                                 </div>
                                             )}
+
+                    <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Cluster Lead Agency
+                        </label>
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                          value={agencyID}
+                          onChange={(e) => handleAgencyChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Agency
+                          </option>
+                          {Array.isArray(agency) && agency.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Mission Cluster Name
+                          Cluster Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your mission classification name"
+                          placeholder="Enter your mission cluster name"
                           value={missionClusterName}
                           onChange={(e) =>
                             handleMissionClusterChange(e.target.value)
@@ -129,6 +196,69 @@ function MissionClusterCreate() {
 
                         />
                       </div>
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Lead Official Name
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your lead official name"
+                          value={leadOfficeName}
+                          onChange={(e) =>
+                            handleLeadOfficeName(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Lead Official Phone
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your lead official phone"
+                          value={leadOfficePhone}
+                          onChange={(e) =>
+                            handleLeadOfficePhone(e.target.value)
+                          }
+
+                        />
+                      </div>
+
+                      
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Lead Official Email
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your lead official email"
+                          value={leadOfficeEmail}
+                          onChange={(e) =>
+                            handleLeadOfficeEmail(e.target.value)
+                          }
+
+                        />
+                      </div>
+
 
 
                       <div className="flex items-center justify-between mt-8">

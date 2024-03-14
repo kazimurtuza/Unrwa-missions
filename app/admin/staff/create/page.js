@@ -460,6 +460,9 @@ useEffect(() => {
                           value={staffRole}
                           onChange={(e) => handleStaffRole(e.target.value)}
                         >
+                          <option value="">
+                            Select One
+                          </option>
                           <option value="Driver">
                             Driver
                           </option>

@@ -32,7 +32,7 @@ export async function POST(request) {
             if (is_user) {
                 // let token = jwt.sign({name, email, id,user_type}, srcky,{ expiresIn: '1h' });
                 let token = jwt.sign({name, email, id,user_type}, srcky);
-                return NextResponse.json({user, 'token': token}, {status: 200});
+                return NextResponse.json({user,message:"Login Successfully", 'token': token}, {status: 200});
             }
         }
     } catch (error) {

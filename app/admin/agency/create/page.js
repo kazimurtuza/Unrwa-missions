@@ -15,6 +15,7 @@ function AgencyCreate() {
   const [agency_physical_address, setAgency_physical_address] = useState("");
   const [agency_cluster, setAgency_cluster] = useState("");
   const [agency_website, setAgency_website] = useState("");
+  const [intervision_note, setIntervision_note] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -53,6 +54,10 @@ function AgencyCreate() {
     setAgency_website(value);
   };
 
+  const handleIntervisionNote = (value) => {
+    setIntervision_note (value);
+  };
+
 
   const handleAgency_logoChange = (e) => {
     const file = e.target.files[0];
@@ -84,7 +89,8 @@ function AgencyCreate() {
       agency_physical_address:agency_physical_address,
       agency_cluster:agency_cluster,
       agency_website:agency_website,
-      agency_logo:agency_logo
+      agency_logo:agency_logo,
+      intervision_note:intervision_note
   
 
     };
@@ -106,6 +112,7 @@ function AgencyCreate() {
             setAgency_physical_address("");
             setAgency_website("");
             setAgency_cluster("");
+            setIntervision_note("");
             setErrorMessage("");
           }
           else
@@ -333,6 +340,26 @@ function AgencyCreate() {
                         />
                       </div>
 
+                      <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Intervision Notes
+                        </label>
+                        <textarea
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter your intervision notes"
+                          value={intervision_note}
+                          onChange={(e) =>
+                            handleIntervisionNote(e.target.value)
+                          }
+
+                        />
+                      </div>
+
                   
 
                       <div className="mb-4">
@@ -340,7 +367,7 @@ function AgencyCreate() {
                                 className="block text-grey-darker text-sm font-bold mb-2"
                                 htmlFor="questionName"
                               >
-                                Agency Logo Change
+                                Agency Logo
                               </label>
                               <input
                                 type="file"
