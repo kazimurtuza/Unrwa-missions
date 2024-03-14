@@ -5,10 +5,12 @@ import axiosClient from "@/app/axiosClient";
 const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
     const [collapse, setCollapse] = useState(true);
     const [premiseTypeList, setPremiseTypeList] = useState([]);
-    const [departureUmrahInfo, setDepartureUmrahInfo] = useState();
-    const [arrivalUmrahInfo, setArrivalUmrahInfo] = useState();
+    const [unrahInfo, setumrahInfo] = useState([]);
     const [arrivalInstallationList, setarrivalInstallationList] = useState([]);
     const [departureInstallationList, setDepartureInstallationList] = useState([]);
+
+    const [usearrival_premise_type, setusearrival_premise_type] = useState([]);
+    const [userdeparture_premise_type, setdeparture_premise_type] = useState([]);
 
 
     const handleClick = () => {
@@ -20,22 +22,22 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
         } else {
             var val = await selectedOption.value;
         }
-        setInfo(name, val, item); // Pass the input value to the parent component
+        if (name == 'arrival_premise_type') {
+            setArrivalInstallation(val)
+        }
+        if (name == 'departure_premise_type') {
+            setDepartureInstallation(val)
+        }
+        await setInfo(name, val, item); // Pass the input value to the parent component
+
+
+
+
     };
     const setdata = (e) => {
 
         const {name, value} = e.target;
-        // if("departure_latitude"==name){
-        //     setdiplet(old=>value)
-        // }
         setInfo(name, value, item); // Pass the input value to the parent component
-
-        if (name == 'arrival_premise_type') {
-            setArrivalInstallation()
-        }
-        if (name == 'departure_premise_type') {
-            setDepartureInstallation()
-        }
 
 
     };
@@ -78,13 +80,11 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                     },
                 }));
 
-                setarrivalInstallationList(updatedInstallatList);
-                setDepartureInstallationList(updatedInstallatList);
+                setumrahInfo(updatedInstallatList)
 
             }
         } catch (error) {
-            setarrivalInstallationList()
-            setDepartureInstallationList()
+            setumrahInfo([])
         }
     };
 
@@ -96,10 +96,11 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
         }
     };
 
-    async function setArrivalInstallation() {
-        if (info.arrival_premise_type != null) {
-            let url = `premise-type-wise-installation/${info.arrival_premise_type}`
+    async function setArrivalInstallation(id) {
+        if (id) {
+            let url = `premise-type-wise-installation/${id}`
             const {data} = await axiosClient.get(url);
+            console.log(data);
             if (data.success === true) {
                 const updatedInstallatList = data.result.map(item => ({
                     value: item._id,
@@ -111,14 +112,14 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                     },
                 }));
 
-                setarrivalInstallationList(updatedInstallatList);
+                setarrivalInstallationList(old => updatedInstallatList);
             }
         }
     }
 
-    async function setDepartureInstallation() {
-        if (info.departure_premise_type != null) {
-            let url = `premise-type-wise-installation/${info.departure_premise_type}`
+    async function setDepartureInstallation(id) {
+        if (id) {
+            let url = `premise-type-wise-installation/${id}`
             const {data} = await axiosClient.get(url);
             if (data.success === true) {
                 const updatedInstallatList = data.result.map(item => ({
@@ -130,7 +131,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                         building_code: item.building_code,
                     },
                 }));
-                setDepartureInstallationList(updatedInstallatList);
+                setDepartureInstallationList(old => updatedInstallatList);
             }
         }
     }
@@ -138,9 +139,9 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
 
     useEffect(() => {
         premisetypeList();
-        setInstallation();
-        setArrivalInstallation();
-        setDepartureInstallation();
+         setInstallation();
+        // setArrivalInstallation();
+        // setDepartureInstallation();
     }, []);
 
     return (
@@ -186,7 +187,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                             </div>
                             {info.departure_umrah_type == 1 ? <div className="form__field collapsable-item__field">
                                 <label htmlFor="premise-type" className="form__label">
-                                    Premise Type
+                                    Premise Type-
                                 </label>
                                 <div className="select-wrap">
                                     <Select
@@ -210,8 +211,8 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                                         <>
                                             <Select
                                                 name="departure_umrah_id"
-                                                options={arrivalInstallationList}
-                                                value={arrivalInstallationList.find(option => option.value === info.departure_umrah_id)}
+                                                options={departureInstallationList}
+                                                value={unrahInfo.find(option => option.value === info.departure_umrah_id)}
 
                                                 id="focus-point"
                                                 onChange={selectData}
@@ -315,7 +316,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                                             <Select
                                                 name="arrival_umrah_id"
                                                 options={arrivalInstallationList}
-                                                value={arrivalInstallationList.find(option => option.value === info.arrival_umrah_id)}
+                                                value={unrahInfo.find(option => option.value === info.arrival_umrah_id)}
                                                 // options={departureUmraheList}
                                                 id="focus-point"
                                                 onChange={selectData}

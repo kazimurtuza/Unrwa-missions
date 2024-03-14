@@ -20,16 +20,16 @@ function MissionList() {
 
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-   async function completeMission(id){
+   async function missionStatus(id,status){
        let adminData={
            mission_id:id,
-           status:1,
+           status:status,
        }
         const response = await axiosClient.post('mission-status-update', adminData);
         console.log(response);
         if(response.data.success==true){
             fetchData();
-            alert('Mission Completed');
+            alert('Mission Status change Successfully');
         }
     }
 
@@ -141,14 +141,15 @@ function MissionList() {
 
                     </td>
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-green-500 text-white rounded" onClick={()=>completeMission(item._id)}> Mission Completed</button>:""}
+                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-green-500 text-white rounded" onClick={()=>missionStatus(item._id,1)}> Mission Completed</button>:""}
+                        {(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject Mission</button>:""}
 
                         <Link
                             href={{
                                 pathname: '/admin/mission-view',
                                 query: { id: item._id },
                             }}
-                            className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                            className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
                         > Details</Link>
                     </td>
                 </tr>
