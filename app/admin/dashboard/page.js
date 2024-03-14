@@ -1,24 +1,94 @@
 "use client";
-import WelcomeBanner from "../../partials/dashboard/WelcomeBanner";
-import {black, yellow} from "next/dist/lib/picocolors";
+import styles from "@/app/admin/style/deshboard.module.css";
+import axiosClient from "@/app/axiosClient";
+import { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsCart } from "react-icons/bs";
 import { FaProductHunt } from "react-icons/fa6";
-import styles from "@/app/admin/style/deshboard.module.css"
-import {useEffect, useState} from "react";
-import axiosClient from "@/app/axiosClient";
+
+import {
+    CategoryScale,
+    Chart as ChartJS,
+    Legend,
+    LineElement,
+    LinearScale,
+    PointElement,
+    Title,
+    Tooltip,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  export const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Line Chart',
+      },
+    },
+  };
+
+  export const data = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'Dataset 1',
+        data: [100,200,205,205,306,600,654,585,696,585,510],
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgb(255, 99, 132)',
+      },
+      {
+        label: 'Dataset 2',
+        data: [60,50,225,285,236,86,242,385,196,285,258],
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgb(53, 162, 235)',
+      },
+      {
+        label: 'Dataset 3',
+        data: [80,80,500,300,400,500,400,15,600,400,400],
+        borderColor: 'rgb(53, 162, 50)',
+        backgroundColor: 'rgb(53, 162, 50)',
+      },
+      {
+        label: 'Dataset 4',
+        data: [100,200,400,10,200,300,400,250,250,400,250],
+        borderColor: 'rgb(50, 99, 132)',
+        backgroundColor: 'rgb(50, 99, 132)',
+      },
+      {
+        label: 'Dataset 5',
+        data: [400,10,200,300,400,250,250,400,250,100,200],
+        borderColor: 'rgb(53, 162, 15)',
+        backgroundColor: 'rgb(53, 162, 15)',
+      },
+      {
+        label: 'Dataset 6',
+        data: [10,200,300,400,250,250,400,250,100,200,400],
+        borderColor: 'rgb(53, 10, 50)',
+        backgroundColor: 'rgb(53, 10, 50)',
+      },
+    ],
+  };
 
 function Dashboard() {
-
     const [totalUser,setTotalUser]=useState(0);
     const [totalProduct,setTotalProduct]=useState(0);
     const [totalOrder,setTotalOrder]=useState(0);
     const [totalCompleteOrder,setTotalCompleteOrder]=useState(0);
     const [isLoading,setLoading]=useState(1);
-
-
-
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,7 +101,6 @@ function Dashboard() {
                     setTotalUser(data.result.userList)
                     setLoading(0)
                 }
-
             } catch (error) {
                 setProductList([]);
                 // console.error('Error fetching categories:', error);
@@ -39,7 +108,6 @@ function Dashboard() {
         };
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
 
     let loader= <div className={styles.loader}></div>
 
@@ -91,10 +159,10 @@ function Dashboard() {
                   </div>
               </div>
 
+          </div>
 
-
-
-
+          <div style={{padding: '30px 200px'}}>
+          <Line options={options} data={data} />
           </div>
 
       </main>

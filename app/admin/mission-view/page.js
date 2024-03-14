@@ -3,6 +3,7 @@
 import {MissionPDF} from "@/app/admin/mission/components/missionPdf";
 import {PDFDownloadLink} from '@react-pdf/renderer';
 import {useRouter, useSearchParams} from "next/navigation";
+import { join } from 'path';
 
 
 import "./style.css";
@@ -86,7 +87,21 @@ function MissionVIew() {
 
     async function downloadPdf(){
         const {data} = await axiosClient.get('mission-pdf');
-        alert('success');
+        const fileName = 'test.pdf'; // Name of the file in the public folder
+        // Construct the URL to the file in the public folder
+        const url = new URL(fileName, window.location.origin + '/');
+        // Create a new anchor element
+        const a = document.createElement('a');
+        // Set the anchor's href attribute to the file path
+        a.href = url;
+        // Set the anchor's download attribute with the desired filename
+        a.download = 'mission.pdf';
+        // Append the anchor to the body
+        document.body.appendChild(a);
+        // Click the anchor to trigger the download
+        a.click();
+        // Remove the anchor from the body
+        document.body.removeChild(a);
     }
 
 
