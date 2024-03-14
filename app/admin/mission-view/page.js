@@ -84,6 +84,11 @@ function MissionVIew() {
         }
     }
 
+    async function downloadPdf(){
+        const {data} = await axiosClient.get('mission-pdf');
+        alert('success');
+    }
+
 
 
     return (
@@ -94,12 +99,13 @@ function MissionVIew() {
                         <div className='py-8'>
                             <main>
                                 <div>
-                                    <PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'}/>}
-                                                     fileName="example.pdf">
-                                        {({blob, url, loading, error}) =>
-                                            loading ? 'Loading document...' : 'Download PDF'
-                                        }
-                                    </PDFDownloadLink>
+                                    <button onClick={downloadPdf}>download Pdf</button>
+                                    {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'}/>}*/}
+                                                     {/*fileName="example.pdf">*/}
+                                        {/*{({blob, url, loading, error}) =>*/}
+                                            {/*loading ? 'Loading document...' : 'Download PDF'*/}
+                                        {/*}*/}
+                                    {/*</PDFDownloadLink>*/}
 
                                 </div>
                                 <div className='px-4 sm:px-6 lg:px-8 py-8 w-full mx-auto'>
