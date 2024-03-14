@@ -2,7 +2,7 @@ import Select from 'react-select'
 import {useEffect, useState} from "react";
 import axiosClient from "@/app/axiosClient";
 
-const Step1 = ({getdata, storeData, staffList, agencyList, classification, checkValidation}) => {
+const Step1 = ({getdata, storeData, staffList, agencyList, classification, checkValidation,cluster}) => {
     const selectData = async (selectedOption, {name}) => {
         if (name == 'leader') {
             setAdminInfo(selectedOption.list);
@@ -185,6 +185,24 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                     {/*        </div>*/}
                     {/*    </div>*/}
                     {/*</div>*/}
+
+                    <div className="form__row flex-start-spb">
+                        <div className="form__field">
+                            <label htmlFor="classification" className="form__label">
+                                Mission Cluster
+                            </label>
+                            <div className="select-wrap">
+                                <Select
+                                    name="mission_cluster"
+                                    options={cluster}
+                                    onChange={selectData}
+                                    isSearchable
+                                >
+                                </Select>
+                                {(checkValidation && storeData.mission_cluster == null) ? errorTxt: ""}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

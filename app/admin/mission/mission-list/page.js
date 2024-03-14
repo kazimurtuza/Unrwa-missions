@@ -7,20 +7,31 @@ import Link from 'next/link';
 function MissionList() {
     const [mission, setMissionList] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('mission');
+            setMissionList(data.result);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { data } = await axiosClient.get('mission');
-                console.log(data);
-                setMissionList(data.result);
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
 
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+   async function completeMission(id){
+       let adminData={
+           mission_id:id,
+           status:1,
+       }
+        const response = await axiosClient.post('mission-status-update', adminData);
+        console.log(response);
+        if(response.data.success==true){
+            fetchData();
+            alert('Mission Completed');
+        }
+    }
 
     function convertDateFormat(dateString, newFormat) {
         // Parse the input date string
@@ -34,7 +45,7 @@ function MissionList() {
 
     let newDateFormat = "DD/MM/YYYY"; // Example new format
 
-    let tableName = "User";
+    let tableName = "Mission List";
     const headName = ["Si", "Name", "movement_date","purpose","remarks","Status", "Action"];
     let head = (
         <tr>
@@ -119,17 +130,19 @@ function MissionList() {
                             aria-hidden
                             className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
                         ></span>
-                        <span className="relative">Active</span>
+                        <span className="relative">Completed</span>
                     </span>):(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                         <span
                             aria-hidden
                             className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
                         ></span>
-                        <span className="relative">Inactive</span>
+                        <span className="relative">Pending</span>
                     </span>)}
 
                     </td>
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-green-500 text-white rounded" onClick={()=>completeMission(item._id)}> Mission Completed</button>:""}
+
                         <Link
                             href={{
                                 pathname: '/admin/mission-view',

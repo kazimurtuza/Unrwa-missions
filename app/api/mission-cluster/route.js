@@ -5,6 +5,7 @@ import { User } from "@/lib/model/users";
 import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
+import { Agency } from "@/lib/model/agency";
 import { MissionCluster } from "@/lib/model/missionCluster";
 
 export async function GET(){
@@ -13,8 +14,11 @@ export async function GET(){
     try{
         console.log(connectionStr);
         await mongoose.connect(connectionStr);
-        data = await MissionCluster
-        .find({is_delete:0}).sort({ created_at: -1 });
+        data = await MissionCluster.find({is_delete:0}).populate({
+            path:'agency',
+            Model:'Agency'
+        })
+        .sort({ created_at: -1 });
     }
     catch(error)
     {

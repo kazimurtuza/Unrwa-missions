@@ -246,7 +246,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li>
 
-                                                    <li className="mb-1 last:mb-0 menu-legend">
+                                                    {/* <li className="mb-1 last:mb-0 menu-legend">
                                                             <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                                                 User Info
                                                             </span>
@@ -268,7 +268,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                                 user
                                                             </span>
                                                         </Link>
-                                                    </li>
+                                                    </li> */}
 
                                                     <li className="mb-1 last:mb-0 menu-legend">
                                                             <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
@@ -479,7 +479,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="admin/mission/mission-list"
+                                                            href="/admin/mission/mission-list"
                                                             className={({ isActive }) =>
                                                                 "text-slate-200 block transition duration-150 truncate " +
                                                                 (isActive
@@ -513,7 +513,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                     <li className="mb-1 last:mb-0 menu-legend">
                                                             <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                            Unrwa
+                                                            Facilities
                                                             </span>
 
                                                     </li>
@@ -529,7 +529,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                         >
                                                             <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Unrwa List
+                                                                Facilities List
                                                             </span>
                                                         </Link>
                                                     </li>
@@ -545,7 +545,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                         >
                                                             <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Create Unrwa
+                                                                Create Facility
                                                             </span>
                                                         </Link>
                                                     </li>

@@ -11,6 +11,7 @@ function Setting() {
   const [aboutEn, setAboutEn] = useState([]);
   const [aboutAr, setAboutAr] = useState([]);
   const [image, setImage] = useState([]);
+  const [app_logo, setApp_logo] = useState([]);
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
@@ -35,15 +36,15 @@ function Setting() {
     console.log(e);
     const file = e.target.files[0];
     if (file) {
-        const reader = new FileReader();
-        console.log("hello");
-        reader.onloadend = () => {
-        // Once the FileReader has read the file, set the base64 data
-        setImage(reader.result);
-        };
+      const reader = new FileReader();
 
-        // Read the file as a data URL (base64)
-        reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        // Once the FileReader has read the file, set the base64 data
+        setApp_logo(reader.result);
+      };
+
+      // Read the file as a data URL (base64)
+      reader.readAsDataURL(file);
     }
     
     
@@ -83,13 +84,14 @@ function Setting() {
       app_name:appName,
       about_app_en: aboutEn,
       about_app_ar:aboutAr,
+      app_logo:app_logo
     };
 
-    if (Array.isArray(image)) {
-      console.log("image");
-        console.log(image);
-        postData.app_logo = image;
-    }
+    // if (Array.isArray(image)) {
+    //   console.log("image");
+    //     console.log(image);
+    //     //postData.app_logo = image;
+    // }
     
     try {
 
@@ -225,7 +227,7 @@ function Setting() {
                          
                       </div>
 
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                             <label
                             className="block text-grey-darker text-sm font-bold mb-2"
                             htmlFor="questionName"
@@ -244,8 +246,8 @@ function Setting() {
                                 <br />
                             </>
                             )}
-                       </div>
-                      <div className="mb-4">
+                       </div> */}
+                      {/* <div className="mb-4">
                             <label
                             className="block text-grey-darker text-sm font-bold mb-2"
                             htmlFor="questionName"
@@ -261,7 +263,23 @@ function Setting() {
                             onChange={handleImage}
                             />
 
-                        </div>
+                        </div> */}
+
+                        
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                                New Logo
+                              </label>
+                              <input
+                                type="file"
+                                className="upload-field"
+                                ref={inputFile}
+                                onChange={handleImage}
+                              />
+                      </div>
 
 
                       <div className="flex items-center justify-between mt-8">

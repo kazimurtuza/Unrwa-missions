@@ -95,7 +95,8 @@ export async function POST(request) {
                 'email': payload.email,
                 'password': hashPassword,
                 'user_type': payload.staff_role,
-                "phone": payload.whatsup_number
+                "phone": payload.whatsup_number,
+                "status":0
         };
         //user create
         let user = new User(storeUser);
@@ -105,34 +106,34 @@ export async function POST(request) {
         payload.user=user._id;
         let staff = new Staff(payload);
         result = await staff.save();
-        const mailOptions={};
+        // const mailOptions={};
 
 
         
-        const transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com",
-                port: 465,
-                secure: true, // Set to false for explicit TLS
-                auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.EMAIL_PASSWORD,
-                },
-                tls: {
-                    // Do not fail on invalid certificates
-                    //rejectUnauthorized: false,
-                },
-        });
+        // const transporter = nodemailer.createTransport({
+        //         host: "smtp.gmail.com",
+        //         port: 465,
+        //         secure: true, // Set to false for explicit TLS
+        //         auth: {
+        //             user: process.env.EMAIL_USER,
+        //             pass: process.env.EMAIL_PASSWORD,
+        //         },
+        //         tls: {
+        //             // Do not fail on invalid certificates
+        //             //rejectUnauthorized: false,
+        //         },
+        // });
 
-        const password = payload.password;
-        const mailContent = `Your password: ${password}`;
+        // const password = payload.password;
+        // const mailContent = `Your password: ${password}`;
 
-        // Set up email options
-        mailOptions.to = payload.email;
-        mailOptions.subject = "User Creation Email";
-        mailOptions.text = mailContent;
+        // // Set up email options
+        // mailOptions.to = payload.email;
+        // mailOptions.subject = "User Creation Email";
+        // mailOptions.text = mailContent;
 
-        // Send the email
-        await transporter.sendMail(mailOptions);
+        // // Send the email
+        // await transporter.sendMail(mailOptions);
 
         return NextResponse.json({ result, success: true });
     } catch (error) {

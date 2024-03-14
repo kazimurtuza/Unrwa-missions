@@ -21,7 +21,7 @@ function Vehicle() {
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Vehicle";
-    const headName = ["Si","Agency", "Name","Vehicle plate number","brand name","brand type","armouted","fuel type","carry out", "Registration Number", "Vehicle Type", "Description", "Action"];
+    const headName = ["Si","Agency","Vehicle plate number","capacity","color","brand name","body type","armouted","fuel type", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -67,6 +67,15 @@ function Vehicle() {
                             </div>
                         </div>
                     </td>
+              
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.vehicle_plate_number}
+                        </p>
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}
@@ -78,7 +87,7 @@ function Vehicle() {
                             {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.name}
+                                    {item.capacity}
                                 </p>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
@@ -87,12 +96,23 @@ function Vehicle() {
                         </div>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.vehicle_plate_number}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
+                        <div className="flex">
+                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
+                            {/*    <img*/}
+                            {/*        className="w-full h-full rounded-full"*/}
+                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
+                            {/*        alt=""*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            <div className="ml-3">
+                                <p className="text-gray-900 whitespace-no-wrap">
+                                    {item.color}
+                                </p>
+                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                                {/*    000004*/}
+                                {/*</p>*/}
+                            </div>
+                        </div>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
@@ -126,46 +146,8 @@ function Vehicle() {
                         {/*    USD*/}
                         {/*</p>*/}
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.carry_out}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.registration_number}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.vehicle_type}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
-                    {/*<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">*/}
-                    {/*    <p className="text-gray-900 whitespace-no-wrap">*/}
-                    {/*        Sept 28, 2019*/}
-                    {/*    </p>*/}
-                    {/*    <p className="text-gray-600 whitespace-no-wrap">*/}
-                    {/*        Due in 3 days*/}
-                    {/*    </p>*/}
-                    {/*</td>*/}
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.description}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
+                  
+            
                   
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                         <ActionDropdown />
