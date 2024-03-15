@@ -123,21 +123,22 @@ function Steps() {
                 mission.movement_date = await formatDate(mission.movement_date);
                 let agencyLit = await mission.agency.map(item => {
                     return {
-                        agency_id: item.agency_id._id,
+                        agency_id: item.agency_id?item.agency_id._id:null,
                         value: item.agency_id._id,
                         label: item.agency_id.name
                     };
                 });
                 mission.agency = agencyLit;
+                // console.log(location)
                 mission.location_list = await location.map((item, index) => {
                     return {
                         "index_no": index,
+                        "_id":item._id,
                         ...item,
-                        "arrival_premise_type": item.arrival_premise_type._id,
-                        "departure_premise_type": item.departure_premise_type._id,
+                        "arrival_premise_type": item.arrival_premise_type?item.arrival_premise_type._id:null,
+                        "departure_premise_type": item.departure_premise_type?item.departure_premise_type._id:null,
                         "arrival_umrah_id": item.arrival_umrah_id ? item.arrival_umrah_id._id : null,
                         "departure_umrah_id": item.departure_umrah_id ? item.departure_umrah_id._id : null,
-                        // "arrival_umrah_id":item.arrival_umrah_id && ,
                     }
                 });
                 mission.places = "",
@@ -146,6 +147,7 @@ function Steps() {
                         // For each item in vicleList, return a new object with the "index_no" property and all other properties of the item
                         return {
                             "index_no": index,
+                            "_id":item._id,
                             "vehicle": item.vehicle._id,
                             "driver": item.driver._id,
                             "agency": item.agency._id,
@@ -159,11 +161,7 @@ function Steps() {
                         };
                     });
 
-                mission.vehicles = "";
-
-
-                console.log(mission.vehicle_list);
-
+                mission.vehicles = [];
 
                 setStoreData(mission)
 
@@ -255,22 +253,21 @@ function Steps() {
 
     async function saveMission() {
         var validationError = await checkStep3()
-        // console.log(storeData);
         if (validationError == 1) {
             setCheckValidation(1)
             return false;
         }
         try {
-            const response = await axiosClient.post('mission', storeData).then(function (response) {
+            const response = await axiosClient.post('mission-edit', storeData).then(function (response) {
 
+                setActiveTab(old => 0);
                 Swal.fire({
                     title: 'success',
-                    text: 'Successfully Mission Created',
+                    text: 'Successfully Mission Updated',
                     icon: 'success',
                     // confirmButtonText: 'Cool'
                 })
-                setStoreData(old => dataObject);
-                setActiveTab(old => 0);
+                // setStoreData(old => dataObject);
             })
                 .catch(function (error) {
                     console.log(error.message);
