@@ -212,7 +212,7 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
                                                 <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/mission"
+                                                            href="/admin/mission/mission-list"
                                                             className={({ isActive }) =>
                                                                 "text-slate-200 block transition duration-150 truncate " +
                                                                 (isActive
@@ -229,7 +229,7 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/mission/create"
+                                                            href="/admin/mission"
                                                             className={({ isActive }) =>
                                                                 "text-slate-200 block transition duration-150 truncate " +
                                                                 (isActive
