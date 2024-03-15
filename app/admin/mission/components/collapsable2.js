@@ -23,7 +23,7 @@ const customStyles = {
 
 let errorTxt = <p style={customStyles}>This field is required.</p>
 
-const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff}) => {
+const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleStaffStore}) => {
 
     const setdata = (e) => {
         const {name, value} = e.target;
@@ -147,7 +147,7 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff}) => {
             staff_id: item
         }));
         let name = "staff"; // Assuming this is the name you want to use
-        setInfo(name, value, item); // You need to define 'item' somewhere in your code
+        vehicleStaffStore(value, item); // You need to define 'item' somewhere in your code
     };
 
     return (

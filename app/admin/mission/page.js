@@ -10,7 +10,6 @@ import Step3 from "./Step3";
 import Step4 from "./Step4";
 import "./steps.css";
 
-
 function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -19,6 +18,7 @@ function formatDate(dateString) {
     const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
     return formattedDate;
 }
+
 function Steps() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -50,7 +50,7 @@ function Steps() {
             "arrival_time": "",
             "arrival_premise_type": null,
             "arrival_umrah_id": null,
-            "mission_cluster":null,
+            "mission_cluster": null,
             "arrival_installation_name": "",
             "arrival_latitude": "",
             "arrival_longitude": "",
@@ -64,7 +64,7 @@ function Steps() {
             "agency": null,
             "vehicle_type": "",
             "vehicle_body": "",
-            "staff":[],
+            "staff": [],
         }]
     }
 
@@ -88,16 +88,31 @@ function Steps() {
     };
     const vehicleSet = async (value) => {
         console.log('-------list------');
+        console.log(value)
         // let stafList= [...value.map((item) =>...item.staff)];
 
-        const stafList =await value.map((item) => item.staff.map((staffItem) => {
+        const stafList = await value.map((item) => item.staff.map((staffItem) => {
             return staffItem.staff_id
-                ; // You might do some processing here
         })).flat();
         setVehicleStaff(stafList);
         // let update =await {...storeData, vehicle_list: value};
-      await  setStoreData(old => ({...old, vehicle_list: value}));
+        await setStoreData(old => ({...old, vehicle_list: value}));
     };
+
+    const vehicleStaffStore = async (value, index) => {
+        let oldData = storeData;
+        let vehicle = oldData.vehicle_list;
+        let vicleList = await vehicle.map(item => {
+            if (item.index_no == index) {
+                item.staff = value;
+                return item;
+            } else {
+                return item;
+            }
+        })
+        let newData = {...storeData, vehicle_list: vicleList}
+        await setStoreData(old => newData);
+    }
 
     const agenciesSet = async () => {
         try {
@@ -144,7 +159,6 @@ function Steps() {
         }
     };
 
-
     const staffListSet = async () => {
         try {
             const {data} = await axiosClient.get('staff');
@@ -169,17 +183,16 @@ function Steps() {
         classificationListSet();
     }, []);
 
-
     async function saveMission() {
-        var validationError =await checkStep3()
+        var validationError = await checkStep3()
         // console.log(storeData);
         if (validationError == 1) {
             setCheckValidation(1)
             return false;
         }
+
         try {
             const response = await axiosClient.post('mission', storeData).then(function (response) {
-
                 Swal.fire({
                     title: 'success',
                     text: 'Successfully Mission Created',
@@ -194,24 +207,23 @@ function Steps() {
                 });
             if (response.data.success == true) {
                 alert("Successfully Created")
-
             }
         } catch (error) {
             console.log(error.message)
         }
-
-
     }
 
     const [activeTab, setActiveTab] = useState(0);
 
     const formElements = [
-        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster} classification={classification}
+        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster}
+               classification={classification}
                staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
         <Step2 data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
                checkValidation={checkValidation} locationSet={locationStore}/>,
-        <Step3 data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]} checkValidation={checkValidation}
-               vehicleStore={vehicleSet}/>,
+        <Step3 data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]}
+               checkValidation={checkValidation}
+               vehicleStore={vehicleSet} vehicleStaffStore={vehicleStaffStore}/>,
         <Step4 data={data} setData={setData}/>,
     ];
     const nextPage = async () => {
@@ -222,19 +234,16 @@ function Steps() {
             setCheckValidation(0)
             setActiveTab((prev) => prev + 1);
         }
-
     }
 
     function checkStep1() {
-
         if (storeData.leader == null ||
-            storeData.agency.length==0 ||
+            storeData.agency.length == 0 ||
             // storeData.mission_classification == null ||
             storeData.movement_date == "" ||
             storeData.purpose == "" ||
             storeData.remarks == "" ||
             storeData.mission_cluster == null
-
         ) {
             setCheckValidation(old => 1)
             return 1;
@@ -252,12 +261,14 @@ function Steps() {
                     result = 1;
                 }
             }
+
             if (item.arrival_umrah_type == 1) {
                 if (item.arrival_umrah_id == null || item.arrival_premise_type == null || item.arrival_building_code == "") {
                     setCheckValidation(old => 1)
                     result = 1;
                 }
             }
+
             if (
                 // item.departure_installation_name == "" ||
                 item.departure_time == "" ||
@@ -270,7 +281,6 @@ function Steps() {
             ) {
                 result = 1;
             }
-
         })
         if (result == 1) {
             setCheckValidation(old => 1)
@@ -289,11 +299,9 @@ function Steps() {
                 item.driver == null ||
                 item.agency == null ||
                 item.staff.length == 0
-
             ) {
                 result = 1;
             }
-
         })
         if (result == 1) {
             setCheckValidation(old => 1)
@@ -321,11 +329,11 @@ function Steps() {
                                         {/*<div className='circle'>4</div>*/}
                                     </div>
                                     {/*<div>*/}
-                                        {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'} />} fileName="example.pdf">*/}
-                                            {/*{({ blob, url, loading, error }) =>*/}
-                                                {/*loading ? 'Loading document...' : 'Download PDF'*/}
-                                            {/*}*/}
-                                        {/*</PDFDownloadLink>*/}
+                                    {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'} />} fileName="example.pdf">*/}
+                                    {/*{({ blob, url, loading, error }) =>*/}
+                                    {/*loading ? 'Loading document...' : 'Download PDF'*/}
+                                    {/*}*/}
+                                    {/*</PDFDownloadLink>*/}
                                     {/*</div>*/}
                                     <div>{formElements[activeTab]}</div>
                                     <div
@@ -337,7 +345,7 @@ function Steps() {
                                                 activeTab === 0
                                                     ? "opacity-30"
                                                     : "opacity-100 hover:shadow-[0_0_15px_0_rgba(0,0,0,.3)]"
-                                                }`}
+                                            }`}
                                         >
                                             Back
                                         </button>
@@ -347,12 +355,13 @@ function Steps() {
                                                     ? "disabled"
                                                     : ""
                                             }
+
                                             onClick={nextPage}
                                             className={`px-4 py-2 rounded bg-main text-white transition duration-300 ${
                                                 activeTab === formElements.length - 2
                                                     ? "hidden"
                                                     : "opacity-100 hover:shadow-[0_0_15px_0_rgba(0,0,0,.5)]"
-                                                }`}
+                                            }`}
                                         >
                                             Next
                                         </button>
@@ -372,8 +381,6 @@ function Steps() {
                 </main>
             </div>
         </div>
-
-
     );
 }
 
