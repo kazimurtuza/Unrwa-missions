@@ -26,7 +26,6 @@ function MissionList() {
            status:status,
        }
         const response = await axiosClient.post('mission-status-update', adminData);
-        console.log(response);
         if(response.data.success==true){
             fetchData();
             alert('Mission Status change Successfully');
