@@ -6,7 +6,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --main-color: #01ADEE;
+  --main-color: #1B7C85;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,10 +36,44 @@ body {
   background-color: var(--main-color);
 }
 
+#sidebar{
+  width: 18rem!important;
+}
+
 ul .menu-legend {
   color: #ffffff;
   text-transform: uppercase;
   margin: 20px 0 5px;
   border-bottom: 1px solid rgba(255, 255, 255, .2);
   padding-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-left: 0!important;
+}
+
+.df-sidebar ul li{
+  position: relative;
+  padding-left: 15px;
+}
+
+.df-sidebar ul li:before{
+  content: "";
+  height: 6px;
+  width: 6px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  left: -15px;
+  top: 11px;
+  z-index: 9;
+  opacity: .7;
+}
+
+ul li.menu-legend:before{
+  display: none!important;
+}
+
+.has-legend li:before{
+  left: 0!important;
 }

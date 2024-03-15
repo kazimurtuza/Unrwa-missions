@@ -1,17 +1,10 @@
 "use client";
 
-import {MissionPDF} from "@/app/admin/mission/components/missionPdf";
-import {PDFDownloadLink} from '@react-pdf/renderer';
-import {useRouter, useSearchParams} from "next/navigation";
-import { join } from 'path';
+import { useRouter, useSearchParams } from "next/navigation";
 
-
-import "./style.css";
-import {useEffect, useState} from "react";
 import axiosClient from "@/app/axiosClient";
-import Select from "react-select";
-import DualListBox from "react-dual-listbox";
-import Link from "../mission/mission-list/page";
+import { useEffect, useState } from "react";
+import "./style.css";
 
 function MissionVIew() {
     const router = useRouter();
@@ -30,7 +23,6 @@ function MissionVIew() {
         {value: "7", label: "Staff Seven"},
     ];
 
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -42,8 +34,8 @@ function MissionVIew() {
                     setMission(data.result.mission);
                     setplaces(data.result.places);
                     setvehicles(data.result.vehicles);
-
                 }
+
                 console.log(data.result);
             } catch (error) {
                 console.error('Error fetching users:', error);
@@ -52,7 +44,6 @@ function MissionVIew() {
 
         fetchData();
     }, []);
-
 
     let dataList={
         mission_id:mission_id,
@@ -74,7 +65,6 @@ function MissionVIew() {
             ...old, // Copy the previous state
             [name]: value // Update the property with the given name
         }))
-
     };
 
     const storeDate=async ()=>{
@@ -105,7 +95,16 @@ function MissionVIew() {
         document.body.removeChild(a);
     }
 
-
+    const [hydrated, setHydrated] = useState(false);
+    useEffect(() => {
+        // This forces a rerender, so the date is rendered
+        // the second time but not the first
+        setHydrated(true);
+    }, []);
+    if (!hydrated) {
+        // Returns null on first render, so the client and server match
+        return null;
+    }
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -114,8 +113,8 @@ function MissionVIew() {
                     <div className='container mx-auto px-4 sm:px-8'>
                         <div className='py-8'>
                             <main>
-                                <div>
-                                    <button onClick={downloadPdf}>download Pdf</button>
+                                <div className="pdf-btn-wrap">
+                                    <button className="mt-4 px-4 py-2 mx-2 bg-main text-white rounded" onClick={downloadPdf}>download Pdf</button>
                                     {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'}/>}*/}
                                                      {/*fileName="example.pdf">*/}
                                         {/*{({blob, url, loading, error}) =>*/}
@@ -179,8 +178,8 @@ function MissionVIew() {
                                                 <div className='msb-meta__item'>
                                                     <h4 className="form__info-box__title">Agencies</h4>
                                                     <ul className='meta-list'>
-                                                        {mission && mission.agency.map(item => (
-                                                            <li>{item.agency_id.name}</li>))}
+                                                        {mission && mission.agency.map((item, index) => (
+                                                            <li key={index}>{item.agency_id.name}</li>))}
 
                                                     </ul>
                                                 </div>
@@ -197,18 +196,17 @@ function MissionVIew() {
                                                 </div>
                                                 <div className='msb-meta__item'>
                                                     <h4 className="form__info-box__title">Remarks</h4>
-                                                    <p><p>{mission && mission.remarks}</p></p>
+                                                    <p>{mission && mission.remarks}</p>
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
 
-
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Movement Stops</h2>
                                         {
-                                            places && places.map(item => <div className='form__info-box'>
+                                            places && places.map((item, index) => <div key={index} className='form__info-box'>
                                                 <h3 className='form__info-box__title'>
                                                     Departure
                                                 </h3>
@@ -224,7 +222,6 @@ function MissionVIew() {
                                                             <b>Facility Ownership</b>
                                                         </p>
                                                         {item.departure_umrah_type == 0 ? <p>NOT UNRAW</p> : <p>UNRAW</p>}
-
 
                                                     </div>
                                                 </div>
@@ -327,9 +324,7 @@ function MissionVIew() {
                                             </div>)
                                         }
 
-
                                     </div>
-
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Vehicle and Driver Details</h2>
@@ -394,21 +389,10 @@ function MissionVIew() {
                                             </div>)
                                         }
 
-
                                     </div>
-
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Admin Mission Set</h2>
-
-                                        {/*mission_classification:"",*/}
-                                        {/*does_mission:"",*/}
-                                        {/*unops_acu_status:"",*/}
-                                        {/*unops_acu:"",*/}
-                                        {/*cla:"",*/}
-                                        {/*cls_decision:"",*/}
-                                        {/*request_status:"",*/}
-                                        {/*greenlight_recieve:"",*/}
                                         <div className="collapsable-item__body">
                                             <div className="collapsable-item__body-row flex-start-spb">
                                                 <div className="collapsable-item__body-col">
@@ -476,6 +460,10 @@ function MissionVIew() {
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
                                                     </div>
 
+                                                </div>
+
+                                                <div className="collapsable-item__body-col">
+
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
                                                             CLA
@@ -536,7 +524,7 @@ function MissionVIew() {
                                                 </div>
                                             </div>
 
-                                            <div><button  className="mt-4 px-4 py-2 mx-2 bg-green-500 text-white rounded" onClick={storeDate}>Submit</button></div>
+                                            <div><button  className="mt-4 px-4 py-2 mx-2 bg-main text-white rounded" onClick={storeDate}>Submit</button></div>
 
                                         </div>
                                     </div>

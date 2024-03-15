@@ -1,10 +1,9 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
-import { useRouter } from 'next/navigation';
+import TableExample from "@/app/example-table/page";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
 
 function UserProduct() {
     const [category, setCategoryList] = useState([]);
@@ -112,7 +111,7 @@ function UserProduct() {
 
 
 
-                      <Link href={`/admin/user-product-list?user_id=${item._id}`} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-gray-600" >Product List</Link>
+                      <Link href={`/admin/user-product-list?user_id=${item._id}`} className="px-4 py-2 bg-main text-white rounded hover:bg-gray-600" >Product List</Link>
                     </td>
                 </tr>
             ))}

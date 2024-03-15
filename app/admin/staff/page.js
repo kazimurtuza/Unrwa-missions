@@ -1,9 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function Staff() {
     const [staff, setStaffList] = useState([]);
@@ -20,7 +19,7 @@ function Staff() {
     };
 
     useEffect(() => {
-       
+
 
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
@@ -55,9 +54,9 @@ function Staff() {
     )}
 
     const body = (
-        
+
         <>
-       
+
             {Array.isArray(staff) && staff.map((item, index) => (
 
                 <tr key={index}>
@@ -121,7 +120,7 @@ function Staff() {
                         {/*    USD*/}
                         {/*</p>*/}
                     </td>
-                
+
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.user.status === 1 ? "Unblocked" : "Blocked"}
@@ -130,7 +129,7 @@ function Staff() {
                         {/*    USD*/}
                         {/*</p>*/}
                     </td>
-                 
+
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.classification}
@@ -147,8 +146,8 @@ function Staff() {
                         {/*    USD*/}
                         {/*</p>*/}
                     </td>
-                  
-                  
+
+
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                         {/* <ActionDropdown /> */}
 
@@ -172,12 +171,12 @@ function Staff() {
                                             //           'Content-Type': 'application/json',
                                             //       },
                                             //   });
-                                            
+
                                             console.log(response);
                                               setSuccessMessage('Status Update successfully');
                                               fetchData();
                                               // Remove the deleted question from the state
-                                              
+
                                           } catch (error) {
                                               console.error("Error deleting user:", error);
                                           }
@@ -194,7 +193,7 @@ function Staff() {
                                     pathname: '/admin/staff/edit',
                                     query: { id: item._id },
                                 }}
-                                className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
                                 <Link
                                 href={{

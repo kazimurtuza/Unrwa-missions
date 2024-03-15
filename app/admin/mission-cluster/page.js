@@ -1,9 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
 import Link from 'next/link';
+import { useEffect, useState } from "react";
 
 function MissionCluster() {
     const [missionCluster, setMissionClusterList] = useState([]);
@@ -18,7 +17,7 @@ function MissionCluster() {
 
     fetchData();
     useEffect(() => {
-      
+
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Mission Cluster";
@@ -159,7 +158,7 @@ function MissionCluster() {
                                     pathname: '/admin/mission-cluster/edit',
                                     query: { id: item._id },
                                 }}
-                                className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
                                <button
                                   onClick={async () => {
@@ -194,7 +193,7 @@ function MissionCluster() {
                             </div>
                         </div>
                     </td>
-                  
+
                     {/* <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                         <ActionDropdown />
                     </td> */}

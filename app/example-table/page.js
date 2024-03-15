@@ -1,9 +1,6 @@
 "use client";
 import { useState } from "react";
 
-import Header from "../partials/Header";
-import Sidebar from "../partials/Sidebar";
-import ActionDropdown from "../components/actionDropdown";
 
 const  TableExample=(props)=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,13 +19,13 @@ const  TableExample=(props)=>{
                 </h2>
                 <form
                   action="/"
-                  class="relative w-full sm:w-80 flex items-center h-12 rounded-md focus-within:shadow-lg bg-white overflow-hidden"
+                  className="relative w-full sm:w-80 flex items-center h-12 rounded-md focus-within:shadow-lg bg-white overflow-hidden"
                 >
-                  <div class="grid place-items-center h-full w-12 text-gray-300 hover:text-indigo-400">
+                  <div className="grid place-items-center h-full w-12 text-gray-300 hover:text-indigo-400">
                     <button type="submit">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
+                        className="h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -45,7 +42,7 @@ const  TableExample=(props)=>{
                   </div>
 
                   <input
-                    class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                    className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
                     type="text"
                     id="search"
                     placeholder="Search something.."
@@ -264,16 +261,16 @@ const  TableExample=(props)=>{
               </div>
 
               {/* pagination */}
-              <nav aria-label="Pagination" class="text-gray-600 pt-8">
+              <nav aria-label="Pagination" className="text-gray-600 pt-8">
                 <ul className="flex items-center justify-center gap-2">
                   <li>
                     <a
                       href="#"
-                      class="p-2 inline-block align-middle rounded hover:bg-gray-200 hover:text-indigo-400"
+                      className="p-2 inline-block align-middle rounded hover:bg-gray-200 hover:text-indigo-400"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
+                        className="h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -290,7 +287,7 @@ const  TableExample=(props)=>{
                   <li>
                     <a
                       href="#"
-                      class="px-4 py-2 text-indigo-400 hover:text-indigo-400 bg-gray-200 inline-block rounded hover:bg-gray-200"
+                      className="px-4 py-2 text-indigo-400 hover:text-indigo-400 bg-gray-200 inline-block rounded hover:bg-gray-200"
                     >
                       1
                     </a>
@@ -298,7 +295,7 @@ const  TableExample=(props)=>{
                   <li>
                     <a
                       href="#"
-                      class="px-4 py-2 hover:text-indigo-400 rounded inline-block text-gray-900 font-medium hover:bg-gray-200"
+                      className="px-4 py-2 hover:text-indigo-400 rounded inline-block text-gray-900 font-medium hover:bg-gray-200"
                     >
                       2
                     </a>
@@ -306,7 +303,7 @@ const  TableExample=(props)=>{
                   <li>
                     <a
                       href="#"
-                      class="px-4 py-2 hover:text-indigo-400 inline-block rounded hover:bg-gray-200"
+                      className="px-4 py-2 hover:text-indigo-400 inline-block rounded hover:bg-gray-200"
                     >
                       3
                     </a>
@@ -314,7 +311,7 @@ const  TableExample=(props)=>{
                   <li>
                     <a
                       href="#"
-                      class="px-4 py-2 hover:text-indigo-400 inline-block rounded hover:bg-gray-200"
+                      className="px-4 py-2 hover:text-indigo-400 inline-block rounded hover:bg-gray-200"
                     >
                       ...
                     </a>
@@ -322,7 +319,7 @@ const  TableExample=(props)=>{
                   <li>
                     <a
                       href="#"
-                      class="px-4 py-2 hover:text-indigo-400 inline-block rounded hover:bg-gray-200"
+                      className="px-4 py-2 hover:text-indigo-400 inline-block rounded hover:bg-gray-200"
                     >
                       9
                     </a>
@@ -330,11 +327,11 @@ const  TableExample=(props)=>{
                   <li>
                     <a
                       href="#"
-                      class="p-2 inline-block align-middle rounded hover:bg-gray-200 hover:text-indigo-400"
+                      className="p-2 inline-block align-middle rounded hover:bg-gray-200 hover:text-indigo-400"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
+                        className="h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"

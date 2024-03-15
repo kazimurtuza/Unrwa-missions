@@ -2,8 +2,6 @@
 import { useState } from "react";
 
 import Modal from "../components/modal";
-import Header from "../partials/Header";
-import Sidebar from "../partials/Sidebar";
 
 function Modal2() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,10 +26,10 @@ function Modal2() {
           <div className="container mx-auto px-4 sm:px-8">
             <div className="py-8">
               {/* Table */}
-              <div class="flex items-center justify-center h-screen">
+              <div className="flex items-center justify-center h-screen">
                 <button
                   onClick={modalTrigger}
-                  class="py-2 px-6 bg-indigo-600 text-white rounded opacity-90 hover:opacity-100 transition font-medium duration-500"
+                  className="py-2 px-6 bg-indigo-600 text-white rounded opacity-90 hover:opacity-100 transition font-medium duration-500"
                   onclick="toggleModal()"
                 >
                   SHOW MODAL
