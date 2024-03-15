@@ -162,9 +162,8 @@ function Dashboard() {
           </div>
 
           <div style={{padding: '30px 200px'}}>
-          { /* <Line options={options} data={data} /> */ }
+          <Line options={options} data={data} />
           </div>
-
       </main>
   );
 }
