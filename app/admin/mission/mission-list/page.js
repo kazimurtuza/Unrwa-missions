@@ -16,7 +16,6 @@ function MissionList() {
     };
 
     useEffect(() => {
-
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
    async function missionStatus(id,status){
@@ -24,6 +23,7 @@ function MissionList() {
            mission_id:id,
            status:status,
        }
+
         const response = await axiosClient.post('mission-status-update', adminData);
         if(response.data.success==true){
             fetchData();
@@ -138,9 +138,9 @@ function MissionList() {
                     </span>)}
 
                     </td>
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-main text-white rounded" onClick={()=>missionStatus(item._id,1)}> Mission Completed</button>:""}
-                        {(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject Mission</button>:""}
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
+                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-main text-white rounded" onClick={()=>missionStatus(item._id,1)}>Complete</button>:""}
+                        {(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject</button>:""}
 
                         <Link
                             href={{
@@ -149,20 +149,19 @@ function MissionList() {
                             }}
                             className="px-4 py-2 mx-2 bg-main text-white rounded"
                         > Details</Link>
-
+                        .circle.active
                         <Link
                             href={{
                                 pathname: '/admin/mission/mission-edit',
                                 query: { id: item._id },
                             }}
-                            className="px-4 py-2 mx-2 bg-main text-white rounded"
+                            className="px-4 py-2 mx-1 bg-main text-white rounded"
                         > Edit </Link>
                     </td>
                 </tr>
             ))}
         </>
     );
-
 
     return (
         <TableExample tableName={tableName} tableHead={head} body={body}/>

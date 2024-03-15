@@ -103,8 +103,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         </svg>
                     </button>
                     {/* Logo */}
-                    <Link href="/" className="block mx-auto text-slate-200">
-                        <img src="/uploads/feb969d7-d5d2-4e07-8d70-149d1ccf5229.jpg" alt="logo" />
+                    <Link href="/" className="block mx-auto text-slate-200 pt-3">
+                        <img width={150} src="/uploads/logo.png" alt="logo" />
                     </Link>
                 </div>
 
