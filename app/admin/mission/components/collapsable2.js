@@ -23,7 +23,7 @@ const customStyles = {
 
 let errorTxt = <p style={customStyles}>This field is required.</p>
 
-const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleStaffStore}) => {
+const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehicleStaffStore}) => {
 
     const setdata = (e) => {
         const {name, value} = e.target;
@@ -42,11 +42,11 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleS
 
     const selectData = (selectedOption, {name}) => {
         // Pass the input value to the parent component
-        var value=selectedOption.value;
-        if(name=='vehicle'){
-             value=selectedOption;
+        var value = selectedOption.value;
+        if (name == 'vehicle') {
+            value = selectedOption;
         }
-        setInfo(name,value,item);
+        setInfo(name, value, item);
     };
 
     const agencyListSet = async () => {
@@ -67,12 +67,15 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleS
 
     const driverListSet = async () => {
         try {
-            const {data} = await axiosClient.get('driver');
+            const {data} = await axiosClient.get('staff');
             if (data.success === true) {
-                const updatedDriverList = data.result.map(item => ({
-                    value: item._id,
-                    label: item.name,
-                }));
+                const updatedDriverList = data.result.filter(item => item && item.staff_role === "Driver")
+                    .map(item => ({
+                        value: item._id,
+                        label: item.name,
+                    }));
+
+                console.log(updatedDriverList);
 
                 setDriverList(updatedDriverList);
             }
@@ -111,17 +114,19 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleS
             setVehicleList([]);
         }
     };
-    async function setSelectedVehicleInfo(){
-        const seletVicleInfoData = await  vehicleList.find(option => option.value === info.vehicle)
+
+    async function setSelectedVehicleInfo() {
+        const seletVicleInfoData = await vehicleList.find(option => option.value === info.vehicle)
 
         if (seletVicleInfoData) {
-            setseletVicleInfo(old=>seletVicleInfoData.list);
+            setseletVicleInfo(old => seletVicleInfoData.list);
         }
     }
+
     async function selectedStaffSet() {
 
-        let selectedStaffList=await info.staff.map(item=>item.staff_id);
-        setSelected(old=>selectedStaffList)
+        let selectedStaffList = await info.staff.map(item => item.staff_id);
+        setSelected(old => selectedStaffList)
     }
 
 
@@ -131,7 +136,7 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleS
         driverListSet();
         staffListSet();
         vehicleListSet();
-        if(info.vehicle){
+        if (info.vehicle) {
             setSelectedVehicleInfo();
         }
     }, []);
@@ -176,7 +181,7 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleS
                                         isSearchable
                                     >
                                     </Select>
-                                    {(checkValidation && info.agency == null) ? errorTxt: ""}
+                                    {(checkValidation && info.agency == null) ? errorTxt : ""}
                                 </div>
                             </div>
 
@@ -193,7 +198,7 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleS
                                     isSearchable
                                 >
                                 </Select>
-                                {(checkValidation && info.driver == null) ? errorTxt: ""}
+                                {(checkValidation && info.driver == null) ? errorTxt : ""}
                             </div>
                         </div>
                         <div className="collapsable-item__body-col">
@@ -214,7 +219,7 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleS
                                         isSearchable
                                     >
                                     </Select>
-                                    {(checkValidation && info.vehicle == null) ? errorTxt: ""}
+                                    {(checkValidation && info.vehicle == null) ? errorTxt : ""}
                                 </div>
                             </div>
                             <div className="form__field collapsable-item__field">
@@ -255,7 +260,7 @@ const Collapsable2 = ({info, setInfo, item,checkValidation,vehicleStaff,vehicleS
                             }}
                             options={staffList}
                         />
-                        {(checkValidation && info.staff.length == 0) ? errorTxt: ""}
+                        {(checkValidation && info.staff.length == 0) ? errorTxt : ""}
                     </div>
                 </div>
 
