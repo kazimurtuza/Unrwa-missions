@@ -5,6 +5,7 @@ import axios from "axios";
 import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function StaffCreate() {
   const [countries, setCountries] = useState([]);
@@ -19,6 +20,12 @@ function StaffCreate() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [staffRole, setStaffRole] = useState("");
+
+  const router = useRouter();
+  const searchParames = useSearchParams();
+  const id = searchParames.get("id");
+
+
 
 
   const [familyName, setFamilyName] = useState("");
@@ -44,6 +51,47 @@ function StaffCreate() {
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
+
+     
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            //const objectId = mongoose.Types.ObjectId(id);
+            const { data } = await axiosClient.get(`staff/${id}`);
+            console.log(data);
+            setStaffName(data.result.name);
+            setPhone(data.result.phone);
+            setEmail(data.result.user.email);
+            setJStatelitePhone(data.result.statelite_phone);
+            setWhatsupNumber(data.result.whatsup_number);
+            setCallSignin(data.result.call_signin);
+            setBloodType(data.result.blood_type);
+            setDateOfBirth(data.result.date_of_birth);
+            setDepartment(data.result.department);
+            setEmployeeId(data.result.employee_id);
+            setPhoneNumberOne(data.result.phone_number_one);
+            setPhoneNumberTwo(data.result.phone_number_two);
+            setNationlity(data.result.nationlity);
+            setNationalId(data.result.national_id);
+            setSignalNumber(data.result.signal_number);
+            setGender(data.result.gender);
+            setTitle(data.result.title);
+            setFamilyName(data.result.family_name);
+            setOtherName(data.result.other_name);
+            setPassportNumberOrginal(data.result.passport_number_orginal);
+            setPassportDuplicate(data.result.passport_number_duplicate);
+            setNationlity(data.result.nationlity);
+            setStaffRole(data.result.staff_role);
+            setAgencyID(data.result.agency);
+            setClassificationId(data.result.classification);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+
+    fetchData();
+}, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -302,41 +350,41 @@ useEffect(() => {
 
     try {
 
-        const response = await axiosClient.post('staff', postData);
+        const response = await axiosClient.put(`staff/${id}`, postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("Staff Create Successfully");
-            setStaffName("");
-            setPhone("");
-            setEmail("");
-            setPassword("");
-            setJStatelitePhone("");
-            setWhatsupNumber("");
-            setCallSignin("");
-            setErrorMessage("");
-            setBloodType("");
-            setDateOfBirth("");
-            setDepartment("");
-            setEmployeeId("");
-            setPhoneNumberOne("");
-            setPhoneNumberTwo("");
-            setNationlity("");
-            setNationalId("");
-            setSignalNumber("");
-            setGender("");
-            setTitle("");
-            setFamilyName("");
-            setOtherName("");
-            setPassportNumberOrginal("");
-            setPassportDuplicate("");
-            setNationlity("");
-            setStaffRole("");
-            setAgencyID("");
-            setClassificationId("");
-            setStaffPhoto(null);
+            setSuccessMessage("Staff Update Successfully");
+            // setStaffName("");
+            // setPhone("");
+            // setEmail("");
+            // setPassword("");
+            // setJStatelitePhone("");
+            // setWhatsupNumber("");
+            // setCallSignin("");
+            // setErrorMessage("");
+            // setBloodType("");
+            // setDateOfBirth("");
+            // setDepartment("");
+            // setEmployeeId("");
+            // setPhoneNumberOne("");
+            // setPhoneNumberTwo("");
+            // setNationlity("");
+            // setNationalId("");
+            // setSignalNumber("");
+            // setGender("");
+            // setTitle("");
+            // setFamilyName("");
+            // setOtherName("");
+            // setPassportNumberOrginal("");
+            // setPassportDuplicate("");
+            // setNationlity("");
+            // setStaffRole("");
+            // setAgencyID("");
+            // setClassificationId("");
+            // setStaffPhoto(null);
           
           }
           else
@@ -383,7 +431,7 @@ useEffect(() => {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Staff Create
+                        Staff Edit
                       </p>
                       <br></br>
                       {successMessage && (
@@ -777,6 +825,7 @@ useEffect(() => {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
+                          readOnly
                           placeholder="Enter your email"
                           value={email}
                           onChange={(e) =>

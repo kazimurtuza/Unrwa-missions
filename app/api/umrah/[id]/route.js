@@ -6,6 +6,7 @@ import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
 import { Vehicle } from "@/lib/model/vehicle";
+import { Umrah } from "@/lib/model/umrah";
 
 export async function PUT(request, content) {
     let result = [];
@@ -15,11 +16,12 @@ export async function PUT(request, content) {
         const payload = await request.json();
         // return NextResponse.json(payload.password);
         await mongoose.connect(connectionStr);
-        const missionCluster=await Vehicle.findById(filter);
+        return NextResponse.json({id, success: true});
+        const missionCluster=await Umrah.findById(filter);
         const oldData=missionCluster._doc;
 
         const updatedata={...oldData,...payload}
-        result = await Vehicle.findOneAndUpdate(filter, updatedata);
+        result = await Umrah.findOneAndUpdate(filter, updatedata);
     } catch (error) {
         return NextResponse.json({error:error.message, success: 'error found'});
     }
@@ -35,7 +37,7 @@ export async function GET(request,content){
         const record={_id:staffId};
         //return NextResponse.json({result:staffId,success:true});
         await mongoose.connect(connectionStr);
-        data=await Vehicle
+        data=await Umrah
         .findById(record);
     }
     catch(error)
@@ -52,7 +54,7 @@ export async function DELETE(request, content) {
         const filter = { _id: id };
 
         await mongoose.connect(connectionStr);
-        const mission = await Vehicle.findById(filter);
+        const mission = await Umrah.findById(filter);
 
         // Update only the is_delete field to 1
         mission.is_delete = 1;

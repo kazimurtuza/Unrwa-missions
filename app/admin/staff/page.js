@@ -3,6 +3,7 @@ import TableExample from "@/app/example-table/page";
 import ActionDropdown from "@/app/components/actionDropdown";
 import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import Link from "next/link";
 
 function Staff() {
     const [staff, setStaffList] = useState([]);
@@ -26,7 +27,7 @@ function Staff() {
 
     let tableName = "Staff";
     //const headName = ["Si","Image","Name", "Email", "Agency","Mission Classification","Gender","Passport Number Orginal","Passport Number Duplicate","Whatsup Number", "Statelite Phone", "Call Signin", "Action"];
-    const headName = ["Si","Image","Name", "Role","Email","Status", "Agency","Mission Classification","Gender", "Action"];
+    const headName = ["Si","Image","Name", "Role",,"Status","Mission Classification","Gender", "Action"];
 
     let head = (
         <tr>
@@ -120,14 +121,7 @@ function Staff() {
                         {/*    USD*/}
                         {/*</p>*/}
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.user.email}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
+                
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.user.status === 1 ? "Unblocked" : "Blocked"}
@@ -136,14 +130,7 @@ function Staff() {
                         {/*    USD*/}
                         {/*</p>*/}
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.agency && item.agency.name}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
+                 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.classification}
@@ -200,6 +187,26 @@ function Staff() {
                               >
                                    {item.user.status === 1 ? "Block" : "Unblock"}
                               </button>
+
+                              <div className="ml-3">
+                            <Link
+                                href={{
+                                    pathname: '/admin/staff/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                              > Edit</Link>
+                                <Link
+                                href={{
+                                    pathname: '/admin/staff/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
+                              > Delete</Link>
+                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                                {/*    000004*/}
+                                {/*</p>*/}
+                            </div>
                     </td>
                 </tr>
             ))}
