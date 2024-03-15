@@ -147,10 +147,8 @@ function Vehicle() {
                         {/*</p>*/}
                     </td>
 
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
 
-
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                    <div className="ml-3">
                             <Link
                                 href={{
                                     pathname: '/admin/vehicle/edit',
@@ -168,13 +166,12 @@ function Vehicle() {
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
                                 {/*</p>*/}
-                            </div>
+
                     </td>
                 </tr>
             ))}
         </>
     );
-
 
     return (
         <TableExample tableName={tableName} tableHead={head} body={body}/>

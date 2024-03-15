@@ -7,14 +7,14 @@ import { BsCart } from "react-icons/bs";
 import { FaProductHunt } from "react-icons/fa6";
 
 import {
-    CategoryScale,
-    Chart as ChartJS,
-    Legend,
-    LineElement,
-    LinearScale,
-    PointElement,
-    Title,
-    Tooltip,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -161,7 +161,7 @@ function Dashboard() {
 
           </div>
 
-          <div style={{padding: '30px 200px'}}>
+          <div style={{width: 'calc(100vw - 500px)', padding: '50px 0 50px 20px'}}>
           <Line options={options} data={data} />
           </div>
       </main>

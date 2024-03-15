@@ -19,8 +19,6 @@ function Staff() {
     };
 
     useEffect(() => {
-
-
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
@@ -147,8 +145,7 @@ function Staff() {
                         {/*</p>*/}
                     </td>
 
-
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
                         {/* <ActionDropdown /> */}
 
                         <button
@@ -162,6 +159,7 @@ function Staff() {
                                             const postData={
                                                 status:1
                                             }
+
                                             const response = await axiosClient.put(`users/status-update/${item.user._id}`, postData);
 
                                             //   await fetch(`/api/users/status-update/${item.user._id}`, {
@@ -176,7 +174,6 @@ function Staff() {
                                               setSuccessMessage('Status Update successfully');
                                               fetchData();
                                               // Remove the deleted question from the state
-
                                           } catch (error) {
                                               console.error("Error deleting user:", error);
                                           }
@@ -187,7 +184,6 @@ function Staff() {
                                    {item.user.status === 1 ? "Block" : "Unblock"}
                               </button>
 
-                              <div className="ml-3">
                             <Link
                                 href={{
                                     pathname: '/admin/staff/edit',
@@ -205,13 +201,12 @@ function Staff() {
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
                                 {/*</p>*/}
-                            </div>
+
                     </td>
                 </tr>
             ))}
         </>
     );
-
 
     return (
         <TableExample tableName={tableName} tableHead={head} body={body}/>

@@ -17,7 +17,6 @@ function UmrahList() {
                 if (data.success == true) {
                     setUmrahList(data.result);
                 }
-
             } catch (error) {
                 setProductList([]);
                 // console.error('Error fetching categories:', error);
@@ -135,8 +134,6 @@ function UmrahList() {
                         </p>
                     </td>
 
-
-
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         {item.status ? (<span
                             className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
@@ -155,8 +152,8 @@ function UmrahList() {
                     </span>)}
 
                     </td>
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                    <div className="ml-3">
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
+
                             <Link
                                 href={{
                                     pathname: '/admin/umrah/edit',
@@ -174,13 +171,12 @@ function UmrahList() {
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
                                 {/*</p>*/}
-                            </div>
+
                     </td>
                 </tr>
             )) : ''}
         </>
     );
-
 
     return (
         <TableExample tableName={tableName} tableHead={head} body={body}/>
