@@ -3,6 +3,7 @@ import TableExample from "@/app/example-table/page";
 import ActionDropdown from "@/app/components/actionDropdown";
 import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import Link from "next/link";
 
 function Vehicle() {
     const [vehicle, setVehicleList] = useState([]);
@@ -150,7 +151,25 @@ function Vehicle() {
             
                   
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                        <ActionDropdown />
+                    <div className="ml-3">
+                            <Link
+                                href={{
+                                    pathname: '/admin/vehicle/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                              > Edit</Link>
+                                <Link
+                                href={{
+                                    pathname: '/admin/vehicle/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
+                              > Delete</Link>
+                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                                {/*    000004*/}
+                                {/*</p>*/}
+                            </div>
                     </td>
                 </tr>
             ))}

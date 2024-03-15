@@ -7,18 +7,18 @@ import Link from 'next/link';
 
 function MissionCluster() {
     const [missionCluster, setMissionClusterList] = useState([]);
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('mission-cluster');
+            setMissionClusterList(data.result);
+        } catch (error) {
+            console.error('Error fetching misson-classifications:', error);
+        }
+    };
 
+    fetchData();
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { data } = await axiosClient.get('mission-cluster');
-                setMissionClusterList(data.result);
-            } catch (error) {
-                console.error('Error fetching misson-classifications:', error);
-            }
-        };
-
-        fetchData();
+      
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Mission Cluster";
@@ -156,18 +156,38 @@ function MissionCluster() {
                             <div className="ml-3">
                             <Link
                                 href={{
-                                    pathname: '/admin/cluster/edit',
+                                    pathname: '/admin/mission-cluster/edit',
                                     query: { id: item._id },
                                 }}
                                 className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
                               > Edit</Link>
-                                <Link
-                                href={{
-                                    pathname: '/admin/cluster/edit',
-                                    query: { id: item._id },
-                                }}
-                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
-                              > Delete</Link>
+                               <button
+                                  onClick={async () => {
+                                      // Show a confirmation alert
+                                      const confirmed = window.confirm("Are you sure you want to delete?");
+
+                                      if (confirmed) {
+                                          // Make a DELETE request to your API to mark the question as deleted
+                                          try {
+                                            await axiosClient.delete(`mission-cluster/${item._id}`, {
+                                                  method: 'DELETE',
+                                                  headers: {
+                                                      'Content-Type': 'application/json',
+                                                  },
+                                              });
+                                              //setMessage('Delete successfully');
+                                              // Remove the deleted question from the state
+                                              //setData(data => data.filter(item => item._id !== val._id));
+                                              fetchData();
+                                          } catch (error) {
+                                              console.error("Error deleting question:", error);
+                                          }
+                                      }
+                                  }}
+                                  className="px-4 py-2 mx-2 bg-red-500 text-white rounded hover:bg-red-600"
+                              >
+                                  Delete
+                              </button>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
                                 {/*</p>*/}

@@ -6,27 +6,27 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BsCart } from "react-icons/bs";
 import { FaProductHunt } from "react-icons/fa6";
 
-// import {
-//     CategoryScale,
-//     Chart as ChartJS,
-//     Legend,
-//     LineElement,
-//     LinearScale,
-//     PointElement,
-//     Title,
-//     Tooltip,
-// } from 'chart.js';
-// import { Line } from 'react-chartjs-2';
-//
-//   ChartJS.register(
-//     CategoryScale,
-//     LinearScale,
-//     PointElement,
-//     LineElement,
-//     Title,
-//     Tooltip,
-//     Legend
-//   );
+import {
+    CategoryScale,
+    Chart as ChartJS,
+    Legend,
+    LineElement,
+    LinearScale,
+    PointElement,
+    Title,
+    Tooltip,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
 
   export const options = {
     responsive: true,
