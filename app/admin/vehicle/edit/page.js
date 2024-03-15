@@ -18,6 +18,7 @@ function VehicleEdit() {
   const [agency,setAgencyList]=useState("");
   const [agencyID,setAgencyID]=useState("");
   const [color, setColor] = useState("");
+  const [vehicle_id,setVehicle_id]=useState("");
 
   const [description, setDescription] = useState("");
   //success message
@@ -46,6 +47,7 @@ function VehicleEdit() {
             setFuelType(data.result.fuel_type);
             setColor(data.result.color);
             setCarryOut(data.result);
+            setVehicle_id(data.result.vehicle_id);
             setCapacity(data.result.capacity);
         } catch (error) {
             console.error('Error fetching agencies:', error);
@@ -92,6 +94,9 @@ function VehicleEdit() {
   const handleDescriptionChange = (value) => {
     setDescription(value);
   };
+  const handleVehicleID = (value) => {
+    setVehicle_id(value);
+  };
   const handleVehiclePlateChange = (value) => {
     setVehicle_Plate_number(value);
   };
@@ -130,9 +135,9 @@ function VehicleEdit() {
     // Prepare data for API request
     const postData = {
       name: vehicleName,
-      registration_number:regNumber,
-      vehicle_type:vehicleType,
-      description:description,
+      registration_number:vehicle_plate_number,
+      vehicle_type:brand_name,
+      description:brand_type,
       vehicle_plate_number:vehicle_plate_number,
       brand_name:brand_name,
       brand_type:brand_type,
@@ -141,7 +146,8 @@ function VehicleEdit() {
       color:color,
       agency:agencyID,
       carry_out:carryOut,
-      capacity:capacity
+      capacity:capacity,
+      vehicle_id:vehicle_id
     };
 
     try {
@@ -316,6 +322,26 @@ function VehicleEdit() {
                         />
                       </div> */}
 
+<div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Vehicle ID
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="slug"
+                          type="text"
+                          placeholder="Enter your vehicle ID"
+                          value={vehicle_id}
+                          onChange={(e) =>
+                            handleVehicleID(e.target.value)
+                          }
+
+                        />
+                      </div>
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -468,11 +494,11 @@ function VehicleEdit() {
                                           value={fuel_type}
                                           onChange={(e) => handleFuelTypeChange(e.target.value)}
                                         >
-                                          <option value="Petual">
-                                            Petual
+                                          <option value="Petrol">
+                                          Petrol
                                           </option>
-                                          <option value="Piesel">
-                                            Piesel
+                                          <option value="Diesel">
+                                          Diesel
                                           </option>
 
                                         </select>

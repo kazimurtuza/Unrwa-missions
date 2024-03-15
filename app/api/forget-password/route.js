@@ -57,6 +57,7 @@ export async function POST(request) {
             const mailContent = `For reset your password Code: ${code}`;
 
             // Set up email options
+            mailOptions.from = process.env.EMAIL_USER;
             mailOptions.to = email;
             mailOptions.subject = "Password Reset";
             mailOptions.text = mailContent;

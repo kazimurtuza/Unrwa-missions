@@ -5,6 +5,7 @@ import { User } from "@/lib/model/users";
 import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
+import { Agency } from "@/lib/model/agency";
 
 export async function GET(){
  
@@ -12,8 +13,12 @@ export async function GET(){
     try{
         console.log(connectionStr);
         await mongoose.connect(connectionStr);
-        data = await Vehicle
-        .find({is_delete:0}).sort({ created_at: -1 });
+        data = await Vehicle.find({ is_delete: 0 })
+        .sort({ created_at: -1 })
+        .populate({
+            path: "agency",
+            model: "Agency"
+        });
     }
     catch(error)
     {
