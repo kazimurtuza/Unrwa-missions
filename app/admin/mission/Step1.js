@@ -137,7 +137,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                             </label>
                             <div className="date-wrap">
                                 <input type="date" onChange={setdata} name="movement_date" className="form__input"
-                                       id="date" value={storeData.movement_date}/>
+                                       id="date" value={storeData.movement_date}   defaultValue={storeData.movement_date} />
                                 {(checkValidation && storeData.movement_date == '') ? errorTxt: ""}
                             </div>
                         </div>
@@ -152,6 +152,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                                 name="purpose"
                                 onChange={setdata}
                                 id="purpose"
+                                value={storeData.purpose}
                             >{storeData.purpose}</textarea>
                             {(checkValidation && storeData.purpose == '') ? errorTxt: ""}
                         </div>
@@ -163,6 +164,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                                 className="form__textarea"
                                 name="remarks"
                                 onChange={setdata}
+                                value={storeData.remarks}
                                 id="remarks"
                             >{storeData.remarks}</textarea>
                             {(checkValidation && storeData.remarks == '') ? errorTxt: ""}

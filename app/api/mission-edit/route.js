@@ -36,33 +36,40 @@ export async function POST(request) {
         delete mission.vehicle_list;
         // return NextResponse.json({mission, success: true});
 
+        let missionId=payload._id;
 
-        const filter = {_id: payload._id};
+        const filter = {_id: missionId};
         const update = mission;
         // Perform the update operation using findOneAndUpdate
         const missionUpdate = await Mission.findOneAndUpdate(filter, update, {new: true});
 
-        // const missionAdd = await new Mission(mission);
-        // missionAdd.save();
-        // result=missionAdd;
-        // const missionId = await missionAdd._id;
-
         if (location_list.length > 0) {
             location_list.map(async (item, index) => {
-                const filter = {_id: item._id};
-                const update = item;
-                const missionLocation = await MissionDepartureArrival.findOneAndUpdate(filter, update, {new: true});
+                item.mission = await missionId;
+                if(item._id){
+                    const filter = {_id: item._id};
+                    const update = item;
+                    const missionLocation = await MissionDepartureArrival.findOneAndUpdate(filter, update, {new: true});
+                }else{
+                    const missionLocation = await new MissionDepartureArrival(item);
+                    missionLocation.save();
+                }
 
             })
         }
         if (vehicle_list.length > 0) {
             vehicle_list.map(async (item, index) => {
-                const filter = {_id: item._id};
-                const update = item;
-                const missionVehicle = await MissionVehicle.findOneAndUpdate(filter, update, {new: true});
+                item.mission = await missionId;
+                if(item._id){
+                    const filter = {_id: item._id};
+                    const update = item;
+                    const missionVehicle = await MissionVehicle.findOneAndUpdate(filter, update, {new: true});
+                }else{
+                    const missionVehicle = await new MissionVehicle(item);
+                    missionVehicle.save();
+                }
             })
         }
-
 
         const mailContent = `New Mission Created `;
         // Set up email options
