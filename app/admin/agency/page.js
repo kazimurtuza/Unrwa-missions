@@ -1,8 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import ActionDropdown from "@/app/components/actionDropdown";
+import TableExample from "@/app/example-table/page";
+import { useEffect, useState } from "react";
 
 function AgencyList() {
     const [agency, setAgencyList] = useState([]);
@@ -74,7 +74,7 @@ function AgencyList() {
                             </div>
                         </div>
                     </td>
-                    
+
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}
@@ -191,7 +191,6 @@ function AgencyList() {
                         </div>
                     </td>
 
-
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}
@@ -232,7 +231,6 @@ function AgencyList() {
                         </div>
                     </td>
 
-
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}
@@ -252,7 +250,7 @@ function AgencyList() {
                             </div>
                         </div>
                     </td>
-                  
+
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                         <ActionDropdown />
                     </td>
@@ -260,7 +258,6 @@ function AgencyList() {
             ))}
         </>
     );
-
 
     return (
         <TableExample tableName={tableName} tableHead={head} body={body}/>
