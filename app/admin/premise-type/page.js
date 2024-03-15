@@ -1,9 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function Driver() {
     const [premiseType, setpremiseType] = useState([]);
@@ -80,7 +79,7 @@ function Driver() {
                                     pathname: '/admin/premise-type/edit',
                                     query: { id: item._id },
                                 }}
-                                className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
                                 <Link
                                 href={{

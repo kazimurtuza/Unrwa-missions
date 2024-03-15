@@ -1,8 +1,8 @@
 :root{
 	--global-font: "Open Sans", sans-serif;
-	--line-border-fill:#01ADEE;
-	--line-border-empty:#01ADEE;
-	--main-color:#01ADEE;
+	--line-border-fill:#1B7C85;
+	--line-border-empty:#1B7C85;
+	--main-color:#1B7C85;
 }
 
 a {
@@ -170,3 +170,68 @@ a {
 	background-color: var(--main-color);
 	color: #ffffff;
 }
+
+.pdf-btn-wrap{
+	text-align: right;
+	padding: 0 25px;
+}
+
+.collapsable-item {
+	margin: 0 0 20px;
+  }
+
+  .collapsable-item__header {
+	padding: 21px 16px;
+	background-color: rgba(0, 0, 0, 0.08);
+	position: relative;
+	cursor: pointer;
+	border-radius: 4px 4px 0 0;
+  }
+
+  .collapsable-item__header::after {
+	content: "";
+	height: 0;
+	width: 0;
+	border: 10px solid;
+	border-color: #000000 transparent transparent transparent;
+	position: absolute;
+	top: 40%;
+	right: 35px;
+	/* transition: 0.2s; */
+  }
+
+  .active .collapsable-item__header::after {
+	top: 30%;
+	transform: rotateX(180deg);
+  }
+
+  .collapsable-item__header-title {
+	font-size: 18px;
+	line-height: 1.2;
+	font-family: var(--global-font);
+	color: var(--black-color);
+	margin: 0;
+  }
+
+  .collapsable-item__body {
+	padding: 0 20px;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	border-radius: 0 0 4px 4px;
+	height: 0;
+	overflow: hidden;
+  }
+
+  .active .collapsable-item__body {
+	height: max-content;
+	padding-block: 20px;
+  }
+
+  .collapsable-item__body-row {
+	gap: 16px;
+	margin-bottom: 20px;
+  }
+
+  .collapsable-item__body-col {
+	flex: 1;
+	max-width: 49.5%;
+  }

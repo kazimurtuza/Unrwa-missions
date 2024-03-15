@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 
 function Modal({ isModalVisible, setModalVisible }) {
   function modalClose() {
@@ -8,15 +7,15 @@ function Modal({ isModalVisible, setModalVisible }) {
   return (
     <>
       {isModalVisible && (
-        <div class="fixed z-10 overflow-y-auto top-0 w-full left-0" id="modal">
-          <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-cente">
-            <div class="fixed inset-0 transition-opacity">
-              <div class="absolute inset-0 bg-gray-900 opacity-75" />
+        <div className="fixed z-10 overflow-y-auto top-0 w-full left-0" id="modal">
+          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-cente">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-gray-900 opacity-75" />
             </div>
-            <span class="hidden inline-block align-middle h-screen"></span>
+            <span className="hidden inline-block align-middle h-screen"></span>
             <form
               action="/"
-              class="align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-lg w-full"
+              className="align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-lg w-full"
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-headline"
@@ -65,17 +64,17 @@ function Modal({ isModalVisible, setModalVisible }) {
                   />
                 </div>
               </div>
-              <div class="bg-gray-200 px-4 py-3 text-right">
+              <div className="bg-gray-200 px-4 py-3 text-right">
                 <button
                   type="reset"
-                  class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
+                  className="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
                   onClick={modalClose}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  class="py-2 px-4 text-white rounded font-medium bg-indigo-600 opacity-90 hover:opacity-100 mr-2 transition duration-500"
+                  className="py-2 px-4 text-white rounded font-medium bg-indigo-600 opacity-90 hover:opacity-100 mr-2 transition duration-500"
                 >
                   Create
                 </button>

@@ -1,9 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
 import Link from 'next/link';
+import { useEffect, useState } from "react";
 
 function MissionClassificationList() {
     const [missionClassification, setMissionClassificationList] = useState([]);
@@ -87,7 +86,7 @@ function MissionClassificationList() {
                             </div>
                         </div>
                     </td>
-                  
+
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                     <div className="ml-3">
                             <Link
@@ -95,7 +94,7 @@ function MissionClassificationList() {
                                     pathname: '/admin/mission-classification/edit',
                                     query: { id: item._id },
                                 }}
-                                className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
                                 <Link
                                 href={{

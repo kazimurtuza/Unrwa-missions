@@ -1,9 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
 import Link from 'next/link';
+import { useEffect, useState } from "react";
 function MissionList() {
     const [mission, setMissionList] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -140,7 +139,7 @@ function MissionList() {
 
                     </td>
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-green-500 text-white rounded" onClick={()=>missionStatus(item._id,1)}> Mission Completed</button>:""}
+                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-main text-white rounded" onClick={()=>missionStatus(item._id,1)}> Mission Completed</button>:""}
                         {(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject Mission</button>:""}
 
                         <Link

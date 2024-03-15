@@ -1,9 +1,8 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import ActionDropdown from "@/app/components/actionDropdown";
 import TableExample from "@/app/example-table/page";
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function AgencyList() {
     const [agency, setAgencyList] = useState([]);
@@ -259,7 +258,7 @@ function AgencyList() {
                                     pathname: '/admin/agency/edit',
                                     query: { id: item._id },
                                 }}
-                                className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
                                 <Link
                                 href={{
