@@ -4,6 +4,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import "./style.css";
 
 function MissionVIew() {
@@ -59,6 +61,7 @@ function MissionVIew() {
     }
 
     const [adminData,setadminData]=useState(dataList);
+    const [downloading,setDownloading]=useState(0);
     const setdata = (e) => {
         const {name, value} = e.target;
         setadminData(old=>  ({
@@ -76,6 +79,7 @@ function MissionVIew() {
     }
 
     async function downloadPdf(){
+        setDownloading(1)
         let urlLink=`mission-pdf/${mission_id}`
         const {data} = await axiosClient.get(urlLink);
         const fileName = 'test.pdf'; // Name of the file in the public folder
@@ -93,6 +97,7 @@ function MissionVIew() {
         a.click();
         // Remove the anchor from the body
         document.body.removeChild(a);
+        setDownloading(0)
     }
 
     const [hydrated, setHydrated] = useState(false);
@@ -114,13 +119,19 @@ function MissionVIew() {
                         <div className='py-8'>
                             <main>
                                 <div className="pdf-btn-wrap">
-                                    <button className="mt-4 px-4 py-2 mx-2 bg-main text-white rounded" onClick={downloadPdf}>download Pdf</button>
+                                    <button className="mt-4 px-4 py-2 mx-2 bg-main text-white rounded" onClick={downloadPdf}>Download PDF
+                                       </button>
+
+
+
                                     {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'}/>}*/}
                                                      {/*fileName="example.pdf">*/}
                                         {/*{({blob, url, loading, error}) =>*/}
                                             {/*loading ? 'Loading document...' : 'Download PDF'*/}
                                         {/*}*/}
                                     {/*</PDFDownloadLink>*/}
+
+
 
                                 </div>
                                 <div className='px-4 sm:px-6 lg:px-8 py-8 w-full mx-auto'>
