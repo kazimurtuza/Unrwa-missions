@@ -17,7 +17,7 @@ import { FaProductHunt } from "react-icons/fa6";
 //     Tooltip,
 // } from 'chart.js';
 // import { Line } from 'react-chartjs-2';
-
+//
 //   ChartJS.register(
 //     CategoryScale,
 //     LinearScale,
