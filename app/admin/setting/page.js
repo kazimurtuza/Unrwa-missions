@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useState,useRef } from "react";
-import axios from "axios";
 import axiosClient from "@/app/axiosClient";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 function Setting() {
@@ -33,7 +31,7 @@ function Setting() {
   };
 
   const handleImage = (e) => {
-  
+
     console.log(e);
     const file = e.target.files[0];
     if (file) {
@@ -47,8 +45,8 @@ function Setting() {
       // Read the file as a data URL (base64)
       reader.readAsDataURL(file);
     }
-    
-    
+
+
   };
 
   const inputFile = useRef(null);
@@ -61,7 +59,7 @@ function Setting() {
         setAboutEn(data.about_app_en);
         setAboutAr(data.about_app_ar);
         setSettings(data);
-        
+
     } catch (error) {
         console.error('Error fetching categories:', error);
     }
@@ -69,7 +67,7 @@ function Setting() {
 
 
   useEffect(() => {
-    
+
     fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
@@ -81,7 +79,7 @@ function Setting() {
     setErrorMessage("");
 
     // Prepare data for API request
-    
+
     const postData = {
       app_name:appName,
       about_app_en: aboutEn,
@@ -94,7 +92,7 @@ function Setting() {
         console.log(app_logo);
         postData.app_logo = app_logo;
     }
-    
+
     try {
 
         const response = await axiosClient.post('settings', postData);
@@ -127,7 +125,7 @@ function Setting() {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -195,7 +193,7 @@ function Setting() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          About App 
+                          About App
                         </label>
                         <textarea
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -228,7 +226,7 @@ function Setting() {
                           }
 
                         />
-                         
+
                       </div> */}
 
                       <div className="mb-4">
@@ -259,7 +257,7 @@ function Setting() {
                             New Logo
                             </label>
 
-                      
+
                             <input
                             type="file"
                             className="upload-field"
@@ -269,7 +267,7 @@ function Setting() {
 
                         </div> */}
 
-                        
+
                       <div className="mb-4">
                             <label
                                 className="block text-grey-darker text-sm font-bold mb-2"
@@ -283,12 +281,12 @@ function Setting() {
                                 ref={inputFile}
                                 onChange={handleImage}
                               />
-                      </div> 
+                      </div>
 
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Update

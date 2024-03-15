@@ -1,11 +1,8 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 function VehicleEdit() {
   const [vehicleName, setVehicleName] = useState("");
@@ -21,7 +18,7 @@ function VehicleEdit() {
   const [agency,setAgencyList]=useState("");
   const [agencyID,setAgencyID]=useState("");
   const [color, setColor] = useState("");
-  
+
   const [description, setDescription] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -58,7 +55,7 @@ function VehicleEdit() {
     fetchData();
 }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-  
+
 
 
 
@@ -84,7 +81,7 @@ function VehicleEdit() {
   };
   const handleRegNumberchange = (value) => {
     setRegNumber(value);
-    
+
   };
   const handleAgencyChange = (value) => {
     setAgencyID(value);
@@ -195,7 +192,7 @@ function VehicleEdit() {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -370,10 +367,10 @@ function VehicleEdit() {
                           <option value="Mixed Emergency Response Items">
                             Mixed Emergency Response Items
                           </option>
-                         
+
                         </select>
                       </div> */}
-                  
+
 
                       <div className="mb-4">
                         <label
@@ -435,7 +432,7 @@ function VehicleEdit() {
                         />
                       </div>
 
-                     
+
 
                       <div className="mb-4">
                                         <label
@@ -455,7 +452,7 @@ function VehicleEdit() {
                                           <option value="No">
                                             No
                                           </option>
-                                        
+
                                         </select>
                         </div>
 
@@ -477,12 +474,12 @@ function VehicleEdit() {
                                           <option value="Piesel">
                                             Piesel
                                           </option>
-                                        
+
                                         </select>
                         </div>
 
 
-                     
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -528,7 +525,7 @@ function VehicleEdit() {
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Submit

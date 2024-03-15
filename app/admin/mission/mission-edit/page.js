@@ -1,19 +1,15 @@
 "use client";
-import {useEffect, useState} from "react";
-import Swal from 'sweetalert2'
-import {PDFDownloadLink} from '@react-pdf/renderer';
+import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 // import {MissionPDF} from "./components/missionPdf";
 
-import Header from "@/app/partials/Header";
-import Sidebar from "@/app/partials/Sidebar";
-import Step1 from "../Step1"
+import axiosClient from "@/app/axiosClient";
+import { useSearchParams } from "next/navigation";
+import Step1 from "../Step1";
 import Step2 from "../Step2";
 import Step3 from "../Step3";
 import Step4 from "../Step4";
 import "../steps.css";
-import React from "react";
-import axiosClient from "@/app/axiosClient";
-import {useSearchParams} from "next/navigation";
 
 
 function formatDate(dateString) {
@@ -430,7 +426,7 @@ function Steps() {
                                                     : ""
                                             }
                                             onClick={nextPage}
-                                            className={`px-4 py-2 rounded bg-black text-white transition duration-300 ${
+                                            className={`px-4 py-2 rounded bg-main text-white transition duration-300 ${
                                                 activeTab === formElements.length - 2
                                                     ? "hidden"
                                                     : "opacity-100 hover:shadow-[0_0_15px_0_rgba(0,0,0,.5)]"
@@ -440,7 +436,7 @@ function Steps() {
                                         </button>
                                         {activeTab === formElements.length - 2 ? (
                                             <button
-                                                className='px-4 py-2 rounded bg-black transition duration-300 text-white  hover:shadow-[0_0_15px_0_rgba(0,0,0,.5)]'
+                                                className='px-4 py-2 rounded bg-main transition duration-300 text-white  hover:shadow-[0_0_15px_0_rgba(0,0,0,.5)]'
                                                 onClick={saveMission}
                                             >
                                                 Save

@@ -1,12 +1,8 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 function MissionClassificationEdit() {
 
@@ -26,11 +22,11 @@ function MissionClassificationEdit() {
                 console.error('Error fetching agencies:', error);
             }
         };
-    
+
         fetchData();
     }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
-    
-      
+
+
   const [missionClassificationName, setMissionClassificationName] = useState("");
   const [requests_classifications, setRequests_classifications] = useState("");
   const [abbreviation, setAbbreviation] = useState("");
@@ -114,7 +110,7 @@ function MissionClassificationEdit() {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -175,7 +171,7 @@ function MissionClassificationEdit() {
 
                         />
                       </div> */}
-                     
+
 
                       <div className="mb-4">
                         <label
@@ -187,7 +183,7 @@ function MissionClassificationEdit() {
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={requests_classifications}
-                          
+
                           onChange={(e) => handlerequestClassificationChange(e.target.value)}
                         >
                           <option value="">
@@ -200,7 +196,7 @@ function MissionClassificationEdit() {
                           <option value="Notification Request">
                               Notification Request
                           </option>
-                         
+
                         </select>
                       </div>
                         {/* Display the select element only when isVisible is true */}
@@ -224,11 +220,11 @@ function MissionClassificationEdit() {
                           />
                         </div>
                       )}
-                                  
+
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Update

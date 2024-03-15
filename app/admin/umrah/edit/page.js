@@ -1,11 +1,8 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 function UmraCreate() {
   const [name, setName] = useState("");
@@ -30,10 +27,10 @@ function UmraCreate() {
   const router = useRouter();
   const searchParames = useSearchParams();
   const id = searchParames.get("id");
-  
 
-   
-   
+
+
+
   useEffect(() => {
  const fetchData = async () => {
      try {
@@ -211,7 +208,7 @@ useEffect(() => {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -313,7 +310,7 @@ useEffect(() => {
                         />
                       </div>
 
-                     
+
 
                       <div className="mb-4">
                         <label
@@ -339,11 +336,11 @@ useEffect(() => {
                           <option value="Rafah">
                             Rafah
                           </option>
-                      
+
                         </select>
                       </div>
 
-                     
+
 
                       <div className="mb-4">
                         <label
@@ -372,7 +369,7 @@ useEffect(() => {
                           <option value="Al Salam Area">
                             Al Salam Area
                           </option>
-                      
+
                         </select>
                       </div>
 
@@ -463,11 +460,11 @@ useEffect(() => {
                           <option value="ICIP">
                             ICIP
                           </option>
-                      
+
                         </select>
                       </div>
 
-                      
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -495,7 +492,7 @@ useEffect(() => {
                           <option value="UNRWA Owned">
                             UNRWA Owned
                           </option>
-                      
+
                         </select>
                       </div>
 
@@ -520,7 +517,7 @@ useEffect(() => {
                           <option value="No">
                             No
                           </option>
-                      
+
                         </select>
                       </div>
 
@@ -547,7 +544,7 @@ useEffect(() => {
                           <option value="Not DES">
                             Not DES
                           </option>
-                      
+
                         </select>
                       </div>
 
@@ -556,7 +553,7 @@ useEffect(() => {
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Submit

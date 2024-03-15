@@ -1,12 +1,8 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 import { useRouter, useSearchParams } from "next/navigation";
-import mongoose from "mongoose";
+import { useEffect, useState } from "react";
 
 function MissionClusterEdit() {
 
@@ -22,7 +18,7 @@ function MissionClusterEdit() {
 
 
 
-      
+
   useEffect(() => {
     const fetchData = async () => {
         try {
@@ -42,19 +38,19 @@ function MissionClusterEdit() {
     fetchData();
 }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-  
+
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
-  
+
   useEffect(() => {
     const fetchData = async () => {
         try {
             const { data } = await axiosClient.get('agency');
             setAgencyList(data.result);
-            
+
             console.log(data.result);
         } catch (error) {
             console.error('Error fetching agencies:', error);
@@ -73,15 +69,15 @@ const handleAgencyChange = (value) => {
   const handleMissionClusterChange = (value) => {
     setMissionClusterName(value);
   };
-  
+
   const handleLeadOfficePhone = (value) => {
     setOfficePhone(value);
   };
-  
+
   const handleLeadOfficeEmail = (value) => {
     setOfficeEmail(value);
   };
-  
+
   const handleLeadOfficeName = (value) => {
     setOfficeName(value);
   };
@@ -143,7 +139,7 @@ const handleAgencyChange = (value) => {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -269,7 +265,7 @@ const handleAgencyChange = (value) => {
                         />
                       </div>
 
-                      
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -294,7 +290,7 @@ const handleAgencyChange = (value) => {
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Update

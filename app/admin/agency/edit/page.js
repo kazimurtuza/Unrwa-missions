@@ -1,11 +1,8 @@
 "use client";
 
-import React, { useState,useRef,useEffect } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 function AgencyCreate() {
   const [agencyName, setAgencyName] = useState("");
@@ -121,14 +118,14 @@ function AgencyCreate() {
       agency_website:agency_website,
       agency_logo:agency_logo,
       intervision_note:intervision_note
-  
+
 
     };
 
     try {
 
         const response = await axiosClient.put(`agency/${id}`, postData);
-   
+
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
@@ -391,7 +388,7 @@ function AgencyCreate() {
                         />
                       </div>
 
-                  
+
 
                       <div className="mb-4">
                             <label
@@ -411,7 +408,7 @@ function AgencyCreate() {
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Submit
