@@ -147,7 +147,7 @@ function MissionList() {
                                 pathname: '/admin/mission-view',
                                 query: { id: item._id },
                             }}
-                            className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+                            className="px-4 py-2 mx-2 bg-main text-white rounded"
                         > Details</Link>
 
                         <Link
@@ -155,7 +155,7 @@ function MissionList() {
                                 pathname: '/admin/mission/mission-edit',
                                 query: { id: item._id },
                             }}
-                            className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+                            className="px-4 py-2 mx-2 bg-main text-white rounded"
                         > Edit </Link>
                     </td>
                 </tr>

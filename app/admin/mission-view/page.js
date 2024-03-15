@@ -196,7 +196,7 @@ function MissionVIew() {
                                                 </div>
                                                 <div className='msb-meta__item'>
                                                     <h4 className="form__info-box__title">Remarks</h4>
-                                                    <p><p>{mission && mission.remarks}</p></p>
+                                                    <p>{mission && mission.remarks}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -393,15 +393,6 @@ function MissionVIew() {
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Admin Mission Set</h2>
-
-                                        {/*mission_classification:"",*/}
-                                        {/*does_mission:"",*/}
-                                        {/*unops_acu_status:"",*/}
-                                        {/*unops_acu:"",*/}
-                                        {/*cla:"",*/}
-                                        {/*cls_decision:"",*/}
-                                        {/*request_status:"",*/}
-                                        {/*greenlight_recieve:"",*/}
                                         <div className="collapsable-item__body">
                                             <div className="collapsable-item__body-row flex-start-spb">
                                                 <div className="collapsable-item__body-col">
