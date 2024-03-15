@@ -149,7 +149,6 @@ function MissionList() {
                             }}
                             className="px-4 py-2 mx-2 bg-main text-white rounded"
                         > Details</Link>
-                        .circle.active
                         <Link
                             href={{
                                 pathname: '/admin/mission/mission-edit',
