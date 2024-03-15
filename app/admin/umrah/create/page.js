@@ -334,6 +334,70 @@ useEffect(() => {
                           <option value="Al Salam Area">
                             Al Salam Area
                           </option>
+                          <option value="Bani Suhaila">
+                            Bani Suhaila
+                          </option>
+                          <option value="Beach Camp">
+                          Beach Camp
+                          </option>
+                          <option value="El Shouka Area">
+                          El Shouka Area
+                          </option>
+                          <option value="Fukhari">
+                          Fukhari
+                          </option>
+
+                          <option value="Gaza Town">
+                          Gaza Town
+                          </option>
+
+                          <option value="Karni">
+                          Karni
+                          </option>
+
+                          <option value="Khan Younis Camp">
+                          Khan Younis Camp
+                          </option>
+
+                          <option value="Khuza'a">
+                          Khuza'a
+                          </option>
+
+                          <option value="Ma'en">
+                          Ma'en
+                          </option>
+
+
+                          <option value="Mawasi">
+                          Mawasi
+                          </option>
+
+
+                          <option value="Qarara">
+                          Qarara
+                          </option>
+
+                          <option value="Rafah">
+                          Rafah
+                          </option>
+
+                          <option value="Rafah Camp">
+                          Rafah Camp
+                          </option>
+
+
+                          <option value="Rafah Town">
+                          Rafah Town
+                          </option>
+
+
+                          <option value="Shajaiya">
+                          Shajaiya
+                          </option>
+
+                          <option value="Tal El Sultan">
+                          Tal El Sultan
+                          </option>
 
                         </select>
                       </div>
@@ -424,6 +488,15 @@ useEffect(() => {
                           </option>
                           <option value="ICIP">
                             ICIP
+                          </option>
+
+                          <option value="PLD">
+                          PLD
+                          </option>
+
+
+                          <option value="RSSD">
+                          RSSD
                           </option>
 
                         </select>

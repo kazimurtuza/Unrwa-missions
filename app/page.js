@@ -57,6 +57,7 @@ function Login() {
             } else if (data.token) {
                 setCookie('authUserType',data.user.user_type);
                 setCookie('authToken', data.token);
+                setCookie('authUserName', data.user.name);
                 router.push('/admin/dashboard', { scroll: false });
             } else {
                 setErrorMessage(data.message);

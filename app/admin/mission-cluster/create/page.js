@@ -75,7 +75,7 @@ const handleAgencyChange = (value) => {
           if(response.data.success==true)
           {
             setSuccessMessage("Mission Cluster Create Successfully");
-            setMissionClassificationName("");
+            setMissionClusterName("");
             setAgencyID("");
             setOfficeEmail("");
             setOfficeName("");
