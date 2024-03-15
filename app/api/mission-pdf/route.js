@@ -3,7 +3,6 @@ import puppeteer from "puppeteer";
 
 export async function GET() {
     try {
-
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.setContent(`
@@ -211,75 +210,75 @@ export async function GET() {
 
                 </div>
 
-                <div class="table-row" style="margin-top: 10px;">
-                    <div class="left">Stop 2</div>
-                    <div class="right">
-                        <div class="right-row">
-                            <div>From</div>
-                            <div>Departure DateTime</div>
-                            <div>Location</div>
-                            <div>Longitude</div>
-                            <div>Latitude</div>
-                        </div>
-                        <div class="right-row">
-                            <div></div>
-                            <div>03/12/2015</div>
-                            <div>Dhaka</div>
-                            <div>65656</div>
-                            <div>565656</div>
-                        </div>
-                        <div class="right-row">
-                            <div>To</div>
-                            <div>Departure DateTime</div>
-                            <div>Location</div>
-                            <div>Longitude</div>
-                            <div>Latitude</div>
-                        </div>
-                        <div class="right-row">
-                            <div></div>
-                            <div>03/12/2015</div>
-                            <div>Dhaka</div>
-                            <div>65656</div>
-                            <div>565656</div>
-                        </div>
-                    </div>
+                <!--<div class="table-row" style="margin-top: 10px;">-->
+                    <!--<div class="left">Stop 2</div>-->
+                    <!--<div class="right">-->
+                        <!--<div class="right-row">-->
+                            <!--<div>From</div>-->
+                            <!--<div>Departure DateTime</div>-->
+                            <!--<div>Location</div>-->
+                            <!--<div>Longitude</div>-->
+                            <!--<div>Latitude</div>-->
+                        <!--</div>-->
+                        <!--<div class="right-row">-->
+                            <!--<div></div>-->
+                            <!--<div>03/12/2015</div>-->
+                            <!--<div>Dhaka</div>-->
+                            <!--<div>65656</div>-->
+                            <!--<div>565656</div>-->
+                        <!--</div>-->
+                        <!--<div class="right-row">-->
+                            <!--<div>To</div>-->
+                            <!--<div>Departure DateTime</div>-->
+                            <!--<div>Location</div>-->
+                            <!--<div>Longitude</div>-->
+                            <!--<div>Latitude</div>-->
+                        <!--</div>-->
+                        <!--<div class="right-row">-->
+                            <!--<div></div>-->
+                            <!--<div>03/12/2015</div>-->
+                            <!--<div>Dhaka</div>-->
+                            <!--<div>65656</div>-->
+                            <!--<div>565656</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                </div>
+                <!--</div>-->
 
-                <div class="table-row" style="margin-top: 10px;">
-                    <div class="left">Stop 3</div>
-                    <div class="right">
-                        <div class="right-row">
-                            <div>From</div>
-                            <div>Departure DateTime</div>
-                            <div>Location</div>
-                            <div>Longitude</div>
-                            <div>Latitude</div>
-                        </div>
-                        <div class="right-row">
-                            <div></div>
-                            <div>03/12/2015</div>
-                            <div>Dhaka</div>
-                            <div>65656</div>
-                            <div>565656</div>
-                        </div>
-                        <div class="right-row">
-                            <div>To</div>
-                            <div>Departure DateTime</div>
-                            <div>Location</div>
-                            <div>Longitude</div>
-                            <div>Latitude</div>
-                        </div>
-                        <div class="right-row">
-                            <div></div>
-                            <div>03/12/2015</div>
-                            <div>Dhaka</div>
-                            <div>65656</div>
-                            <div>565656</div>
-                        </div>
-                    </div>
+                <!--<div class="table-row" style="margin-top: 10px;">-->
+                    <!--<div class="left">Stop 3</div>-->
+                    <!--<div class="right">-->
+                        <!--<div class="right-row">-->
+                            <!--<div>From</div>-->
+                            <!--<div>Departure DateTime</div>-->
+                            <!--<div>Location</div>-->
+                            <!--<div>Longitude</div>-->
+                            <!--<div>Latitude</div>-->
+                        <!--</div>-->
+                        <!--<div class="right-row">-->
+                            <!--<div></div>-->
+                            <!--<div>03/12/2015</div>-->
+                            <!--<div>Dhaka</div>-->
+                            <!--<div>65656</div>-->
+                            <!--<div>565656</div>-->
+                        <!--</div>-->
+                        <!--<div class="right-row">-->
+                            <!--<div>To</div>-->
+                            <!--<div>Departure DateTime</div>-->
+                            <!--<div>Location</div>-->
+                            <!--<div>Longitude</div>-->
+                            <!--<div>Latitude</div>-->
+                        <!--</div>-->
+                        <!--<div class="right-row">-->
+                            <!--<div></div>-->
+                            <!--<div>03/12/2015</div>-->
+                            <!--<div>Dhaka</div>-->
+                            <!--<div>65656</div>-->
+                            <!--<div>565656</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                </div>
+                <!--</div>-->
 
                 <div style={page-break-after: always;}>
 

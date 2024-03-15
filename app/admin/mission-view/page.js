@@ -86,7 +86,8 @@ function MissionVIew() {
     }
 
     async function downloadPdf(){
-        const {data} = await axiosClient.get('mission-pdf');
+        let urlLink=`mission-pdf/${mission_id}`
+        const {data} = await axiosClient.get(urlLink);
         const fileName = 'test.pdf'; // Name of the file in the public folder
         // Construct the URL to the file in the public folder
         const url = new URL(fileName, window.location.origin + '/');
