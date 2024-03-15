@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import Select from 'react-select'
 import axiosClient from "@/app/axiosClient";
+import { useEffect, useState } from "react";
+import Select from 'react-select';
 
 const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
     const [collapse, setCollapse] = useState(true);
@@ -12,34 +12,30 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
     const [usearrival_premise_type, setusearrival_premise_type] = useState([]);
     const [userdeparture_premise_type, setdeparture_premise_type] = useState([]);
 
-
     const handleClick = () => {
         setCollapse(!collapse)
     }
+
     const selectData = async (selectedOption, {name}) => {
         if ("arrival_umrah_id" == name || "departure_umrah_id" == name) {
             var val = await selectedOption;
         } else {
             var val = await selectedOption.value;
         }
+
         if (name == 'arrival_premise_type') {
             setArrivalInstallation(val)
         }
+
         if (name == 'departure_premise_type') {
             setDepartureInstallation(val)
         }
+
         await setInfo(name, val, item); // Pass the input value to the parent component
-
-
-
-
     };
     const setdata = (e) => {
-
         const {name, value} = e.target;
         setInfo(name, value, item); // Pass the input value to the parent component
-
-
     };
 
     const customStyles = {
@@ -81,7 +77,6 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                 }));
 
                 setumrahInfo(updatedInstallatList)
-
             }
         } catch (error) {
             setumrahInfo([])
@@ -136,7 +131,6 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
         }
     }
 
-
     useEffect(() => {
         premisetypeList();
          setInstallation();
@@ -187,7 +181,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                             </div>
                             {info.departure_umrah_type == 1 ? <div className="form__field collapsable-item__field">
                                 <label htmlFor="premise-type" className="form__label">
-                                    Premise Type-
+                                    Premise Type
                                 </label>
                                 <div className="select-wrap">
                                     <Select
@@ -241,6 +235,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                                     {(checkValidation && info.departure_building_code == "") ? errorTxt : ""}
                                 </div> : ""
                             }
+
                             <div className="form__field collapsable-item__field">
                                 <label htmlFor="longitude" className="form__label">
                                     Longitude
@@ -332,7 +327,6 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                                             {(checkValidation && info.arrival_installation_name == "") ? errorTxt : ""}
                                         </div>}
                                 </div>
-
 
                             </div>
                             {info.arrival_umrah_type == 1 ?

@@ -1,7 +1,7 @@
 :root{
 	--global-font: "Open Sans", sans-serif;
-	--line-border-fill:#01ADEE;
-	--line-border-empty:#01ADEE;
+	--line-border-fill:var(--main-color);
+	--line-border-empty:var(--main-color);
 }
 
 a {

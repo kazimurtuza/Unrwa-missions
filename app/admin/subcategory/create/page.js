@@ -1,11 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import axios from "axios";
-import Header from "@/app/partials/Header";
-import Sidebar from "@/app/partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function SubCategoryCreate() {
   const [category, setCategoryList] = useState([]);
@@ -91,7 +87,7 @@ function SubCategoryCreate() {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -195,7 +191,7 @@ function SubCategoryCreate() {
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Submit

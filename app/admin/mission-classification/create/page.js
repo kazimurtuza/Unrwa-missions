@@ -1,10 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
+import { useState } from "react";
 
 function MissionClassificationCreate() {
   const [missionClassificationName, setMissionClassificationName] = useState("");
@@ -90,7 +87,7 @@ function MissionClassificationCreate() {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -151,7 +148,7 @@ function MissionClassificationCreate() {
 
                         />
                       </div> */}
-                     
+
 
                       <div className="mb-4">
                         <label
@@ -163,7 +160,7 @@ function MissionClassificationCreate() {
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={requests_classifications}
-                          
+
                           onChange={(e) => handlerequestClassificationChange(e.target.value)}
                         >
                           <option value="">
@@ -176,7 +173,7 @@ function MissionClassificationCreate() {
                           <option value="Notification Request">
                               Notification Request
                           </option>
-                         
+
                         </select>
                       </div>
                         {/* Display the select element only when isVisible is true */}
@@ -200,11 +197,11 @@ function MissionClassificationCreate() {
                           />
                         </div>
                       )}
-                                  
+
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Submit

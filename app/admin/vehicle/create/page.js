@@ -1,10 +1,7 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
+import { useEffect, useState } from "react";
 
 function VehicleCreate() {
   const [vehicleName, setVehicleName] = useState("");
@@ -20,7 +17,7 @@ function VehicleCreate() {
   const [agency,setAgencyList]=useState("");
   const [agencyID,setAgencyID]=useState("");
   const [color, setColor] = useState("");
-  
+
   const [description, setDescription] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -50,7 +47,7 @@ function VehicleCreate() {
   };
   const handleRegNumberchange = (value) => {
     setRegNumber(value);
-    
+
   };
   const handleAgencyChange = (value) => {
     setAgencyID(value);
@@ -161,7 +158,7 @@ function VehicleCreate() {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -336,10 +333,10 @@ function VehicleCreate() {
                           <option value="Mixed Emergency Response Items">
                             Mixed Emergency Response Items
                           </option>
-                         
+
                         </select>
                       </div> */}
-                  
+
 
                       <div className="mb-4">
                         <label
@@ -401,7 +398,7 @@ function VehicleCreate() {
                         />
                       </div>
 
-                     
+
 
                       <div className="mb-4">
                                         <label
@@ -421,7 +418,7 @@ function VehicleCreate() {
                                           <option value="No">
                                             No
                                           </option>
-                                        
+
                                         </select>
                         </div>
 
@@ -443,12 +440,12 @@ function VehicleCreate() {
                                           <option value="Piesel">
                                             Piesel
                                           </option>
-                                        
+
                                         </select>
                         </div>
 
 
-                     
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -494,7 +491,7 @@ function VehicleCreate() {
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Submit

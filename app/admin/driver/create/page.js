@@ -1,10 +1,7 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
+import { useEffect, useState } from "react";
 
 function DriverCreate() {
   const [driverName, setDriverName] = useState("");
@@ -159,7 +156,7 @@ function DriverCreate() {
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
             }
-            
+
           }
         } else {
           console.error('Response does not contain data:', response);
@@ -175,7 +172,7 @@ function DriverCreate() {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -515,7 +512,7 @@ function DriverCreate() {
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Submit

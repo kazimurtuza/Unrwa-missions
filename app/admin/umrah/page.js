@@ -1,8 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import {useEffect, useState} from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const base_url = process.env.NEXT_PUBLIC_API_BASE_URL + "/";
 
@@ -17,7 +17,6 @@ function UmrahList() {
                 if (data.success == true) {
                     setUmrahList(data.result);
                 }
-
             } catch (error) {
                 setProductList([]);
                 // console.error('Error fetching categories:', error);
@@ -134,8 +133,6 @@ function UmrahList() {
                             {item.des}
                         </p>
                     </td>
-                 
-
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         {item.status ? (<span
@@ -155,14 +152,31 @@ function UmrahList() {
                     </span>)}
 
                     </td>
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                        <ActionDropdown/>
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
+
+                            <Link
+                                href={{
+                                    pathname: '/admin/umrah/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
+                              > Edit</Link>
+                                <Link
+                                href={{
+                                    pathname: '/admin/umrah/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
+                              > Delete</Link>
+                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                                {/*    000004*/}
+                                {/*</p>*/}
+
                     </td>
                 </tr>
             )) : ''}
         </>
     );
-
 
     return (
         <TableExample tableName={tableName} tableHead={head} body={body}/>

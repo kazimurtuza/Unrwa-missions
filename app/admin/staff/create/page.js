@@ -1,10 +1,7 @@
 "use client";
 
-import React, { useState,useEffect,useRef } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
+import { useEffect, useRef, useState } from "react";
 
 function StaffCreate() {
   const [countries, setCountries] = useState([]);
@@ -165,7 +162,7 @@ const inputFile4 = useRef(null);
     setStaffRole(value);
   };
 
-  
+
   const handleNationality = (value) => {
     setNationlity(value);
   };
@@ -334,7 +331,10 @@ useEffect(() => {
             setPassportDuplicate("");
             setNationlity("");
             setStaffRole("");
-          
+            setAgencyID("");
+            setClassificationId("");
+            setStaffPhoto(null);
+
           }
           else
           {
@@ -363,7 +363,7 @@ useEffect(() => {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
+
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -903,6 +903,7 @@ useEffect(() => {
                       <select
                         className="appearance-none border rounded w-full py-2 px-3 text-grey-darker mt-2"
                         id="countryDropdown"
+                        value={nationlity}
                         onChange={(e) => handleNationality(e.target.value)}
                       >
                         <option value="">Select a country</option>
@@ -977,13 +978,13 @@ useEffect(() => {
                               />
                       </div>
 
-            
+
 
 
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Submit

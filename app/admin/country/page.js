@@ -1,8 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function Country() {
     const [country, setCountryList] = useState([]);
@@ -108,7 +108,6 @@ function Country() {
                         {/*</p>*/}
                     </td>
 
-                   
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.region}
@@ -117,15 +116,32 @@ function Country() {
                         {/*    USD*/}
                         {/*</p>*/}
                     </td>
-                  
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                        <ActionDropdown />
+
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
+
+                            <Link
+                                href={{
+                                    pathname: '/admin/country/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
+                              > Edit</Link>
+                                <Link
+                                href={{
+                                    pathname: '/admin/country/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
+                              > Delete</Link>
+                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                                {/*    000004*/}
+                                {/*</p>*/}
+
                     </td>
                 </tr>
             ))}
         </>
     );
-
 
     return (
         <TableExample tableName={tableName} tableHead={head} body={body}/>

@@ -7,6 +7,25 @@ import bcrypt from 'bcrypt';
 import validator from 'validator';
 import { Vehicle } from "@/lib/model/vehicle";
 
+export async function PUT(request, content) {
+    let result = [];
+    try {
+        const id = content.params.id;
+        const filter = {_id: id};
+        const payload = await request.json();
+        // return NextResponse.json(payload.password);
+        await mongoose.connect(connectionStr);
+        const missionCluster=await Vehicle.findById(filter);
+        const oldData=missionCluster._doc;
+
+        const updatedata={...oldData,...payload}
+        result = await Vehicle.findOneAndUpdate(filter, updatedata);
+    } catch (error) {
+        return NextResponse.json({error:error.message, success: 'error found'});
+    }
+    return NextResponse.json({result, success: true});
+}
+
 export async function GET(request,content){
  
     let data=[];
@@ -25,4 +44,23 @@ export async function GET(request,content){
     }
 
     return NextResponse.json({result:data,success:true});
+}
+
+export async function DELETE(request, content) {
+    try {
+        const id = content.params.id;
+        const filter = { _id: id };
+
+        await mongoose.connect(connectionStr);
+        const mission = await Vehicle.findById(filter);
+
+        // Update only the is_delete field to 1
+        mission.is_delete = 1;
+
+        const result = await mission.save();
+    } catch (error) {
+        return NextResponse.json({ error:error.message, success: false });
+    }
+
+    return NextResponse.json({ success: true });
 }

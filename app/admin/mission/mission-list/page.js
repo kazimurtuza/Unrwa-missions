@@ -1,9 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
 import Link from 'next/link';
+import { useEffect, useState } from "react";
 function MissionList() {
     const [mission, setMissionList] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +16,6 @@ function MissionList() {
     };
 
     useEffect(() => {
-
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
    async function missionStatus(id,status){
@@ -25,8 +23,8 @@ function MissionList() {
            mission_id:id,
            status:status,
        }
+
         const response = await axiosClient.post('mission-status-update', adminData);
-        console.log(response);
         if(response.data.success==true){
             fetchData();
             alert('Mission Status change Successfully');
@@ -140,23 +138,29 @@ function MissionList() {
                     </span>)}
 
                     </td>
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-green-500 text-white rounded" onClick={()=>missionStatus(item._id,1)}> Mission Completed</button>:""}
-                        {(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-2 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject Mission</button>:""}
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
+                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-main text-white rounded" onClick={()=>missionStatus(item._id,1)}>Complete</button>:""}
+                        {(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject</button>:""}
 
                         <Link
                             href={{
                                 pathname: '/admin/mission-view',
                                 query: { id: item._id },
                             }}
-                            className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+                            className="px-4 py-2 mx-2 bg-main text-white rounded"
                         > Details</Link>
+                        <Link
+                            href={{
+                                pathname: '/admin/mission/mission-edit',
+                                query: { id: item._id },
+                            }}
+                            className="px-4 py-2 mx-1 bg-main text-white rounded"
+                        > Edit </Link>
                     </td>
                 </tr>
             ))}
         </>
     );
-
 
     return (
         <TableExample tableName={tableName} tableHead={head} body={body}/>

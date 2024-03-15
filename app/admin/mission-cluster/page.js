@@ -1,24 +1,22 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
 import Link from 'next/link';
+import { useEffect, useState } from "react";
 
 function MissionCluster() {
     const [missionCluster, setMissionClusterList] = useState([]);
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('mission-cluster');
+            setMissionClusterList(data.result);
+        } catch (error) {
+            console.error('Error fetching misson-classifications:', error);
+        }
+    };
 
+    fetchData();
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { data } = await axiosClient.get('mission-cluster');
-                setMissionClusterList(data.result);
-            } catch (error) {
-                console.error('Error fetching misson-classifications:', error);
-            }
-        };
-
-        fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Mission Cluster";
@@ -144,37 +142,45 @@ function MissionCluster() {
                             </div>
                         </div>
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            <div className="ml-3">
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm" style={{whiteSpace: 'nowrap'}}>
+
                             <Link
                                 href={{
-                                    pathname: '/admin/cluster/edit',
+                                    pathname: '/admin/mission-cluster/edit',
                                     query: { id: item._id },
                                 }}
-                                className="px-4 py-2 mx-2 bg-green-500 text-white rounded"
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
-                                <Link
-                                href={{
-                                    pathname: '/admin/cluster/edit',
-                                    query: { id: item._id },
-                                }}
-                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
-                              > Delete</Link>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
-                            </div>
-                        </div>
+                               <button
+                                  onClick={async () => {
+                                      // Show a confirmation alert
+                                      const confirmed = window.confirm("Are you sure you want to delete?");
+
+                                      if (confirmed) {
+                                          // Make a DELETE request to your API to mark the question as deleted
+                                          try {
+                                            await axiosClient.delete(`mission-cluster/${item._id}`, {
+                                                  method: 'DELETE',
+                                                  headers: {
+                                                      'Content-Type': 'application/json',
+                                                  },
+                                              });
+                                              //setMessage('Delete successfully');
+                                              // Remove the deleted question from the state
+                                              //setData(data => data.filter(item => item._id !== val._id));
+                                              fetchData();
+                                          } catch (error) {
+                                              console.error("Error deleting question:", error);
+                                          }
+                                      }
+                                  }}
+                                  className="px-4 py-2 mx-2 bg-red-500 text-white rounded hover:bg-red-600"
+                              >
+                                  Delete
+                              </button>
+
                     </td>
-                  
+
                     {/* <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                         <ActionDropdown />
                     </td> */}
@@ -182,7 +188,6 @@ function MissionCluster() {
             ))}
         </>
     );
-
 
     return (
         <TableExample tableName={tableName} tableHead={head} body={body}/>

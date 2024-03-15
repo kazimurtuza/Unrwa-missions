@@ -1,10 +1,7 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
-import axios from "axios";
-import Header from "../../../partials/Header";
-import Sidebar from "../../../partials/Sidebar";
 import axiosClient from "@/app/axiosClient";
+import { useEffect, useState } from "react";
 
 function CountryCreate() {
   const [countryName, setCountryName] = useState("");
@@ -18,7 +15,6 @@ function CountryCreate() {
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
-
 
   useEffect(() => {
     // Function to fetch countries from REST Countries API
@@ -36,7 +32,7 @@ function CountryCreate() {
         console.error('Error fetching countries:', error);
       }
     };
-  
+
     // Call the function to fetch countries when the component mounts
     fetchCountries();
   }, []); //
@@ -83,13 +79,11 @@ function CountryCreate() {
     };
 
     try {
-
         const response = await axiosClient.post('country', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
-          if(response.data.success==true)
-          {
+          if(response.data.success==true) {
             setSuccessMessage("Country Create Successfully");
             setCountryName("");
             setAlpha2("");
@@ -99,15 +93,10 @@ function CountryCreate() {
             setIso3166("");
             setRegion("");
             setErrorMessage("");
-          }
-          else
-          {
-            if(response.data.msg)
-            {
+          } else {
+            if(response.data.msg) {
               setErrorMessage(response.data.msg);
-            }
-            else
-            {
+            } else {
             //   const allErrors = extractErrors(response.data.error.errors);
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
@@ -127,7 +116,6 @@ function CountryCreate() {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -192,8 +180,8 @@ function CountryCreate() {
                         onChange={(e) => handleCountryNameChange(e.target.value)}
                       >
                         <option value="">Select a country</option>
-                        {countries && countries.map((country) => (
-                          <option key={country.id} value={country.name.common}>
+                        {countries && countries.map((country, index) => (
+                          <option key={index} value={country.name.common}>
                             {country.name.common}
                           </option>
                         ))}
@@ -298,8 +286,6 @@ function CountryCreate() {
                         />
                       </div> */}
 
-                   
-
                   <div className="mb-4">
                       <label
                         className="block text-grey-darker text-sm font-bold mb-2"
@@ -327,16 +313,14 @@ function CountryCreate() {
                         <option value="Oceania">Oceania</option>
                         <option value="Africa">Africa</option>
                         <option value="Americas">Americas</option>
-                        
+
                       </select>
-                    
+
                       </div>
-
-
 
                       <div className="flex items-center justify-between mt-8">
                         <button
-                          className="bg-black duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
+                          className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
                           Submit
@@ -363,8 +347,8 @@ function extractErrors(errors) {
         result.push(`${key}: ${errorMessage}`);
       }
     }
+
     return result;
 }
 
 export default CountryCreate;
-

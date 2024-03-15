@@ -1,8 +1,8 @@
 "use client";
-import TableExample from "@/app/example-table/page";
-import ActionDropdown from "@/app/components/actionDropdown";
-import { useEffect, useState } from "react";
 import axiosClient from "@/app/axiosClient";
+import TableExample from "@/app/example-table/page";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function Driver() {
     const [premiseType, setpremiseType] = useState([]);
@@ -73,7 +73,25 @@ function Driver() {
 
 
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                        <ActionDropdown />
+                    <div className="ml-3">
+                            <Link
+                                href={{
+                                    pathname: '/admin/premise-type/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
+                              > Edit</Link>
+                                <Link
+                                href={{
+                                    pathname: '/admin/premise-type/edit',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
+                              > Delete</Link>
+                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                                {/*    000004*/}
+                                {/*</p>*/}
+                            </div>
                     </td>
                 </tr>
             ))}
