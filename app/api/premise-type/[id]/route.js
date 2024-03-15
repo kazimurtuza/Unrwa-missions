@@ -1,11 +1,13 @@
-import { NextResponse } from "next/server";
+import {NextResponse} from "next/server";
 import mongoose from "mongoose";
-import { Driver } from "@/lib/model/driver";
-import { User } from "@/lib/model/users";
-import { connectionStr } from "@/lib/db";
-import bcrypt from 'bcrypt';
-import validator from 'validator';
-import { Vehicle } from "@/lib/model/vehicle";
+import {connectionStr} from "@/lib/db"
+import {User} from "@/lib/model/users";
+import bcrypt from "bcrypt";
+import {v4 as uuidv4} from "uuid";
+import path from "path";
+import fs from "fs";
+import { MissionClassification } from "@/lib/model/missionClassification";
+import { PremiseType } from "@/lib/model/premiseType";
 
 export async function PUT(request, content) {
     let result = [];
@@ -15,35 +17,29 @@ export async function PUT(request, content) {
         const payload = await request.json();
         // return NextResponse.json(payload.password);
         await mongoose.connect(connectionStr);
-        const missionCluster=await Vehicle.findById(filter);
+        const missionCluster=await PremiseType.findById(filter);
         const oldData=missionCluster._doc;
 
         const updatedata={...oldData,...payload}
-        result = await Vehicle.findOneAndUpdate(filter, updatedata);
+        result = await PremiseType.findOneAndUpdate(filter, updatedata);
     } catch (error) {
         return NextResponse.json({error:error.message, success: 'error found'});
     }
     return NextResponse.json({result, success: true});
 }
 
-export async function GET(request,content){
- 
-    let data=[];
-    try{
-        console.log(connectionStr);
-        const staffId=content.params.id;
-        const record={_id:staffId};
-        //return NextResponse.json({result:staffId,success:true});
+export async function GET(request, content) {
+    let result = [];
+    try {
+        const id = content.params.id;
+        const record = {_id: id};
         await mongoose.connect(connectionStr);
-        data=await Vehicle
-        .findById(record);
+        const result = await PremiseType.findById(record);
+        return NextResponse.json({result, success: true});
+    } catch (error) {
+        result = error;
     }
-    catch(error)
-    {
-        data={success:false,error:error.message};
-    }
-
-    return NextResponse.json({result:data,success:true});
+    return NextResponse.json(result);
 }
 
 export async function DELETE(request, content) {
@@ -52,7 +48,7 @@ export async function DELETE(request, content) {
         const filter = { _id: id };
 
         await mongoose.connect(connectionStr);
-        const mission = await Vehicle.findById(filter);
+        const mission = await PremiseType.findById(filter);
 
         // Update only the is_delete field to 1
         mission.is_delete = 1;
