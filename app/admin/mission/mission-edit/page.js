@@ -1,18 +1,19 @@
 "use client";
 import {useEffect, useState} from "react";
 import Swal from 'sweetalert2'
-import { PDFDownloadLink} from '@react-pdf/renderer';
+import {PDFDownloadLink} from '@react-pdf/renderer';
 // import {MissionPDF} from "./components/missionPdf";
 
 import Header from "@/app/partials/Header";
 import Sidebar from "@/app/partials/Sidebar";
-import Step1 from "./Step1";
-import Step2 from "./Step2";
-import Step3 from "./Step3";
-import Step4 from "./Step4";
-import "./steps.css";
+import Step1 from "../Step1"
+import Step2 from "../Step2";
+import Step3 from "../Step3";
+import Step4 from "../Step4";
+import "../steps.css";
 import React from "react";
 import axiosClient from "@/app/axiosClient";
+import {useSearchParams} from "next/navigation";
 
 
 function formatDate(dateString) {
@@ -23,8 +24,12 @@ function formatDate(dateString) {
     const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
     return formattedDate;
 }
+
 function Steps() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const searchParames = useSearchParams();
+    const mission_id = searchParames.get("id");
 
     const [data, setData] = useState({
         name: "",
@@ -54,7 +59,7 @@ function Steps() {
             "arrival_time": "",
             "arrival_premise_type": null,
             "arrival_umrah_id": null,
-            "mission_cluster":null,
+            "mission_cluster": null,
             "arrival_installation_name": "",
             "arrival_latitude": "",
             "arrival_longitude": "",
@@ -68,7 +73,7 @@ function Steps() {
             "agency": null,
             "vehicle_type": "",
             "vehicle_body": "",
-            "staff":[],
+            "staff": [],
         }]
     }
 
@@ -79,7 +84,6 @@ function Steps() {
     const [classification, setClassification] = useState([]);
     const [cluster, setcluster] = useState([]);
     const [checkValidation, setCheckValidation] = useState(0);
-
     const [vehicleStaff, setVehicleStaff] = useState([]);
 
     const handleChange = (name, value) => {
@@ -94,14 +98,88 @@ function Steps() {
         console.log('-------list------');
         // let stafList= [...value.map((item) =>...item.staff)];
 
-        const stafList =await value.map((item) => item.staff.map((staffItem) => {
+        const stafList = await value.map((item) => item.staff.map((staffItem) => {
             return staffItem.staff_id
                 ; // You might do some processing here
         })).flat();
         setVehicleStaff(stafList);
         // let update =await {...storeData, vehicle_list: value};
-      await  setStoreData(old => ({...old, vehicle_list: value}));
+        await setStoreData(old => ({...old, vehicle_list: value}));
     };
+
+
+    const fetchData = async () => {
+        try {
+            const id = await mission_id;
+            const url = `mission/${id}`
+
+            const {data} = await axiosClient.get(url);
+            if (data.success) {
+                let agency = []
+                let mission = data.result.mission;
+                let location = data.result.places
+                let vicleList = data.result.vehicles
+                mission.leader = mission.leader._id;
+                mission.movement_date = await formatDate(mission.movement_date);
+                let agencyLit = await mission.agency.map(item => {
+                    return {
+                        agency_id: item.agency_id._id,
+                        value: item.agency_id._id,
+                        label: item.agency_id.name
+                    };
+                });
+                mission.agency = agencyLit;
+                mission.location_list = await location.map((item, index) => {
+                    return {
+                        "index_no": index,
+                        ...item,
+                        "arrival_premise_type": item.arrival_premise_type._id,
+                        "departure_premise_type": item.departure_premise_type._id,
+                        "arrival_umrah_id": item.arrival_umrah_id ? item.arrival_umrah_id._id : null,
+                        "departure_umrah_id": item.departure_umrah_id ? item.departure_umrah_id._id : null,
+                        // "arrival_umrah_id":item.arrival_umrah_id && ,
+                    }
+                });
+                mission.places = "",
+
+                    mission.vehicle_list = await vicleList.map((item, index) => {
+                        // For each item in vicleList, return a new object with the "index_no" property and all other properties of the item
+                        return {
+                            "index_no": index,
+                            "vehicle": item.vehicle._id,
+                            "driver": item.driver._id,
+                            "agency": item.agency._id,
+                            "vehicle_type": item.vehicle.vehicle_type,
+                            "vehicle_body": item.vehicle.description,
+                            "staff": item.staff.map((item, index) => {
+                                return {
+                                    staff_id: item.staff_id._id
+                                }
+                            })
+                        };
+                    });
+
+                mission.vehicles = "";
+
+
+                console.log(mission.vehicle_list);
+
+
+                setStoreData(mission)
+
+
+                // console.log(data.result.mission);
+                // setMission(data.result.mission);
+                // setplaces(data.result.places);
+                // setvehicles(data.result.vehicles);
+
+            }
+            // console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
 
     const agenciesSet = async () => {
         try {
@@ -167,6 +245,7 @@ function Steps() {
     };
 
     useEffect(() => {
+        fetchData();
         agenciesSet();
         staffListSet();
         missionCluster();
@@ -175,7 +254,7 @@ function Steps() {
 
 
     async function saveMission() {
-        var validationError =await checkStep3()
+        var validationError = await checkStep3()
         // console.log(storeData);
         if (validationError == 1) {
             setCheckValidation(1)
@@ -210,11 +289,13 @@ function Steps() {
     const [activeTab, setActiveTab] = useState(0);
 
     const formElements = [
-        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster} classification={classification}
+        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster}
+               classification={classification}
                staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
         <Step2 data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
                checkValidation={checkValidation} locationSet={locationStore}/>,
-        <Step3 data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]} checkValidation={checkValidation}
+        <Step3 data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]}
+               checkValidation={checkValidation}
                vehicleStore={vehicleSet}/>,
         <Step4 data={data} setData={setData}/>,
     ];
@@ -232,7 +313,7 @@ function Steps() {
     function checkStep1() {
 
         if (storeData.leader == null ||
-            storeData.agency.length==0 ||
+            storeData.agency.length == 0 ||
             // storeData.mission_classification == null ||
             storeData.movement_date == "" ||
             storeData.purpose == "" ||
@@ -325,11 +406,11 @@ function Steps() {
                                         {/*<div className='circle'>4</div>*/}
                                     </div>
                                     {/*<div>*/}
-                                        {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'} />} fileName="example.pdf">*/}
-                                            {/*{({ blob, url, loading, error }) =>*/}
-                                                {/*loading ? 'Loading document...' : 'Download PDF'*/}
-                                            {/*}*/}
-                                        {/*</PDFDownloadLink>*/}
+                                    {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'} />} fileName="example.pdf">*/}
+                                    {/*{({ blob, url, loading, error }) =>*/}
+                                    {/*loading ? 'Loading document...' : 'Download PDF'*/}
+                                    {/*}*/}
+                                    {/*</PDFDownloadLink>*/}
                                     {/*</div>*/}
                                     <div>{formElements[activeTab]}</div>
                                     <div
@@ -341,7 +422,7 @@ function Steps() {
                                                 activeTab === 0
                                                     ? "opacity-30"
                                                     : "opacity-100 hover:shadow-[0_0_15px_0_rgba(0,0,0,.3)]"
-                                                }`}
+                                            }`}
                                         >
                                             Back
                                         </button>
@@ -356,7 +437,7 @@ function Steps() {
                                                 activeTab === formElements.length - 2
                                                     ? "hidden"
                                                     : "opacity-100 hover:shadow-[0_0_15px_0_rgba(0,0,0,.5)]"
-                                                }`}
+                                            }`}
                                         >
                                             Next
                                         </button>
