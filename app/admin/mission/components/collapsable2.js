@@ -63,6 +63,9 @@ const Collapsable2 = ({
         if (name == 'driver') {
             setDriverInfo(selectedOption.list);
         }
+        if (name == 'agency') {
+            driverListSet(value);
+        }
 
         if (name == "vehicle") {
             value = selectedOption;
@@ -162,7 +165,7 @@ const Collapsable2 = ({
     useEffect(() => {
         selectedStaffSet();
         agencyListSet();
-        driverListSet();
+        // driverListSet();
         staffListSet();
         vehicleListSet();
         getDriverData();
