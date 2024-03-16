@@ -48,3 +48,18 @@ export async function GET() {
 
     // return NextResponse.json({result:data,success:true});
 }
+
+export async function POST(request) {
+    const payload = await request.json();
+    const dateList = await payload.date;
+    const id=await payload.id;
+    const counts = await Promise.all(dateList.map(async date => {
+        const query = await {
+            mission_cluster: id,
+            created_at:date
+        };
+        const count = await Mission.countDocuments(query);
+        return query;
+    }));
+    return NextResponse.json({ payload, counts, success: true });
+}

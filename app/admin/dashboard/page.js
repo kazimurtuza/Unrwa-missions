@@ -49,6 +49,31 @@ function Dashboard() {
     const [approved,setapproved]=useState(0);
     const [cluster,setcluster]=useState([]);
     const [isLoading,setLoading]=useState(1);
+    const [dateList,setDateList]=useState([]);
+
+
+    function getCurrentMonthDateList() {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth(); // Note: January is 0, February is 1, ..., December is 11
+
+        // Get the number of days in the current month
+        const numberOfDaysInMonth = new Date(year, month + 1, 0).getDate();
+
+        // Construct the date list array
+        const dateList = [];
+        for (let day = 1; day <= numberOfDaysInMonth; day++) {
+            const dateString = new Date(year, month, day).toISOString().slice(0, 10);
+            dateList.push(dateString);
+        }
+        setDataset(prevDataset => ({
+            ...prevDataset,
+            labels:dateList,
+
+        }));
+        return dateList;
+    }
+
 
 
     const fetchData = async () => {
@@ -58,7 +83,8 @@ function Dashboard() {
                 setrejectCount(data.result.rejectCount)
                 settotalMission(data.result.totalMission)
                 setcompleted(data.result.completed)
-                setapproved(data.result.approved)
+                await setapproved(data.result.approved)
+                await setcluster(old=>data.result.clusterList)
                 setLoading(0)
             }
         } catch (error) {
@@ -83,60 +109,93 @@ function Dashboard() {
         }
     };
 
-    useEffect(() => {
-        fetchData()
-        fetchCluster();
-    }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
     let loader= <div className={styles.loader}></div>
 
 
 
     const data = {
 
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: [],
+        // dataset:dataset,
         datasets: [
-            {
-                label: 'Dataset 1',
-                data: [100,200,205,205,306,600,654,585,696,585,510],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgb(255, 99, 132)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [60,50,225,285,236,86,242,385,196,285,258],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgb(53, 162, 235)',
-            },
-            {
-                label: 'Dataset 3',
-                data: [80,80,500,300,400,500,400,15,600,400,400],
-                borderColor: 'rgb(53, 162, 50)',
-                backgroundColor: 'rgb(53, 162, 50)',
-            },
-            {
-                label: 'Dataset 4',
-                data: [100,200,400,10,200,300,400,250,250,400,250],
-                borderColor: 'rgb(50, 99, 132)',
-                backgroundColor: 'rgb(50, 99, 132)',
-            },
-            {
-                label: 'Dataset 5',
-                data: [400,10,200,300,400,250,250,400,250,100,200],
-                borderColor: 'rgb(53, 162, 15)',
-                backgroundColor: 'rgb(53, 162, 15)',
-            },
-            {
-                label: 'Dataset 6',
-                data: [10,200,300,400,250,250,400,250,100,200,400],
-                borderColor: 'rgb(53, 10, 50)',
-                backgroundColor: 'rgb(53, 10, 50)',
-            },
+
+            // {
+            //     label: 'Dataset 2',
+            //     data: [60,50,225,285,236,86,242,385,196,285,258],
+            //     borderColor: 'rgb(53, 162, 235)',
+            //     backgroundColor: 'rgb(53, 162, 235)',
+            // },
+            // {
+            //     label: 'Dataset 3',
+            //     data: [80,80,500,300,400,500,400,15,600,400,400],
+            //     borderColor: 'rgb(53, 162, 50)',
+            //     backgroundColor: 'rgb(53, 162, 50)',
+            // },
+            // {
+            //     label: 'Dataset 4',
+            //     data: [100,200,400,10,200,300,400,250,250,400,250],
+            //     borderColor: 'rgb(50, 99, 132)',
+            //     backgroundColor: 'rgb(50, 99, 132)',
+            // },
+            // {
+            //     label: 'Dataset 5',
+            //     data: [400,10,200,300,400,250,250,400,250,100,200],
+            //     borderColor: 'rgb(53, 162, 15)',
+            //     backgroundColor: 'rgb(53, 162, 15)',
+            // },
+            // {
+            //     label: 'Dataset 6',
+            //     data: [10,200,300,400,250,250,400,250,100,200,400],
+            //     borderColor: 'rgb(53, 10, 50)',
+            //     backgroundColor: 'rgb(53, 10, 50)',
+            // },
         ],
     };
 
+    const [dataset,setDataset]=useState(data);
+    async function clusterList(){
+        const { data } = await axiosClient.get('mission-cluster');
+
+        if(data.success){
+            let cluster=await data.result
+            var dataList=await getCurrentMonthDateList()
+            for (const item of cluster) {
+                const { data } = await axiosClient.post('chart',{date:dataList,id:item._id});
+                console.log(data)
+                await additem(item._id);
+            }
+        }
+    }
+
+    useEffect(()=> {
+
+        fetchData()
+        fetchData()
+        getCurrentMonthDateList()
+        fetchCluster();
+        clusterList();
 
 
+        // addDatasets();
+
+
+    }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+
+
+    function additem(id) {
+        let newItem = {
+            label: 'Dataset ' + (dataset.length + 1),
+            data: [1+dataset.length,200+dataset.length,id,205,306,600,654,585,696,585,510,600,654,585,696,585,510,100,200,205,205,306,600,654,585,696,585,510],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(255, 99, 132)',
+        };
+
+        setDataset(prevDataset => ({
+            ...prevDataset,
+            datasets: [...prevDataset.datasets, newItem]
+        }));
+    }
 
 
 
@@ -195,9 +254,11 @@ function Dashboard() {
           </div>
 
           <div style={{width: 'calc(100vw - 500px)', padding: '50px 0 50px 20px'}}>
-          <Line options={options} data={data} />
+          <Line options={options} data={dataset} />
           </div>
       </main>
+
+              <button onClick={additem}>sdf</button>
           </div>
       </div>
   );

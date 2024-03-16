@@ -46,7 +46,6 @@ const Collapsable2 = ({
     const [driverInfo, setDriverInfo] = useState();
 
 
-
     const getDriverData = async () => {
         const selectedStaff = await driverList.find(option => option.value === info.driver)
         if (selectedStaff) {
@@ -55,24 +54,32 @@ const Collapsable2 = ({
     };
 
 
-
     const selectData = async (selectedOption, {name}) => {
+
         // Pass the input value to the parent component
         var value = selectedOption.value;
 
         if (name == 'driver') {
             setDriverInfo(selectedOption.list);
         }
+        if (name == 'agency') {
+            driverListSet(value);
+            vehicleListSet(value)
+        }
 
         if (name == "vehicle") {
             value = selectedOption;
         }
-        if (name == "carri") {
-            selectedOption.value = await selectedOption.map((item) => ({
-                agency_id: item.value,
-                value: item.value,
-                label: item.label,
-            }));
+        if (name == "carried") {
+            value=selectedOption;
+            // console.log("data carry")
+            // console.log(selectedOption.value)
+            // selectedOption = await selectedOption.map((item) => ({
+            //     agency_id: item.value,
+            //     value: item.value,
+            //     label: item.label,
+            // }));
+            console.log(selectedOption);
         }
 
         setInfo(name, value, item);
@@ -94,17 +101,18 @@ const Collapsable2 = ({
         }
     };
 
-    const driverListSet = async () => {
+    const driverListSet = async (id) => {
         try {
-            const {data} = await axiosClient.get("staff");
+            // const {data} = await axiosClient.get("staff");
+            const driverLink = `agency-wise-driver/${id}`
+
+            const {data} = await axiosClient.get(driverLink);
             if (data.success === true) {
-                const updatedDriverList = data.result
-                    .filter((item) => item && item.staff_role === "Driver")
-                    .map((item) => ({
-                        value: item._id,
-                        label: item.name,
-                        list: item,
-                    }));
+                const updatedDriverList = data.result.map((item) => ({
+                    value: item._id,
+                    label: item.name,
+                    list: item,
+                }));
 
                 setDriverList(updatedDriverList);
             }
@@ -128,9 +136,10 @@ const Collapsable2 = ({
             setStaffList([]);
         }
     };
-    const vehicleListSet = async () => {
+    const vehicleListSet = async (id) => {
         try {
-            const {data} = await axiosClient.get("vehicle");
+            const vehicleLink = `agency-wise-vehicle/${id}`
+            const {data} = await axiosClient.get(vehicleLink);
             if (data.success === true) {
                 const updatedVehicleList = data.result.map((item) => ({
                     value: item._id,
@@ -162,12 +171,18 @@ const Collapsable2 = ({
     useEffect(() => {
         selectedStaffSet();
         agencyListSet();
-        driverListSet();
+        // driverListSet();
         staffListSet();
-        vehicleListSet();
+        // vehicleListSet();
         getDriverData();
         if (info.vehicle) {
             setSelectedVehicleInfo();
+        }
+        if (info.agency) {
+            driverListSet(info.agency);
+        }
+        if (info.vehicle) {
+            vehicleListSet(info.agency)
         }
     }, []);
 
@@ -249,7 +264,7 @@ const Collapsable2 = ({
                                     : ""}
                             </div>
 
-                            {driverInfo? <div className='form__info-box'>
+                            {driverInfo ? <div className='form__info-box'>
                                 <h3 className='form__info-box__title'>
                                     Driver Information
                                 </h3>
@@ -289,7 +304,7 @@ const Collapsable2 = ({
                                         <p>ND</p>
                                     </div>
                                 </div>
-                            </div>:''}
+                            </div> : ''}
 
 
                         </div>

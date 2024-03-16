@@ -3,6 +3,7 @@ import {connectionStr} from "@/lib/db";
 import {User} from "@/lib/model/users";
 import {NextResponse} from "next/server";
 import {Mission} from "../../../lib/model/mission";
+import {MissionCluster} from "../../../lib/model/missionCluster";
 
 export async function GET() {
 
@@ -17,7 +18,7 @@ export async function GET() {
         let completed = await Mission.countDocuments({ request_status: "mission_completed" });
         let rejectCount = await Mission.countDocuments({ cla_decision: "denied" });
         let approved = await Mission.countDocuments({ cla_decision: "approved" });
-        // let clusterList = await MissionCluster.find({is_delete:0});
+        let clusterList = await MissionCluster.find({is_delete:0});
 
 
 
@@ -26,6 +27,7 @@ export async function GET() {
             completed: completed,
             approved: approved,
             rejectCount: rejectCount,
+            clusterList: clusterList,
         };
 
         return NextResponse.json({ result: data, success: true });

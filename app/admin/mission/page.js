@@ -227,10 +227,10 @@ function Steps() {
         let validationError = 0;
         if (activeTab == 0) validationError = await checkStep1()
         if (activeTab == 1) validationError = await checkStep2()
-        if (validationError == 0) {
-            setCheckValidation(0)
+        // if (validationError == 0) {
+        //     setCheckValidation(0)
             setActiveTab((prev) => prev + 1);
-        }
+        // }
     }
 
     function checkStep1() {
