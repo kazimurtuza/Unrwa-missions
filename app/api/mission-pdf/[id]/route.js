@@ -16,6 +16,19 @@ function convertDateFormat(dateString, newFormat) {
     return formattedDate;
 }
 
+function getStatusString(request_status) {
+    return (
+        request_status === "request_received" ? "Request Received" :
+            request_status === "request_submitted_cla" ? "Request Submitted CLA" :
+                request_status === "mission_completed" ? "Mission Completed" :
+                    request_status === "request_cancelled_request" ? "Request Cancelled Request" :
+                        request_status === "mission_postponed" ? "Mission Postponed" :
+                            request_status === "mission_pending" ? "Mission Pending" :
+                                request_status === "mission_aborted" ? "Mission Aborted" :
+                                    "Unknown Status"
+    );
+}
+
  function convertDateTimeFormat(dateString) {
     // Parse the input date string
     let parsedDate = new Date(dateString);
@@ -84,7 +97,7 @@ export async function GET(req, content) {
             <div class="right-row">
                 <div></div>
                  <div>${convertDateTimeFormat(item.departure_time)}</div>
-                <div>${item.departure_umrah_id!=null?item.departure_umrah_id.location_area:item.departure_installation_name}</div>
+                <div>${item.departure_umrah_id!=null?item.departure_umrah_id.installation_name:item.departure_installation_name}</div>
                   <div>${item.departure_latitude}</div>
                 <div>${item.departure_longitude}</div>
             </div>
@@ -98,7 +111,7 @@ export async function GET(req, content) {
             <div class="right-row">
                 <div></div>
                  <div>${convertDateTimeFormat(item.arrival_time)}</div>
-               <div>${item.arrival_umrah_id!=null?item.arrival_umrah_id.location_area:item.arrival_installation_name}</div>
+               <div>${item.arrival_umrah_id!=null?item.arrival_umrah_id.installation_name:item.arrival_installation_name}</div>
                <div>${item.arrival_latitude}</div>
                 <div>${item.arrival_longitude}</div>
             </div>
@@ -262,7 +275,7 @@ export async function GET(req, content) {
                 <div class="list" style="paddin-top: 5px;">
                     <div class="list-item">
                         <strong>Request Type</strong>
-                        <span>${data.mission.request_status}</span>
+                        <span>${ getStatusString(data.mission.request_status)}</span>
                     </div>
                     <div class="list-item">
                         <strong>Date of Request</strong>

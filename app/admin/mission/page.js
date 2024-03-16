@@ -36,7 +36,7 @@ function Steps() {
         "movement_date": "",
         "purpose": "",
         "remarks": "",
-        "request_status":"Request Recieved",
+        "request_status":"request_received",
         "location_list": [{
             "index_no": 0,
             "departure_premise_type": null,

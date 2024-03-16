@@ -23,7 +23,6 @@ function MissionList() {
            mission_id:id,
            status:status,
        }
-
         const response = await axiosClient.post('mission-status-update', adminData);
         if(response.data.success==true){
             fetchData();
@@ -40,11 +39,23 @@ function MissionList() {
 
         return formattedDate;
     }
+    function getStatusString(request_status) {
+        return (
+            request_status === "request_received" ? "Request Received" :
+                request_status === "request_submitted_cla" ? "Request Submitted CLA" :
+                    request_status === "mission_completed" ? "Mission Completed" :
+                        request_status === "request_cancelled_request" ? "Request Cancelled Request" :
+                            request_status === "mission_postponed" ? "Mission Postponed" :
+                                request_status === "mission_pending" ? "Mission Pending" :
+                                    request_status === "mission_aborted" ? "Mission Aborted" :
+                                        "Unknown Status"
+        );
+    }
 
     let newDateFormat = "DD/MM/YYYY"; // Example new format
 
     let tableName = "Mission List";
-    const headName = ["Si", "Name", "movement_date","purpose","remarks","Status", "Action"];
+    const headName = ["Si", "Name", "movement_date","Status","Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -82,7 +93,7 @@ function MissionList() {
                             {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                              --
+                                    {item.leader_details[0].name}
                                 </p>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
@@ -98,22 +109,22 @@ function MissionList() {
                         {/*    USD*/}
                         {/*</p>*/}
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.purpose}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
+                    {/*<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">*/}
+                        {/*<p className="text-gray-900 whitespace-no-wrap">*/}
+                            {/*{item.purpose}*/}
                         {/*</p>*/}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.remarks}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
+                        {/*/!*<p className="text-gray-600 whitespace-no-wrap">*!/*/}
+                        {/*/!*    USD*!/*/}
+                        {/*/!*</p>*!/*/}
+                    {/*</td>*/}
+                    {/*<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">*/}
+                        {/*<p className="text-gray-900 whitespace-no-wrap">*/}
+                            {/*{item.remarks}*/}
                         {/*</p>*/}
-                    </td>
+                        {/*/!*<p className="text-gray-600 whitespace-no-wrap">*!/*/}
+                        {/*/!*    USD*!/*/}
+                        {/*/!*</p>*!/*/}
+                    {/*</td>*/}
                     {/*<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">*/}
                     {/*    <p className="text-gray-900 whitespace-no-wrap">*/}
                     {/*        Sept 28, 2019*/}
@@ -123,24 +134,37 @@ function MissionList() {
                     {/*    </p>*/}
                     {/*</td>*/}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {item.status?(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                        {/*{item.status?(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">*/}
+                        {/*<span*/}
+                            {/*aria-hidden*/}
+                            {/*className="absolute inset-0 bg-green-200 opacity-50 rounded-full"*/}
+                        {/*></span>*/}
+                        {/*<span className="relative">Completed</span>*/}
+                    {/*</span>):(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">*/}
+                        {/*<span*/}
+                            {/*aria-hidden*/}
+                            {/*className="absolute inset-0 bg-green-200 opacity-50 rounded-full"*/}
+                        {/*></span>*/}
+                        {/*<span className="relative">Pending</span>*/}
+                    {/*</span>)}*/}
+
+                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                         <span
                             aria-hidden
                             className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
                         ></span>
-                        <span className="relative">Completed</span>
-                    </span>):(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span
-                            aria-hidden
-                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                        ></span>
-                        <span className="relative">Pending</span>
-                    </span>)}
+                        <span className="relative">
+                            {getStatusString(item.request_status)}
+
+
+
+                        </span>
+                    </span>
 
                     </td>
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
-                        {(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-main text-white rounded" onClick={()=>missionStatus(item._id,1)}>Complete</button>:""}
-                        {(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject</button>:""}
+                        {/*{(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-main text-white rounded" onClick={()=>missionStatus(item._id,1)}>Complete</button>:""}*/}
+                        {/*{(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject</button>:""}*/}
 
                         <Link
                             href={{
