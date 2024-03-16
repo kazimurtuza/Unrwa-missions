@@ -143,7 +143,7 @@ const Collapsable2 = ({
             if (data.success === true) {
                 const updatedVehicleList = data.result.map((item) => ({
                     value: item._id,
-                    label: item.registration_number,
+                    label: item.vehicle_plate_number,
                     list: item,
                 }));
                 setVehicleList((prevStaffList) => [...updatedVehicleList]);
@@ -317,7 +317,7 @@ const Collapsable2 = ({
                                     htmlFor='vehicle-registration'
                                     className='form__label'
                                 >
-                                    Vehicle Registration #
+                                    Vehicle Plate Number
                                 </label>
                                 <div className='select-wrap'>
                                     <Select

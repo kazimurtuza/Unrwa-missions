@@ -8,6 +8,38 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import "./style.css";
 
+function convertDateFormat(dateString, newFormat) {
+    // Parse the input date string
+    let parsedDate = new Date(dateString);
+
+    // Format the date according to the new format
+    let formattedDate = parsedDate.toLocaleDateString(undefined, {dateStyle: 'medium'});
+
+    return formattedDate;
+}
+
+function convertDateTimeFormat(dateString) {
+    // Parse the input date string
+    let parsedDate = new Date(dateString);
+
+    // Format the date and time
+
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false // Use 24-hour format
+    };
+
+    // Format the date and time
+    let formattedDateTime = new Intl.DateTimeFormat('en-US', options).format(parsedDate);
+
+
+    return formattedDateTime;
+}
+
 function MissionVIew() {
     const router = useRouter();
     const searchParames = useSearchParams();
@@ -170,7 +202,7 @@ function MissionVIew() {
                                                         <b>Email Address</b>
                                                     </p>
                                                     <p>
-                                                        eb2@technovicinity.com
+                                                        { mission && mission.leader.user.email}
                                                     </p>
                                                 </div>
                                             </div>
@@ -196,7 +228,7 @@ function MissionVIew() {
                                                 </div>
                                                 <div className='msb-meta__item'>
                                                     <h4 className="form__info-box__title">Movement Date</h4>
-                                                    <p>{mission && mission.movement_date}</p>
+                                                    <p>{mission &&  convertDateFormat(mission.movement_date)}</p>
                                                 </div>
                                             </div>
 
@@ -226,7 +258,7 @@ function MissionVIew() {
                                                         <p>
                                                             <b>Departure Time</b>
                                                         </p>
-                                                        <p>{item.departure_time}</p>
+                                                        <p>{ convertDateTimeFormat(item.departure_time)}</p>
                                                     </div>
                                                     <div className='form__col'>
                                                         <p>
@@ -248,7 +280,7 @@ function MissionVIew() {
                                                             <b>Installation Name</b>
                                                         </p>
                                                         <p>
-                                                            <p>{item.departure_installation_name}</p>
+                                                            <p> {item.departure_umrah_id!=null?item.departure_umrah_id.installation_name:item.departure_installation_name}</p>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -286,7 +318,7 @@ function MissionVIew() {
                                                         <p>
                                                             <b>Arrival Time</b>
                                                         </p>
-                                                        <p>{item.arrival_time}</p>
+                                                        <p>{ convertDateTimeFormat(item.arrival_time)}</p>
                                                     </div>
                                                     <div className='form__col'>
                                                         <p>
@@ -306,7 +338,7 @@ function MissionVIew() {
                                                         <p>
                                                             <b>Installation Name</b>
                                                         </p>
-                                                        <p>{item.arrival_installation_name}</p>
+                                                        <p>{item.arrival_umrah_id!=null?item.arrival_umrah_id.installation_name:item.arrival_installation_name}</p>
                                                     </div>
                                                 </div>
                                                 <div className='form__row flex-ctr-spb'>
