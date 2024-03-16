@@ -42,19 +42,15 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
 
     const selectData = async (selectedOption, {name}) => {
         // Pass the input value to the parent component
-        var value ;
-        if (name == 'vehicle'||name == 'carried') {
+        var value = selectedOption.value;
+        if (name == 'vehicle') {
             value = selectedOption;
-        }else{
-            value = selectedOption.value;
         }
-        // if(name=='carri'){
-        //
-        //     selectedOption.value = await selectedOption.map(item=>({agency_id:item.value,value:item.value,label:item.label}))
-        // }
-        // console.log('data get')
-        // console.log(selectedOption)
-        // console.log('data get')
+        if(name=='carri'){
+
+            selectedOption.value = await selectedOption.map(item=>({agency_id:item.value,value:item.value,label:item.label}))
+        }
+
 
         setInfo(name, value, item);
     };
@@ -263,7 +259,7 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
                                         isSearchable
                                     >
                                     </Select>
-                                    {(checkValidation && info.carried.length == 0) ? errorTxt: ""}
+                                    {/*{(checkValidation && storeData.agency.length == 0) ? errorTxt: ""}*/}
                                 </div>
                             </div>
                         </div>
