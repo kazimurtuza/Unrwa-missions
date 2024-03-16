@@ -15,6 +15,10 @@ export async function GET(request,content){
         const uid=content.params.id;
         await mongoose.connect(connectionStr);
         data = await Vehicle.find({ agency: uid,is_delete: 0})
+        .populate({
+            path: 'agency',
+            model: 'Agency'
+        })
         .sort({ created_at: -1 });
     }
     catch(error)
