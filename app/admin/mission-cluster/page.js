@@ -3,6 +3,7 @@ import axiosClient from "@/app/axiosClient";
 import TableExample from "@/app/example-table/page";
 import Link from 'next/link';
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 
 function MissionCluster() {
     const [missionCluster, setMissionClusterList] = useState([]);
@@ -165,6 +166,13 @@ function MissionCluster() {
                                                       'Content-Type': 'application/json',
                                                   },
                                               });
+                                              Swal.fire({
+                                                title: 'success',
+                                                text: 'Successfully Deleted',
+                                                icon: 'success',
+                                                // confirmButtonText: 'Cool'
+                                            })
+                                          
                                               //setMessage('Delete successfully');
                                               // Remove the deleted question from the state
                                               //setData(data => data.filter(item => item._id !== val._id));

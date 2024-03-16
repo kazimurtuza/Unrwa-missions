@@ -3,21 +3,24 @@ import axiosClient from "@/app/axiosClient";
 import TableExample from "@/app/example-table/page";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 
 function Driver() {
     const [premiseType, setpremiseType] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { data } = await axiosClient.get('premise-type');
-                setpremiseType(data.result);
-            } catch (error) {
-                console.error('Error fetching drivers:', error);
-            }
-        };
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('premise-type');
+            setpremiseType(data.result);
+        } catch (error) {
+            console.error('Error fetching drivers:', error);
+        }
+    };
 
-        fetchData();
+    fetchData();
+
+    useEffect(() => {
+       
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Premise Type";
@@ -81,13 +84,40 @@ function Driver() {
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
-                                <Link
-                                href={{
-                                    pathname: '/admin/premise-type/edit',
-                                    query: { id: item._id },
-                                }}
-                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
-                              > Delete</Link>
+                                <button
+                                  onClick={async () => {
+                                      // Show a confirmation alert
+                                      const confirmed = window.confirm("Are you sure you want to delete?");
+
+                                      if (confirmed) {
+                                          // Make a DELETE request to your API to mark the question as deleted
+                                          try {
+                                            await axiosClient.delete(`premise-type/${item._id}`, {
+                                                  method: 'DELETE',
+                                                  headers: {
+                                                      'Content-Type': 'application/json',
+                                                  },
+                                              });
+                                              Swal.fire({
+                                                title: 'success',
+                                                text: 'Successfully Deleted',
+                                                icon: 'success',
+                                                // confirmButtonText: 'Cool'
+                                            })
+                                          
+                                              //setMessage('Delete successfully');
+                                              // Remove the deleted question from the state
+                                              //setData(data => data.filter(item => item._id !== val._id));
+                                              fetchData();
+                                          } catch (error) {
+                                              console.error("Error deleting question:", error);
+                                          }
+                                      }
+                                  }}
+                                  className="px-4 py-2 mx-2 bg-red-500 text-white rounded hover:bg-red-600"
+                              >
+                                  Delete
+                              </button>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
                                 {/*</p>*/}
