@@ -65,6 +65,7 @@ function Steps() {
             "agency": null,
             "vehicle_type": "",
             "vehicle_body": "",
+            "carried": [],
             "staff": [],
         }]
     }
@@ -88,15 +89,10 @@ function Steps() {
         setStoreData(old => update);
     };
     const vehicleSet = async (value) => {
-        console.log('-------list------');
-        console.log(value)
-        // let stafList= [...value.map((item) =>...item.staff)];
-
-        const stafList = await value.map((item) => item.staff.map((staffItem) => {
-            return staffItem.staff_id
-        })).flat();
-        setVehicleStaff(stafList);
-        // let update =await {...storeData, vehicle_list: value};
+        // const stafList = await value.map((item) => item.staff.map((staffItem) => {
+        //     return staffItem.staff_id
+        // })).flat();
+        // setVehicleStaff(stafList);
         await setStoreData(old => ({...old, vehicle_list: value}));
     };
 
@@ -105,15 +101,29 @@ function Steps() {
         let vehicle = oldData.vehicle_list;
         let vicleList = await vehicle.map(item => {
             if (item.index_no == index) {
-                item.staff = value;
+                item={...item,staff:value};
                 return item;
             } else {
                 return item;
             }
         })
+
+        console.log("old data")
+        console.log(storeData)
+        console.log("ld data")
+
+        console.log("vi")
+        console.log(vicleList)
+        console.log("vi")
+
         let newData = {...storeData, vehicle_list: vicleList}
+        console.log("new data")
+        console.log(newData)
+        console.log("new data")
         await setStoreData(old => newData);
     }
+
+
 
     const agenciesSet = async () => {
         try {
@@ -231,10 +241,10 @@ function Steps() {
         let validationError = 0;
         if (activeTab == 0) validationError = await checkStep1()
         if (activeTab == 1) validationError = await checkStep2()
-        if (validationError == 0) {
-            setCheckValidation(0)
+        // if (validationError == 0) {
+        //     setCheckValidation(0)
             setActiveTab((prev) => prev + 1);
-        }
+        // }
     }
 
     function checkStep1() {
