@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 
 function Country() {
     const [country, setCountryList] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [perPage] = useState(10);
 
     const fetchData = async () => {
         try {
@@ -22,6 +24,12 @@ function Country() {
     useEffect(() => {
         
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+    const indexOfLastItem = currentPage * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const currentItems = country.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     let tableName = "Country";
     const headName = ["Si", "Name","Alpha 2", "Iso 3166 -2","Alpha 3", "Cuntry Code","Region", "Action"];
@@ -40,7 +48,7 @@ function Country() {
 
     const body = (
         <>
-            {Array.isArray(country) && country.map((item, index) => (
+            {Array.isArray(country) && currentItems.map((item, index) => (
 
                 <tr key={index}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -170,6 +178,19 @@ function Country() {
                     </td>
                 </tr>
             ))}
+
+        <ul className="flex justify-center my-4">
+                {Array.from({ length: Math.ceil(country.length / perPage) }, (_, i) => (
+                    <li key={i} className="mx-1">
+                        <button
+                            onClick={() => paginate(i + 1)}
+                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${currentPage === i + 1 ? 'bg-blue-700' : ''}`}
+                        >
+                            {i + 1}
+                        </button>
+                    </li>
+                ))}
+            </ul>
         </>
     );
 

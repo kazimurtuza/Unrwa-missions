@@ -10,7 +10,7 @@ function CountryCreate() {
   const [countryCode, setCountryCode] = useState("");
   const [iso3166, setIso3166] = useState("");
   const [isoPort, setIsoPort] = useState("");
-  const [region, setRegion] = useState("");
+  const [region, setRegion] = useState("Asia");
   const [countries, setCountries] = useState([]);
   //success message
   const [successMessage, setSuccessMessage] = useState("");

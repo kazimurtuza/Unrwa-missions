@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 function MissionList() {
     const [mission, setMissionList] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [perPage] = useState(10);
+    
     const fetchData = async () => {
         try {
             const { data } = await axiosClient.get('mission');
@@ -18,7 +21,15 @@ function MissionList() {
     useEffect(() => {
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-   async function missionStatus(id,status){
+   
+    const indexOfLastItem = currentPage * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const currentItems = mission.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
+   
+    async function missionStatus(id,status){
        let adminData={
            mission_id:id,
            status:status,
@@ -60,7 +71,7 @@ function MissionList() {
 
     const body = (
         <>
-            {mission.map((item, index) => (
+            {Array.isArray(mission) && currentItems.map((item, index) => (
 
                 <tr key={index}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -159,6 +170,18 @@ function MissionList() {
                     </td>
                 </tr>
             ))}
+             <ul className="flex justify-center my-4">
+                {Array.from({ length: Math.ceil(mission.length / perPage) }, (_, i) => (
+                    <li key={i} className="mx-1">
+                        <button
+                            onClick={() => paginate(i + 1)}
+                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${currentPage === i + 1 ? 'bg-blue-700' : ''}`}
+                        >
+                            {i + 1}
+                        </button>
+                    </li>
+                ))}
+            </ul>
         </>
     );
 

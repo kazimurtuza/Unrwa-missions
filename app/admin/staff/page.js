@@ -9,6 +9,8 @@ function Staff() {
     const [staff, setStaffList] = useState([]);
     const [successMessage, setSuccessMessage] = useState("");
     const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [perPage] = useState(10);
 
     const fetchData = async () => {
         try {
@@ -22,6 +24,12 @@ function Staff() {
     useEffect(() => {
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+    const indexOfLastItem = currentPage * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const currentItems = staff.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     let tableName = "Staff";
     //const headName = ["Si","Image","Name", "Email", "Agency","Mission Classification","Gender","Passport Number Orginal","Passport Number Duplicate","Whatsup Number", "Statelite Phone", "Call Signin", "Action"];
@@ -56,7 +64,7 @@ function Staff() {
 
         <>
 
-            {Array.isArray(staff) && staff.map((item, index) => (
+            {Array.isArray(staff) && currentItems.map((item, index) => (
 
                 <tr key={index}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -233,6 +241,20 @@ function Staff() {
                     </td>
                 </tr>
             ))}
+
+              {/*Pangination*/}
+              <ul className="flex justify-center my-4">
+                {Array.from({ length: Math.ceil(staff.length / perPage) }, (_, i) => (
+                    <li key={i} className="mx-1">
+                        <button
+                            onClick={() => paginate(i + 1)}
+                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${currentPage === i + 1 ? 'bg-blue-700' : ''}`}
+                        >
+                            {i + 1}
+                        </button>
+                    </li>
+                ))}
+            </ul>
         </>
     );
 

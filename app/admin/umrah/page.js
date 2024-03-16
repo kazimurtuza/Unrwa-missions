@@ -9,6 +9,8 @@ const base_url = process.env.NEXT_PUBLIC_API_BASE_URL + "/";
 
 function UmrahList() {
     const [umrah, setUmrahList] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [perPage] = useState(10);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const fetchData = async () => {
@@ -27,6 +29,13 @@ function UmrahList() {
     useEffect(() => {
        
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+    const indexOfLastItem = currentPage * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const currentItems = umrah.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
 
     let tableName = "Facilities List";
     const headName = [
@@ -61,7 +70,7 @@ function UmrahList() {
 
     const body = (
         <>
-            {Array.isArray(umrah) ? umrah.map((item, index) => (
+            {Array.isArray(umrah) ? currentItems.map((item, index) => (
 
                 <tr key={index}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -205,6 +214,20 @@ function UmrahList() {
                     </td>
                 </tr>
             )) : ''}
+
+            {/*Pangination*/}
+            <ul className="flex justify-center my-4">
+                {Array.from({ length: Math.ceil(umrah.length / perPage) }, (_, i) => (
+                    <li key={i} className="mx-1">
+                        <button
+                            onClick={() => paginate(i + 1)}
+                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${currentPage === i + 1 ? 'bg-blue-700' : ''}`}
+                        >
+                            {i + 1}
+                        </button>
+                    </li>
+                ))}
+            </ul>
         </>
     );
 
