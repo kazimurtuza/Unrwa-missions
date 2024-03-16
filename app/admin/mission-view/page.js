@@ -420,8 +420,8 @@ function MissionVIew() {
                                                                 onChange={setdata}
                                                             >
                                                                 <option value="">Select</option>
-                                                                <option value="mrc">mrc</option>
-                                                                <option value="mnr">mnr</option>
+                                                                <option value="mrc">Mrc</option>
+                                                                <option value="mnr">Mnr</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -525,13 +525,15 @@ function MissionVIew() {
                                                         </div>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
                                                     </div>
-                                                    <div className="form__field collapsable-item__field">
+                                                    {adminData.does_mission!="no"? <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
-                                                            greenlight_recieve
+                                                            Greenlight Recieve
                                                         </label>
                                                         <input type="text"   onInput={setdata} value={adminData.greenlight_recieve} name="greenlight_recieve" className="form__input" />
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
-                                                    </div>
+                                                    </div>:''}
+
+
                                                 </div>
                                             </div>
 
