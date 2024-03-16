@@ -16,13 +16,40 @@ function convertDateFormat(dateString, newFormat) {
     return formattedDate;
 }
 
+ function convertDateTimeFormat(dateString) {
+    // Parse the input date string
+    let parsedDate = new Date(dateString);
+
+    // Format the date and time
+
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false // Use 24-hour format
+    };
+
+    // Format the date and time
+    let formattedDateTime = new Intl.DateTimeFormat('en-US', options).format(parsedDate);
+
+
+    return formattedDateTime;
+}
+
 export async function GET(req, content) {
     try {
 
         const id = content.params.id;
 
         await mongoose.connect(connectionStr);
-        let mission = await Mission.findOne({_id: id}).populate('agency.agency_id').populate('leader');
+        let mission=await Mission.findOne({_id:id}).populate('mission_cluster').populate('agency.agency_id').populate({
+            path: 'leader',
+            populate: {
+                path: 'user'
+            }
+        });
         let missionLocation = await MissionDepartureArrival.find({mission: id})
             .populate('departure_umrah_id')
             .populate('departure_premise_type')
@@ -56,8 +83,8 @@ export async function GET(req, content) {
             </div>
             <div class="right-row">
                 <div></div>
-                 <div>${convertDateFormat(item.departure_time, newDateFormat)}</div>
-                <div>Dhaka</div>
+                 <div>${convertDateTimeFormat(item.departure_time)}</div>
+                <div>${item.departure_umrah_id!=null?item.departure_umrah_id.location_area:item.departure_installation_name}</div>
                   <div>${item.departure_latitude}</div>
                 <div>${item.departure_longitude}</div>
             </div>
@@ -70,8 +97,8 @@ export async function GET(req, content) {
             </div>
             <div class="right-row">
                 <div></div>
-                 <div>${convertDateFormat(item.arrival_time, newDateFormat)}</div>
-                <div>Dhaka</div>
+                 <div>${convertDateTimeFormat(item.arrival_time)}</div>
+               <div>${item.arrival_umrah_id!=null?item.arrival_umrah_id.location_area:item.arrival_installation_name}</div>
                <div>${item.arrival_latitude}</div>
                 <div>${item.arrival_longitude}</div>
             </div>
@@ -90,7 +117,7 @@ export async function GET(req, content) {
                         </p>
                         <p>
                             <strong>Vehicle ID #</strong>
-                            <span>ND</span>
+                            <span>${item.vehicle.vehicle_id}</span>
                         </p>
                         <p>
                             <strong>Registration / Number Plate:</strong>
@@ -98,7 +125,7 @@ export async function GET(req, content) {
                         </p>
                         <p>
                             <strong>Cargo:</strong>
-                            <span>ND</span>
+                            ${item.carried.map(item=> `<span>${item.value}</span>`)}
                         </p>
                     </div>
                     <div class="table-col">
@@ -133,7 +160,7 @@ export async function GET(req, content) {
                         </p>
                         <p>
                             <strong>ID</strong>
-                            <span>ND</span>
+                            <span>${staff.staff_id.employee_id}</span>
                         </p>
                    
                     `)}
@@ -239,7 +266,7 @@ export async function GET(req, content) {
                     </div>
                     <div class="list-item">
                         <strong>Date of Request</strong>
-                        <span>ND</span>
+                        <span>${convertDateFormat(data.mission.created_at, newDateFormat)}</span>
                     </div>
                     <div class="list-item">
                         <strong>UNRWA Request #</strong>
@@ -284,7 +311,7 @@ export async function GET(req, content) {
                     </div>
                     <div class="list-item">
                         <strong>Email</strong>
-                        <span>Email</span>
+                        <span>${data.mission.leader.user.email}</span>
                     </div>
                     <div class="list-item">
                         <strong>GSM Phone # 1:</strong>
@@ -308,7 +335,7 @@ export async function GET(req, content) {
                     </div>
                     <div class="list-item">
                         <strong>Cluster</strong>
-                        <span>Cluster</span>
+                        <span>${data.mission.mission_cluster.name}</span>
                     </div>
                 </div>
 
