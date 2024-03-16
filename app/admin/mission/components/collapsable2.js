@@ -1,15 +1,15 @@
 import axiosClient from "@/app/axiosClient";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import DualListBox from "react-dual-listbox";
 import "react-dual-listbox/lib/react-dual-listbox.css";
 import Select from "react-select";
 
 const carriList = [
-    { value: "Passengers", label: "Passengers" },
-    { value: "Fuel", label: "Fuel" },
-    { value: "Medicine", label: "Medicine" },
-    { value: "Food", label: "Food" },
-    { value: "Mixed_Items", label: "Mixed Emergency Response Items" },
+    {value: "Passengers", label: "Passengers"},
+    {value: "Fuel", label: "Fuel"},
+    {value: "Medicine", label: "Medicine"},
+    {value: "Food", label: "Food"},
+    {value: "Mixed_Items", label: "Mixed Emergency Response Items"},
 ];
 
 const customStyles = {
@@ -22,15 +22,15 @@ const customStyles = {
 let errorTxt = <p style={customStyles}>This field is required.</p>;
 
 const Collapsable2 = ({
-    info,
-    setInfo,
-    item,
-    checkValidation,
-    vehicleStaff,
-    vehicleStaffStore,
-}) => {
+                          info,
+                          setInfo,
+                          item,
+                          checkValidation,
+                          vehicleStaff,
+                          vehicleStaffStore,
+                      }) => {
     const setdata = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setInfo(name, value, item); // Pass the input value to the parent component
     };
 
@@ -43,14 +43,30 @@ const Collapsable2 = ({
     const [seletVicleInfo, setseletVicleInfo] = useState();
     const [collapse, setCollapse] = useState(true);
     const [selected, setSelected] = useState([]);
+    const [driverInfo, setDriverInfo] = useState();
 
-    const selectData = async (selectedOption, { name }) => {
+
+
+    const getDriverData = async () => {
+        const selectedStaff = await driverList.find(option => option.value === info.driver)
+        if (selectedStaff) {
+            setDriverInfo(selectedStaff.list);
+        }
+    };
+
+
+
+    const selectData = async (selectedOption, {name}) => {
         // Pass the input value to the parent component
         var value = selectedOption.value;
+
+        if (name == 'driver') {
+            setDriverInfo(selectedOption.list);
+        }
+
         if (name == "vehicle") {
             value = selectedOption;
         }
-
         if (name == "carri") {
             selectedOption.value = await selectedOption.map((item) => ({
                 agency_id: item.value,
@@ -64,7 +80,7 @@ const Collapsable2 = ({
 
     const agencyListSet = async () => {
         try {
-            const { data } = await axiosClient.get("agency");
+            const {data} = await axiosClient.get("agency");
             if (data.success === true) {
                 const updatedAgencyList = data.result.map((item) => ({
                     value: item._id,
@@ -80,16 +96,15 @@ const Collapsable2 = ({
 
     const driverListSet = async () => {
         try {
-            const { data } = await axiosClient.get("staff");
+            const {data} = await axiosClient.get("staff");
             if (data.success === true) {
                 const updatedDriverList = data.result
                     .filter((item) => item && item.staff_role === "Driver")
                     .map((item) => ({
                         value: item._id,
                         label: item.name,
+                        list: item,
                     }));
-
-                console.log(updatedDriverList);
 
                 setDriverList(updatedDriverList);
             }
@@ -100,7 +115,7 @@ const Collapsable2 = ({
 
     const staffListSet = async () => {
         try {
-            const { data } = await axiosClient.get("staff");
+            const {data} = await axiosClient.get("staff");
             if (data.success === true) {
                 const updatedStaffList = data.result.map((item) => ({
                     value: item._id,
@@ -115,7 +130,7 @@ const Collapsable2 = ({
     };
     const vehicleListSet = async () => {
         try {
-            const { data } = await axiosClient.get("vehicle");
+            const {data} = await axiosClient.get("vehicle");
             if (data.success === true) {
                 const updatedVehicleList = data.result.map((item) => ({
                     value: item._id,
@@ -150,6 +165,7 @@ const Collapsable2 = ({
         driverListSet();
         staffListSet();
         vehicleListSet();
+        getDriverData();
         if (info.vehicle) {
             setSelectedVehicleInfo();
         }
@@ -233,47 +249,49 @@ const Collapsable2 = ({
                                     : ""}
                             </div>
 
-                            <div class='form__info-box'>
-                                <h3 class='form__info-box__title'>
+                            {driverInfo? <div className='form__info-box'>
+                                <h3 className='form__info-box__title'>
                                     Driver Information
                                 </h3>
-                                <div class='form__row flex-ctr-spb'>
-                                    <div class='form__col'>
+                                <div className='form__row flex-ctr-spb'>
+                                    <div className='form__col'>
                                         <p>
                                             <b>Name</b>
                                         </p>
-                                        <p>staff2</p>
+                                        <p>{driverInfo.name}</p>
                                     </div>
-                                    <div class='form__col'>
+                                    <div className='form__col'>
                                         <p>
-                                            <b>Satellite Phone</b>
+                                            <b>ID</b>
                                         </p>
-                                        <p>7988767</p>
+                                        <p>{driverInfo.employee_id}</p>
                                     </div>
                                 </div>
-                                <div class='form__row flex-ctr-spb'>
-                                    <div class='form__col'>
+                                <div className='form__row flex-ctr-spb'>
+                                    <div className='form__col'>
                                         <p>
-                                            <b>Phone</b>
+                                            <b>Ooredoo Phone</b>
                                         </p>
-                                        <p>9889768</p>
+                                        <p>ND</p>
                                     </div>
-                                    <div class='form__col'>
+                                    <div className='form__col'>
                                         <p>
-                                            <b>Email Address</b>
+                                            <b>Jawwal Phone</b>
                                         </p>
-                                        <p>lipan.dutta+3@gmail.com</p>
+                                        <p>{driverInfo.phone_number_two}</p>
                                     </div>
                                 </div>
-                                <div class='form__row flex-ctr-spb'>
-                                    <div class='form__col'>
+                                <div className='form__row flex-ctr-spb'>
+                                    <div className='form__col'>
                                         <p>
                                             <b>Whatsapp</b>
                                         </p>
-                                        <p>565765</p>
+                                        <p>ND</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div>:''}
+
+
                         </div>
                         <div className='collapsable-item__body-col'>
                             <h3 className='collapsable-item__body-title'>
@@ -361,7 +379,7 @@ const Collapsable2 = ({
                             filterCallback={(
                                 option,
                                 filterInput,
-                                { getOptionLabel }
+                                {getOptionLabel}
                             ) => {
                                 if (filterInput === "") {
                                     return true;
