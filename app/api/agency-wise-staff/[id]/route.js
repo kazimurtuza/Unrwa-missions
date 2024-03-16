@@ -18,6 +18,10 @@ export async function GET(request,content){
         //staff role not driver
 
         data= await Staff.find({ agency: uid,is_delete: 0,staff_role:{$ne:"Driver"}})
+        .populate({
+            path: 'user',
+            model: 'User'
+        })
         .sort({ created_at: -1 });
     }
     catch(error)
