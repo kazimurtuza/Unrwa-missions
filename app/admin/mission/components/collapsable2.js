@@ -4,14 +4,14 @@ import 'react-dual-listbox/lib/react-dual-listbox.css';
 import axiosClient from "@/app/axiosClient";
 import Select from "react-select";
 
-const options = [
-    {value: "1", label: "Staff One"},
-    {value: "2", label: "Staff Two"},
-    {value: "3", label: "Staff Three"},
-    {value: "4", label: "Staff Four"},
-    {value: "5", label: "Staff Five"},
-    {value: "6", label: "Staff Six"},
-    {value: "7", label: "Staff Seven"},
+
+const carriList = [
+    {value: "Passengers", label: "Passengers"},
+    {value: "Fuel", label: "Fuel"},
+    {value: "Medicine", label: "Medicine"},
+    {value: "Food", label: "Food"},
+    {value: "Mixed_Items", label: "Mixed Emergency Response Items"},
+
 ];
 
 const customStyles = {
@@ -40,12 +40,22 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
     const [collapse, setCollapse] = useState(true);
     const [selected, setSelected] = useState([]);
 
-    const selectData = (selectedOption, {name}) => {
+    const selectData = async (selectedOption, {name}) => {
         // Pass the input value to the parent component
-        var value = selectedOption.value;
-        if (name == 'vehicle') {
+        var value ;
+        if (name == 'vehicle'||name == 'carried') {
             value = selectedOption;
+        }else{
+            value = selectedOption.value;
         }
+        // if(name=='carri'){
+        //
+        //     selectedOption.value = await selectedOption.map(item=>({agency_id:item.value,value:item.value,label:item.label}))
+        // }
+        // console.log('data get')
+        // console.log(selectedOption)
+        // console.log('data get')
+
         setInfo(name, value, item);
     };
 
@@ -237,6 +247,24 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
                                     Vehicle Body Description
                                 </label>
                                 <input type="text" value={info.vehicle_body} className="form__input" id="dsc"/>
+                            </div>
+                            <div className="form__field">
+                                <label htmlFor="agencies" className="form__label">
+                                    What is being carried out
+                                </label>
+                                <div className="select-wrap">
+                                    <Select
+                                        name="carried"
+                                        value={info.carried}
+                                        isMulti
+                                        options={carriList}
+                                        onChange={selectData}
+                                        className="basic-multi-select"
+                                        isSearchable
+                                    >
+                                    </Select>
+                                    {(checkValidation && info.carried.length == 0) ? errorTxt: ""}
+                                </div>
                             </div>
                         </div>
                     </div>

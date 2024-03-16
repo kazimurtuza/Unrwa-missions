@@ -197,6 +197,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                                 <Select
                                     name="mission_cluster"
                                     options={cluster}
+                                    value={cluster.find(option => option.value === storeData.mission_cluster)}
                                     onChange={selectData}
                                     isSearchable
                                 >
