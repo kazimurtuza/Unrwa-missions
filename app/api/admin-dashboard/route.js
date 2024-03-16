@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import {connectionStr} from "@/lib/db";
 import {User} from "@/lib/model/users";
 import {NextResponse} from "next/server";
+import {Mission} from "../../../lib/model/mission";
 
 export async function GET() {
 
@@ -9,16 +10,22 @@ export async function GET() {
     var data = {}; // Declare data as an empty object
     try {
         await mongoose.connect(connectionStr);
-        let userList = 0;
-        let productList = 0;
-        let orderList = 0;
-        let completeOrderList = 0;
+
+
+
+        let totalMission = await Mission.countDocuments();
+        let completed = await Mission.countDocuments({ request_status: "mission_completed" });
+        let rejectCount = await Mission.countDocuments({ cla_decision: "denied" });
+        let approved = await Mission.countDocuments({ cla_decision: "approved" });
+        // let clusterList = await MissionCluster.find({is_delete:0});
+
+
 
         data = {
-            userList: userList,
-            productList: productList,
-            orderList: orderList,
-            completeOrderList: completeOrderList
+            totalMission: totalMission,
+            completed: completed,
+            approved: approved,
+            rejectCount: rejectCount,
         };
 
         return NextResponse.json({ result: data, success: true });

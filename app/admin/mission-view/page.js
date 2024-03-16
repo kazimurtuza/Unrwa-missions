@@ -514,13 +514,13 @@ function MissionVIew() {
                                                                 onChange={setdata}
                                                             >
                                                                 <option value="">SELECT</option>
-                                                                <option value="Request Recieved">Request Recieved</option>
-                                                                <option value="Request submitted to CLA">Request submitted to CLA</option>
-                                                                <option value="Mission Completed">Mission Completed</option>
-                                                                <option value="Requestor Cancelled Request">Requestor Cancelled Request</option>
-                                                                <option value="Mission Postponed">Mission Postponed</option>
-                                                                <option value="Mission Pending">Mission Pending</option>
-                                                                <option value="Mission Aborted">Mission Aborted</option>
+                                                                <option value="request_recieved">Request Recieved</option>
+                                                                <option value="request_submitted_cla">Request submitted to CLA</option>
+                                                                <option value="mission_completed">Mission Completed</option>
+                                                                <option value="request_cancelled_request">Requestor Cancelled Request</option>
+                                                                <option value="mission_postponed">Mission Postponed</option>
+                                                                <option value="mission_pending">Mission Pending</option>
+                                                                <option value="mission_aborted">Mission Aborted</option>
                                                             </select>
                                                         </div>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
