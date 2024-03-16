@@ -3,6 +3,7 @@ import axiosClient from "@/app/axiosClient";
 import TableExample from "@/app/example-table/page";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 
 const base_url = process.env.NEXT_PUBLIC_API_BASE_URL + "/";
 
@@ -10,19 +11,21 @@ function UmrahList() {
     const [umrah, setUmrahList] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const {data} = await axiosClient.get('umrah');
-                if (data.success == true) {
-                    setUmrahList(data.result);
-                }
-            } catch (error) {
-                setProductList([]);
-                // console.error('Error fetching categories:', error);
+    const fetchData = async () => {
+        try {
+            const {data} = await axiosClient.get('umrah');
+            if (data.success == true) {
+                setUmrahList(data.result);
             }
-        };
-        fetchData();
+        } catch (error) {
+            setProductList([]);
+            // console.error('Error fetching categories:', error);
+        }
+    };
+    fetchData();
+
+    useEffect(() => {
+       
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Facilities List";
@@ -161,13 +164,40 @@ function UmrahList() {
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
-                                <Link
-                                href={{
-                                    pathname: '/admin/umrah/edit',
-                                    query: { id: item._id },
-                                }}
-                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
-                              > Delete</Link>
+                                <button
+                                  onClick={async () => {
+                                      // Show a confirmation alert
+                                      const confirmed = window.confirm("Are you sure you want to delete?");
+
+                                      if (confirmed) {
+                                          // Make a DELETE request to your API to mark the question as deleted
+                                          try {
+                                            await axiosClient.delete(`umrah/${item._id}`, {
+                                                  method: 'DELETE',
+                                                  headers: {
+                                                      'Content-Type': 'application/json',
+                                                  },
+                                              });
+                                              Swal.fire({
+                                                title: 'success',
+                                                text: 'Successfully Deleted',
+                                                icon: 'success',
+                                                // confirmButtonText: 'Cool'
+                                            })
+                                          
+                                              //setMessage('Delete successfully');
+                                              // Remove the deleted question from the state
+                                              //setData(data => data.filter(item => item._id !== val._id));
+                                              fetchData();
+                                          } catch (error) {
+                                              console.error("Error deleting question:", error);
+                                          }
+                                      }
+                                  }}
+                                  className="px-4 py-2 mx-2 bg-red-500 text-white rounded hover:bg-red-600"
+                              >
+                                  Delete
+                              </button>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
                                 {/*</p>*/}

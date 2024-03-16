@@ -420,8 +420,8 @@ function MissionVIew() {
                                                                 onChange={setdata}
                                                             >
                                                                 <option value="">Select</option>
-                                                                <option value="mrc">Mrc</option>
-                                                                <option value="mnr">Mnr</option>
+                                                                <option value="MRC">MRC</option>
+                                                                <option value="MNR">MNR</option>
                                                             </select>
                                                         </div>
                                                     </div>
