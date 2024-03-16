@@ -1,32 +1,36 @@
-import {useEffect, useState} from "react";
-import DualListBox from "react-dual-listbox";
-import 'react-dual-listbox/lib/react-dual-listbox.css';
 import axiosClient from "@/app/axiosClient";
+import { useEffect, useState } from "react";
+import DualListBox from "react-dual-listbox";
+import "react-dual-listbox/lib/react-dual-listbox.css";
 import Select from "react-select";
 
-
 const carriList = [
-    {value: "Passengers", label: "Passengers"},
-    {value: "Fuel", label: "Fuel"},
-    {value: "Medicine", label: "Medicine"},
-    {value: "Food", label: "Food"},
-    {value: "Mixed_Items", label: "Mixed Emergency Response Items"},
-
+    { value: "Passengers", label: "Passengers" },
+    { value: "Fuel", label: "Fuel" },
+    { value: "Medicine", label: "Medicine" },
+    { value: "Food", label: "Food" },
+    { value: "Mixed_Items", label: "Mixed Emergency Response Items" },
 ];
 
 const customStyles = {
-    color: 'red',
-    fontSize: '16px',
-    fontWeight: 'bold',
+    color: "red",
+    fontSize: "16px",
+    fontWeight: "bold",
     // Add more styles as needed
 };
 
-let errorTxt = <p style={customStyles}>This field is required.</p>
+let errorTxt = <p style={customStyles}>This field is required.</p>;
 
-const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehicleStaffStore}) => {
-
+const Collapsable2 = ({
+    info,
+    setInfo,
+    item,
+    checkValidation,
+    vehicleStaff,
+    vehicleStaffStore,
+}) => {
     const setdata = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setInfo(name, value, item); // Pass the input value to the parent component
     };
 
@@ -40,26 +44,29 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
     const [collapse, setCollapse] = useState(true);
     const [selected, setSelected] = useState([]);
 
-    const selectData = async (selectedOption, {name}) => {
+    const selectData = async (selectedOption, { name }) => {
         // Pass the input value to the parent component
         var value = selectedOption.value;
-        if (name == 'vehicle') {
+        if (name == "vehicle") {
             value = selectedOption;
         }
-        if(name=='carri'){
 
-            selectedOption.value = await selectedOption.map(item=>({agency_id:item.value,value:item.value,label:item.label}))
+        if (name == "carri") {
+            selectedOption.value = await selectedOption.map((item) => ({
+                agency_id: item.value,
+                value: item.value,
+                label: item.label,
+            }));
         }
-
 
         setInfo(name, value, item);
     };
 
     const agencyListSet = async () => {
         try {
-            const {data} = await axiosClient.get('agency');
+            const { data } = await axiosClient.get("agency");
             if (data.success === true) {
-                const updatedAgencyList = data.result.map(item => ({
+                const updatedAgencyList = data.result.map((item) => ({
                     value: item._id,
                     label: item.name,
                 }));
@@ -73,10 +80,11 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
 
     const driverListSet = async () => {
         try {
-            const {data} = await axiosClient.get('staff');
+            const { data } = await axiosClient.get("staff");
             if (data.success === true) {
-                const updatedDriverList = data.result.filter(item => item && item.staff_role === "Driver")
-                    .map(item => ({
+                const updatedDriverList = data.result
+                    .filter((item) => item && item.staff_role === "Driver")
+                    .map((item) => ({
                         value: item._id,
                         label: item.name,
                     }));
@@ -92,14 +100,14 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
 
     const staffListSet = async () => {
         try {
-            const {data} = await axiosClient.get('staff');
+            const { data } = await axiosClient.get("staff");
             if (data.success === true) {
-                const updatedStaffList = data.result.map(item => ({
+                const updatedStaffList = data.result.map((item) => ({
                     value: item._id,
                     label: item.name,
                     list: item,
                 }));
-                setStaffList(prevStaffList => [...updatedStaffList]);
+                setStaffList((prevStaffList) => [...updatedStaffList]);
             }
         } catch (error) {
             setStaffList([]);
@@ -107,14 +115,14 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
     };
     const vehicleListSet = async () => {
         try {
-            const {data} = await axiosClient.get('vehicle');
+            const { data } = await axiosClient.get("vehicle");
             if (data.success === true) {
-                const updatedVehicleList = data.result.map(item => ({
+                const updatedVehicleList = data.result.map((item) => ({
                     value: item._id,
                     label: item.registration_number,
                     list: item,
                 }));
-                setVehicleList(prevStaffList => [...updatedVehicleList]);
+                setVehicleList((prevStaffList) => [...updatedVehicleList]);
             }
         } catch (error) {
             setVehicleList([]);
@@ -122,22 +130,22 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
     };
 
     async function setSelectedVehicleInfo() {
-        const seletVicleInfoData = await vehicleList.find(option => option.value === info.vehicle)
+        const seletVicleInfoData = await vehicleList.find(
+            (option) => option.value === info.vehicle
+        );
 
         if (seletVicleInfoData) {
-            setseletVicleInfo(old => seletVicleInfoData.list);
+            setseletVicleInfo((old) => seletVicleInfoData.list);
         }
     }
 
     async function selectedStaffSet() {
-
-        let selectedStaffList = await info.staff.map(item => item.staff_id);
-        setSelected(old => selectedStaffList)
+        let selectedStaffList = await info.staff.map((item) => item.staff_id);
+        setSelected((old) => selectedStaffList);
     }
 
-
     useEffect(() => {
-        selectedStaffSet()
+        selectedStaffSet();
         agencyListSet();
         driverListSet();
         staffListSet();
@@ -148,14 +156,14 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
     }, []);
 
     const handleClick = () => {
-        setCollapse(!collapse)
-    }
+        setCollapse(!collapse);
+    };
 
     const employeeSet = async (data) => {
         setSelected(data);
         // Map each item in the data array to an object with a key staff_id
         let value = await data.map((item) => ({
-            staff_id: item
+            staff_id: item,
         }));
         let name = "staff"; // Assuming this is the name you want to use
         vehicleStaffStore(value, item); // You need to define 'item' somewhere in your code
@@ -164,101 +172,182 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
     return (
         <>
             <div className={`collapsable-item ${collapse ? "active" : ""} `}>
-                <div className="collapsable-item__header collapse-trigger" onClick={handleClick}>
-                    <h3 className="collapsable-item__header-title">
+                <div
+                    className='collapsable-item__header collapse-trigger'
+                    onClick={handleClick}
+                >
+                    <h3 className='collapsable-item__header-title'>
                         Vehicle and Driver Details
                     </h3>
                 </div>
-                <div className="collapsable-item__body">
-                    <div className="collapsable-item__body-row flex-start-spb">
-                        <div className="collapsable-item__body-col">
-                            <h3 className="collapsable-item__body-title">Driver</h3>
-                            <div className="form__field collapsable-item__field">
-                                <label htmlFor="agency-name" className="form__label">
+                <div className='collapsable-item__body'>
+                    <div className='collapsable-item__body-row flex-start-spb'>
+                        <div className='collapsable-item__body-col'>
+                            <h3 className='collapsable-item__body-title'>
+                                Driver
+                            </h3>
+                            <div className='form__field collapsable-item__field'>
+                                <label
+                                    htmlFor='agency-name'
+                                    className='form__label'
+                                >
                                     Agency Name
                                 </label>
-                                <div className="select-wrap">
+                                <div className='select-wrap'>
                                     <Select
-                                        name="agency"
-                                        value={agencyList.find(option => option.value === info.agency)}
+                                        name='agency'
+                                        value={agencyList.find(
+                                            (option) =>
+                                                option.value === info.agency
+                                        )}
                                         options={agencyList}
-                                        id="focus-point"
+                                        id='focus-point'
                                         onChange={selectData}
                                         isSearchable
-                                    >
-                                    </Select>
-                                    {(checkValidation && info.agency == null) ? errorTxt : ""}
+                                    ></Select>
+                                    {checkValidation && info.agency == null
+                                        ? errorTxt
+                                        : ""}
                                 </div>
                             </div>
 
-                            <div className="form__field collapsable-item__field">
-                                <label htmlFor="driver-name" className="form__label">
+                            <div className='form__field collapsable-item__field'>
+                                <label
+                                    htmlFor='driver-name'
+                                    className='form__label'
+                                >
                                     Driver Name
                                 </label>
                                 <Select
-                                    name="driver"
+                                    name='driver'
                                     options={driverList}
-                                    value={driverList.find(option => option.value === info.driver)}
-                                    id="focus-point"
+                                    value={driverList.find(
+                                        (option) => option.value === info.driver
+                                    )}
+                                    id='focus-point'
                                     onChange={selectData}
                                     isSearchable
-                                >
-                                </Select>
-                                {(checkValidation && info.driver == null) ? errorTxt : ""}
+                                ></Select>
+                                {checkValidation && info.driver == null
+                                    ? errorTxt
+                                    : ""}
+                            </div>
+
+                            <div class='form__info-box'>
+                                <h3 class='form__info-box__title'>
+                                    Driver Information
+                                </h3>
+                                <div class='form__row flex-ctr-spb'>
+                                    <div class='form__col'>
+                                        <p>
+                                            <b>Name</b>
+                                        </p>
+                                        <p>staff2</p>
+                                    </div>
+                                    <div class='form__col'>
+                                        <p>
+                                            <b>Satellite Phone</b>
+                                        </p>
+                                        <p>7988767</p>
+                                    </div>
+                                </div>
+                                <div class='form__row flex-ctr-spb'>
+                                    <div class='form__col'>
+                                        <p>
+                                            <b>Phone</b>
+                                        </p>
+                                        <p>9889768</p>
+                                    </div>
+                                    <div class='form__col'>
+                                        <p>
+                                            <b>Email Address</b>
+                                        </p>
+                                        <p>lipan.dutta+3@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class='form__row flex-ctr-spb'>
+                                    <div class='form__col'>
+                                        <p>
+                                            <b>Whatsapp</b>
+                                        </p>
+                                        <p>565765</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="collapsable-item__body-col">
-                            <h3 className="collapsable-item__body-title">Vehicle</h3>
-                            <div className="form__field collapsable-item__field">
-                                <label htmlFor="vehicle-registration" className="form__label">
+                        <div className='collapsable-item__body-col'>
+                            <h3 className='collapsable-item__body-title'>
+                                Vehicle
+                            </h3>
+                            <div className='form__field collapsable-item__field'>
+                                <label
+                                    htmlFor='vehicle-registration'
+                                    className='form__label'
+                                >
                                     Vehicle Registration #
                                 </label>
-                                <div className="select-wrap">
-
+                                <div className='select-wrap'>
                                     <Select
-                                        name="vehicle"
+                                        name='vehicle'
                                         options={vehicleList}
-                                        value={vehicleList.find(option => option.value === info.vehicle)}
-
-                                        id="focus-point"
+                                        value={vehicleList.find(
+                                            (option) =>
+                                                option.value === info.vehicle
+                                        )}
+                                        id='focus-point'
                                         onChange={selectData}
                                         isSearchable
-                                    >
-                                    </Select>
-                                    {(checkValidation && info.vehicle == null) ? errorTxt : ""}
+                                    ></Select>
+                                    {checkValidation && info.vehicle == null
+                                        ? errorTxt
+                                        : ""}
                                 </div>
                             </div>
-                            <div className="form__field collapsable-item__field">
-                                <label htmlFor="vehicle-type" className="form__label">
+                            <div className='form__field collapsable-item__field'>
+                                <label
+                                    htmlFor='vehicle-type'
+                                    className='form__label'
+                                >
                                     Vehicle Type (Model)
                                 </label>
-                                <div className="select-wrap">
-
-                                    <input type="text" value={info.vehicle_type} className="form__input" id="dsc"/>
+                                <div className='select-wrap'>
+                                    <input
+                                        type='text'
+                                        value={info.vehicle_type}
+                                        className='form__input'
+                                        id='dsc'
+                                    />
                                 </div>
                             </div>
 
-                            <div className="form__field collapsable-item__field">
-                                <label htmlFor="dsc" className="form__label">
+                            <div className='form__field collapsable-item__field'>
+                                <label htmlFor='dsc' className='form__label'>
                                     Vehicle Body Description
                                 </label>
-                                <input type="text" value={info.vehicle_body} className="form__input" id="dsc"/>
+                                <input
+                                    type='text'
+                                    value={info.vehicle_body}
+                                    className='form__input'
+                                    id='dsc'
+                                />
                             </div>
-                            <div className="form__field">
-                                <label htmlFor="agencies" className="form__label">
+                            <div className='form__field'>
+                                <label
+                                    htmlFor='agencies'
+                                    className='form__label'
+                                >
                                     What is being carried out
                                 </label>
-                                <div className="select-wrap">
+                                <div className='select-wrap'>
                                     <Select
-                                        name="carried"
+                                        name='carried'
                                         value={info.carried}
                                         isMulti
                                         options={carriList}
                                         onChange={selectData}
-                                        className="basic-multi-select"
+                                        className='basic-multi-select'
                                         isSearchable
-                                    >
-                                    </Select>
+                                    ></Select>
                                     {/*{(checkValidation && storeData.agency.length == 0) ? errorTxt: ""}*/}
                                 </div>
                             </div>
@@ -272,7 +361,7 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
                             filterCallback={(
                                 option,
                                 filterInput,
-                                {getOptionLabel}
+                                { getOptionLabel }
                             ) => {
                                 if (filterInput === "") {
                                     return true;
@@ -284,13 +373,14 @@ const Collapsable2 = ({info, setInfo, item, checkValidation, vehicleStaff, vehic
                             }}
                             options={staffList}
                         />
-                        {(checkValidation && info.staff.length == 0) ? errorTxt : ""}
+                        {checkValidation && info.staff.length == 0
+                            ? errorTxt
+                            : ""}
                     </div>
                 </div>
-
             </div>
         </>
-    )
-}
+    );
+};
 
 export default Collapsable2;
