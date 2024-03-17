@@ -33,7 +33,7 @@ function Staff() {
 
     let tableName = "Staff";
     //const headName = ["Si","Image","Name", "Email", "Agency","Mission Classification","Gender","Passport Number Orginal","Passport Number Duplicate","Whatsup Number", "Statelite Phone", "Call Signin", "Action"];
-    const headName = ["Si","Image","Name", "Role",,"Status","Mission Classification","Gender", "Action"];
+    const headName = ["Si","Image","Name", "Role",,"Status","Classification","Gender", "Action"];
 
     let head = (
         <tr>
