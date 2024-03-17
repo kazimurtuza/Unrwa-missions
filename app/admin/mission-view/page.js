@@ -57,28 +57,6 @@ function MissionVIew() {
         {value: "7", label: "Staff Seven"},
     ];
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const id = await mission_id;
-                const url = `mission/${id}`
-
-                const {data} = await axiosClient.get(url);
-                if (data.success) {
-                    setMission(data.result.mission);
-                    setplaces(data.result.places);
-                    setvehicles(data.result.vehicles);
-                }
-
-                console.log(data.result);
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
     let dataList={
         mission_id:mission_id,
         mission_classification_info:"",
@@ -93,6 +71,44 @@ function MissionVIew() {
     }
 
     const [adminData,setadminData]=useState(dataList);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const id = await mission_id;
+                const url = `mission/${id}`
+
+                const {data} = await axiosClient.get(url);
+                if (data.success) {
+                    let missionData= await data.result.mission
+                    setMission(missionData);
+                    setplaces(data.result.places);
+                    setvehicles(data.result.vehicles);
+                    setadminData(old=>(
+                        {...old,
+                            request_status:missionData.request_status,
+                            greenlight_recieve:missionData.greenlight_recieve,
+                            unops_acu_status:missionData.unops_acu_status,
+                            cla_decision:missionData.cla_decision,
+                            mission_classification_info:missionData.mission_classification_info,
+                            does_mission:missionData.does_mission,
+                            unops_acu:missionData.unops_acu,
+                            cla:missionData.cla,
+
+                        }))
+                }
+
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+
     const [downloading,setDownloading]=useState(0);
     const setdata = (e) => {
         const {name, value} = e.target;
@@ -103,8 +119,8 @@ function MissionVIew() {
     };
 
     const storeDate=async ()=>{
+        console.log(adminData);
         const response = await axiosClient.post('mission-admin-update', adminData);
-        console.log(response);
         if(response.data.success==true){
             alert('success fully updated');
         }
@@ -487,8 +503,7 @@ function MissionVIew() {
                                                                 value={adminData.unops_acu_status}
                                                                 onChange={setdata}
                                                             >
-                                                                <option value="">Select</option>
-                                                                <option value="Submitted to CLA">Submitted to CLA</option>
+                                                                <option value="Submitted to CLA" >Submitted to CLA</option>
                                                                 <option value="Recieved">Recieved</option>
                                                                 <option value="Denied by CLA">Denied by CLA</option>
                                                             </select>
