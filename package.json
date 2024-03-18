@@ -19,6 +19,7 @@
     "bson": "^6.2.0",
     "chart.js": "^4.4.2",
     "cookies-next": "^4.1.1",
+    "datatables": "^1.10.18",
     "faker": "^6.6.6",
     "fs": "^0.0.1-security",
     "joi": "^17.11.0",
