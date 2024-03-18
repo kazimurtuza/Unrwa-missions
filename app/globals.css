@@ -130,3 +130,7 @@ body div .dataTables_wrapper .dataTables_paginate .paginate_button.current, body
 .dataTables_wrapper .dataTables_paginate{
   padding-bottom: .25em;
 }
+
+table a{
+  display: inline-block;
+}

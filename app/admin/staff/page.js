@@ -226,25 +226,11 @@ function Staff() {
                     </td>
                 </tr>
             ))}
-
-              {/*Pangination*/}
-              <ul className="flex justify-center my-4">
-                {Array.from({ length: Math.ceil(staff.length / perPage) }, (_, i) => (
-                    <li key={i} className="mx-1">
-                        <button
-                            onClick={() => paginate(i + 1)}
-                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${currentPage === i + 1 ? 'bg-blue-700' : ''}`}
-                        >
-                            {i + 1}
-                        </button>
-                    </li>
-                ))}
-            </ul>
         </>
     );
 
     return (
-        // <TableExample tableName={tableName} tableHead={head} body={body}/>
+
         <div className="flex h-screen overflow-hidden">
 
         <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">

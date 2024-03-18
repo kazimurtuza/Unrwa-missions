@@ -1,9 +1,11 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import TableExample from "@/app/example-table/page";
+import $ from 'jquery';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
+import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
+import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 
 const base_url = process.env.NEXT_PUBLIC_API_BASE_URL + "/";
 
@@ -18,6 +20,9 @@ function UmrahList() {
             const {data} = await axiosClient.get('umrah');
             if (data.success == true) {
                 setUmrahList(data.result);
+                setTimeout( function(){
+                    $('table').dataTable();
+                }, 300);
             }
         } catch (error) {
             setProductList([]);
@@ -27,7 +32,6 @@ function UmrahList() {
     fetchData();
 
     useEffect(() => {
-       
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     const indexOfLastItem = currentPage * perPage;
@@ -35,7 +39,6 @@ function UmrahList() {
     const currentItems = umrah.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
-
 
     let tableName = "Facilities List";
     const headName = [
@@ -70,14 +73,14 @@ function UmrahList() {
 
     const body = (
         <>
-            {Array.isArray(umrah) ? currentItems.map((item, index) => (
+            {Array.isArray(umrah) ? umrah.map((item, index) => (
 
                 <tr key={index}>
                     {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {index + 1}
                         </p>
-                     
+
                     </td> */}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
@@ -191,7 +194,7 @@ function UmrahList() {
                                                 icon: 'success',
                                                 // confirmButtonText: 'Cool'
                                             })
-                                          
+
                                               //setMessage('Delete successfully');
                                               // Remove the deleted question from the state
                                               //setData(data => data.filter(item => item._id !== val._id));
@@ -213,24 +216,42 @@ function UmrahList() {
                 </tr>
             )) : ''}
 
-            {/*Pangination*/}
-            <ul className="flex justify-center my-4">
-                {Array.from({ length: Math.ceil(umrah.length / perPage) }, (_, i) => (
-                    <li key={i} className="mx-1">
-                        <button
-                            onClick={() => paginate(i + 1)}
-                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${currentPage === i + 1 ? 'bg-blue-700' : ''}`}
-                        >
-                            {i + 1}
-                        </button>
-                    </li>
-                ))}
-            </ul>
         </>
     );
 
     return (
-        <TableExample tableName={tableName} tableHead={head} body={body}/>
+        <div className="flex h-screen overflow-hidden">
+
+        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <main>
+            <div className="container mx-auto px-4 sm:px-8">
+              <div className="py-8">
+                <div className="flex gap-5 flex-wrap items-center justify-between">
+                  <h2 className="text-2xl font-semibold leading-tight">
+                  Facilities List
+
+                  </h2>
+                </div>
+                {/* Table */}
+                <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                  <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                    <table className="min-w-full leading-normal">
+                      <thead>
+                      {head}
+                      </thead>
+                      <tbody>
+                      {body}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     );
 }
 
