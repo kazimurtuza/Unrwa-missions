@@ -560,6 +560,7 @@ useEffect(() => {
                           type="text"
                           placeholder="Enter your employee id"
                           value={employeeId}
+                          required
                           onChange={(e) =>
                             handleEmployeeId(e.target.value)
                           }
@@ -579,6 +580,7 @@ useEffect(() => {
                           type="text"
                           placeholder="Enter your national id"
                           value={nationalId}
+                          required
                           onChange={(e) =>
                             handleNationalId(e.target.value)
                           }
