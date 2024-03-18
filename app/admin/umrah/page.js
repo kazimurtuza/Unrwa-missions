@@ -25,7 +25,7 @@ function UmrahList() {
                 }, 300);
             }
         } catch (error) {
-            setProductList([]);
+            //setProductList([]);
             // console.error('Error fetching categories:', error);
         }
     };
@@ -45,16 +45,16 @@ function UmrahList() {
 
         "installation_name",
         "premise_type",
-        "country",
+        // "country",
         "location_area",
         "sub_area",
-        "longitude",
-        "latitude",
-        "building_code",
+        // "longitude",
+        // "latitude",
+        // "building_code",
         "department",
         "ownership",
-        "cls_list",
-        "des",
+        // "cls_list",
+        // "des",
         "status",
         "Action"
     ];
@@ -96,11 +96,11 @@ function UmrahList() {
                             {item.premise_type?item.premise_type.name:'-'}
                         </p>
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.country?item.country.name:'-'}
                         </p>
-                    </td>
+                    </td> */}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.location_area}
@@ -111,7 +111,7 @@ function UmrahList() {
                             {item.sub_area}
                         </p>
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.longitude}
                         </p>
@@ -125,7 +125,7 @@ function UmrahList() {
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.building_code}
                         </p>
-                    </td>
+                    </td> */}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.department && item.department.name}
@@ -136,7 +136,7 @@ function UmrahList() {
                             {item.ownership}
                         </p>
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.cls_list}
                         </p>
@@ -145,7 +145,7 @@ function UmrahList() {
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.des}
                         </p>
-                    </td>
+                    </td> */}
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         {item.status ? (<span

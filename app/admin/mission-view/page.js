@@ -71,6 +71,54 @@ function MissionVIew() {
     }
 
     const [adminData,setadminData]=useState(dataList);
+    const [claDataList,setClaDataList]=useState("");
+    const [claList,setClaList]=useState("");
+    const [requestStatusDataList,setRequestStatusDataList]=useState("");
+    const [acuDataList,setAcuStatusDataList]=useState("");
+
+    useEffect(() => {
+        const fetchData3 = async () => {
+            try {
+                const { data } = await axiosClient.get('cla_list');
+                setClaDataList(data.result);
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching agencies:', error);
+            }
+        };
+      
+        fetchData3();
+      }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+
+      useEffect(() => {
+        const fetchData4 = async () => {
+            try {
+                const { data } = await axiosClient.get('request_status');
+                setRequestStatusDataList(data.result);
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching agencies:', error);
+            }
+        };
+      
+        fetchData4();
+      }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+      useEffect(() => {
+        const fetchData2 = async () => {
+            try {
+                const { data } = await axiosClient.get('acu_status');
+                setAcuStatusDataList(data.result);
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching agencies:', error);
+            }
+        };
+      
+        fetchData2();
+      }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+      
 
     useEffect(() => {
         const fetchData = async () => {
@@ -496,16 +544,19 @@ function MissionVIew() {
                                                             UNOPS ACU Status
                                                         </label>
                                                         <div className="select-wrap">
-                                                            <select
-                                                                className="form__select"
-                                                                name="unops_acu_status"
-                                                                id="facility"
-                                                                value={adminData.unops_acu_status}
-                                                                onChange={setdata}
+                                                        <select
+                                                            className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                                                            value={adminData.unops_acu_status}
+                                                            onChange={setdata}
                                                             >
-                                                                <option value="Submitted to CLA" >Submitted to CLA</option>
-                                                                <option value="Recieved">Recieved</option>
-                                                                <option value="Denied by CLA">Denied by CLA</option>
+                                                            <option value="" disabled hidden>
+                                                                Select ACU Status
+                                                            </option>
+                                                            {Array.isArray(acuDataList) && acuDataList.map((val) => (
+                                                                <option key={val.id} value={val._id}>
+                                                                {val.acu_status}
+                                                                </option>
+                                                            ))}
                                                             </select>
                                                         </div>
                                                     </div>
@@ -526,9 +577,37 @@ function MissionVIew() {
                                                         <label htmlFor="driver-name" className="form__label">
                                                             CLA
                                                         </label>
+                                                       
                                                         <input type="text" value={adminData.cla} onInput={setdata} name="cla" className="form__input" />
+                                               
+                                                    </div>
+
+                                                    <div className="form__field collapsable-item__field">
+                                                        <label htmlFor="driver-name" className="form__label">
+                                                                CLA Decision
+                                                        </label>
+                                                        <div className="select-wrap">
+                                                        <select
+                                                            className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                                                            value={adminData.cla_decision}
+                                                            onChange={setdata}
+
+                                                            >
+                                                            <option value="" disabled hidden>
+                                                                Select CLA
+                                                            </option>
+                                                            {Array.isArray(claDataList) && claDataList.map((val) => (
+                                                                <option key={val.id} value={val._id}>
+                                                                {val.name}
+                                                                </option>
+                                                            ))}
+                                                            </select>
+                                                        </div>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
                                                     </div>
+                                                 
+                       
+{/*            
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
                                                                 CLA Decision
@@ -546,28 +625,27 @@ function MissionVIew() {
                                                                 <option value="denied">Denied</option>
                                                             </select>
                                                         </div>
-                                                        {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
-                                                    </div>
+                                                       
+                                                    </div> */}
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
                                                             Request Status
                                                         </label>
                                                         <div className="select-wrap">
-                                                            <select
-                                                                className="form__select"
-                                                                name="request_status"
-                                                                id="facility"
-                                                                value={adminData.request_status}
-                                                                onChange={setdata}
+                                                        <select
+                                                            className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                                                           
+                                                            onChange={setdata}
                                                             >
-                                                                <option value="">SELECT</option>
-                                                                <option value="request_recieved">Request Recieved</option>
-                                                                <option value="request_submitted_cla">Request submitted to CLA</option>
-                                                                <option value="mission_completed">Mission Completed</option>
-                                                                <option value="request_cancelled_request">Requestor Cancelled Request</option>
-                                                                <option value="mission_postponed">Mission Postponed</option>
-                                                                <option value="mission_pending">Mission Pending</option>
-                                                                <option value="mission_aborted">Mission Aborted</option>
+                                                            <option value="" disabled hidden>
+                                                                Select Request Status
+                                                            </option>
+                                                            {Array.isArray(requestStatusDataList) && requestStatusDataList.map((val) => (
+                                                                <option key={val.id} value={val._id}>
+                                                                   value={adminData.request_status}
+                                                                {val.request_status}
+                                                                </option>
+                                                            ))}
                                                             </select>
                                                         </div>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
