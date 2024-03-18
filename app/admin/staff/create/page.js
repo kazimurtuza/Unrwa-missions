@@ -18,7 +18,6 @@ function StaffCreate() {
   const [password, setPassword] = useState("");
   const [staffRole, setStaffRole] = useState("");
 
-
   const [familyName, setFamilyName] = useState("");
   const [otherName, setOtherName] = useState("");
   const [title, setTitle] = useState("");
@@ -92,7 +91,6 @@ useEffect(() => {
   fetchCountries();
 }, []); //
 
-
 const inputFile = useRef(null);
 
 const inputFile2 = useRef(null);
@@ -100,7 +98,6 @@ const inputFile2 = useRef(null);
 const inputFile3 = useRef(null);
 
 const inputFile4 = useRef(null);
-
 
   const handleStaffNameChange = (value) => {
     setStaffName(value);
@@ -176,7 +173,6 @@ const inputFile4 = useRef(null);
   const handleStaffRole = (value) => {
     setStaffRole(value);
   };
-
 
   const handleNationality = (value) => {
     setNationlity(value);
@@ -255,7 +251,6 @@ const inputFile4 = useRef(null);
     fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-
 useEffect(() => {
   const fetchData = async () => {
       try {
@@ -269,9 +264,6 @@ useEffect(() => {
 
   fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -309,17 +301,14 @@ useEffect(() => {
       passport_original_attachment:passportOrginalAttachment,
       passport_duplicate_attachment:passportDuplicateAttachment,
       national_id_attachment:nationaltyAttachment
-
     };
 
     try {
-
         const response = await axiosClient.post('staff', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
-          if(response.data.success==true)
-          {
+          if(response.data.success==true) {
             setSuccessMessage("Staff Create Successfully");
             setStaffName("");
             setPhone("");
@@ -349,16 +338,10 @@ useEffect(() => {
             setAgencyID("");
             setClassificationId("");
             setStaffPhoto(null);
-
-          }
-          else
-          {
-            if(response.data.msg)
-            {
+          } else {
+            if(response.data.msg) {
               setErrorMessage(response.data.msg);
-            }
-            else
-            {
+            } else {
             //   const allErrors = extractErrors(response.data.error.errors);
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
@@ -378,7 +361,6 @@ useEffect(() => {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -435,8 +417,8 @@ useEffect(() => {
                           <option value="" disabled hidden>
                             Select Agency
                           </option>
-                          {Array.isArray(agency) && agency.map((val) => (
-                            <option key={val.id} value={val._id}>
+                          {Array.isArray(agency) && agency.map((val, index) => (
+                            <option key={index+'b'} value={val._id}>
                               {val.name}
                             </option>
                           ))}
@@ -659,7 +641,6 @@ useEffect(() => {
                           <option value="female">Female</option>
                         </select>
                       </div>
-               
 
                       <div className="mb-4">
                         <label
@@ -676,8 +657,8 @@ useEffect(() => {
                           <option value="" disabled hidden>
                             Select Department
                           </option>
-                          {Array.isArray(departmentList) && departmentList.map((val) => (
-                            <option key={val.id} value={val._id}>
+                          {Array.isArray(departmentList) && departmentList.map((val, index) => (
+                            <option key={index+'c'} value={val._id}>
                               {val.name}
                             </option>
                           ))}
@@ -927,8 +908,8 @@ useEffect(() => {
                         onChange={(e) => handleNationality(e.target.value)}
                       >
                         <option value="">Select a country</option>
-                        {countries && countries.map((country) => (
-                          <option key={country.id} value={country.name.common}>
+                        {countries && countries.map((country, index) => (
+                          <option key={index + 'a'} value={country.name.common}>
                             {country.name.common}
                           </option>
                         ))}
@@ -965,8 +946,6 @@ useEffect(() => {
                               />
                       </div>
 
-
-
                       <div className="mb-4">
                             <label
                                 className="block text-grey-darker text-sm font-bold mb-2"
@@ -982,7 +961,6 @@ useEffect(() => {
                               />
                       </div>
 
-
                       <div className="mb-4">
                             <label
                                 className="block text-grey-darker text-sm font-bold mb-2"
@@ -997,10 +975,6 @@ useEffect(() => {
                                 onChange={handleNationalIdAttachment}
                               />
                       </div>
-
-
-
-
 
                       <div className="flex items-center justify-between mt-8">
                         <button
@@ -1031,8 +1005,8 @@ function extractErrors(errors) {
         result.push(`${key}: ${errorMessage}`);
       }
     }
+
     return result;
 }
 
 export default StaffCreate;
-

@@ -1,16 +1,16 @@
-import Select from 'react-select'
-import {useEffect, useState} from "react";
-import axiosClient from "@/app/axiosClient";
+import { useEffect, useState } from "react";
+import Select from 'react-select';
 
 const Step1 = ({getdata, storeData, staffList, agencyList, classification, checkValidation,cluster}) => {
     const selectData = async (selectedOption, {name}) => {
         if (name == 'leader') {
             setAdminInfo(selectedOption.list);
         }
-        if(name=='agency'){
 
+        if(name=='agency'){
             selectedOption.value = await selectedOption.map(item=>({agency_id:item.value,value:item.value,label:item.label}))
         }
+
         getdata(name, selectedOption.value); // Pass the input value to the parent component
     };
     const setdata = (e) => {
@@ -38,7 +38,6 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
     };
 
     let errorTxt = <p style={customStyles}>This field is required.</p>
-
 
     let options = [
         {value: "1", label: "one"},
@@ -137,7 +136,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                             </label>
                             <div className="date-wrap">
                                 <input type="date" onChange={setdata} name="movement_date" className="form__input"
-                                       id="date" value={storeData.movement_date}   defaultValue={storeData.movement_date} />
+                                       id="date" value={storeData.movement_date}  />
                                 {(checkValidation && storeData.movement_date == '') ? errorTxt: ""}
                             </div>
                         </div>
