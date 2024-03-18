@@ -49,7 +49,7 @@ export async function POST(request) {
         }
         await mongoose.connect(connectionStr);
 
-        const record = {email: payload.email};
+        const record = {email: payload.email,is_delete:0};
         const is_findEmail = await User.findOne(record);
         if (is_findEmail) {
             return NextResponse.json({msg: 'user is already present',success:false}, {status: 409});
@@ -137,7 +137,9 @@ export async function POST(request) {
 
         return NextResponse.json({ result, success: true });
     } catch (error) {
+        //await User.deleteMany({ email: payload.email });
         return NextResponse.json({ error: error.message, success: false }, { status: 500 });
+        
     } finally {
         await mongoose.disconnect();
     }

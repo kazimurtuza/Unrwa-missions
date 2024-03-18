@@ -8,6 +8,38 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import "./style.css";
 
+function convertDateFormat(dateString, newFormat) {
+    // Parse the input date string
+    let parsedDate = new Date(dateString);
+
+    // Format the date according to the new format
+    let formattedDate = parsedDate.toLocaleDateString(undefined, {dateStyle: 'medium'});
+
+    return formattedDate;
+}
+
+function convertDateTimeFormat(dateString) {
+    // Parse the input date string
+    let parsedDate = new Date(dateString);
+
+    // Format the date and time
+
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false // Use 24-hour format
+    };
+
+    // Format the date and time
+    let formattedDateTime = new Intl.DateTimeFormat('en-US', options).format(parsedDate);
+
+
+    return formattedDateTime;
+}
+
 function MissionVIew() {
     const router = useRouter();
     const searchParames = useSearchParams();
@@ -25,28 +57,6 @@ function MissionVIew() {
         {value: "7", label: "Staff Seven"},
     ];
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const id = await mission_id;
-                const url = `mission/${id}`
-
-                const {data} = await axiosClient.get(url);
-                if (data.success) {
-                    setMission(data.result.mission);
-                    setplaces(data.result.places);
-                    setvehicles(data.result.vehicles);
-                }
-
-                console.log(data.result);
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
     let dataList={
         mission_id:mission_id,
         mission_classification_info:"",
@@ -61,6 +71,44 @@ function MissionVIew() {
     }
 
     const [adminData,setadminData]=useState(dataList);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const id = await mission_id;
+                const url = `mission/${id}`
+
+                const {data} = await axiosClient.get(url);
+                if (data.success) {
+                    let missionData= await data.result.mission
+                    setMission(missionData);
+                    setplaces(data.result.places);
+                    setvehicles(data.result.vehicles);
+                    setadminData(old=>(
+                        {...old,
+                            request_status:missionData.request_status,
+                            greenlight_recieve:missionData.greenlight_recieve,
+                            unops_acu_status:missionData.unops_acu_status,
+                            cla_decision:missionData.cla_decision,
+                            mission_classification_info:missionData.mission_classification_info,
+                            does_mission:missionData.does_mission,
+                            unops_acu:missionData.unops_acu,
+                            cla:missionData.cla,
+
+                        }))
+                }
+
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+
     const [downloading,setDownloading]=useState(0);
     const setdata = (e) => {
         const {name, value} = e.target;
@@ -71,8 +119,8 @@ function MissionVIew() {
     };
 
     const storeDate=async ()=>{
+        console.log(adminData);
         const response = await axiosClient.post('mission-admin-update', adminData);
-        console.log(response);
         if(response.data.success==true){
             alert('success fully updated');
         }
@@ -170,7 +218,7 @@ function MissionVIew() {
                                                         <b>Email Address</b>
                                                     </p>
                                                     <p>
-                                                        eb2@technovicinity.com
+                                                        { mission && mission.leader.user.email}
                                                     </p>
                                                 </div>
                                             </div>
@@ -196,7 +244,7 @@ function MissionVIew() {
                                                 </div>
                                                 <div className='msb-meta__item'>
                                                     <h4 className="form__info-box__title">Movement Date</h4>
-                                                    <p>{mission && mission.movement_date}</p>
+                                                    <p>{mission &&  convertDateFormat(mission.movement_date)}</p>
                                                 </div>
                                             </div>
 
@@ -226,7 +274,7 @@ function MissionVIew() {
                                                         <p>
                                                             <b>Departure Time</b>
                                                         </p>
-                                                        <p>{item.departure_time}</p>
+                                                        <p>{ convertDateTimeFormat(item.departure_time)}</p>
                                                     </div>
                                                     <div className='form__col'>
                                                         <p>
@@ -248,7 +296,7 @@ function MissionVIew() {
                                                             <b>Installation Name</b>
                                                         </p>
                                                         <p>
-                                                            <p>{item.departure_installation_name}</p>
+                                                            <p> {item.departure_umrah_id!=null?item.departure_umrah_id.installation_name:item.departure_installation_name}</p>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -286,7 +334,7 @@ function MissionVIew() {
                                                         <p>
                                                             <b>Arrival Time</b>
                                                         </p>
-                                                        <p>{item.arrival_time}</p>
+                                                        <p>{ convertDateTimeFormat(item.arrival_time)}</p>
                                                     </div>
                                                     <div className='form__col'>
                                                         <p>
@@ -306,7 +354,7 @@ function MissionVIew() {
                                                         <p>
                                                             <b>Installation Name</b>
                                                         </p>
-                                                        <p>{item.arrival_installation_name}</p>
+                                                        <p>{item.arrival_umrah_id!=null?item.arrival_umrah_id.installation_name:item.arrival_installation_name}</p>
                                                     </div>
                                                 </div>
                                                 <div className='form__row flex-ctr-spb'>
@@ -455,8 +503,7 @@ function MissionVIew() {
                                                                 value={adminData.unops_acu_status}
                                                                 onChange={setdata}
                                                             >
-                                                                <option value="">Select</option>
-                                                                <option value="Submitted to CLA">Submitted to CLA</option>
+                                                                <option value="Submitted to CLA" >Submitted to CLA</option>
                                                                 <option value="Recieved">Recieved</option>
                                                                 <option value="Denied by CLA">Denied by CLA</option>
                                                             </select>

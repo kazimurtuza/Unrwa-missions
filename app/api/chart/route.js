@@ -7,7 +7,6 @@ import {MissionCluster} from "../../../lib/model/missionCluster";
 
 export async function GET() {
 
-
     var data = {}; // Declare data as an empty object
     try {
         await mongoose.connect(connectionStr);
@@ -47,4 +46,19 @@ export async function GET() {
     }
 
     // return NextResponse.json({result:data,success:true});
+}
+
+export async function POST(request) {
+    const payload = await request.json();
+    const dateList = await payload.date;
+    const id=await payload.id;
+    const counts = await Promise.all(dateList.map(async date => {
+        const query = await {
+            mission_cluster: id,
+            create_date:date
+        };
+        const count = await Mission.countDocuments(query);
+        return count;
+    }));
+    return NextResponse.json({ retsult:counts, success: true });
 }

@@ -36,7 +36,7 @@ function Steps() {
         "movement_date": "",
         "purpose": "",
         "remarks": "",
-        "request_status":"Request Recieved",
+        "request_status":"request_received",
         "location_list": [{
             "index_no": 0,
             "departure_premise_type": null,
@@ -227,10 +227,10 @@ function Steps() {
         let validationError = 0;
         if (activeTab == 0) validationError = await checkStep1()
         if (activeTab == 1) validationError = await checkStep2()
-        if (validationError == 0) {
-            setCheckValidation(0)
+        // if (validationError == 0) {
+        //     setCheckValidation(0)
             setActiveTab((prev) => prev + 1);
-        }
+        // }
     }
 
     function checkStep1() {
