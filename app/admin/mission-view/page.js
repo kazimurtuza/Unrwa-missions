@@ -634,7 +634,7 @@ function MissionVIew() {
                                                         <div className="select-wrap">
                                                         <select
                                                             className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
-                                                           
+                                                            value={adminData.request_status}
                                                             onChange={setdata}
                                                             >
                                                             <option value="" disabled hidden>
@@ -642,7 +642,7 @@ function MissionVIew() {
                                                             </option>
                                                             {Array.isArray(requestStatusDataList) && requestStatusDataList.map((val) => (
                                                                 <option key={val.id} value={val._id}>
-                                                                   value={adminData.request_status}
+                                                                  
                                                                 {val.request_status}
                                                                 </option>
                                                             ))}
