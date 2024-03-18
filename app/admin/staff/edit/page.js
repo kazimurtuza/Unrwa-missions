@@ -553,6 +553,7 @@ useEffect(() => {
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={agencyID}
+                          disabled
                           onChange={(e) => handleAgencyChange(e.target.value)}
                         >
                           <option value="" disabled hidden>
@@ -857,7 +858,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your passport number one"
                           value={phoneNumberOne}
                           onChange={(e) =>
@@ -876,7 +877,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your passport number one"
                           value={phoneNumberTwo}
                           onChange={(e) =>
@@ -895,7 +896,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your signal number"
                           value={signalNumber}
                           onChange={(e) =>
@@ -975,7 +976,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your statelite phone"
                           value={statelitePhone}
                           onChange={(e) =>
@@ -995,7 +996,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your whatsapp number"
                           value={whatsupNumber}
                           onChange={(e) =>

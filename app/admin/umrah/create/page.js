@@ -539,7 +539,7 @@ useEffect(() => {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          CLS List
+                          CLA List
                         </label>
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"

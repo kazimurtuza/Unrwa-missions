@@ -251,6 +251,7 @@ function VehicleEdit() {
                                         <select
                                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                                           value={agencyID}
+                                          disabled
                                           onChange={(e) => handleAgencyChange(e.target.value)}
                                         >
                                           <option value="" disabled hidden>

@@ -6,8 +6,7 @@ import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
 import { uploadBase64Img } from "@/app/helper";
-import { Department } from "@/lib/model/department";
-import { AcuStatus } from "@/lib/model/acu_status";
+import { RequestStatus } from "@/lib/model/request_status";
 
 export async function GET(){
  
@@ -15,7 +14,7 @@ export async function GET(){
     try{
         console.log(connectionStr);
         await mongoose.connect(connectionStr);
-        data = await AcuStatus
+        data = await RequestStatus
         .find({is_delete:0}).sort({ created_at: -1 });
     }
     catch(error)
@@ -31,15 +30,16 @@ export async function POST(request) {
 
         await mongoose.connect(connectionStr);
 
-        const record = {acu_status: payload.acu_status,is_delete:0};
-        const is_findData = await AcuStatus.findOne(record);
-        if (is_findData) {
-            return NextResponse.json({msg: 'ACU Status must be unique',success:false}, {status: 409});
+        const record = {request_status: payload.request_status,is_delete:0};
+        const is_findEmail = await RequestStatus.findOne(record);
+        if (is_findEmail) {
+            return NextResponse.json({msg: 'Request Status is already present',success:false}, {status: 409});
         }
 
-        //create
-        let department = new AcuStatus(payload);
-        let result = await department.save();
+ 
+        //agency create
+        let agency = new RequestStatus(payload);
+        let result = await agency.save();
         return NextResponse.json({ result, success: true });
     } catch (error) {
         return NextResponse.json({ error: error.message, success: false }, { status: 500 });
