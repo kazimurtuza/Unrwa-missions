@@ -27,7 +27,7 @@ function Country() {
 
     const indexOfLastItem = currentPage * perPage;
     const indexOfFirstItem = indexOfLastItem - perPage;
-    const currentItems = country.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = Array.isArray(country) && country.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
 

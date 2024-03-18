@@ -10,7 +10,10 @@ function Staff() {
     const [successMessage, setSuccessMessage] = useState("");
     const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [currentPage, setCurrentPage] = useState(1);
-    const [perPage] = useState(10);
+    const [perPage] = useState(5);
+
+
+
 
     const fetchData = async () => {
         try {
@@ -27,13 +30,13 @@ function Staff() {
 
     const indexOfLastItem = currentPage * perPage;
     const indexOfFirstItem = indexOfLastItem - perPage;
-    const currentItems = staff.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = Array.isArray(staff) && staff.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     let tableName = "Staff";
     //const headName = ["Si","Image","Name", "Email", "Agency","Mission Classification","Gender","Passport Number Orginal","Passport Number Duplicate","Whatsup Number", "Statelite Phone", "Call Signin", "Action"];
-    const headName = ["Si","Image","Name", "Role",,"Status","Classification","Gender", "Action"];
+    const headName = ["Photo","Name","Agency", "Role","Status","Classification","Gender", "Action"];
 
     let head = (
         <tr>
@@ -67,14 +70,12 @@ function Staff() {
             {Array.isArray(staff) && currentItems.map((item, index) => (
 
                 <tr key={index}>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {index+1}
                         </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
+                       
+                    </td> */}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}
@@ -120,6 +121,25 @@ function Staff() {
                         </div>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <div className="flex">
+                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
+                            {/*    <img*/}
+                            {/*        className="w-full h-full rounded-full"*/}
+                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
+                            {/*        alt=""*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            <div className="ml-3">
+                                <p className="text-gray-900 whitespace-no-wrap">
+                                    {item.agency && item.agency.name}
+                                </p>
+                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                                {/*    000004*/}
+                                {/*</p>*/}
+                            </div>
+                        </div>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.staff_role}
                         </p>
@@ -157,6 +177,14 @@ function Staff() {
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
                         {/* <ActionDropdown /> */}
 
+                        <Link
+                                href={{
+                                    pathname: '/admin/staff/details',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
+                              > Details</Link>
+
                         <button
                                   onClick={async () => {
                                       // Show a confirmation alert
@@ -192,6 +220,9 @@ function Staff() {
                               >
                                    {item.user.status === 1 ? "Block" : "Unblock"}
                               </button>
+
+
+                          
 
                             <Link
                                 href={{

@@ -24,7 +24,7 @@ function Driver() {
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Premise Type";
-    const headName = ["Si", "Name", "Status","Action"];
+    const headName = ["Name", "Status","Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -43,11 +43,11 @@ function Driver() {
             {Array.isArray(premiseType) && premiseType.map((item, index) => (
 
                 <tr key={index}>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {index+1}
                         </p>
-                    </td>
+                    </td> */}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             <div className="ml-3">

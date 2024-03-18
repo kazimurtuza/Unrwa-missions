@@ -24,7 +24,7 @@ function MissionList() {
    
     const indexOfLastItem = currentPage * perPage;
     const indexOfFirstItem = indexOfLastItem - perPage;
-    const currentItems = mission.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = Array.isArray(mission) && mission.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
 

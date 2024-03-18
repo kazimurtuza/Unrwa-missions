@@ -39,7 +39,7 @@ function UmrahList() {
 
     let tableName = "Facilities List";
     const headName = [
-        "Si",
+
         "installation_name",
         "premise_type",
         "country",
@@ -73,14 +73,12 @@ function UmrahList() {
             {Array.isArray(umrah) ? currentItems.map((item, index) => (
 
                 <tr key={index}>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {index + 1}
                         </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
+                     
+                    </td> */}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             <div className="ml-3">

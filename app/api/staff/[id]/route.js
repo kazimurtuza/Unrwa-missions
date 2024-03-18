@@ -40,6 +40,8 @@ export async function PUT(request, content) {
         await mongoose.connect(connectionStr);
         const missionCluster=await Staff.findById(filter);
         const oldData=missionCluster._doc;
+        //return NextResponse.json({error:payload.staff_photo, success: false});
+
         if(payload.staff_photo)
         {
             try {
