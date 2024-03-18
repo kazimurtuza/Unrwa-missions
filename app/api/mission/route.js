@@ -70,7 +70,7 @@ export async function POST(request) {
         // Set up email options
         // let user=User.findOne({user_type:'admin'}).email;
         if(1){
-            mailOptions.to = 'kazimurtuza11@gmail.com';
+            mailOptions.to = 'lipan@technovicinity.com';
             mailOptions.subject = "UNRWA New Mission Created";
             mailOptions.text = mailContent;
             // Send the email
