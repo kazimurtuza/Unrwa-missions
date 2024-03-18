@@ -4,6 +4,7 @@ import {NextResponse} from "next/server";
 import {Umrah} from "../../../lib/model/umrah";
 import { PremiseType } from "@/lib/model/premiseType";
 import { Country } from "@/lib/model/country";
+import { Department } from "@/lib/model/department";
 
 export async function POST(request) {
     try {
@@ -29,6 +30,10 @@ export async function GET() {
             {
                 path: 'country',
                 model: 'Country'
+            },
+            {
+                path: 'department',
+                model: 'Department'
             },
     
         ])

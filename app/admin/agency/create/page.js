@@ -181,7 +181,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Name
+                          Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -201,7 +201,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Name Acroynm
+                          Name Acroynm
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -222,7 +222,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Head
+                          Head
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -242,7 +242,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Phone
+                          Phone
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -262,7 +262,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Email
+                          Email
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -282,7 +282,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Physical Address
+                          Physical Address
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -302,7 +302,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Cluster
+                          Cluster
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -322,7 +322,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Website
+                          Website
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -364,7 +364,7 @@ function AgencyCreate() {
                                 className="block text-grey-darker text-sm font-bold mb-2"
                                 htmlFor="questionName"
                               >
-                                Agency Logo
+                                Logo
                               </label>
                               <input
                                 type="file"

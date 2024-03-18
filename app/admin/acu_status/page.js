@@ -5,15 +5,17 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
 
-function Vehicle() {
-    const [vehicle, setVehicleList] = useState([]);
+function AcuStatusList() {
+    const [acu_status, setAcu_status] = useState([]);
+    const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     const fetchData = async () => {
         try {
-            const { data } = await axiosClient.get('vehicle');
-            setVehicleList(data.result);
+            const { data } = await axiosClient.get('acu_status');
+            setAcu_status(data.result);
+            console.log(data.result);
         } catch (error) {
-            console.error('Error fetching vehicles:', error);
+            console.error('Error fetching agencies:', error);
         }
     };
 
@@ -23,8 +25,8 @@ function Vehicle() {
        
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-    let tableName = "Vehicle";
-    const headName = ["Agency","Vehicle ID","capacity","brand name","body type","armoured","fuel type", "Action"];
+    let tableName = "Missions UNOPS ACU Status";
+    const headName = ["ACU Status", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -40,44 +42,12 @@ function Vehicle() {
 
     const body = (
         <>
-            {Array.isArray(vehicle) && vehicle.map((item, index) => (
+            {Array.isArray(acu_status) && acu_status.map((item, index) => (
 
                 <tr key={index}>
-                    {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {index+1}
-                        </p>
-                      
-                    </td> */}
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            <div className="ml-3">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.agency && item.agency.name}
-                                </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
-                            </div>
-                        </div>
-                    </td>
+                
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.vehicle_id}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}
                             {/*    <img*/}
@@ -88,7 +58,7 @@ function Vehicle() {
                             {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.capacity}
+                                    {item.acu_status}
                                 </p>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
@@ -96,50 +66,18 @@ function Vehicle() {
                             </div>
                         </div>
                     </td>
-                    
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.brand_name}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.brand_type}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.armouted}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {item.fuel_type}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
+                  
 
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
 
                             <Link
                                 href={{
-                                    pathname: '/admin/vehicle/edit',
+                                    pathname: '/admin/acu_status/edit',
                                     query: { id: item._id },
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
-                                <button
+                                 <button
                                   onClick={async () => {
                                       // Show a confirmation alert
                                       const confirmed = window.confirm("Are you sure you want to delete?");
@@ -147,7 +85,7 @@ function Vehicle() {
                                       if (confirmed) {
                                           // Make a DELETE request to your API to mark the question as deleted
                                           try {
-                                            await axiosClient.delete(`vehicle/${item._id}`, {
+                                            await axiosClient.delete(`acu_status/${item._id}`, {
                                                   method: 'DELETE',
                                                   headers: {
                                                       'Content-Type': 'application/json',
@@ -188,4 +126,4 @@ function Vehicle() {
     );
 }
 
-export default Vehicle;
+export default AcuStatusList;

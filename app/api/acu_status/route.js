@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
-import { MissionClassification } from "@/lib/model/missionClassification";
+import { Agency } from "@/lib/model/agency";
 import { User } from "@/lib/model/users";
 import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
+import { uploadBase64Img } from "@/app/helper";
+import { Department } from "@/lib/model/department";
+import { AcuStatus } from "@/lib/model/acu_status";
 
 export async function GET(){
  
@@ -12,7 +15,7 @@ export async function GET(){
     try{
         console.log(connectionStr);
         await mongoose.connect(connectionStr);
-        data = await MissionClassification
+        data = await AcuStatus
         .find({is_delete:0}).sort({ created_at: -1 });
     }
     catch(error)
@@ -28,22 +31,15 @@ export async function POST(request) {
 
         await mongoose.connect(connectionStr);
 
-        const record = {requests_classifications: payload.requests_classifications,is_delete:0};
-        const is_findData = await MissionClassification.findOne(record);
+        const record = {acu_tstatus: payload.acu_status,is_delete:0};
+        const is_findData = await AcuStatus.findOne(record);
         if (is_findData) {
-            return NextResponse.json({msg: 'Request Classification must be unique',success:false}, {status: 409});
+            return NextResponse.json({msg: 'ACU Status must be unique',success:false}, {status: 409});
         }
 
-        const record2 = {abbreviation: payload.abbreviation,is_delete:0};
-        const is_findData2 = await MissionClassification.findOne(record2);
-        if (is_findData2) {
-            return NextResponse.json({msg: 'Abbrevation must be unique',success:false}, {status: 409});
-        }
-
-
-        //mission classification create
-        let missionClassification = new MissionClassification(payload);
-        let result = await missionClassification.save();
+        //create
+        let department = new AcuStatus(payload);
+        let result = await department.save();
         return NextResponse.json({ result, success: true });
     } catch (error) {
         return NextResponse.json({ error: error.message, success: false }, { status: 500 });

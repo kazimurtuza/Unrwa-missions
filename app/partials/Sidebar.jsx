@@ -580,6 +580,52 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             </span>
                                                         </Link>
                                                     </li>
+
+                                                    <li className="mb-1 last:mb-0">
+                                                        <Link
+                                                            href="/admin/acu_status/create"
+
+                                                        >
+                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                                Create ACU Status
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                  
+
+                                                    <li className="mb-1 last:mb-0">
+                                                        <Link
+                                                            href="/admin/acu_status"
+
+                                                        >
+                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                                ACU Status List
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+
+                                                    <li className="mb-1 last:mb-0">
+                                                        <Link
+                                                            href="/admin/general_status/create"
+
+                                                        >
+                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                                Create General Status
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                  
+
+                                                    <li className="mb-1 last:mb-0">
+                                                        <Link
+                                                            href="/admin/general_status"
+
+                                                        >
+                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                                General Status List
+                                                            </span>
+                                                        </Link>
+                                                    </li>
                                                  
                                                  
                                                     <li className="mb-1 last:mb-0 menu-legend">
