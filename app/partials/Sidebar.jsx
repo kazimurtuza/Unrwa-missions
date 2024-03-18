@@ -213,6 +213,17 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                 <ul className={`mt-1 ${!open && "hidden"}`}>
 
+                                                <li className="mb-1 last:mb-0">
+                                                        <Link
+                                                            href="/admin/mission"
+
+                                                        >
+                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                                Create Mission
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
                                                             href="/admin/mission/mission-list"
@@ -224,16 +235,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li>
 
-                                                    <li className="mb-1 last:mb-0">
-                                                        <Link
-                                                            href="/admin/mission"
-
-                                                        >
-                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Mission Create
-                                                            </span>
-                                                        </Link>
-                                                    </li>
+                                                   
 
                                                 </ul>
 
@@ -298,17 +300,19 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                     </li>
 
+
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
                                                             href="/admin/staff/create"
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Staff Create
+                                                                Create Staff
                                                             </span>
                                                         </Link>
                                                     </li>
 
+                                                  
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
                                                             href="/admin/staff"
@@ -319,6 +323,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             </span>
                                                         </Link>
                                                     </li>
+
+                                                  
+
 
                                                     {/* <li className="mb-1 last:mb-0 menu-legend">
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
@@ -358,10 +365,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Agency Create
+                                                                Create Agency
                                                             </span>
                                                         </Link>
                                                     </li>
+
+                                                  
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
                                                             href="/admin/agency"
@@ -372,6 +381,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             </span>
                                                         </Link>
                                                     </li>
+
+                                                  
 
                                                     <li className="mb-1 last:mb-0 menu-legend">
                                                     <svg width={16} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="#ffffff" d="M41 7C31.6-2.3 16.4-2.3 7 7S-2.3 31.6 7 41l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L41 7zM599 7L527 79c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0zM7 505c9.4 9.4 24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L7 471c-9.4 9.4-9.4 24.6 0 33.9zm592 0c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-72-72c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72zM320 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128zM212.1 336c-2.7 7.5-4.1 15.6-4.1 24c0 13.3 10.7 24 24 24H408c13.3 0 24-10.7 24-24c0-8.4-1.4-16.5-4.1-24c-.5-1.4-1-2.7-1.6-4c-9.4-22.3-29.8-38.9-54.3-43c-3.9-.7-7.9-1-12-1H280c-4.1 0-8.1 .3-12 1c-.8 .1-1.7 .3-2.5 .5c-24.9 5.1-45.1 23-53.4 46.5zM175.8 224a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm-26.5 32C119.9 256 96 279.9 96 309.3c0 14.7 11.9 26.7 26.7 26.7h56.1c8-34.1 32.8-61.7 65.2-73.6c-7.5-4.1-16.2-6.4-25.3-6.4H149.3zm368 80c14.7 0 26.7-11.9 26.7-26.7c0-29.5-23.9-53.3-53.3-53.3H421.3c-9.2 0-17.8 2.3-25.3 6.4c32.4 11.9 57.2 39.5 65.2 73.6h56.1zM464 224a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" /></svg>
@@ -387,7 +398,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Cluster Create
+                                                                Create Cluster
                                                             </span>
                                                         </Link>
                                                     </li>
@@ -416,7 +427,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Classification Create
+                                                                Create Classification
                                                             </span>
                                                         </Link>
                                                     </li>
@@ -441,6 +452,17 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
+                                                            href="/admin/country/create"
+
+                                                        >
+                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                                Create Country
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+
+                                                    <li className="mb-1 last:mb-0">
+                                                        <Link
                                                             href="/admin/country"
 
                                                         >
@@ -450,16 +472,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li>
 
-                                                    <li className="mb-1 last:mb-0">
-                                                        <Link
-                                                            href="/admin/country/create"
-
-                                                        >
-                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Country Create
-                                                            </span>
-                                                        </Link>
-                                                    </li>
+                                                 
 
                                                     <li className="mb-1 last:mb-0 menu-legend">
                                                     <svg width={16} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="#ffffff" d="M112 0C85.5 0 64 21.5 64 48V96H16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 272c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 48c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 240c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 208c8.8 0 16 7.2 16 16s-7.2 16-16 16H64V416c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H112zM544 237.3V256H416V160h50.7L544 237.3zM160 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm272 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0z"/></svg>
@@ -467,6 +480,17 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             Vehicle
                                                         </span>
 
+                                                    </li>
+
+                                                    <li className="mb-1 last:mb-0">
+                                                        <Link
+                                                            href="/admin/vehicle/create"
+
+                                                        >
+                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                                Create Vehicle
+                                                            </span>
+                                                        </Link>
                                                     </li>
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
@@ -479,16 +503,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li>
 
-                                                    <li className="mb-1 last:mb-0">
-                                                        <Link
-                                                            href="/admin/vehicle/create"
-
-                                                        >
-                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Vehicle Create
-                                                            </span>
-                                                        </Link>
-                                                    </li>
+                                                  
 
                                                     <li className="mb-1 last:mb-0 menu-legend">
                                                     <svg width={16} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#ffffff" d="M152.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 113C-2.3 103.6-2.3 88.4 7 79s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM224 96c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H192c-17.7 0-32-14.3-32-32zM48 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
@@ -496,6 +511,17 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             Facilities
                                                         </span>
 
+                                                    </li>
+
+                                                    <li className="mb-1 last:mb-0">
+                                                        <Link
+                                                            href="/admin/umrah/create"
+
+                                                        >
+                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                                Create Facility
+                                                            </span>
+                                                        </Link>
                                                     </li>
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
@@ -507,27 +533,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             </span>
                                                         </Link>
                                                     </li>
-                                                    <li className="mb-1 last:mb-0">
-                                                        <Link
-                                                            href="/admin/umrah/create"
 
-                                                        >
-                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Create Facility
-                                                            </span>
-                                                        </Link>
-                                                    </li>
-
-                                                    <li className="mb-1 last:mb-0">
-                                                        <Link
-                                                            href="/admin/premise-type"
-
-                                                        >
-                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Premise Type
-                                                            </span>
-                                                        </Link>
-                                                    </li>
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
                                                             href="/admin/premise-type/create"
@@ -538,6 +544,19 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             </span>
                                                         </Link>
                                                     </li>
+                                                  
+
+                                                    <li className="mb-1 last:mb-0">
+                                                        <Link
+                                                            href="/admin/premise-type"
+
+                                                        >
+                                                            <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                                Premise Type List
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                 
                                                     <li className="mb-1 last:mb-0 menu-legend">
                                                     <svg width={16} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#ffffff" d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"/></svg>
                                                         <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
