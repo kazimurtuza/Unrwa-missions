@@ -7,6 +7,7 @@ function StaffCreate() {
   const [countries, setCountries] = useState([]);
   const [staffName, setStaffName] = useState("");
   const [agency,setAgencyList]=useState("");
+  const [departmentList,setDepartmentList]=useState("");
   const [classification,setClassificationList]=useState("");
   const [agencyID,setAgencyID]=useState("");
   const [phone, setPhone] = useState("");
@@ -54,6 +55,20 @@ function StaffCreate() {
     };
 
     fetchData();
+}, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+useEffect(() => {
+  const fetchData = async () => {
+      try {
+          const { data } = await axiosClient.get('department');
+          setDepartmentList(data.result);
+          console.log(data.result);
+      } catch (error) {
+          console.error('Error fetching agencies:', error);
+      }
+  };
+
+  fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
 useEffect(() => {
@@ -644,6 +659,8 @@ useEffect(() => {
                           <option value="female">Female</option>
                         </select>
                       </div>
+               
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -651,18 +668,21 @@ useEffect(() => {
                         >
                           Department
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your department"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={department}
-                          onChange={(e) =>
-                            handleDepartmentChange(e.target.value)
-                          }
-
-                        />
-                      </div>
+                          onChange={(e) => handleDepartmentChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Department
+                          </option>
+                          {Array.isArray(departmentList) && departmentList.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
+                        </select>
+                        </div>
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"

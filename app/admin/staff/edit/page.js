@@ -15,6 +15,7 @@ function StaffCreate() {
   const [whatsupNumber, setWhatsupNumber] = useState("");
   const [callSignIn, setCallSignin] = useState("");
   const [email, setEmail] = useState("");
+  const [departmentList,setDepartmentList]=useState("");
   const [password, setPassword] = useState("");
   const [staffRole, setStaffRole] = useState("");
 
@@ -23,6 +24,60 @@ function StaffCreate() {
   const router = useRouter();
   const searchParames = useSearchParams();
   const id = searchParames.get("id");
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('department');
+            setDepartmentList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+  
+    fetchData();
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  
+
+  const fetchData = async () => {
+    try {
+        //const objectId = mongoose.Types.ObjectId(id);
+        const { data } = await axiosClient.get(`staff/${id}`);
+        console.log(data);
+        setStaffName(data.result.name);
+        setPhone(data.result.phone);
+        setEmail(data.result.user.email);
+        setJStatelitePhone(data.result.statelite_phone);
+        setWhatsupNumber(data.result.whatsup_number);
+        setCallSignin(data.result.call_signin);
+        setBloodType(data.result.blood_type);
+        setDateOfBirth(data.result.date_of_birth);
+        setDepartment(data.result.department.name);
+        setEmployeeId(data.result.employee_id);
+        setPhoneNumberOne(data.result.phone_number_one);
+        setPhoneNumberTwo(data.result.phone_number_two);
+        setNationlity(data.result.nationlity);
+        setNationalId(data.result.national_id);
+        setSignalNumber(data.result.signal_number);
+        setGender(data.result.gender);
+        setTitle(data.result.title);
+        setFamilyName(data.result.family_name);
+        setOtherName(data.result.other_name);
+        setPassportNumberOrginal(data.result.passport_number_orginal);
+        setPassportDuplicate(data.result.passport_number_duplicate);
+        setNationlity(data.result.nationlity);
+        setStaffRole(data.result.staff_role);
+        setAgencyID(data.result.agency);
+        setClassificationId(data.result.classification);
+        setStaffPhoto2(data.result.staff_photo);
+        setNationalityAttachment2(data.result.national_id_attachment);
+        setPassportOrginalAttachment2(data.result.passport_original_attachment);
+        setPassportDuplicateAttachment2(data.result.passport_duplicate_attachment);
+    } catch (error) {
+        console.error('Error fetching agencies:', error);
+    }
+};
 
 
 
@@ -387,7 +442,7 @@ useEffect(() => {
           if(response.data.success==true)
           {
             
-            //fetchData();
+            fetchData();
             setSuccessMessage("Staff Update Successfully");
             // setStaffName("");
             // setPhone("");
@@ -734,18 +789,21 @@ useEffect(() => {
                         >
                           Department
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your department"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={department}
-                          onChange={(e) =>
-                            handleDepartmentChange(e.target.value)
-                          }
-
-                        />
-                      </div>
+                          onChange={(e) => handleDepartmentChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Department
+                          </option>
+                          {Array.isArray(departmentList) && departmentList.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
+                        </select>
+                        </div>
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"

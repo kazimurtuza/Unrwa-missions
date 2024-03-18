@@ -1,37 +1,25 @@
 "use client";
 
 import axiosClient from "@/app/axiosClient";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-function MissionClassificationCreate() {
-  const [missionClassificationName, setMissionClassificationName] = useState("");
-  const [requests_classifications, setRequests_classifications] = useState("");
-  const [abbreviation, setAbbreviation] = useState("");
-  const [isVisible, setIsVisible] = useState(true);
+function DepartmentCreate() {
+  const [departmentName, setDepartmentName] = useState("");
+  const [abbrevation, setAbbrevation] = useState("");
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
 
+  const inputFile = useRef(null);
 
-  const handleMissionClassificationChange = (value) => {
-    setMissionClassificationName(value);
+
+  const handleDepartmentNameChange = (value) => {
+    setDepartmentName(value);
   };
-  const handlerequestClassificationChange = (value) => {
-    setRequests_classifications(value);
-    // if (value === 'Coordination Request') {
-    //   setAbbreviation('CRQ');
-    // } else if (value === 'Notification Request') {
-    //   setAbbreviation('NRQ');
-    // } else {
-    //   setAbbreviation(''); // Clear abbreviation if no classification is selected
-    //   setIsVisible(false);
-    // }
-    setIsVisible(true);
-  };
-  const handleAbbrivationChange = (value) => {
-    setAbbreviation(value);
+  const handleAbbrevation = (value) => {
+    setAbbrevation(value);
   };
 
   const handleSubmit = async (e) => {
@@ -41,23 +29,22 @@ function MissionClassificationCreate() {
 
     // Prepare data for API request
     const postData = {
-      //name: missionClassificationName,
-      requests_classifications:requests_classifications,
-      abbreviation:abbreviation
+      name: departmentName,
+      abbrevation:abbrevation,
+
     };
 
     try {
 
-        const response = await axiosClient.post('misson-classification', postData);
+        const response = await axiosClient.post('department', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("Mission Classification Create Successfully");
-            setMissionClassificationName("");
-            setRequests_classifications("");
-            setAbbreviation("");
+            setSuccessMessage("Department Create Successfully");
+            setDepartmentName("");
+            setAbbrevation("");
             setErrorMessage("");
           }
           else
@@ -83,12 +70,7 @@ function MissionClassificationCreate() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-
-      {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
-
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
             <div className="font-sans antialiased bg-grey-lightest">
@@ -104,7 +86,7 @@ function MissionClassificationCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Mission Classification Create
+                        Department Create
                       </p>
                       <br></br>
                       {successMessage && (
@@ -129,67 +111,45 @@ function MissionClassificationCreate() {
                                                 </span>
                                                 </div>
                                             )}
-                      {/* <div className="mb-4">
+                      <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Mission Classification Name
+                         Department Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your mission classification name"
-                          value={missionClassificationName}
+                          placeholder="Enter your department name"
+                          value={departmentName}
                           onChange={(e) =>
-                            handleMissionClassificationChange(e.target.value)
+                            handleDepartmentNameChange(e.target.value)
                           }
 
                         />
-                      </div> */}
+                      </div>
 
-
-                      
                       <div className="mb-4">
-                          <label
-                            className="block text-grey-darker text-sm font-bold mb-2"
-                            htmlFor="abbreviation"
-                          >
-                            Request Classification
-                          </label>
-                          <input
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                         Department Abbreviation
+                        </label>
+                        <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter Request Classification"
-                          value={requests_classifications}
+                          placeholder="Enter your abbrevation"
+                          value={abbrevation}
                           onChange={(e) =>
-                            handlerequestClassificationChange(e.target.value)
+                            handleAbbrevation(e.target.value)
                           }
-                          />
-                        </div>
-                        {/* Display the select element only when isVisible is true */}
-                      {isVisible && (
-                        <div className="mb-4">
-                          <label
-                            className="block text-grey-darker text-sm font-bold mb-2"
-                            htmlFor="abbreviation"
-                          >
-                            Abbreviation
-                          </label>
-                          <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter Abbrevation"
-                          value={abbreviation}
-                          onChange={(e) =>
-                            handleAbbrivationChange(e.target.value)
-                          }
-                          />
-                        </div>
-                      )}
+
+                        />
+                      </div>
 
 
                       <div className="flex items-center justify-between mt-8">
@@ -224,5 +184,5 @@ function extractErrors(errors) {
     return result;
 }
 
-export default MissionClassificationCreate;
+export default DepartmentCreate;
 

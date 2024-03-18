@@ -342,7 +342,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Intervision Notes
+                          Intervention Notes
                         </label>
                         <textarea
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"

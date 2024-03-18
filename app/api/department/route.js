@@ -6,6 +6,7 @@ import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
 import { uploadBase64Img } from "@/app/helper";
+import { Department } from "@/lib/model/department";
 
 export async function GET(){
  
@@ -13,7 +14,7 @@ export async function GET(){
     try{
         console.log(connectionStr);
         await mongoose.connect(connectionStr);
-        data = await Agency
+        data = await Department
         .find({is_delete:0}).sort({ created_at: -1 });
     }
     catch(error)
@@ -29,24 +30,15 @@ export async function POST(request) {
 
         await mongoose.connect(connectionStr);
 
-        const record = {agency_email: payload.agency_email,is_delete:0};
-        const is_findEmail = await Agency.findOne(record);
-        if (is_findEmail) {
-            return NextResponse.json({msg: 'agency is already present',success:false}, {status: 409});
+        const record = {name: payload.name,is_delete:0};
+        const is_findData = await Department.findOne(record);
+        if (is_findData) {
+            return NextResponse.json({msg: 'Name must be unique',success:false}, {status: 409});
         }
 
-        if(payload.agency_logo)
-        {
-            try {
-                payload.agency_logo = await uploadBase64Img(payload.agency_logo);
-            } catch (e) {
-                return NextResponse.json({e, success: 'img upload error found'});
-            }
-        }
-
-        //agency create
-        let agency = new Agency(payload);
-        let result = await agency.save();
+        //create
+        let department = new Department(payload);
+        let result = await department.save();
         return NextResponse.json({ result, success: true });
     } catch (error) {
         return NextResponse.json({ error: error.message, success: false }, { status: 500 });

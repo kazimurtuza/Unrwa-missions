@@ -64,7 +64,7 @@ function StaffCreate() {
             setCallSignin(data.result.call_signin);
             setBloodType(data.result.blood_type);
             setDateOfBirth(data.result.date_of_birth);
-            setDepartment(data.result.department);
+            setDepartment(data.result.department.name);
             setEmployeeId(data.result.employee_id);
             setPhoneNumberOne(data.result.phone_number_one);
             setPhoneNumberTwo(data.result.phone_number_two);
