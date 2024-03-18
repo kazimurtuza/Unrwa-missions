@@ -19,6 +19,7 @@ function UmraCreate() {
   const [ownership, setOwenership] = useState("");
   const [clsList, setClsList] = useState("");
   const [des, setDes] = useState("");
+  const [departmentList,setDepartmentList]=useState("");
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -29,6 +30,21 @@ function UmraCreate() {
   const id = searchParames.get("id");
 
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('department');
+            setDepartmentList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+  
+    fetchData();
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  
 
 
   useEffect(() => {
@@ -510,32 +526,16 @@ useEffect(() => {
                           onChange={(e) => handleDepartmentChange(e.target.value)}
                         >
                           <option value="" disabled hidden>
-                            Select One
+                            Select Department
                           </option>
-                          <option value=" Education">
-                            Education
-                          </option>
-                          <option value="Emergency">
-                            Emergency
-                          </option>
-                          <option value="Health">
-                            Health
-                          </option>
-                          <option value="ICIP">
-                            ICIP
-                          </option>
-
-                          <option value="PLD">
-                          PLD
-                          </option>
-
-
-                          <option value="RSSD">
-                          RSSD
-                          </option>
-
+                          {Array.isArray(departmentList) && departmentList.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
                         </select>
-                      </div>
+                        </div>
+
 
 
                       <div className="mb-4">

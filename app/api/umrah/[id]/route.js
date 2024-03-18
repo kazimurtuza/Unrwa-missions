@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import validator from 'validator';
 import { Vehicle } from "@/lib/model/vehicle";
 import { Umrah } from "@/lib/model/umrah";
+import { Department } from "@/lib/model/department";
 
 export async function PUT(request, content) {
     let result = [];
@@ -16,7 +17,6 @@ export async function PUT(request, content) {
         const payload = await request.json();
         // return NextResponse.json(payload.password);
         await mongoose.connect(connectionStr);
-        return NextResponse.json({id, success: true});
         const missionCluster=await Umrah.findById(filter);
         const oldData=missionCluster._doc;
 
@@ -38,7 +38,10 @@ export async function GET(request,content){
         //return NextResponse.json({result:staffId,success:true});
         await mongoose.connect(connectionStr);
         data=await Umrah
-        .findById(record);
+        .findById(record).populate({
+            path:'department',
+            model:'Department'
+        });
     }
     catch(error)
     {
