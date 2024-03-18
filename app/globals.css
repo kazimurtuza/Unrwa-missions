@@ -77,3 +77,7 @@ ul li.menu-legend:before{
 .has-legend li:before{
   left: 0!important;
 }
+
+.user-page{
+  background-color: var(--main-color);
+}
