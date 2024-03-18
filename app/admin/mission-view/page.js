@@ -493,7 +493,7 @@ function MissionVIew() {
 
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="agency-name" className="form__label">
-                                                            Unops acu status
+                                                            UNOPS ACU Status
                                                         </label>
                                                         <div className="select-wrap">
                                                             <select
@@ -512,7 +512,7 @@ function MissionVIew() {
 
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
-                                                            Unops ACU
+                                                            UNOPS ACU
                                                         </label>
                                                         <input type="text" value={adminData.unops_acu} onInput={setdata} name="unops_acu" className="form__input" id="dsc"/>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}

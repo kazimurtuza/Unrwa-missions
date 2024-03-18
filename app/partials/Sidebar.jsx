@@ -588,22 +588,22 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/general_status/create"
+                                                            href="/admin/request_status/create"
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Create General Status
+                                                                Create Request Status
                                                             </span>
                                                         </Link>
                                                     </li>
 
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/general_status"
+                                                            href="/admin/request_status"
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                General Status List
+                                                                Request Status List
                                                             </span>
                                                         </Link>
                                                     </li>

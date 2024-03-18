@@ -33,6 +33,19 @@ export async function POST(request) {
 
         await mongoose.connect(connectionStr);
 
+        const record = {vehicle_id: payload.vehicle_id,is_delete:0};
+        const is_findEmail = await Vehicle.findOne(record);
+        if (is_findEmail) {
+            return NextResponse.json({msg: 'Vehicle ID is already present',success:false}, {status: 409});
+        }
+
+        const record2 = {vehicle_plate_number: payload.vehicle_plate_number,is_delete:0};
+        const is_findEmail2 = await Vehicle.findOne(record2);
+        if (is_findEmail2) {
+            return NextResponse.json({msg: 'Vehicle Plate Number is already present',success:false}, {status: 409});
+        }
+
+
         //vehicle create
         let vehicle = new Vehicle(payload);
         let result = await vehicle.save();
