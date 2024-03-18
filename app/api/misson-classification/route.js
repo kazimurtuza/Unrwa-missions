@@ -28,6 +28,13 @@ export async function POST(request) {
 
         await mongoose.connect(connectionStr);
 
+        const record = {requests_classifications: payload.requests_classifications,is_delete:0};
+        const is_findData = await MissionClassification.findOne(record);
+        if (is_findData) {
+            return NextResponse.json({msg: 'Request Classification must be unique',success:false}, {status: 409});
+        }
+
+
         //mission classification create
         let missionClassification = new MissionClassification(payload);
         let result = await missionClassification.save();

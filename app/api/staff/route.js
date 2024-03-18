@@ -62,6 +62,7 @@ export async function POST(request) {
                 return NextResponse.json({e, success: 'img upload error found'});
             }
         }
+      
         if(payload.passport_original_attachment)
         {
             try {

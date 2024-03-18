@@ -5,14 +5,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
 
-function AgencyList() {
-    const [agency, setAgencyList] = useState([]);
+function DepartmentList() {
+    const [department, setDepartmentList] = useState([]);
     const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     const fetchData = async () => {
         try {
-            const { data } = await axiosClient.get('agency');
-            setAgencyList(data.result);
+            const { data } = await axiosClient.get('department');
+            setDepartmentList(data.result);
         } catch (error) {
             console.error('Error fetching agencies:', error);
         }
@@ -24,8 +24,8 @@ function AgencyList() {
        
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-    let tableName = "Agency";
-    const headName = ["Logo", "Name","agency name acroynm","agency head", "Action"];
+    let tableName = "Department";
+    const headName = ["Name","abbrevation", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -41,35 +41,10 @@ function AgencyList() {
 
     const body = (
         <>
-            {Array.isArray(agency) && agency.map((item, index) => (
+            {Array.isArray(department) && department.map((item, index) => (
 
                 <tr key={index}>
                 
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            <div className="ml-3">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.agency_logo && (
-                                        <img
-                                            className="w-8 h-8 rounded-full object-cover"
-                                            src={`${api_base_url}/${item.agency_logo}`}
-                                            alt={`${item.name}'s image`}
-                                        />
-                                    )}
-                                </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
-                            </div>
-                        </div>
-                    </td>
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
@@ -102,26 +77,7 @@ function AgencyList() {
                             {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.agency_name_acroynm}
-                                </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
-                            </div>
-                        </div>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            <div className="ml-3">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.agency_head}
+                                    {item.abbrevation}
                                 </p>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
@@ -135,7 +91,7 @@ function AgencyList() {
 
                             <Link
                                 href={{
-                                    pathname: '/admin/agency/edit',
+                                    pathname: '/admin/department/edit',
                                     query: { id: item._id },
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"
@@ -148,7 +104,7 @@ function AgencyList() {
                                       if (confirmed) {
                                           // Make a DELETE request to your API to mark the question as deleted
                                           try {
-                                            await axiosClient.delete(`agency/${item._id}`, {
+                                            await axiosClient.delete(`department/${item._id}`, {
                                                   method: 'DELETE',
                                                   headers: {
                                                       'Content-Type': 'application/json',
@@ -189,4 +145,4 @@ function AgencyList() {
     );
 }
 
-export default AgencyList;
+export default DepartmentList;
