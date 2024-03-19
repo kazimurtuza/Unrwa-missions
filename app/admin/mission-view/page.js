@@ -120,6 +120,7 @@ function MissionVIew() {
       }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
       
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -202,6 +203,7 @@ function MissionVIew() {
         // the second time but not the first
         setHydrated(true);
     }, []);
+
     if (!hydrated) {
         // Returns null on first render, so the client and server match
         return null;
