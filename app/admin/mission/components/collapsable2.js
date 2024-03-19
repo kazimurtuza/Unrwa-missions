@@ -28,11 +28,8 @@ const Collapsable2 = ({
                           checkValidation,
                           vehicleStaff,
                           vehicleStaffStore,
-<<<<<<< HEAD
                           prevehicleStaf,
                           updateVehicleStaf,
-=======
->>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
                       }) => {
     const setdata = (e) => {
         const {name, value} = e.target;
@@ -60,7 +57,6 @@ const Collapsable2 = ({
 
 
     const selectData = async (selectedOption, {name}) => {
-<<<<<<< HEAD
         var value;
         value = selectedOption.value;
         // if(name==undefined){
@@ -81,11 +77,6 @@ const Collapsable2 = ({
 
         // Pass the input value to the parent component
 
-=======
-
-        // Pass the input value to the parent component
-        var value = selectedOption.value;
->>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
 
         if (name == 'driver') {
             setDriverInfo(selectedOption.list);
@@ -99,11 +90,7 @@ const Collapsable2 = ({
             value = selectedOption;
         }
         if (name == "carried") {
-<<<<<<< HEAD
             value = selectedOption;
-=======
-            value=selectedOption;
->>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
             // console.log("data carry")
             // console.log(selectedOption.value)
             // selectedOption = await selectedOption.map((item) => ({
@@ -196,7 +183,6 @@ const Collapsable2 = ({
     }
 
     async function selectedStaffSet() {
-<<<<<<< HEAD
         console.log("pre data")
         console.log(prevehicleStaf.length)
         console.log("new pre data")
@@ -209,10 +195,6 @@ const Collapsable2 = ({
         // var save=prevehicleStaf?prevehicleStaf[item]:[];
         // // let selectedStaffList = await info.staff.map((item) => item.staff_id);
 
-=======
-        let selectedStaffList = await info.staff.map((item) => item.staff_id);
-        setSelected((old) => selectedStaffList);
->>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
     }
 
     useEffect(() => {
@@ -241,7 +223,6 @@ const Collapsable2 = ({
 
         // updateVehicleStaf()
         setSelected(data);
-<<<<<<< HEAD
         // // Map each item in the data array to an object with a key staff_id
         // let value = await data.map((item) => ({
         //     staff_id: item,
@@ -273,14 +254,6 @@ const Collapsable2 = ({
 
         // let name = "staff"; // Assuming this is the name you want to use
         // vehicleStaffStore(value, item); // You need to define 'item' somewhere in your code
-=======
-        // Map each item in the data array to an object with a key staff_id
-        let value = await data.map((item) => ({
-            staff_id: item,
-        }));
-        let name = "staff"; // Assuming this is the name you want to use
-        vehicleStaffStore(value, item); // You need to define 'item' somewhere in your code
->>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
     };
 
     return (
@@ -489,11 +462,7 @@ const Collapsable2 = ({
                             }}
                             options={staffList}
                         />
-<<<<<<< HEAD
                         {checkValidation &&  prevehicleStaf[item].length==0
-=======
-                        {checkValidation && info.staff.length == 0
->>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
                             ? errorTxt
                             : ""}
                     </div>

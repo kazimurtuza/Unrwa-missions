@@ -1,24 +1,15 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import $ from 'jquery';
+import TableExample from "@/app/example-table/page";
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import '../../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
-import '../../../../node_modules/datatables/media/js/jquery.dataTables.min';
-
 function MissionList() {
     const [mission, setMissionList] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [perPage] = useState(10);
-
     const fetchData = async () => {
         try {
             const { data } = await axiosClient.get('mission');
             setMissionList(data.result);
-            setTimeout( function(){
-                $('table').dataTable();
-            }, 300);
         } catch (error) {
             console.error('Error fetching users:', error);
         }
@@ -27,19 +18,11 @@ function MissionList() {
     useEffect(() => {
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
-    const indexOfLastItem = currentPage * perPage;
-    const indexOfFirstItem = indexOfLastItem - perPage;
-    const currentItems = Array.isArray(mission) && mission.slice(indexOfFirstItem, indexOfLastItem);
-
-    const paginate = pageNumber => setCurrentPage(pageNumber);
-
-    async function missionStatus(id,status){
+   async function missionStatus(id,status){
        let adminData={
            mission_id:id,
            status:status,
        }
-
         const response = await axiosClient.post('mission-status-update', adminData);
         if(response.data.success==true){
             fetchData();
@@ -56,19 +39,6 @@ function MissionList() {
 
         return formattedDate;
     }
-    function getStatusString(request_status) {
-        return (
-            request_status === "request_received" ? "Request Received" :
-                request_status === "request_submitted_cla" ? "Request Submitted CLA" :
-                    request_status === "mission_completed" ? "Mission Completed" :
-                        request_status === "request_cancelled_request" ? "Request Cancelled Request" :
-                            request_status === "mission_postponed" ? "Mission Postponed" :
-                                request_status === "mission_pending" ? "Mission Pending" :
-                                    request_status === "mission_aborted" ? "Mission Aborted" :
-                                        "Unknown Status"
-        );
-    }
-
     function getStatusString(request_status) {
         return (
             request_status === "request_received" ? "Request Received" :
@@ -101,7 +71,7 @@ function MissionList() {
 
     const body = (
         <>
-            {Array.isArray(mission) && mission.map((item, index) => (
+            {mission.map((item, index) => (
 
                 <tr key={index}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -114,12 +84,20 @@ function MissionList() {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
-
+                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
+                            {/*    <img*/}
+                            {/*        className="w-full h-full rounded-full"*/}
+                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
+                            {/*        alt=""*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
                                     {item.leader_details[0].name}
                                 </p>
-
+                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                                {/*    000004*/}
+                                {/*</p>*/}
                             </div>
                         </div>
                     </td>
@@ -127,7 +105,6 @@ function MissionList() {
                         <p className="text-gray-900 whitespace-no-wrap">
                             {convertDateFormat(item.movement_date, newDateFormat)}
                         </p>
-<<<<<<< HEAD
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}
                         {/*</p>*/}
@@ -185,25 +162,6 @@ function MissionList() {
                     </span>
 
                     </td>
-=======
-
-                    </td>
-
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-
-                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span
-                            aria-hidden
-                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                        ></span>
-                        <span className="relative">
-                            {getStatusString(item.request_status)}
-
-                        </span>
-                    </span>
-
-                    </td>
->>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
                         {/*{(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-main text-white rounded" onClick={()=>missionStatus(item._id,1)}>Complete</button>:""}*/}
                         {/*{(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject</button>:""}*/}
@@ -229,37 +187,7 @@ function MissionList() {
     );
 
     return (
-        <div className="flex h-screen overflow-hidden">
-
-        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-          <main>
-            <div className="container mx-auto px-4 sm:px-8">
-              <div className="py-8">
-                <div className="flex gap-5 flex-wrap items-center justify-between">
-                  <h2 className="text-2xl font-semibold leading-tight">
-                  Mission List
-                  </h2>
-                </div>
-
-                <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                  <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
-                    <table className="min-w-full leading-normal">
-                      <thead>
-                      {head}
-                      </thead>
-                      <tbody>
-                      {body}
-
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </main>
-        </div>
-      </div>
+        <TableExample tableName={tableName} tableHead={head} body={body}/>
     );
 }
 

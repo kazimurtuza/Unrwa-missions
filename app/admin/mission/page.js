@@ -36,11 +36,7 @@ function Steps() {
         "movement_date": "",
         "purpose": "",
         "remarks": "",
-<<<<<<< HEAD
         "request_status": "request_received",
-=======
-        "request_status":"request_received",
->>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
         "location_list": [{
             "index_no": 0,
             "departure_premise_type": null,
@@ -106,11 +102,7 @@ function Steps() {
         let vehicle = oldData.vehicle_list;
         let vicleList = await vehicle.map(item => {
             if (item.index_no == index) {
-<<<<<<< HEAD
                 item = {...item, "staff": value};
-=======
-                item={...item,"staff":value}  ;
->>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
                 return item;
             } else {
                 return item;
@@ -265,10 +257,10 @@ function Steps() {
         let validationError = 0;
         if (activeTab == 0) validationError = await checkStep1()
         if (activeTab == 1) validationError = await checkStep2()
-        // if (validationError == 0) {
-        //     setCheckValidation(0)
+        if (validationError == 0) {
+            setCheckValidation(0)
             setActiveTab((prev) => prev + 1);
-        // }
+        }
     }
 
     function checkStep1() {
