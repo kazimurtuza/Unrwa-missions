@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function CountryCreate() {
+  const router = useRouter();
   const [countryName, setCountryName] = useState("");
   const [alpha2, setAlpha2] = useState("");
   const [alpha3, setAlpha3] = useState("");
@@ -93,6 +95,7 @@ function CountryCreate() {
             setIso3166("");
             setRegion("");
             setErrorMessage("");
+            router.push("../country", { scroll: false });
           } else {
             if(response.data.msg) {
               setErrorMessage(response.data.msg);

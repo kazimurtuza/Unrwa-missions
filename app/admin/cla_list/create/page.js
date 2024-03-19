@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function DepartmentCreate() {
+  const router = useRouter();
   const [name, setName] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -39,6 +41,7 @@ function DepartmentCreate() {
             setSuccessMessage("CLA List Create Successfully");
             setName("");
             setErrorMessage("");
+            router.push("../cla_list", { scroll: false });
           }
           else
           {

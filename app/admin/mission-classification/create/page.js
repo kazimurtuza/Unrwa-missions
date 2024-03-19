@@ -2,12 +2,15 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function MissionClassificationCreate() {
+  const router = useRouter();
   const [missionClassificationName, setMissionClassificationName] = useState("");
   const [requests_classifications, setRequests_classifications] = useState("");
   const [abbreviation, setAbbreviation] = useState("");
   const [isVisible, setIsVisible] = useState(true);
+  
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -59,6 +62,7 @@ function MissionClassificationCreate() {
             setRequests_classifications("");
             setAbbreviation("");
             setErrorMessage("");
+            router.push("../mission-classification", { scroll: false });
           }
           else
           {

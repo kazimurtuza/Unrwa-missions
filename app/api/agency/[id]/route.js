@@ -8,6 +8,7 @@ import path from "path";
 import fs from "fs";
 import { Agency } from "@/lib/model/agency";
 import { uploadBase64Img } from "@/app/helper";
+import { MissionCluster } from "@/lib/model/missionCluster";
 
 export async function PUT(request, content) {
     let result = [];
@@ -18,7 +19,7 @@ export async function PUT(request, content) {
         // return NextResponse.json(payload.password);
         await mongoose.connect(connectionStr);
         const missionCluster=await Agency.findById(filter).populate({
-            path:'ageny_cluster',
+            path:'agency_cluster',
             model:'MissionCluster'
         });
         const oldData=missionCluster._doc;
@@ -59,7 +60,10 @@ export async function GET(request, content) {
         const id = content.params.id;
         const record = {_id: id};
         await mongoose.connect(connectionStr);
-        const result = await Agency.findById(record);
+        const result = await Agency.findById(record).populate({
+            path:'agency_cluster',
+            model:'MissionCluster'
+        });
         return NextResponse.json({result, success: true});
     } catch (error) {
         result = error;
