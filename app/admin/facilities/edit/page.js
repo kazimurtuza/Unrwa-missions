@@ -11,12 +11,15 @@ function UmraCreate() {
   const [premiseType, setPremiseTypeList] = useState([]);
   const [premiseTypeId, setPremiseTypeId] = useState([]);
   const [locationArea, setLocationArea] = useState("");
+  const [locationAreaList, setLocationAreaList] = useState("");
   const [subArea, setSubArea] = useState("");
+  const [subAreaList, setSubAreaList] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [buildingCode, setBuildingCode] = useState("");
   const [department, setDepartment] = useState("");
   const [ownership, setOwenership] = useState("");
+  const [clsDataList, setClsDataList] = useState("");
   const [clsList, setClsList] = useState("");
   const [des, setDes] = useState("");
   const [departmentList,setDepartmentList]=useState("");
@@ -29,6 +32,53 @@ function UmraCreate() {
   const searchParames = useSearchParams();
   const id = searchParames.get("id");
 
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('area');
+            setLocationAreaList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+  
+    fetchData();
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('sub_area');
+            setSubAreaList("");
+            setSubAreaList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+  
+    fetchData();
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('cla_list');
+            setClsDataList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+  
+    fetchData();
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  
 
 
   useEffect(() => {
@@ -328,6 +378,7 @@ useEffect(() => {
 
 
 
+                     
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -335,24 +386,19 @@ useEffect(() => {
                         >
                           Location Area
                         </label>
-                        <select
+                       <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={locationArea}
                           onChange={(e) => handleLocaltionAreaChange(e.target.value)}
                         >
                           <option value="" disabled hidden>
-                            Select Area
+                            Select Location Area
                           </option>
-                          <option value="Gaza">
-                            Gaza
-                          </option>
-                          <option value="Khan Younis">
-                            Khan Younis
-                          </option>
-                          <option value="Rafah">
-                            Rafah
-                          </option>
-
+                          {Array.isArray(locationAreaList) && locationAreaList.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
@@ -370,86 +416,14 @@ useEffect(() => {
                           value={subArea}
                           onChange={(e) => handleSubAreaChange(e.target.value)}
                         >
-                          <option value="" disabled hidden>
+                           <option value="" disabled hidden>
                             Select Sub Area
                           </option>
-                          <option value="Abasan">
-                            Abasan
-                          </option>
-                          <option value="Abu Tue’ma">
-                            Abu Tue’ma
-                          </option>
-                          <option value="Al Naser Area">
-                            Al Naser Area
-                          </option>
-                          <option value="Al Salam Area">
-                            Al Salam Area
-                          </option>
-                          <option value="Bani Suhaila">
-                            Bani Suhaila
-                          </option>
-                          <option value="Beach Camp">
-                          Beach Camp
-                          </option>
-                          <option value="El Shouka Area">
-                          El Shouka Area
-                          </option>
-                          <option value="Fukhari">
-                          Fukhari
-                          </option>
-
-                          <option value="Gaza Town">
-                          Gaza Town
-                          </option>
-
-                          <option value="Karni">
-                          Karni
-                          </option>
-
-                          <option value="Khan Younis Camp">
-                          Khan Younis Camp
-                          </option>
-
-                          <option value="Khuza'a">
-                          Khuza'a
-                          </option>
-
-                          <option value="Ma'en">
-                          Ma'en
-                          </option>
-
-
-                          <option value="Mawasi">
-                          Mawasi
-                          </option>
-
-
-                          <option value="Qarara">
-                          Qarara
-                          </option>
-
-                          <option value="Rafah">
-                          Rafah
-                          </option>
-
-                          <option value="Rafah Camp">
-                          Rafah Camp
-                          </option>
-
-
-                          <option value="Rafah Town">
-                          Rafah Town
-                          </option>
-
-
-                          <option value="Shajaiya">
-                          Shajaiya
-                          </option>
-
-                          <option value="Tal El Sultan">
-                          Tal El Sultan
-                          </option>
-
+                          {Array.isArray(subAreaList) && subAreaList.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
@@ -574,7 +548,7 @@ useEffect(() => {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          CLS List
+                          CLA List
                         </label>
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
@@ -582,15 +556,13 @@ useEffect(() => {
                           onChange={(e) => handleClsListChange(e.target.value)}
                         >
                           <option value="" disabled hidden>
-                            Select One
+                            Select CLA
                           </option>
-                          <option value="Yes">
-                              Yes
-                          </option>
-                          <option value="No">
-                            No
-                          </option>
-
+                          {Array.isArray(clsDataList) && clsDataList.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
