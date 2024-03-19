@@ -56,6 +56,18 @@ function MissionList() {
 
         return formattedDate;
     }
+    function getStatusString(request_status) {
+        return (
+            request_status === "request_received" ? "Request Received" :
+                request_status === "request_submitted_cla" ? "Request Submitted CLA" :
+                    request_status === "mission_completed" ? "Mission Completed" :
+                        request_status === "request_cancelled_request" ? "Request Cancelled Request" :
+                            request_status === "mission_postponed" ? "Mission Postponed" :
+                                request_status === "mission_pending" ? "Mission Pending" :
+                                    request_status === "mission_aborted" ? "Mission Aborted" :
+                                        "Unknown Status"
+        );
+    }
 
     function getStatusString(request_status) {
         return (
@@ -115,6 +127,65 @@ function MissionList() {
                         <p className="text-gray-900 whitespace-no-wrap">
                             {convertDateFormat(item.movement_date, newDateFormat)}
                         </p>
+<<<<<<< HEAD
+                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
+                        {/*    USD*/}
+                        {/*</p>*/}
+                    </td>
+                    {/*<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">*/}
+                        {/*<p className="text-gray-900 whitespace-no-wrap">*/}
+                            {/*{item.purpose}*/}
+                        {/*</p>*/}
+                        {/*/!*<p className="text-gray-600 whitespace-no-wrap">*!/*/}
+                        {/*/!*    USD*!/*/}
+                        {/*/!*</p>*!/*/}
+                    {/*</td>*/}
+                    {/*<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">*/}
+                        {/*<p className="text-gray-900 whitespace-no-wrap">*/}
+                            {/*{item.remarks}*/}
+                        {/*</p>*/}
+                        {/*/!*<p className="text-gray-600 whitespace-no-wrap">*!/*/}
+                        {/*/!*    USD*!/*/}
+                        {/*/!*</p>*!/*/}
+                    {/*</td>*/}
+                    {/*<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">*/}
+                    {/*    <p className="text-gray-900 whitespace-no-wrap">*/}
+                    {/*        Sept 28, 2019*/}
+                    {/*    </p>*/}
+                    {/*    <p className="text-gray-600 whitespace-no-wrap">*/}
+                    {/*        Due in 3 days*/}
+                    {/*    </p>*/}
+                    {/*</td>*/}
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        {/*{item.status?(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">*/}
+                        {/*<span*/}
+                            {/*aria-hidden*/}
+                            {/*className="absolute inset-0 bg-green-200 opacity-50 rounded-full"*/}
+                        {/*></span>*/}
+                        {/*<span className="relative">Completed</span>*/}
+                    {/*</span>):(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">*/}
+                        {/*<span*/}
+                            {/*aria-hidden*/}
+                            {/*className="absolute inset-0 bg-green-200 opacity-50 rounded-full"*/}
+                        {/*></span>*/}
+                        {/*<span className="relative">Pending</span>*/}
+                    {/*</span>)}*/}
+
+                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                        <span
+                            aria-hidden
+                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                        ></span>
+                        <span className="relative">
+                            {getStatusString(item.request_status)}
+
+
+
+                        </span>
+                    </span>
+
+                    </td>
+=======
 
                     </td>
 
@@ -132,6 +203,7 @@ function MissionList() {
                     </span>
 
                     </td>
+>>>>>>> bc2b7b2f645aa18e17bbd095e085623e2e602610
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
                         {/*{(item.admin_info_set==1 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-main text-white rounded" onClick={()=>missionStatus(item._id,1)}>Complete</button>:""}*/}
                         {/*{(item.admin_info_set!=1 && item.admin_info_set!=2 && item.status==0)?<button  className="px-4 py-2 mx-1 bg-red-500 text-white rounded" onClick={()=>missionStatus(item._id,2)}> Reject</button>:""}*/}

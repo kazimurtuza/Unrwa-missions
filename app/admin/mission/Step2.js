@@ -58,6 +58,7 @@ const Step1 = ({data, locationSet,checkValidation,emptyLocation}) => {
         setLocationList(newdata);
         locationSet(newdata);
 
+
     }
 
     return (
