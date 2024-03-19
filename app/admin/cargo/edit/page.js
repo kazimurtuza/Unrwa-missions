@@ -4,8 +4,10 @@ import axiosClient from "@/app/axiosClient";
 import { useRef, useState,useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-function DepartmentCreate() {
+function CargoCreate() {
   const router = useRouter();
+  const [name, setName] = useState("");
+
   const searchParames = useSearchParams();
   const id = searchParames.get("id");
 
@@ -13,9 +15,9 @@ function DepartmentCreate() {
     const fetchData = async () => {
         try {
             //const objectId = mongoose.Types.ObjectId(id);
-            const { data } = await axiosClient.get(`acu_status/${id}`);
+            const { data } = await axiosClient.get(`cargo/${id}`);
             console.log(data);
-            setAcu_status(data.result.acu_status);
+            setName(data.result.what_is_being_carried_out);
         } catch (error) {
             console.error('Error fetching agencies:', error);
         }
@@ -24,8 +26,6 @@ function DepartmentCreate() {
     fetchData();
 }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-  const [acu_status, setAcu_status] = useState("");
-  const [abbrevation, setAbbrevation] = useState("");
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
@@ -35,8 +35,8 @@ function DepartmentCreate() {
   const inputFile = useRef(null);
 
 
-  const handleStatusChange = (value) => {
-    setAcu_status(value);
+  const handleNameChange = (value) => {
+    setName(value);
   };
 
   const handleSubmit = async (e) => {
@@ -46,19 +46,19 @@ function DepartmentCreate() {
 
     // Prepare data for API request
     const postData = {
-      acu_status: acu_status
+        what_is_being_carried_out: name
 
     };
 
     try {
 
-      const response = await axiosClient.put(`acu_status/${id}`, postData);
+        const response = await axiosClient.put(`cargo/${id}`, postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("ACU status Update Successfully");
+            setSuccessMessage("Cargo Update Successfully");
             setErrorMessage("");
           }
           else
@@ -100,7 +100,7 @@ function DepartmentCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                      Missions UNOPS ACU Status Edit
+                        Missions Vehicle Cargo Edit
                       </p>
                       <br></br>
                       {successMessage && (
@@ -130,16 +130,16 @@ function DepartmentCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                        UNOPS ACU Status
+                        What is being Carried
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your acu status"
-                          value={acu_status}
+                          placeholder="Enter your carried out"
+                          value={name}
                           onChange={(e) =>
-                            handleStatusChange(e.target.value)
+                            handleNameChange(e.target.value)
                           }
 
                         />
@@ -178,5 +178,5 @@ function extractErrors(errors) {
     return result;
 }
 
-export default DepartmentCreate;
+export default CargoCreate;
 
