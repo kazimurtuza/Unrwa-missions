@@ -16,7 +16,10 @@ export async function GET(){
         console.log(connectionStr);
         await mongoose.connect(connectionStr);
         data = await SubArea
-        .find({is_delete:0}).sort({ created_at: -1 });
+        .find({is_delete:0}).populate({
+            path:'area',
+            model:'Area'
+        }).sort({ created_at: -1 });
     }
     catch(error)
     {

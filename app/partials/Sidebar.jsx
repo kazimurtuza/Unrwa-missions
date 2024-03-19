@@ -501,7 +501,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/umrah/create"
+                                                            href="/admin/facilities/create"
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
@@ -511,7 +511,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                     </li>
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/umrah"
+                                                            href="/admin/facilities"
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
@@ -718,7 +718,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                     </li>
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/general-status/create"
+                                                            href="/admin/general_status/create"
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
@@ -729,7 +729,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                     <li className="mb-1 last:mb-0">
                                                         <Link
-                                                            href="/admin/general-status"
+                                                            href="/admin/general_status"
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
