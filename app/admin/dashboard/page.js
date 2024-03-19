@@ -100,6 +100,7 @@ function Dashboard() {
         try {
             const {data} = await axiosClient.get('admin-dashboard');
             if (data.success == true) {
+
                 setrejectCount(data.result.rejectCount)
                 settotalMission(data.result.totalMission)
                 setcompleted(data.result.completed)
@@ -206,6 +207,11 @@ function Dashboard() {
         <div className="flex h-screen overflow-hidden">
 
             <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+<<<<<<< HEAD
+                <main>
+                    <h4>Today Report</h4>
+                    <div className="grid grid-cols-4 gap-4  p-3">
+=======
                 <main className="dashboar-main">
                     <h3 className="text-2xl font-semibold leading-tight ml-2">Monthly Overview</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  p-3">
@@ -261,6 +267,7 @@ function Dashboard() {
                     </div>
                     <h3 className="text-2xl font-semibold leading-tight ml-2 mt-4">Daily Overview</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  p-3">
+>>>>>>> a0443356cef2f6c9942cdc3cc17296a7dc9e684d
 
                         <div className={styles.itemcard} style={{backgroundColor: '#76978f4a'}}>
 
@@ -311,6 +318,59 @@ function Dashboard() {
                         </div>
 
                     </div>
+                    <h4>Total Report</h4>
+                    <div className="grid grid-cols-4 gap-4  p-3">
+
+                        <div className={styles.itemcard} style={{backgroundColor: '#76978f4a'}}>
+
+                            <div className="grid grid-cols-2 gap-2 ">
+                                <div className={styles.round} style={{backgroundColor: '#eaf3f3'}}><AiOutlineUser
+                                    size={40}/></div>
+                                <div>
+                                    <h1 className={styles.totalnumber}>{isLoading ? loader : totalMission}</h1>
+                                    <h5 className={styles.subtitle}>Total Mission Submitted </h5>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className={styles.itemcard} style={{backgroundColor: '#cbcbcb'}}>
+
+                            <div className="grid grid-cols-2 gap-2 ">
+                                <div className={styles.round} style={{backgroundColor: '#d9d7d7'}}><FaProductHunt
+                                    size={40}/></div>
+                                <div>
+                                    <h1 className={styles.totalnumber}>{isLoading ? loader : completed}</h1>
+                                    <h5 className={styles.subtitle}>Total Mission Completed</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.itemcard} style={{backgroundColor: '#e7a93c63'}}>
+
+                            <div className="grid grid-cols-2 gap-2 ">
+                                <div className={styles.round} style={{backgroundColor: '#e9c27d'}}><BsCart size={40}/>
+                                </div>
+                                <div>
+                                    <h1 className={styles.totalnumber}>{isLoading ? loader : approved}</h1>
+                                    <h5 className={styles.subtitle}>Total CLA Approved</h5>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className={styles.itemcard} style={{backgroundColor: '#65ebacd6'}}>
+
+                            <div className="grid grid-cols-2 gap-2 ">
+                                <div className={styles.round} style={{backgroundColor: '#cbcb4145'}}><BsCart size={40}/>
+                                </div>
+                                <div>
+                                    <h1 className={styles.totalnumber}>{isLoading ? loader : rejectCount}</h1>
+                                    <h5 className={styles.subtitle}>Total Rejected</h5>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
 
                     <div className="chart-wrap mt-4">
                         {isloadmap==1? <Line options={options} data={data1}/>:<Line options={options} data={dataset}/>}
