@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function DepartmentCreate() {
+  const router = useRouter();
   const [acu_status, setAcu_status] = useState("");
   const [abbrevation, setAbbrevation] = useState("");
 
@@ -42,6 +44,7 @@ function DepartmentCreate() {
             setAcu_status("");
             setAbbrevation("");
             setErrorMessage("");
+            router.push("../acu_status", { scroll: false });
           }
           else
           {

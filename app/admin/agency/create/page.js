@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useRef,useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function AgencyCreate() {
+  const router = useRouter();
   const [agencyName, setAgencyName] = useState("");
   const [agency_name_acroynm, setAgency_name_acroynm] = useState("");
   const [agency_head, setAgency_head] = useState("");
@@ -15,6 +17,7 @@ function AgencyCreate() {
   const [intervision_note, setIntervision_note] = useState("");
   const [clusterList, setClusterList] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
+  
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
@@ -126,6 +129,7 @@ function AgencyCreate() {
             setAgency_cluster("");
             setIntervision_note("");
             setErrorMessage("");
+            router.push("../agency", { scroll: false });
           }
           else
           {

@@ -1,15 +1,13 @@
 "use client";
 
 import axiosClient from "@/app/axiosClient";
+import { useRef, useState,useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
-function PremiseTypeCreate() {
+function AreaCreate() {
+  const [areaName, setAreaName] = useState("");
+  const [areaId, setAreaId] = useState("");
   const [name, setName] = useState("");
-
-  //success message
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage,setErrorMessage]=useState("");
 
   const router = useRouter();
   const searchParames = useSearchParams();
@@ -19,9 +17,10 @@ function PremiseTypeCreate() {
     const fetchData = async () => {
         try {
             //const objectId = mongoose.Types.ObjectId(id);
-            const { data } = await axiosClient.get(`premise-type/${id}`);
+            const { data } = await axiosClient.get(`sub_area/${id}`);
             console.log(data);
             setName(data.result.name);
+            setAreaId(data.result.area);
         } catch (error) {
             console.error('Error fetching agencies:', error);
         }
@@ -31,10 +30,37 @@ function PremiseTypeCreate() {
 }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
 
+  //success message
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage,setErrorMessage]=useState("");
+
+
+  const inputFile = useRef(null);
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('area');
+            setAreaName(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+
+    fetchData();
+}, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+
 
 
   const handleNameChange = (value) => {
     setName(value);
+  };
+
+  const handleAreaChange = (value) => {
+    setAreaId(value);
   };
 
   const handleSubmit = async (e) => {
@@ -45,18 +71,21 @@ function PremiseTypeCreate() {
     // Prepare data for API request
     const postData = {
       name: name,
+      area:areaId
+
     };
 
     try {
 
-        const response = await axiosClient.put(`premise-type/${id}`, postData);
+        const response = await axiosClient.put(`sub_area/${id}`, postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("Premise Type Update Successfully");
-            // setName("");
+            setSuccessMessage("Sub Area Update Successfully");
+            setName("");
+            setAreaId("");
             setErrorMessage("");
           }
           else
@@ -82,12 +111,7 @@ function PremiseTypeCreate() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-
-      {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
-
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
             <div className="font-sans antialiased bg-grey-lightest">
@@ -103,7 +127,7 @@ function PremiseTypeCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Premise Type Edit
+                        Emergency Response Gaza Sub Area Create
                       </p>
                       <br></br>
                       {successMessage && (
@@ -128,18 +152,43 @@ function PremiseTypeCreate() {
                                                 </span>
                                                 </div>
                                             )}
+
+                    <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                        Area
+                        </label>
+                        <select
+                            className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                            value={areaId}
+                            onChange={(e) => handleAreaChange(e.target.value)}
+                            required
+                        >
+                            <option value="" disabled hidden>
+                            Select Area
+                            </option>
+                            {Array.isArray(areaName) && areaName.map((val) => (
+                            <option key={val.id} value={val._id}>
+                                {val.name}
+                            </option>
+                            ))}
+                        </select>
+                      </div>
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Name
+                        Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your premise type name"
+                          placeholder="Enter your area name"
                           value={name}
                           onChange={(e) =>
                             handleNameChange(e.target.value)
@@ -147,6 +196,8 @@ function PremiseTypeCreate() {
 
                         />
                       </div>
+
+                    
 
 
                       <div className="flex items-center justify-between mt-8">
@@ -181,5 +232,5 @@ function extractErrors(errors) {
     return result;
 }
 
-export default PremiseTypeCreate;
+export default AreaCreate;
 

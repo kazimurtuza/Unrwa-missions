@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function CoordinateCreate() {
+  const router = useRouter();
   const [name, setName] = useState("");
 
   //success message
@@ -40,6 +42,7 @@ function CoordinateCreate() {
             setSuccessMessage("Coordinate Decision Create Successfully");
             setName("");
             setErrorMessage("");
+            router.push("../coordinate-decision", { scroll: false });
           }
           else
           {

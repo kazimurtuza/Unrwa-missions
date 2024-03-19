@@ -1,15 +1,11 @@
 "use client";
 
 import axiosClient from "@/app/axiosClient";
+import { useRef, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
-function PremiseTypeCreate() {
+function AreaEdit() {
   const [name, setName] = useState("");
-
-  //success message
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage,setErrorMessage]=useState("");
 
   const router = useRouter();
   const searchParames = useSearchParams();
@@ -19,7 +15,7 @@ function PremiseTypeCreate() {
     const fetchData = async () => {
         try {
             //const objectId = mongoose.Types.ObjectId(id);
-            const { data } = await axiosClient.get(`premise-type/${id}`);
+            const { data } = await axiosClient.get(`area/${id}`);
             console.log(data);
             setName(data.result.name);
         } catch (error) {
@@ -31,6 +27,12 @@ function PremiseTypeCreate() {
 }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
 
+  //success message
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage,setErrorMessage]=useState("");
+
+
+  const inputFile = useRef(null);
 
 
   const handleNameChange = (value) => {
@@ -44,19 +46,19 @@ function PremiseTypeCreate() {
 
     // Prepare data for API request
     const postData = {
-      name: name,
+      name: name
+
     };
 
     try {
 
-        const response = await axiosClient.put(`premise-type/${id}`, postData);
+        const response = await axiosClient.put(`area/${id}`, postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("Premise Type Update Successfully");
-            // setName("");
+            setSuccessMessage("Area Update Successfully");
             setErrorMessage("");
           }
           else
@@ -82,12 +84,7 @@ function PremiseTypeCreate() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-
-      {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
-
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
             <div className="font-sans antialiased bg-grey-lightest">
@@ -103,7 +100,7 @@ function PremiseTypeCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Premise Type Edit
+                        Emergency Response Gaza Area Edit
                       </p>
                       <br></br>
                       {successMessage && (
@@ -133,13 +130,13 @@ function PremiseTypeCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Name
+                        Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your premise type name"
+                          placeholder="Enter your area name"
                           value={name}
                           onChange={(e) =>
                             handleNameChange(e.target.value)
@@ -181,5 +178,5 @@ function extractErrors(errors) {
     return result;
 }
 
-export default PremiseTypeCreate;
+export default AreaEdit;
 

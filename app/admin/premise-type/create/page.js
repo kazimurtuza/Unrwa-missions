@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function PremiseTypeCreate() {
+  const router = useRouter();
   const [name, setName] = useState("");
 
   //success message
@@ -37,6 +39,7 @@ function PremiseTypeCreate() {
             setSuccessMessage("Premise Type Create Successfully");
             setName("");
             setErrorMessage("");
+            router.push("../staff", { scroll: false });
           }
           else
           {

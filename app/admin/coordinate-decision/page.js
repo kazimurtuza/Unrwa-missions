@@ -72,7 +72,7 @@ function CoordinationDecision() {
 
                             <Link
                                 href={{
-                                    pathname: '/admin/coordinate_decision/edit',
+                                    pathname: '/admin/coordinate-decision/edit',
                                     query: { id: item._id },
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"

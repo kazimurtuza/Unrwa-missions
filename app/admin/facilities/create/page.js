@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function UmraCreate() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [country, setCountryList] = useState([]);
   const [countryId, setCountryId] = useState([]);
@@ -211,6 +213,7 @@ useEffect(() => {
             setOwenership("");
             setSubArea("");
             setLocationArea("");
+            router.push("../facilities", { scroll: false });
 
           }
           else
