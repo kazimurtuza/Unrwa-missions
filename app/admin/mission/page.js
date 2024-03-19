@@ -207,6 +207,8 @@ function Steps() {
                     staf: updatedStaf // Assuming 'staf' is the property where you want to store the updated staff list
                 };
             });
+
+
             let updateData = await {...storeData, vehicle_list: vehicle_list};
 
 
