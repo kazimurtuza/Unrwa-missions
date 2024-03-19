@@ -370,7 +370,6 @@ useEffect(() => {
               <form
                 action="#"
                 className="w-full bg-grey-lightest"
-                style={{ paddingTop: "4rem" }}
                 onSubmit={handleSubmit}
               >
                 <div className="container mx-auto py-8">
