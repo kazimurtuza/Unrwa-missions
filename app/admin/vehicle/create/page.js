@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function VehicleCreate() {
+  const router = useRouter();
   const [vehicleName, setVehicleName] = useState("");
   const [regNumber, setRegNumber] = useState("");
   const [vehicleType, setVehicleType] = useState("");
@@ -139,6 +141,7 @@ function VehicleCreate() {
             setCapacity("");
             setVehicle_id("");
             setAgencyID("");
+            router.push("../vehicle", { scroll: false });
           }
           else
           {

@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function MissionClusterCreate() {
+  const router = useRouter();
   const [missionClusterName, setMissionClusterName] = useState("");
   const [leadOfficeName, setOfficeName] = useState("");
   const [leadOfficePhone, setOfficePhone] = useState("");
@@ -81,6 +83,7 @@ const handleAgencyChange = (value) => {
             setOfficeName("");
             setOfficePhone("");
             setErrorMessage("");
+            router.push("../mission-cluster", { scroll: false });
           }
           else
           {

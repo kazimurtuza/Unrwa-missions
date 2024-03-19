@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function CargoCreate() {
+  const router = useRouter();
   const [name, setName] = useState("");
 
   //success message
@@ -40,6 +42,7 @@ function CargoCreate() {
             setSuccessMessage("Cargo Create Successfully");
             setName("");
             setErrorMessage("");
+            router.push("../cargo", { scroll: false });
           }
           else
           {

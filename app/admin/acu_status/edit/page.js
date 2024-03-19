@@ -1,9 +1,29 @@
 "use client";
 
 import axiosClient from "@/app/axiosClient";
-import { useRef, useState } from "react";
+import { useRef, useState,useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function DepartmentCreate() {
+  const router = useRouter();
+  const searchParames = useSearchParams();
+  const id = searchParames.get("id");
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            //const objectId = mongoose.Types.ObjectId(id);
+            const { data } = await axiosClient.get(`acu_status/${id}`);
+            console.log(data);
+            setAcu_status(data.result.acu_status);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+
+    fetchData();
+}, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
   const [acu_status, setAcu_status] = useState("");
   const [abbrevation, setAbbrevation] = useState("");
 
@@ -32,15 +52,13 @@ function DepartmentCreate() {
 
     try {
 
-        const response = await axiosClient.post('acu_status', postData);
+      const response = await axiosClient.put(`acu_status/${id}`, postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
           if(response.data.success==true)
           {
-            setSuccessMessage("ACU status Create Successfully");
-            setAcu_status("");
-            setAbbrevation("");
+            setSuccessMessage("ACU status Update Successfully");
             setErrorMessage("");
           }
           else
@@ -82,7 +100,7 @@ function DepartmentCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                      Missions UNOPS ACU Status Create
+                      Missions UNOPS ACU Status Edit
                       </p>
                       <br></br>
                       {successMessage && (
@@ -133,7 +151,7 @@ function DepartmentCreate() {
                           className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
-                          Submit
+                          Update
                         </button>
                       </div>
                     </div>

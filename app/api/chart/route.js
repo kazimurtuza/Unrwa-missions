@@ -4,6 +4,7 @@ import {User} from "@/lib/model/users";
 import {NextResponse} from "next/server";
 import {Mission} from "../../../lib/model/mission";
 import {MissionCluster} from "../../../lib/model/missionCluster";
+import {AuthUser} from "@/app/helper";
 
 export async function GET() {
 
@@ -11,7 +12,7 @@ export async function GET() {
     try {
         await mongoose.connect(connectionStr);
 
-        let clusterList = await MissionCluster.find({is_delete:0})
+        let clusterList = await MissionCluster.find({is_delete: 0})
 
         const currentDate = new Date();
 
@@ -22,7 +23,7 @@ export async function GET() {
         const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59, 999);
 
 
-        let mission =await await Mission.aggregate([
+        let mission = await await Mission.aggregate([
             {
                 $match: {
                     created_at: {
@@ -35,13 +36,13 @@ export async function GET() {
 
 
         data = {
-            clusterList:clusterList,
-            mission:mission
+            clusterList: clusterList,
+            mission: mission
         };
 
-        return NextResponse.json({ result: data, success: true });
+        return NextResponse.json({result: data, success: true});
     } catch (error) {
-        data = { success: false, message: error.message };
+        data = {success: false, message: error.message};
         return NextResponse.json(data); // Return the error response
     }
 
@@ -51,14 +52,33 @@ export async function GET() {
 export async function POST(request) {
     const payload = await request.json();
     const dateList = await payload.date;
-    const id=await payload.id;
-    const counts = await Promise.all(dateList.map(async date => {
-        const query = await {
-            mission_cluster: id,
-            create_date:date
-        };
-        const count = await Mission.countDocuments(query);
-        return count;
-    }));
-    return NextResponse.json({ retsult:counts, success: true });
+    const id = await payload.id;
+
+    let userInfo = await AuthUser()
+    let user_type = userInfo.user_type;
+    let user_id = await userInfo.id;
+
+    if (user_type == "admin") {
+        var counts = await Promise.all(dateList.map(async date => {
+            const query = await {
+                mission_cluster: id,
+                create_date: date
+            };
+            const count = await Mission.countDocuments(query);
+            return count;
+        }));
+    } else {
+        var counts = await Promise.all(dateList.map(async date => {
+            const query = await {
+                mission_cluster: id,
+                create_date: date,
+                leader: user_id,
+            };
+            const count = await Mission.countDocuments(query);
+            return count;
+        }));
+    }
+
+
+    return NextResponse.json({retsult: counts, success: true});
 }

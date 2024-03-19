@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function StaffCreate() {
+  const router = useRouter();
   const [countries, setCountries] = useState([]);
   const [staffName, setStaffName] = useState("");
   const [agency,setAgencyList]=useState("");
@@ -338,6 +340,7 @@ useEffect(() => {
             setAgencyID("");
             setClassificationId("");
             setStaffPhoto(null);
+            router.push("../staff", { scroll: false });
           } else {
             if(response.data.msg) {
               setErrorMessage(response.data.msg);
