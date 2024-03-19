@@ -144,18 +144,28 @@ export async function GET() {
                 },
                 {
                     $sort: { /* Specify the field to sort by and set it to -1 for descending order */
-                        fieldToSortBy: -1
+                        _id: -1
                     }
                 }
             ]) // Adjust this line
                 .exec();
         }else{
+         var id= new mongoose.Types.ObjectId(user_id)
             var result = await Mission.aggregate([
                 {
                     $match: {
-                        leader: mongoose.Types.ObjectId(user_id) // Match documents where the leader field matches the given leader ID
+                        leader:id// Match documents where the leader field matches the given leader ID
                     }
                 },
+                {
+                    $lookup: {
+                        from: "staffs",
+                        localField: "leader",
+                        foreignField: "_id",
+                        as: "leader_details"
+                    }
+                },
+
                 {
                     $lookup: {
                         from: "staffs",
@@ -206,9 +216,6 @@ export async function GET() {
             ]) // Adjust this line
                 .exec();
         }
-
-
-
 
 
         return NextResponse.json({result, success: true});
