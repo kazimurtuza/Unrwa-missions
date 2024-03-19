@@ -134,52 +134,52 @@ function MissionVIew() {
         fetchData2();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const id = await mission_id;
-                const url = `mission/${id}`;
+    const fetchData = async () => {
+        try {
+            const id = await mission_id;
+            const url = `mission/${id}`;
 
-                const {data} = await axiosClient.get(url);
-                if (data.success) {
-                    let missionData = await data.result.mission;
-                    setMission(missionData);
-                    setplaces(data.result.places);
-                    setvehicles(data.result.vehicles);
-                    setadminData((old) => ({
-                        ...old,
-                        request_status: missionData.request_status,
-                        greenlight_recieve: missionData.greenlight_recieve,
-                        unops_acu_status: missionData.unops_acu_status,
-                        cla_decision: missionData.cla_decision,
-                        mission_classification_info:
-                        missionData.mission_classification_info,
-                        does_mission: missionData.does_mission,
-                        unops_acu: missionData.unops_acu,
-                        cla: missionData.cla,
-                    }));
+            const {data} = await axiosClient.get(url);
+            if (data.success) {
+                let missionData = await data.result.mission;
+                setMission(missionData);
+                setplaces(data.result.places);
+                setvehicles(data.result.vehicles);
+                setadminData((old) => ({
+                    ...old,
+                    request_status: missionData.request_status,
+                    greenlight_recieve: missionData.greenlight_recieve,
+                    unops_acu_status: missionData.unops_acu_status,
+                    cla_decision: missionData.cla_decision,
+                    mission_classification_info:
+                    missionData.mission_classification_info,
+                    does_mission: missionData.does_mission,
+                    unops_acu: missionData.unops_acu,
+                    cla: missionData.cla,
+                }));
 
-                    setReport(old => ({
-                        ...old,
-                        not_passable_road_condition: missionData.not_passable_road_condition,
-                        very_bad_road_condition: missionData.very_bad_road_condition,
-                        bad_road_condition: missionData.bad_road_condition,
-                        regular_road_condition: missionData.regular_road_condition,
-                        not_passable_presence_eds_erw_uxo: missionData.not_passable_presence_eds_erw_uxo,
-                        very_bad_presence_eds_erw_uxo: missionData.very_bad_presence_eds_erw_uxo,
-                        bad_presence_eds_erw_uxo: missionData.bad_presence_eds_erw_uxo,
-                        regular_presence_eds_erw_uxo: missionData.regular_presence_eds_erw_uxo,
-                        humanitarian_assistance: missionData.humanitarian_assistance,
-                        humanitarian_observations:missionData.humanitarian_observations,
+                setReport(old => ({
+                    ...old,
+                    not_passable_road_condition: missionData.not_passable_road_condition,
+                    very_bad_road_condition: missionData.very_bad_road_condition,
+                    bad_road_condition: missionData.bad_road_condition,
+                    regular_road_condition: missionData.regular_road_condition,
+                    not_passable_presence_eds_erw_uxo: missionData.not_passable_presence_eds_erw_uxo,
+                    very_bad_presence_eds_erw_uxo: missionData.very_bad_presence_eds_erw_uxo,
+                    bad_presence_eds_erw_uxo: missionData.bad_presence_eds_erw_uxo,
+                    regular_presence_eds_erw_uxo: missionData.regular_presence_eds_erw_uxo,
+                    humanitarian_assistance: missionData.humanitarian_assistance,
+                    humanitarian_observations:missionData.humanitarian_observations,
 
-                    }))
-                }
-
-                console.log(data.result);
-            } catch (error) {
-                console.error("Error fetching users:", error);
+                }))
             }
-        };
+
+            console.log(data.result);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
+    useEffect(() => {
 
         fetchData();
     }, []);
@@ -208,6 +208,7 @@ function MissionVIew() {
             adminData
         );
         if (response.data.success == true) {
+            fetchData()
             alert("success fully updated");
         }
     };
@@ -1122,81 +1123,81 @@ function MissionVIew() {
                                             </div>
                                         </div>
                                     </div>
+                                    {mission &&(mission.request_status=="mission_completed")?
+                                        <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
+                                            <h1>Mission Debriefing Form</h1>
+                                            <div className='mdf-form-body'>
+                                                <div className='mdf-form-head'>
+                                                    <p>
+                                                        Convoy composition
+                                                        (Agencies):{" "}
 
-                                    <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
-                                        <h1>Mission Debriefing Form</h1>
-                                        <div className='mdf-form-body'>
-                                            <div className='mdf-form-head'>
-                                                <p>
-                                                    Convoy composition
-                                                    (Agencies):{" "}
+                                                        {mission &&
+                                                        mission.agency.map(
+                                                            (
+                                                                item,
+                                                                index
+                                                            ) => (
+                                                                <span>{
+                                                                    item.agency_id.name
+                                                                }</span>
+                                                            )
+                                                        )}
 
-                                                    {mission &&
-                                                    mission.agency.map(
-                                                        (
-                                                            item,
-                                                            index
-                                                        ) => (
-                                                            <span>{
-                                                                item.agency_id.name
-                                                            }</span>
-                                                        )
-                                                    )}
-
-                                                </p>
-                                                <p>
-                                                    Mission Locations visited
-                                                    and route:{" "}
+                                                    </p>
+                                                    <p>
+                                                        Mission Locations visited
+                                                        and route:{" "}
 
 
-                                                    {/*{places &&*/}
-                                                     {/*places.map((item, index) => (*/}
-                                                            {/*<span>{item.departure_umrah_id != null ? item*/}
-                                                                {/*.departure_umrah_id.installation_name : item.departure_installation_name}</span> -*/}
-                                                            {/*<span>{item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name} ,</span>*/}
+                                                        {/*{places &&*/}
+                                                        {/*places.map((item, index) => (*/}
+                                                        {/*<span>{item.departure_umrah_id != null ? item*/}
+                                                        {/*.departure_umrah_id.installation_name : item.departure_installation_name}</span> -*/}
+                                                        {/*<span>{item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name} ,</span>*/}
                                                         {/*)*/}
-                                                    {/*)*/}
-                                                    {/*}*/}
+                                                        {/*)*/}
+                                                        {/*}*/}
 
-                                                    {places.map((item, index) => <span>{item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name}-{item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name},</span>)}
+                                                        {places.map((item, index) =>
+                                                            <span>{item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name}-{item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name},</span>)}
 
 
+                                                        <span>Sample Data</span>
+                                                    </p>
+                                                    <p>
+                                                        Date of the mission:{" "}
+                                                        <span> {mission &&
+                                                        convertDateFormat(
+                                                            mission.movement_date
+                                                        )}</span>
+                                                    </p>
+                                                    <p>
+                                                        Mission Focal Point:{" "}
+                                                        <span> {mission &&
+                                                        mission.leader.name}</span>
+                                                    </p>
+                                                </div>
+                                                <h3>
+                                                    A Road Assessment (few bullet
+                                                    points in relevant section)
+                                                </h3>
 
-                                                    <span>Sample Data</span>
-                                                </p>
-                                                <p>
-                                                    Date of the mission:{" "}
-                                                    <span> {mission &&
-                                                    convertDateFormat(
-                                                        mission.movement_date
-                                                    )}</span>
-                                                </p>
-                                                <p>
-                                                    Mission Focal Point:{" "}
-                                                    <span> {mission &&
-                                                    mission.leader.name}</span>
-                                                </p>
-                                            </div>
-                                            <h3>
-                                                A Road Assessment (few bullet
-                                                points in relevant section)
-                                            </h3>
-
-                                            <div class='table-wrap'>
-                                                <table>
-                                                    <thead>
-                                                    <tr>
-                                                        <th>
-                                                            Road Condition
-                                                        </th>
-                                                        <th>
-                                                            Include remarks
-                                                            description next
-                                                            to the relevant
-                                                            cell under
-                                                            column ‘road
-                                                            condition’{" "}
-                                                            <span>
+                                                <div className='table-wrap'>
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Road Condition
+                                                            </th>
+                                                            <th>
+                                                                Include remarks
+                                                                description next
+                                                                to the relevant
+                                                                cell under
+                                                                column ‘road
+                                                                condition’{" "}
+                                                                <span>
                                                                     (include
                                                                     stretch of
                                                                     the road,
@@ -1206,11 +1207,11 @@ function MissionVIew() {
                                                                     relevant
                                                                     info)
                                                                 </span>
-                                                        </th>
-                                                        <th>
-                                                            Presence of EDs,
-                                                            ERWs, and UXO
-                                                            <span>
+                                                            </th>
+                                                            <th>
+                                                                Presence of EDs,
+                                                                ERWs, and UXO
+                                                                <span>
                                                                     (brief
                                                                     description
                                                                     and
@@ -1220,38 +1221,40 @@ function MissionVIew() {
                                                                     in the next
                                                                     section)
                                                                 </span>
-                                                        </th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            A. Not Passable
-                                                            <span>
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                A. Not Passable
+                                                                <span>
                                                                     (e.g. Trucks
                                                                     and 4x4)
                                                                 </span>
-                                                        </td>
-                                                        <td>
-                                                            <div className='input-wrap'>
-                                                                <input type='text' name='not_passable_road_condition'
-                                                                       value={report.not_passable_road_condition}
-                                                                       onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className='input-wrap'>
-                                                                <input type='text' name="not_passable_presence_eds_erw_uxo"
-                                                                       value={report.not_passable_presence_eds_erw_uxo}
-                                                                       onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            B. Very bad
-                                                            condition
-                                                            <span>
+                                                            </td>
+                                                            <td>
+                                                                <div className='input-wrap'>
+                                                                    <input type='text'
+                                                                           name='not_passable_road_condition'
+                                                                           value={report.not_passable_road_condition}
+                                                                           onInput={setReportData}/>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className='input-wrap'>
+                                                                    <input type='text'
+                                                                           name="not_passable_presence_eds_erw_uxo"
+                                                                           value={report.not_passable_presence_eds_erw_uxo}
+                                                                           onInput={setReportData}/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                B. Very bad
+                                                                condition
+                                                                <span>
                                                                     (e.g
                                                                     accessible
                                                                     with 4x4 but
@@ -1261,26 +1264,27 @@ function MissionVIew() {
                                                                     accessible
                                                                     by Truck)
                                                                 </span>
-                                                        </td>
-                                                        <td>
-                                                            <div className='input-wrap'>
-                                                                <input type='text' name="very_bad_road_condition"
-                                                                       value={report.very_bad_road_condition}
-                                                                       onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className='input-wrap'>
-                                                                <input type='text' name="very_bad_presence_eds_erw_uxo"
-                                                                       value={report.very_bad_presence_eds_erw_uxo}
-                                                                       onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            C. Bad condition
-                                                            <span>
+                                                            </td>
+                                                            <td>
+                                                                <div className='input-wrap'>
+                                                                    <input type='text' name="very_bad_road_condition"
+                                                                           value={report.very_bad_road_condition}
+                                                                           onInput={setReportData}/>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className='input-wrap'>
+                                                                    <input type='text'
+                                                                           name="very_bad_presence_eds_erw_uxo"
+                                                                           value={report.very_bad_presence_eds_erw_uxo}
+                                                                           onInput={setReportData}/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                C. Bad condition
+                                                                <span>
                                                                     (accessible
                                                                     with 4x4
                                                                     with some
@@ -1290,27 +1294,27 @@ function MissionVIew() {
                                                                     below XX
                                                                     tonnage)
                                                                 </span>
-                                                        </td>
-                                                        <td>
-                                                            <div className='input-wrap'>
-                                                                <input type='text' name="bad_road_condition"
-                                                                       value={report.bad_road_condition}
-                                                                       onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className='input-wrap'>
-                                                                <input type='text' name="bad_presence_eds_erw_uxo"
-                                                                       value={report.bad_presence_eds_erw_uxo}
-                                                                       onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            D. Regular
-                                                            condition
-                                                            <span>
+                                                            </td>
+                                                            <td>
+                                                                <div className='input-wrap'>
+                                                                    <input type='text' name="bad_road_condition"
+                                                                           value={report.bad_road_condition}
+                                                                           onInput={setReportData}/>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className='input-wrap'>
+                                                                    <input type='text' name="bad_presence_eds_erw_uxo"
+                                                                           value={report.bad_presence_eds_erw_uxo}
+                                                                           onInput={setReportData}/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                D. Regular
+                                                                condition
+                                                                <span>
                                                                     (accessible
                                                                     by 2x4
                                                                     vehicles
@@ -1318,105 +1322,110 @@ function MissionVIew() {
                                                                     Trucks XX
                                                                     tonnage)
                                                                 </span>
-                                                        </td>
-                                                        <td>
-                                                            <div className='input-wrap'>
-                                                                <input type='text' name="regular_road_condition"
-                                                                       value={report.regular_road_condition}
-                                                                       onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className='input-wrap'>
-                                                                <input type='text' name="regular_presence_eds_erw_uxo"
-                                                                       value={report.regular_presence_eds_erw_uxo}
-                                                                       onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                                <p>Please provide with maps and photographs below if possible</p>
-                                            </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className='input-wrap'>
+                                                                    <input type='text' name="regular_road_condition"
+                                                                           value={report.regular_road_condition}
+                                                                           onInput={setReportData}/>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className='input-wrap'>
+                                                                    <input type='text'
+                                                                           name="regular_presence_eds_erw_uxo"
+                                                                           value={report.regular_presence_eds_erw_uxo}
+                                                                           onInput={setReportData}/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>Please provide with maps and photographs below if possible</p>
+                                                </div>
 
-                                            <div class='table-wrap'>
-                                                <h3>Section B
-                                                </h3>
-                                                <table>
-                                                    <thead>
-                                                    <tr>
-                                                        <th>
-                                                            Insecurity or hostilities affecting humanitarian assistance
-                                                            <span>(report observation in military operation area, presence of check points, (without coordinates, or specific incidents that impacted the mission)</span>
-                                                        </th>
+                                                <div className='table-wrap'>
+                                                    <h3>Section B
+                                                    </h3>
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Insecurity or hostilities affecting humanitarian
+                                                                assistance
+                                                                <span>(report observation in military operation area, presence of check points, (without coordinates, or specific incidents that impacted the mission)</span>
+                                                            </th>
 
-                                                        <th>
-                                                            Humanitarian Observations
-                                                            <span>(i.e notable presence of IDPs, urgent needs or gaps in response etc)</span>
-                                                        </th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
+                                                            <th>
+                                                                Humanitarian Observations
+                                                                <span>(i.e notable presence of IDPs, urgent needs or gaps in response etc)</span>
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
 
-                                                        <td>
-                                                            <div className='input-wrap'>
+                                                            <td>
+                                                                <div className='input-wrap'>
                                                                 <textarea type='text' name='humanitarian_assistance'
                                                                           style={{width: '100%', height: '300px'}}
                                                                           value={report.humanitarian_assistance}
                                                                           onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className='input-wrap'>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className='input-wrap'>
                                                                 <textarea type='text' name="humanitarian_observations"
                                                                           style={{width: '100%', height: '300px'}}
                                                                           value={report.humanitarian_observations}
                                                                           onInput={setReportData}/>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    {/*<tr>*/}
-                                                    {/*<td>*/}
-                                                    {/*<div className='input-wrap'>*/}
-                                                    {/*<input type='text' name="bad_road_condition" onInput={setReportData}  />*/}
-                                                    {/*</div>*/}
-                                                    {/*</td>*/}
-                                                    {/*<td>*/}
-                                                    {/*<div className='input-wrap'>*/}
-                                                    {/*<input type='text' name="regular_road_condition" onInput={setReportData}/>*/}
-                                                    {/*</div>*/}
-                                                    {/*</td>*/}
-                                                    {/*</tr>*/}
-                                                    {/*<tr>*/}
-                                                    {/*<td>*/}
-                                                    {/*<div className='input-wrap'>*/}
-                                                    {/*<input type='text'  name="not_passable_presence_eds_erw_uxo" onInput={setReportData}/>*/}
-                                                    {/*</div>*/}
-                                                    {/*</td>*/}
-                                                    {/*<td>*/}
-                                                    {/*<div className='input-wrap'>*/}
-                                                    {/*<input type='text' name="very_bad_presence_eds_erw_uxo" onInput={setReportData}/>*/}
-                                                    {/*</div>*/}
-                                                    {/*</td>*/}
-                                                    {/*</tr>*/}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        {/*<tr>*/}
+                                                        {/*<td>*/}
+                                                        {/*<div className='input-wrap'>*/}
+                                                        {/*<input type='text' name="bad_road_condition" onInput={setReportData}  />*/}
+                                                        {/*</div>*/}
+                                                        {/*</td>*/}
+                                                        {/*<td>*/}
+                                                        {/*<div className='input-wrap'>*/}
+                                                        {/*<input type='text' name="regular_road_condition" onInput={setReportData}/>*/}
+                                                        {/*</div>*/}
+                                                        {/*</td>*/}
+                                                        {/*</tr>*/}
+                                                        {/*<tr>*/}
+                                                        {/*<td>*/}
+                                                        {/*<div className='input-wrap'>*/}
+                                                        {/*<input type='text'  name="not_passable_presence_eds_erw_uxo" onInput={setReportData}/>*/}
+                                                        {/*</div>*/}
+                                                        {/*</td>*/}
+                                                        {/*<td>*/}
+                                                        {/*<div className='input-wrap'>*/}
+                                                        {/*<input type='text' name="very_bad_presence_eds_erw_uxo" onInput={setReportData}/>*/}
+                                                        {/*</div>*/}
+                                                        {/*</td>*/}
+                                                        {/*</tr>*/}
 
 
-                                                    <div>
-                                                        <button
-                                                            className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
-                                                            onClick={storeReportDate}
-                                                        >
-                                                            Submit
-                                                        </button>
-                                                    </div>
+                                                        <div>
+                                                            <button
+                                                                className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
+                                                                onClick={storeReportDate}
+                                                            >
+                                                                Submit
+                                                            </button>
+                                                        </div>
 
-                                                    </tbody>
-                                                </table>
+                                                        </tbody>
+                                                    </table>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div>:""}
+
+
+
                                 </div>
                             </main>
                         </div>
