@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 
 function Cargo() {
     const [cargo, setCargo] = useState([]);
-    const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     const fetchData = async () => {
         try {
@@ -19,10 +18,10 @@ function Cargo() {
         }
     };
 
-    fetchData();
-
     useEffect(() => {
        
+
+        fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Missions Vehicle Cargo";
@@ -43,78 +42,49 @@ function Cargo() {
     const body = (
         <>
             {Array.isArray(cargo) && cargo.map((item, index) => (
-
                 <tr key={index}>
-                
-
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
                                     {item.what_is_being_carried_out}
                                 </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
                             </div>
                         </div>
                     </td>
-                  
-
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
+                    <a
+                        href={`/admin/cargo/edit?id=${item._id}`}
+                        className="px-4 py-2 mx-2 bg-main text-white rounded"
+                    >
+                        Edit
+                    </a>
+                        <button
+                            onClick={async () => {
+                                const confirmed = window.confirm("Are you sure you want to delete?");
 
-                            <Link
-                                href={{
-                                    pathname: '/admin/cargo/edit',
-                                    query: { id: item._id },
-                                }}
-                                className="px-4 py-2 mx-2 bg-main text-white rounded"
-                              > Edit</Link>
-                                 <button
-                                  onClick={async () => {
-                                      // Show a confirmation alert
-                                      const confirmed = window.confirm("Are you sure you want to delete?");
-
-                                      if (confirmed) {
-                                          // Make a DELETE request to your API to mark the question as deleted
-                                          try {
-                                            await axiosClient.delete(`cargo/${item._id}`, {
-                                                  method: 'DELETE',
-                                                  headers: {
-                                                      'Content-Type': 'application/json',
-                                                  },
-                                              });
-                                              Swal.fire({
-                                                title: 'success',
-                                                text: 'Successfully Deleted',
-                                                icon: 'success',
-                                                // confirmButtonText: 'Cool'
-                                            })
-                                          
-                                              //setMessage('Delete successfully');
-                                              // Remove the deleted question from the state
-                                              //setData(data => data.filter(item => item._id !== val._id));
-                                              fetchData();
-                                          } catch (error) {
-                                              console.error("Error deleting question:", error);
-                                          }
-                                      }
-                                  }}
-                                  className="px-4 py-2 mx-2 bg-red-500 text-white rounded hover:bg-red-600"
-                              >
-                                  Delete
-                              </button>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
-
+                                if (confirmed) {
+                                    try {
+                                        await axiosClient.delete(`cargo/${item._id}`, {
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                        });
+                                        Swal.fire({
+                                            title: 'success',
+                                            text: 'Successfully Deleted',
+                                            icon: 'success',
+                                        })
+                                        fetchData();
+                                    } catch (error) {
+                                        console.error("Error deleting question:", error);
+                                    }
+                                }
+                            }}
+                            className="px-4 py-2 mx-2 bg-red-500 text-white rounded hover:bg-red-600"
+                        >
+                            Delete
+                        </button>
                     </td>
                 </tr>
             ))}
