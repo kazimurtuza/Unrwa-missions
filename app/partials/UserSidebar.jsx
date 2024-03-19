@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 
+import { deleteCookie } from "cookies-next";
 import Link from 'next/link';
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
 function UserSidebar({ sidebarOpen, setSidebarOpen }) {
     const location = {
         pathname: ['dashboard']
+    };
+
+    const handleSignOut = () => {
+        // Delete the admin token cookie
+        deleteCookie('authToken');
+
+        // Redirect to the admin login page
+        window.location.href = '/login';
     };
     // const location = useLocation();
     const { pathname } = location;
@@ -92,10 +101,9 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
                         </svg>
                     </button>
                     {/* Logo */}
-                    <a to="/" className="block mx-auto text-slate-200">
-
-                        <img src="./logo.png" alt="logo" />
-                    </a>
+                    <Link href="/" className="block mx-auto text-slate-200 pt-3">
+                        <img width={150} src="/uploads/logo.png" alt="logo" />
+                    </Link>
                 </div>
 
                 {/* Links */}
@@ -103,12 +111,6 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
                     {/* Pages group */}
                     <div>
                         <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-                            <span
-                                className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                                aria-hidden="true"
-                            >
-                                •••
-                            </span>
                             <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                                 Pages
                             </span>
@@ -130,12 +132,7 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
                                                         ? "hover:text-slate-200"
                                                         : "hover:text-white"
                                                     }`}
-                                            // onClick={(e) => {
-                                            //     e.preventDefault();
-                                            //     sidebarExpanded
-                                            //         ? handleClick()
-                                            //         : setSidebarExpanded(true);
-                                            // }}
+
                                             >
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center">
@@ -156,7 +153,6 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
                                     );
                                 }}
                             </SidebarLinkGroup>
-                            {/* Forms */}
 
                             <SidebarLinkGroup
                                 activecondition={pathname.includes("ecommerce")}
@@ -180,9 +176,7 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center">
 
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path fillRule="evenodd" clipRule="evenodd" d="M16.25 17.5C16.913 17.5 17.5489 17.2366 18.0178 16.7678C18.4866 16.2989 18.75 15.663 18.75 15V7.5C18.75 6.83696 18.4866 6.20107 18.0178 5.73223C17.5489 5.26339 16.913 5 16.25 5H11.7675C11.6018 4.99985 11.4429 4.93391 11.3258 4.81667L9.55833 3.05C9.38429 2.87574 9.17762 2.73748 8.95013 2.64311C8.72264 2.54874 8.47879 2.50011 8.2325 2.5H3.75C3.08696 2.5 2.45107 2.76339 1.98223 3.23223C1.51339 3.70107 1.25 4.33696 1.25 5V15C1.25 15.663 1.51339 16.2989 1.98223 16.7678C2.45107 17.2366 3.08696 17.5 3.75 17.5H16.25ZM10.625 8.75C10.625 8.58424 10.5592 8.42527 10.4419 8.30806C10.3247 8.19085 10.1658 8.125 10 8.125C9.83424 8.125 9.67527 8.19085 9.55806 8.30806C9.44085 8.42527 9.375 8.58424 9.375 8.75V10.625H7.5C7.33424 10.625 7.17527 10.6908 7.05806 10.8081C6.94085 10.9253 6.875 11.0842 6.875 11.25C6.875 11.4158 6.94085 11.5747 7.05806 11.6919C7.17527 11.8092 7.33424 11.875 7.5 11.875H9.375V13.75C9.375 13.9158 9.44085 14.0747 9.55806 14.1919C9.67527 14.3092 9.83424 14.375 10 14.375C10.1658 14.375 10.3247 14.3092 10.4419 14.1919C10.5592 14.0747 10.625 13.9158 10.625 13.75V11.875H12.5C12.6658 11.875 12.8247 11.8092 12.9419 11.6919C13.0592 11.5747 13.125 11.4158 13.125 11.25C13.125 11.0842 13.0592 10.9253 12.9419 10.8081C12.8247 10.6908 12.6658 10.625 12.5 10.625H10.625V8.75Z" fill="white" />
-                                                        </svg>
+                                                    <svg width={18} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="#ffffff" d="M41 7C31.6-2.3 16.4-2.3 7 7S-2.3 31.6 7 41l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L41 7zM599 7L527 79c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0zM7 505c9.4 9.4 24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L7 471c-9.4 9.4-9.4 24.6 0 33.9zm592 0c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-72-72c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72zM320 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128zM212.1 336c-2.7 7.5-4.1 15.6-4.1 24c0 13.3 10.7 24 24 24H408c13.3 0 24-10.7 24-24c0-8.4-1.4-16.5-4.1-24c-.5-1.4-1-2.7-1.6-4c-9.4-22.3-29.8-38.9-54.3-43c-3.9-.7-7.9-1-12-1H280c-4.1 0-8.1 .3-12 1c-.8 .1-1.7 .3-2.5 .5c-24.9 5.1-45.1 23-53.4 46.5zM175.8 224a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm-26.5 32C119.9 256 96 279.9 96 309.3c0 14.7 11.9 26.7 26.7 26.7h56.1c8-34.1 32.8-61.7 65.2-73.6c-7.5-4.1-16.2-6.4-25.3-6.4H149.3zm368 80c14.7 0 26.7-11.9 26.7-26.7c0-29.5-23.9-53.3-53.3-53.3H421.3c-9.2 0-17.8 2.3-25.3 6.4c32.4 11.9 57.2 39.5 65.2 73.6h56.1zM464 224a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" /></svg>
 
                                                         <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                                             Mission
@@ -202,9 +196,9 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
                                             </a>
                                             <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                                                 <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
-                                                    <li className="mb-1 last:mb-0">
+                                                    <li className="mb-1 last:mb-0" style={{paddingLeft: '0px'}}>
                                                         <Link
-                                                            href="/admin/mission"
+                                                            href="/admin/mission/mission-list"
                                                             className={({ isActive }) =>
                                                                 "text-slate-200 block transition duration-150 truncate " +
                                                                 (isActive
@@ -219,9 +213,9 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li>
 
-                                                    <li className="mb-1 last:mb-0">
+                                                    <li className="mb-1 last:mb-0" style={{paddingLeft: '0px'}}>
                                                         <Link
-                                                            href="/admin/mission/create"
+                                                            href="/admin/mission"
                                                             className={({ isActive }) =>
                                                                 "text-slate-200 block transition duration-150 truncate " +
                                                                 (isActive
@@ -238,11 +232,64 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                 </ul>
                                             </div>
+                                            {/* <div className="flex items-center justify-between">
+                                                    <div className="flex items-center">
+
+                                                    <svg width={16} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#ffffff" d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>
+
+                                                        <span className="text-sm font-medium ml-3  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                        <a
+                                                            href="/login"
+                                                            onClick={(e) => {
+                                                            e.preventDefault();
+                                                            handleSignOut();
+                                                            }}
+                                                        >
+                                                            Log Out
+                                                        </a>
+                                                        </span>
+                                                    </div>
+
+                                                </div> */}
                                         </React.Fragment>
                                     );
                                 }}
                             </SidebarLinkGroup>
+                            <SidebarLinkGroup
+                                activecondition={
+                                    true
+                                }
 
+                            >
+                                {(handleClick, open) => {
+                                    return (
+                                        <React.Fragment>
+                                            <Link
+                                                href="/login"
+                                                className={`block text-slate-200 truncate transition duration-150`}
+
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        handleSignOut();
+                                                        }}
+
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center">
+
+                                                    <svg width={16} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#ffffff" d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>
+
+                                                        <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                            Logout
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+                                            </Link>
+                                        </React.Fragment>
+                                    );
+                                }}
+                            </SidebarLinkGroup>
                         </ul>
                     </div>
                 </div>

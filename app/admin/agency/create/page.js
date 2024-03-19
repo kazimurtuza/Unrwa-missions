@@ -1,7 +1,7 @@
 "use client";
 
 import axiosClient from "@/app/axiosClient";
-import { useRef, useState } from "react";
+import { useRef,useEffect, useState } from "react";
 
 function AgencyCreate() {
   const [agencyName, setAgencyName] = useState("");
@@ -13,11 +13,26 @@ function AgencyCreate() {
   const [agency_cluster, setAgency_cluster] = useState("");
   const [agency_website, setAgency_website] = useState("");
   const [intervision_note, setIntervision_note] = useState("");
+  const [clusterList, setClusterList] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('mission-cluster');
+            setClusterList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+  
+    fetchData();
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  
 
   const inputFile = useRef(null);
 
@@ -181,7 +196,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Name
+                          Name
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -201,7 +216,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Name Acroynm
+                          Name Acroynm
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -222,7 +237,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Head
+                          Head
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -242,12 +257,12 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Phone
+                          Phone
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your agency phone"
                           value={agency_phone}
                           onChange={(e) =>
@@ -262,7 +277,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Email
+                          Email
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -282,7 +297,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Physical Address
+                          Physical Address
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -302,27 +317,30 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Cluster
+                          Cluster
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your agency cluster"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={agency_cluster}
-                          onChange={(e) =>
-                            handleClusterChange(e.target.value)
-                          }
-
-                        />
-                      </div>
+                          onChange={(e) => handleClusterChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Cluster
+                          </option>
+                          {Array.isArray(clusterList) && clusterList.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
+                        </select>
+                        </div>
 
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Agency Website
+                          Website
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -342,7 +360,7 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Intervision Notes
+                          Intervention Notes
                         </label>
                         <textarea
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -364,7 +382,7 @@ function AgencyCreate() {
                                 className="block text-grey-darker text-sm font-bold mb-2"
                                 htmlFor="questionName"
                               >
-                                Agency Logo
+                                Logo
                               </label>
                               <input
                                 type="file"

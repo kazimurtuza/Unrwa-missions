@@ -4,7 +4,41 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import "./style.css";
+
+function convertDateFormat(dateString, newFormat) {
+    // Parse the input date string
+    let parsedDate = new Date(dateString);
+
+    // Format the date according to the new format
+    let formattedDate = parsedDate.toLocaleDateString(undefined, {dateStyle: 'medium'});
+
+    return formattedDate;
+}
+
+function convertDateTimeFormat(dateString) {
+    // Parse the input date string
+    let parsedDate = new Date(dateString);
+
+    // Format the date and time
+
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false // Use 24-hour format
+    };
+
+    // Format the date and time
+    let formattedDateTime = new Intl.DateTimeFormat('en-US', options).format(parsedDate);
+
+
+    return formattedDateTime;
+}
 
 function MissionVIew() {
     const router = useRouter();
@@ -23,28 +57,6 @@ function MissionVIew() {
         {value: "7", label: "Staff Seven"},
     ];
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const id = await mission_id;
-                const url = `mission/${id}`
-
-                const {data} = await axiosClient.get(url);
-                if (data.success) {
-                    setMission(data.result.mission);
-                    setplaces(data.result.places);
-                    setvehicles(data.result.vehicles);
-                }
-
-                console.log(data.result);
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
     let dataList={
         mission_id:mission_id,
         mission_classification_info:"",
@@ -59,6 +71,93 @@ function MissionVIew() {
     }
 
     const [adminData,setadminData]=useState(dataList);
+    const [claDataList,setClaDataList]=useState("");
+    const [claList,setClaList]=useState("");
+    const [requestStatusDataList,setRequestStatusDataList]=useState("");
+    const [acuDataList,setAcuStatusDataList]=useState("");
+
+    useEffect(() => {
+        const fetchData3 = async () => {
+            try {
+                const { data } = await axiosClient.get('cla_list');
+                setClaDataList(data.result);
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching agencies:', error);
+            }
+        };
+      
+        fetchData3();
+      }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+
+      useEffect(() => {
+        const fetchData4 = async () => {
+            try {
+                const { data } = await axiosClient.get('request_status');
+                setRequestStatusDataList(data.result);
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching agencies:', error);
+            }
+        };
+      
+        fetchData4();
+      }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+      useEffect(() => {
+        const fetchData2 = async () => {
+            try {
+                const { data } = await axiosClient.get('acu_status');
+                setAcuStatusDataList(data.result);
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching agencies:', error);
+            }
+        };
+      
+        fetchData2();
+      }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+      
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const id = await mission_id;
+                const url = `mission/${id}`
+
+                const {data} = await axiosClient.get(url);
+                if (data.success) {
+                    let missionData= await data.result.mission
+                    setMission(missionData);
+                    setplaces(data.result.places);
+                    setvehicles(data.result.vehicles);
+                    setadminData(old=>(
+                        {...old,
+                            request_status:missionData.request_status,
+                            greenlight_recieve:missionData.greenlight_recieve,
+                            unops_acu_status:missionData.unops_acu_status,
+                            cla_decision:missionData.cla_decision,
+                            mission_classification_info:missionData.mission_classification_info,
+                            does_mission:missionData.does_mission,
+                            unops_acu:missionData.unops_acu,
+                            cla:missionData.cla,
+
+                        }))
+                }
+
+                console.log(data.result);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+
+    const [downloading,setDownloading]=useState(0);
     const setdata = (e) => {
         const {name, value} = e.target;
         setadminData(old=>  ({
@@ -68,14 +167,15 @@ function MissionVIew() {
     };
 
     const storeDate=async ()=>{
+        console.log(adminData);
         const response = await axiosClient.post('mission-admin-update', adminData);
-        console.log(response);
         if(response.data.success==true){
             alert('success fully updated');
         }
     }
 
     async function downloadPdf(){
+        setDownloading(1)
         let urlLink=`mission-pdf/${mission_id}`
         const {data} = await axiosClient.get(urlLink);
         const fileName = 'test.pdf'; // Name of the file in the public folder
@@ -93,6 +193,7 @@ function MissionVIew() {
         a.click();
         // Remove the anchor from the body
         document.body.removeChild(a);
+        setDownloading(0)
     }
 
     const [hydrated, setHydrated] = useState(false);
@@ -115,13 +216,19 @@ function MissionVIew() {
                         <div className='py-8'>
                             <main>
                                 <div className="pdf-btn-wrap">
-                                    <button className="mt-4 px-4 py-2 mx-2 bg-main text-white rounded" onClick={downloadPdf}>download Pdf</button>
+                                    <button className="mt-4 px-4 py-2 mx-2 bg-main text-white rounded" onClick={downloadPdf}>Download PDF
+                                       </button>
+
+
+
                                     {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'}/>}*/}
                                                      {/*fileName="example.pdf">*/}
                                         {/*{({blob, url, loading, error}) =>*/}
                                             {/*loading ? 'Loading document...' : 'Download PDF'*/}
                                         {/*}*/}
                                     {/*</PDFDownloadLink>*/}
+
+
 
                                 </div>
                                 <div className='px-4 sm:px-6 lg:px-8 py-8 w-full mx-auto'>
@@ -160,7 +267,7 @@ function MissionVIew() {
                                                         <b>Email Address</b>
                                                     </p>
                                                     <p>
-                                                        eb2@technovicinity.com
+                                                        { mission && mission.leader.user.email}
                                                     </p>
                                                 </div>
                                             </div>
@@ -186,7 +293,7 @@ function MissionVIew() {
                                                 </div>
                                                 <div className='msb-meta__item'>
                                                     <h4 className="form__info-box__title">Movement Date</h4>
-                                                    <p>{mission && mission.movement_date}</p>
+                                                    <p>{mission &&  convertDateFormat(mission.movement_date)}</p>
                                                 </div>
                                             </div>
 
@@ -216,7 +323,7 @@ function MissionVIew() {
                                                         <p>
                                                             <b>Departure Time</b>
                                                         </p>
-                                                        <p>{item.departure_time}</p>
+                                                        <p>{ convertDateTimeFormat(item.departure_time)}</p>
                                                     </div>
                                                     <div className='form__col'>
                                                         <p>
@@ -238,7 +345,7 @@ function MissionVIew() {
                                                             <b>Installation Name</b>
                                                         </p>
                                                         <p>
-                                                            <p>{item.departure_installation_name}</p>
+                                                            <p> {item.departure_umrah_id!=null?item.departure_umrah_id.installation_name:item.departure_installation_name}</p>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -276,7 +383,7 @@ function MissionVIew() {
                                                         <p>
                                                             <b>Arrival Time</b>
                                                         </p>
-                                                        <p>{item.arrival_time}</p>
+                                                        <p>{ convertDateTimeFormat(item.arrival_time)}</p>
                                                     </div>
                                                     <div className='form__col'>
                                                         <p>
@@ -296,7 +403,7 @@ function MissionVIew() {
                                                         <p>
                                                             <b>Installation Name</b>
                                                         </p>
-                                                        <p>{item.arrival_installation_name}</p>
+                                                        <p>{item.arrival_umrah_id!=null?item.arrival_umrah_id.installation_name:item.arrival_installation_name}</p>
                                                     </div>
                                                 </div>
                                                 <div className='form__row flex-ctr-spb'>
@@ -410,8 +517,8 @@ function MissionVIew() {
                                                                 onChange={setdata}
                                                             >
                                                                 <option value="">Select</option>
-                                                                <option value="mrc">mrc</option>
-                                                                <option value="mnr">mnr</option>
+                                                                <option value="MRC">MRC</option>
+                                                                <option value="MNR">MNR</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -435,27 +542,29 @@ function MissionVIew() {
 
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="agency-name" className="form__label">
-                                                            Unops acu status
+                                                            UNOPS ACU Status
                                                         </label>
                                                         <div className="select-wrap">
-                                                            <select
-                                                                className="form__select"
-                                                                name="unops_acu_status"
-                                                                id="facility"
-                                                                value={adminData.unops_acu_status}
-                                                                onChange={setdata}
+                                                        <select
+                                                            className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                                                            value={adminData.unops_acu_status}
+                                                            onChange={setdata}
                                                             >
-                                                                <option value="">Select</option>
-                                                                <option value="Submitted to CLA">Submitted to CLA</option>
-                                                                <option value="Recieved">Recieved</option>
-                                                                <option value="Denied by CLA">Denied by CLA</option>
+                                                            <option value="" disabled hidden>
+                                                                Select ACU Status
+                                                            </option>
+                                                            {Array.isArray(acuDataList) && acuDataList.map((val) => (
+                                                                <option key={val.id} value={val._id}>
+                                                                {val.acu_status}
+                                                                </option>
+                                                            ))}
                                                             </select>
                                                         </div>
                                                     </div>
 
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
-                                                            Unops ACU
+                                                            UNOPS ACU
                                                         </label>
                                                         <input type="text" value={adminData.unops_acu} onInput={setdata} name="unops_acu" className="form__input" id="dsc"/>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
@@ -469,9 +578,37 @@ function MissionVIew() {
                                                         <label htmlFor="driver-name" className="form__label">
                                                             CLA
                                                         </label>
+                                                       
                                                         <input type="text" value={adminData.cla} onInput={setdata} name="cla" className="form__input" />
+                                               
+                                                    </div>
+
+                                                    <div className="form__field collapsable-item__field">
+                                                        <label htmlFor="driver-name" className="form__label">
+                                                                CLA Decision
+                                                        </label>
+                                                        <div className="select-wrap">
+                                                        <select
+                                                            className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                                                            value={adminData.cla_decision}
+                                                            onChange={setdata}
+
+                                                            >
+                                                            <option value="" disabled hidden>
+                                                                Select CLA
+                                                            </option>
+                                                            {Array.isArray(claDataList) && claDataList.map((val) => (
+                                                                <option key={val.id} value={val._id}>
+                                                                {val.name}
+                                                                </option>
+                                                            ))}
+                                                            </select>
+                                                        </div>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
                                                     </div>
+                                                 
+                       
+{/*            
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
                                                                 CLA Decision
@@ -489,39 +626,40 @@ function MissionVIew() {
                                                                 <option value="denied">Denied</option>
                                                             </select>
                                                         </div>
-                                                        {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
-                                                    </div>
+                                                       
+                                                    </div> */}
                                                     <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
                                                             Request Status
                                                         </label>
                                                         <div className="select-wrap">
-                                                            <select
-                                                                className="form__select"
-                                                                name="request_status"
-                                                                id="facility"
-                                                                value={adminData.request_status}
-                                                                onChange={setdata}
+                                                        <select
+                                                            className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                                                            value={adminData.request_status}
+                                                            onChange={setdata}
                                                             >
-                                                                <option value="">SELECT</option>
-                                                                <option value="Request Recieved">Request Recieved</option>
-                                                                <option value="Request submitted to CLA">Request submitted to CLA</option>
-                                                                <option value="Mission Completed">Mission Completed</option>
-                                                                <option value="Requestor Cancelled Request">Requestor Cancelled Request</option>
-                                                                <option value="Mission Postponed">Mission Postponed</option>
-                                                                <option value="Mission Pending">Mission Pending</option>
-                                                                <option value="Mission Aborted">Mission Aborted</option>
+                                                            <option value="" disabled hidden>
+                                                                Select Request Status
+                                                            </option>
+                                                            {Array.isArray(requestStatusDataList) && requestStatusDataList.map((val) => (
+                                                                <option key={val.id} value={val._id}>
+                                                                  
+                                                                {val.request_status}
+                                                                </option>
+                                                            ))}
                                                             </select>
                                                         </div>
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
                                                     </div>
-                                                    <div className="form__field collapsable-item__field">
+                                                    {adminData.does_mission!="no"? <div className="form__field collapsable-item__field">
                                                         <label htmlFor="driver-name" className="form__label">
-                                                            greenlight_recieve
+                                                            Greenlight Recieve
                                                         </label>
                                                         <input type="text"   onInput={setdata} value={adminData.greenlight_recieve} name="greenlight_recieve" className="form__input" />
                                                         {/*{(checkValidation && info.driver == null) ? errorTxt: ""}*/}
-                                                    </div>
+                                                    </div>:''}
+
+
                                                 </div>
                                             </div>
 

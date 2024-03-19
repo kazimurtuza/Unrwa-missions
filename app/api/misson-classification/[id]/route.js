@@ -18,6 +18,26 @@ export async function PUT(request, content) {
         await mongoose.connect(connectionStr);
         const missionCluster=await MissionClassification.findById(filter);
         const oldData=missionCluster._doc;
+        const record = { requests_classifications: payload.requests_classifications, is_delete: 0 };
+        const is_findData = await MissionClassification.findOne({
+            ...record,
+            _id: { $ne: missionCluster._id }
+        });
+
+        if (is_findData) {
+            return NextResponse.json({ msg: 'Request Classification must be unique', success: false }, { status: 409 });
+        }
+
+        const record2 = { abbreviation: payload.abbreviation, is_delete: 0 };
+        const is_findData2 = await MissionClassification.findOne({
+            ...record,
+            _id: { $ne: missionCluster._id }
+        });
+
+        if (is_findData2) {
+            return NextResponse.json({ msg: 'Request Classification must be unique', success: false }, { status: 409 });
+        }
+
 
         const updatedata={...oldData,...payload}
         result = await MissionClassification.findOneAndUpdate(filter, updatedata);

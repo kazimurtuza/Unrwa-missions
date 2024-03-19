@@ -19,6 +19,16 @@ export async function PUT(request, content) {
         await mongoose.connect(connectionStr);
         const missionCluster=await PremiseType.findById(filter);
         const oldData=missionCluster._doc;
+        const record = { name: payload.name, is_delete: 0 };
+        const is_findData = await PremiseType.findOne({
+            ...record,
+            _id: { $ne: missionCluster._id }
+        });
+
+        if (is_findData) {
+            return NextResponse.json({ msg: 'Name must be unique', success: false }, { status: 409 });
+        }
+
 
         const updatedata={...oldData,...payload}
         result = await PremiseType.findOneAndUpdate(filter, updatedata);

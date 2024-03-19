@@ -5,6 +5,7 @@ import { User } from "@/lib/model/users";
 import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
+import { Department } from "@/lib/model/department";
 import { uploadBase64Img } from "@/app/helper";
 
 export async function GET(request,content){
@@ -17,10 +18,15 @@ export async function GET(request,content){
         //return NextResponse.json({result:staffId,success:true});
         await mongoose.connect(connectionStr);
         data=await Staff
-        .findById(record).populate({
+        .findById(record).populate([{
             path:'user',
             model:'User'
-        });
+        },
+        {
+            path:'department',
+            model:'Department'
+        }]
+        );
     }
     catch(error)
     {
@@ -40,6 +46,8 @@ export async function PUT(request, content) {
         await mongoose.connect(connectionStr);
         const missionCluster=await Staff.findById(filter);
         const oldData=missionCluster._doc;
+        //return NextResponse.json({error:payload.staff_photo, success: false});
+
         if(payload.staff_photo)
         {
             try {
@@ -47,6 +55,10 @@ export async function PUT(request, content) {
             } catch (e) {
                 return NextResponse.json({e, success: 'img upload error found'});
             }
+        }
+        else
+        {
+            payload.staff_photo=missionCluster.staff_photo;
         }
         if(payload.passport_original_attachment)
         {
@@ -56,6 +68,10 @@ export async function PUT(request, content) {
                 return NextResponse.json({e, success: 'img upload error found'});
             }
         }
+        else
+        {
+            payload.passport_original_attachment=missionCluster.passport_original_attachment;
+        }
         if(payload.passport_duplicate_attachment)
         {
             try {
@@ -64,6 +80,10 @@ export async function PUT(request, content) {
                 return NextResponse.json({e, success: 'img upload error found'});
             }
         }
+        else
+        {
+            payload.passport_duplicate_attachment=missionCluster.passport_duplicate_attachment;
+        }
         if(payload.national_id_attachment)
         {
             try {
@@ -71,6 +91,10 @@ export async function PUT(request, content) {
             } catch (e) {
                 return NextResponse.json({e, success: 'img upload error found'});
             }
+        }
+        else
+        {
+            payload.national_id_attachment=missionCluster.national_id_attachment;
         }
 
         const updatedata={...oldData,...payload}

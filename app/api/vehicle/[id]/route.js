@@ -16,6 +16,26 @@ export async function PUT(request, content) {
         // return NextResponse.json(payload.password);
         await mongoose.connect(connectionStr);
         const missionCluster=await Vehicle.findById(filter);
+        const record = { vehicle_id: payload.vehicle_id, is_delete: 0 };
+        const is_findData = await Agency.findOne({
+            ...record,
+            _id: { $ne: missionCluster._id }
+        });
+
+        if (is_findData) {
+            return NextResponse.json({ msg: 'Vehicle ID must be unique', success: false }, { status: 409 });
+        }
+
+
+        const record2 = { vehicle_plate_number: payload.vehicle_plate_number, is_delete: 0 };
+        const is_findData2 = await Agency.findOne({
+            ...record2,
+            _id: { $ne: missionCluster._id }
+        });
+
+        if (is_findData2) {
+            return NextResponse.json({ msg: 'Vehicle ID must be unique', success: false }, { status: 409 });
+        }
         const oldData=missionCluster._doc;
 
         const updatedata={...oldData,...payload}

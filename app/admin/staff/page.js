@@ -1,32 +1,42 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import TableExample from "@/app/example-table/page";
+import $ from 'jquery';
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
+import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
+import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 
 function Staff() {
     const [staff, setStaffList] = useState([]);
     const [successMessage, setSuccessMessage] = useState("");
     const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [perPage] = useState(5);
 
     const fetchData = async () => {
         try {
             const { data } = await axiosClient.get('staff');
             setStaffList(data.result);
+            setTimeout( function(){
+                $('table').dataTable();
+            }, 300);
         } catch (error) {
             console.error('Error fetching drivers:', error);
         }
     };
 
     useEffect(() => {
-
-
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-    let tableName = "Staff";
-    //const headName = ["Si","Image","Name", "Email", "Agency","Mission Classification","Gender","Passport Number Orginal","Passport Number Duplicate","Whatsup Number", "Statelite Phone", "Call Signin", "Action"];
-    const headName = ["Si","Image","Name", "Role",,"Status","Mission Classification","Gender", "Action"];
+    const indexOfLastItem = currentPage * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const currentItems = Array.isArray(staff) && staff.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
+    const headName = ["Photo","Name","Agency", "Role","Status","Classification","Gender", "Action"];
 
     let head = (
         <tr>
@@ -60,23 +70,9 @@ function Staff() {
             {Array.isArray(staff) && staff.map((item, index) => (
 
                 <tr key={index}>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {index+1}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
+
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
                                     {item.staff_photo && (
@@ -87,28 +83,27 @@ function Staff() {
                                         />
                                     )}
                                 </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
+
                             </div>
                         </div>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
                                     {item.name}
                                 </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
+
+                            </div>
+                        </div>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <div className="flex">
+                            <div className="ml-3">
+                                <p className="text-gray-900 whitespace-no-wrap">
+                                    {item.agency && item.agency.name}
+                                </p>
+
                             </div>
                         </div>
                     </td>
@@ -116,40 +111,39 @@ function Staff() {
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.staff_role}
                         </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
+
                     </td>
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.user.status === 1 ? "Unblocked" : "Blocked"}
                         </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
+
                     </td>
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.classification}
                         </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
+
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {item.gender}
                         </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
+
                     </td>
 
-
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
                         {/* <ActionDropdown /> */}
+
+                        <Link
+                                href={{
+                                    pathname: '/admin/staff/details',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
+                              > Details</Link>
 
                         <button
                                   onClick={async () => {
@@ -162,6 +156,7 @@ function Staff() {
                                             const postData={
                                                 status:1
                                             }
+
                                             const response = await axiosClient.put(`users/status-update/${item.user._id}`, postData);
 
                                             //   await fetch(`/api/users/status-update/${item.user._id}`, {
@@ -176,7 +171,6 @@ function Staff() {
                                               setSuccessMessage('Status Update successfully');
                                               fetchData();
                                               // Remove the deleted question from the state
-
                                           } catch (error) {
                                               console.error("Error deleting user:", error);
                                           }
@@ -187,7 +181,6 @@ function Staff() {
                                    {item.user.status === 1 ? "Block" : "Unblock"}
                               </button>
 
-                              <div className="ml-3">
                             <Link
                                 href={{
                                     pathname: '/admin/staff/edit',
@@ -195,26 +188,80 @@ function Staff() {
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"
                               > Edit</Link>
-                                <Link
-                                href={{
-                                    pathname: '/admin/staff/edit',
-                                    query: { id: item._id },
-                                }}
-                                className="px-4 py-2 mx-2 bg-red-500 text-white rounded"
-                              > Delete</Link>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
-                            </div>
+                                <button
+                                  onClick={async () => {
+                                      // Show a confirmation alert
+                                      const confirmed = window.confirm("Are you sure you want to delete?");
+
+                                      if (confirmed) {
+                                          // Make a DELETE request to your API to mark the question as deleted
+                                          try {
+                                            await axiosClient.delete(`staff/${item._id}`, {
+                                                  method: 'DELETE',
+                                                  headers: {
+                                                      'Content-Type': 'application/json',
+                                                  },
+                                              });
+                                              Swal.fire({
+                                                title: 'success',
+                                                text: 'Successfully Deleted',
+                                                icon: 'success',
+                                                // confirmButtonText: 'Cool'
+                                            })
+
+                                              //setMessage('Delete successfully');
+                                              // Remove the deleted question from the state
+                                              //setData(data => data.filter(item => item._id !== val._id));
+                                              fetchData();
+                                          } catch (error) {
+                                              console.error("Error deleting question:", error);
+                                          }
+                                      }
+                                  }}
+                                  className="px-4 py-2 mx-2 bg-red-500 text-white rounded hover:bg-red-600"
+                              >
+                                  Delete
+                              </button>
+
                     </td>
                 </tr>
             ))}
         </>
     );
 
-
     return (
-        <TableExample tableName={tableName} tableHead={head} body={body}/>
+
+        <div className="flex h-screen overflow-hidden">
+
+        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <main>
+            <div className="container mx-auto px-4 sm:px-8">
+              <div className="py-8">
+                <div className="flex gap-5 flex-wrap items-center justify-between">
+                  <h2 className="text-2xl font-semibold leading-tight">
+                    Staff
+                  </h2>
+                </div>
+                {/* Table */}
+                <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                  <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                    <table className="min-w-full leading-normal">
+                      <thead>
+                      {head}
+                      </thead>
+                      <tbody>
+                      {body}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     );
 }
 

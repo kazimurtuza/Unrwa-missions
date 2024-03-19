@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Swal from 'sweetalert2';
 // import {MissionPDF} from "./components/missionPdf";
 
@@ -36,7 +36,7 @@ function Steps() {
         "movement_date": "",
         "purpose": "",
         "remarks": "",
-        "request_status":"Request Recieved",
+        "request_status": "request_received",
         "location_list": [{
             "index_no": 0,
             "departure_premise_type": null,
@@ -65,11 +65,13 @@ function Steps() {
             "agency": null,
             "vehicle_type": "",
             "vehicle_body": "",
+            "carried": [],
             "staff": [],
         }]
     }
 
     const [storeData, setStoreData] = useState(dataObject);
+    const [vehicleStaf, setvehicleStaf] = useState([[]]);
     const [staffList, setStaffList] = useState([]);
     const [selectedStaffList, setSelectedStaffList] = useState();
     const [agencyList, setAgencyList] = useState([]);
@@ -88,15 +90,10 @@ function Steps() {
         setStoreData(old => update);
     };
     const vehicleSet = async (value) => {
-        console.log('-------list------');
-        console.log(value)
-        // let stafList= [...value.map((item) =>...item.staff)];
-
-        const stafList = await value.map((item) => item.staff.map((staffItem) => {
-            return staffItem.staff_id
-        })).flat();
-        setVehicleStaff(stafList);
-        // let update =await {...storeData, vehicle_list: value};
+        // const stafList = await value.map((item) => item.staff.map((staffItem) => {
+        //     return staffItem.staff_id
+        // })).flat();
+        // setVehicleStaff(stafList);
         await setStoreData(old => ({...old, vehicle_list: value}));
     };
 
@@ -105,7 +102,7 @@ function Steps() {
         let vehicle = oldData.vehicle_list;
         let vicleList = await vehicle.map(item => {
             if (item.index_no == index) {
-                item.staff = value;
+                item = {...item, "staff": value};
                 return item;
             } else {
                 return item;
@@ -185,15 +182,38 @@ function Steps() {
     }, []);
 
     async function saveMission() {
-        var validationError = await checkStep3()
-        // console.log(storeData);
-        if (validationError == 1) {
-            setCheckValidation(1)
-            return false;
-        }
+
 
         try {
-            const response = await axiosClient.post('mission', storeData).then(function (response) {
+            var validationError = await checkStep3();
+            await vehicleStaf.forEach(item => {
+                if (item.length == 0) {
+                    validationError = 1;
+                }
+            })
+
+            if (validationError == 1) {
+                setCheckValidation(1)
+                return false;
+            }
+
+            const vehicle_list = storeData.vehicle_list.map((item, index) => {
+                // Map over the items of vehicleStaf array corresponding to the same index
+                const updatedStaf = vehicleStaf[index].map(stafItem => ({staff_id: stafItem}));
+
+                // Return the updated item with the updatedStaf array
+                return {
+                    ...item,
+                    staf: updatedStaf // Assuming 'staf' is the property where you want to store the updated staff list
+                };
+            });
+
+
+            let updateData = await {...storeData, vehicle_list: vehicle_list};
+
+
+            setCheckValidation(0)
+            const response = await axiosClient.post('mission', updateData).then(function (response) {
                 Swal.fire({
                     title: 'success',
                     text: 'Successfully Mission Created',
@@ -216,15 +236,21 @@ function Steps() {
 
     const [activeTab, setActiveTab] = useState(0);
 
+    const updateVehicleStaf = (newData) => {
+        setvehicleStaf(old => newData);
+        // console.log(vehicleStaff)
+    };
+
     const formElements = [
         <Step1 data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster}
                classification={classification}
                staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
         <Step2 data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
                checkValidation={checkValidation} locationSet={locationStore}/>,
-        <Step3 data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]}
+        <Step3 data={storeData} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]}
                checkValidation={checkValidation}
-               vehicleStore={vehicleSet} vehicleStaffStore={vehicleStaffStore}/>,
+               vehicleStore={vehicleSet} vehicleStaffStore={vehicleStaffStore} prevehicleStaf={vehicleStaf}
+               updateVehicleStaf={updateVehicleStaf}/>,
         <Step4 data={data} setData={setData}/>,
     ];
     const nextPage = async () => {
@@ -298,8 +324,7 @@ function Steps() {
                 // item.departure_installation_name == "" ||
                 item.vehicle == null ||
                 item.driver == null ||
-                item.agency == null ||
-                item.staff.length == 0
+                item.agency == null
             ) {
                 result = 1;
             }
@@ -346,7 +371,7 @@ function Steps() {
                                                 activeTab === 0
                                                     ? "opacity-30"
                                                     : "opacity-100 hover:shadow-[0_0_15px_0_rgba(0,0,0,.3)]"
-                                            }`}
+                                                }`}
                                         >
                                             Back
                                         </button>
@@ -362,7 +387,7 @@ function Steps() {
                                                 activeTab === formElements.length - 2
                                                     ? "hidden"
                                                     : "opacity-100 hover:shadow-[0_0_15px_0_rgba(0,0,0,.5)]"
-                                            }`}
+                                                }`}
                                         >
                                             Next
                                         </button>

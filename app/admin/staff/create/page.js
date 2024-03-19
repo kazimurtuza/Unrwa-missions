@@ -7,6 +7,7 @@ function StaffCreate() {
   const [countries, setCountries] = useState([]);
   const [staffName, setStaffName] = useState("");
   const [agency,setAgencyList]=useState("");
+  const [departmentList,setDepartmentList]=useState("");
   const [classification,setClassificationList]=useState("");
   const [agencyID,setAgencyID]=useState("");
   const [phone, setPhone] = useState("");
@@ -16,7 +17,6 @@ function StaffCreate() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [staffRole, setStaffRole] = useState("");
-
 
   const [familyName, setFamilyName] = useState("");
   const [otherName, setOtherName] = useState("");
@@ -57,6 +57,20 @@ function StaffCreate() {
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
 useEffect(() => {
+  const fetchData = async () => {
+      try {
+          const { data } = await axiosClient.get('department');
+          setDepartmentList(data.result);
+          console.log(data.result);
+      } catch (error) {
+          console.error('Error fetching agencies:', error);
+      }
+  };
+
+  fetchData();
+}, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+useEffect(() => {
   // Function to fetch countries from REST Countries API
   const fetchCountries = async () => {
     try {
@@ -77,7 +91,6 @@ useEffect(() => {
   fetchCountries();
 }, []); //
 
-
 const inputFile = useRef(null);
 
 const inputFile2 = useRef(null);
@@ -85,7 +98,6 @@ const inputFile2 = useRef(null);
 const inputFile3 = useRef(null);
 
 const inputFile4 = useRef(null);
-
 
   const handleStaffNameChange = (value) => {
     setStaffName(value);
@@ -161,7 +173,6 @@ const inputFile4 = useRef(null);
   const handleStaffRole = (value) => {
     setStaffRole(value);
   };
-
 
   const handleNationality = (value) => {
     setNationlity(value);
@@ -240,7 +251,6 @@ const inputFile4 = useRef(null);
     fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-
 useEffect(() => {
   const fetchData = async () => {
       try {
@@ -254,9 +264,6 @@ useEffect(() => {
 
   fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -294,17 +301,14 @@ useEffect(() => {
       passport_original_attachment:passportOrginalAttachment,
       passport_duplicate_attachment:passportDuplicateAttachment,
       national_id_attachment:nationaltyAttachment
-
     };
 
     try {
-
         const response = await axiosClient.post('staff', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
-          if(response.data.success==true)
-          {
+          if(response.data.success==true) {
             setSuccessMessage("Staff Create Successfully");
             setStaffName("");
             setPhone("");
@@ -334,16 +338,10 @@ useEffect(() => {
             setAgencyID("");
             setClassificationId("");
             setStaffPhoto(null);
-
-          }
-          else
-          {
-            if(response.data.msg)
-            {
+          } else {
+            if(response.data.msg) {
               setErrorMessage(response.data.msg);
-            }
-            else
-            {
+            } else {
             //   const allErrors = extractErrors(response.data.error.errors);
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
@@ -363,7 +361,6 @@ useEffect(() => {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -420,8 +417,8 @@ useEffect(() => {
                           <option value="" disabled hidden>
                             Select Agency
                           </option>
-                          {Array.isArray(agency) && agency.map((val) => (
-                            <option key={val.id} value={val._id}>
+                          {Array.isArray(agency) && agency.map((val, index) => (
+                            <option key={index+'b'} value={val._id}>
                               {val.name}
                             </option>
                           ))}
@@ -563,6 +560,7 @@ useEffect(() => {
                           type="text"
                           placeholder="Enter your employee id"
                           value={employeeId}
+                          required
                           onChange={(e) =>
                             handleEmployeeId(e.target.value)
                           }
@@ -582,6 +580,7 @@ useEffect(() => {
                           type="text"
                           placeholder="Enter your national id"
                           value={nationalId}
+                          required
                           onChange={(e) =>
                             handleNationalId(e.target.value)
                           }
@@ -644,6 +643,7 @@ useEffect(() => {
                           <option value="female">Female</option>
                         </select>
                       </div>
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -651,18 +651,21 @@ useEffect(() => {
                         >
                           Department
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your department"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={department}
-                          onChange={(e) =>
-                            handleDepartmentChange(e.target.value)
-                          }
-
-                        />
-                      </div>
+                          onChange={(e) => handleDepartmentChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Department
+                          </option>
+                          {Array.isArray(departmentList) && departmentList.map((val, index) => (
+                            <option key={index+'c'} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
+                        </select>
+                        </div>
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -716,7 +719,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your passport number one"
                           value={phoneNumberOne}
                           onChange={(e) =>
@@ -735,7 +738,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your passport number one"
                           value={phoneNumberTwo}
                           onChange={(e) =>
@@ -754,7 +757,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your signal number"
                           value={signalNumber}
                           onChange={(e) =>
@@ -803,7 +806,7 @@ useEffect(() => {
                         />
                       </div> */}
 
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
@@ -821,7 +824,7 @@ useEffect(() => {
                           }
 
                         />
-                      </div>
+                      </div> */}
 
                       <div className="mb-4">
                         <label
@@ -833,7 +836,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your statelite phone"
                           value={statelitePhone}
                           onChange={(e) =>
@@ -853,7 +856,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your whatsapp number"
                           value={whatsupNumber}
                           onChange={(e) =>
@@ -907,8 +910,8 @@ useEffect(() => {
                         onChange={(e) => handleNationality(e.target.value)}
                       >
                         <option value="">Select a country</option>
-                        {countries && countries.map((country) => (
-                          <option key={country.id} value={country.name.common}>
+                        {countries && countries.map((country, index) => (
+                          <option key={index + 'a'} value={country.name.common}>
                             {country.name.common}
                           </option>
                         ))}
@@ -945,8 +948,6 @@ useEffect(() => {
                               />
                       </div>
 
-
-
                       <div className="mb-4">
                             <label
                                 className="block text-grey-darker text-sm font-bold mb-2"
@@ -962,7 +963,6 @@ useEffect(() => {
                               />
                       </div>
 
-
                       <div className="mb-4">
                             <label
                                 className="block text-grey-darker text-sm font-bold mb-2"
@@ -977,10 +977,6 @@ useEffect(() => {
                                 onChange={handleNationalIdAttachment}
                               />
                       </div>
-
-
-
-
 
                       <div className="flex items-center justify-between mt-8">
                         <button
@@ -1011,8 +1007,8 @@ function extractErrors(errors) {
         result.push(`${key}: ${errorMessage}`);
       }
     }
+
     return result;
 }
 
 export default StaffCreate;
-

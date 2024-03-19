@@ -29,6 +29,12 @@ export async function POST(request) {
 
         await mongoose.connect(connectionStr);
 
+        const record = {agency_email: payload.agency_email,is_delete:0};
+        const is_findEmail = await Agency.findOne(record);
+        if (is_findEmail) {
+            return NextResponse.json({msg: 'agency is already present',success:false}, {status: 409});
+        }
+
         if(payload.agency_logo)
         {
             try {

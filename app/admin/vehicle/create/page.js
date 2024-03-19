@@ -11,11 +11,12 @@ function VehicleCreate() {
   const [capacity, setCapacity] = useState("");
   const [brand_name, setBrand_name] = useState("");
   const [brand_type, setBrandType] = useState("");
-  const [armouted, setArmoured] = useState("");
-  const [fuel_type, setFuelType] = useState("");
+  const [armouted, setArmoured] = useState("Yes");
+  const [fuel_type, setFuelType] = useState("Petrol");
   const [carryOut, setCarryOut] = useState("");
   const [agency,setAgencyList]=useState("");
   const [agencyID,setAgencyID]=useState("");
+  const [vehicle_id,setVehicle_id]=useState("");
   const [color, setColor] = useState("");
 
   const [description, setDescription] = useState("");
@@ -86,6 +87,10 @@ function VehicleCreate() {
     setCapacity(value);
   };
 
+  const handleVehicleID = (value) => {
+    setVehicle_id(value);
+  };
+
 
 
   const handleSubmit = async (e) => {
@@ -96,9 +101,9 @@ function VehicleCreate() {
     // Prepare data for API request
     const postData = {
       name: vehicleName,
-      registration_number:regNumber,
-      vehicle_type:vehicleType,
-      description:description,
+      registration_number:vehicle_plate_number,
+      vehicle_type:brand_name,
+      description:brand_type,
       vehicle_plate_number:vehicle_plate_number,
       brand_name:brand_name,
       brand_type:brand_type,
@@ -107,7 +112,8 @@ function VehicleCreate() {
       color:color,
       agency:agencyID,
       carry_out:carryOut,
-      capacity:capacity
+      capacity:capacity,
+      vehicle_id:vehicle_id
     };
 
     try {
@@ -130,6 +136,9 @@ function VehicleCreate() {
             setFuelType("");
             setColor("");
             setCarryOut("");
+            setCapacity("");
+            setVehicle_id("");
+            setAgencyID("");
           }
           else
           {
@@ -212,6 +221,7 @@ function VehicleCreate() {
                                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                                           value={agencyID}
                                           onChange={(e) => handleAgencyChange(e.target.value)}
+                                          required
                                         >
                                           <option value="" disabled hidden>
                                             Select Agency
@@ -282,6 +292,27 @@ function VehicleCreate() {
                         />
                       </div> */}
 
+                    <div className="mb-4">
+                        <label
+                          className="block text-grey-darker text-sm font-bold mb-2"
+                          htmlFor="questionName"
+                        >
+                          Vehicle ID
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="slug"
+                          type="text"
+                          placeholder="Enter your vehicle ID"
+                          value={vehicle_id}
+                          required
+                          onChange={(e) =>
+                            handleVehicleID(e.target.value)
+                          }
+
+                        />
+                      </div>
+
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -295,6 +326,7 @@ function VehicleCreate() {
                           type="text"
                           placeholder="Enter your vehicle plate number"
                           value={vehicle_plate_number}
+                          required
                           onChange={(e) =>
                             handleVehiclePlateChange(e.target.value)
                           }
@@ -391,6 +423,7 @@ function VehicleCreate() {
                           type="text"
                           placeholder="Enter your body type"
                           value={brand_type}
+                          required
                           onChange={(e) =>
                             handleBrandTypeChange(e.target.value)
                           }
@@ -434,11 +467,11 @@ function VehicleCreate() {
                                           value={fuel_type}
                                           onChange={(e) => handleFuelTypeChange(e.target.value)}
                                         >
-                                          <option value="Petual">
-                                            Petual
+                                          <option value="Petrol">
+                                            Petrol
                                           </option>
-                                          <option value="Piesel">
-                                            Piesel
+                                          <option value="Diesel">
+                                          Diesel
                                           </option>
 
                                         </select>

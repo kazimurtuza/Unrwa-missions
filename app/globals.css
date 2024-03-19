@@ -77,3 +77,60 @@ ul li.menu-legend:before{
 .has-legend li:before{
   left: 0!important;
 }
+
+.user-page{
+  background-color: var(--main-color);
+}
+
+.dataTables_wrapper .dataTables_filter{
+  float: none!important;
+  padding-right: 15px;
+}
+
+.dataTable{
+  margin-top: 20px!important;
+}
+
+.dataTables_length{
+  padding-left: 15px;
+}
+
+.dataTables_length select {
+  height: 34px;
+  padding: 6px;
+  border-radius: 4px;
+  margin: 0 10px;
+}
+
+.dataTables_filter input{
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.border-lite{
+  border: 1px solid #8e8686;
+}
+
+.dataTables_wrapper{
+  padding-top: 15px;
+}
+
+.dataTables_wrapper .dataTables_info{
+  padding-left: 20px;
+}
+
+body div .dataTables_wrapper .dataTables_paginate .paginate_button.current, body div .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+  background: var(--main-color)!important;
+  background-image: none!important;
+  color: #ffffff!important;
+  border: 0!important;
+}
+
+.dataTables_wrapper .dataTables_paginate{
+  padding-bottom: .25em;
+}
+
+table a{
+  display: inline-block;
+}

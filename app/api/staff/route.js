@@ -49,10 +49,20 @@ export async function POST(request) {
         }
         await mongoose.connect(connectionStr);
 
-        const record = {email: payload.email};
+        const record = {email: payload.email,is_delete:0};
         const is_findEmail = await User.findOne(record);
         if (is_findEmail) {
             return NextResponse.json({msg: 'user is already present',success:false}, {status: 409});
+        }
+        const record2 = {national_id: payload.national_id,is_delete:0};
+        const is_findEmail2 = await Staff.findOne(record2);
+        if (is_findEmail2) {
+            return NextResponse.json({msg: 'National ID is already present',success:false}, {status: 409});
+        }
+        const record3 = {employee_id: payload.employee_id,is_delete:0};
+        const is_findEmail3 = await Staff.findOne(record3);
+        if (is_findEmail3) {
+            return NextResponse.json({msg: 'employee ID is already present',success:false}, {status: 409});
         }
         if(payload.staff_photo)
         {
@@ -62,6 +72,7 @@ export async function POST(request) {
                 return NextResponse.json({e, success: 'img upload error found'});
             }
         }
+      
         if(payload.passport_original_attachment)
         {
             try {
@@ -137,7 +148,9 @@ export async function POST(request) {
 
         return NextResponse.json({ result, success: true });
     } catch (error) {
+        //await User.deleteMany({ email: payload.email });
         return NextResponse.json({ error: error.message, success: false }, { status: 500 });
+        
     } finally {
         await mongoose.disconnect();
     }

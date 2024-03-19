@@ -15,12 +15,69 @@ function StaffCreate() {
   const [whatsupNumber, setWhatsupNumber] = useState("");
   const [callSignIn, setCallSignin] = useState("");
   const [email, setEmail] = useState("");
+  const [departmentList,setDepartmentList]=useState("");
   const [password, setPassword] = useState("");
   const [staffRole, setStaffRole] = useState("");
+
+  const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const router = useRouter();
   const searchParames = useSearchParams();
   const id = searchParames.get("id");
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('department');
+            setDepartmentList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+  
+    fetchData();
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  
+
+  const fetchData = async () => {
+    try {
+        //const objectId = mongoose.Types.ObjectId(id);
+        const { data } = await axiosClient.get(`staff/${id}`);
+        console.log(data);
+        setStaffName(data.result.name);
+        setPhone(data.result.phone);
+        setEmail(data.result.user.email);
+        setJStatelitePhone(data.result.statelite_phone);
+        setWhatsupNumber(data.result.whatsup_number);
+        setCallSignin(data.result.call_signin);
+        setBloodType(data.result.blood_type);
+        setDateOfBirth(data.result.date_of_birth);
+        setDepartment(data.result.department.name);
+        setEmployeeId(data.result.employee_id);
+        setPhoneNumberOne(data.result.phone_number_one);
+        setPhoneNumberTwo(data.result.phone_number_two);
+        setNationlity(data.result.nationlity);
+        setNationalId(data.result.national_id);
+        setSignalNumber(data.result.signal_number);
+        setGender(data.result.gender);
+        setTitle(data.result.title);
+        setFamilyName(data.result.family_name);
+        setOtherName(data.result.other_name);
+        setPassportNumberOrginal(data.result.passport_number_orginal);
+        setPassportDuplicate(data.result.passport_number_duplicate);
+        setNationlity(data.result.nationlity);
+        setStaffRole(data.result.staff_role);
+        setAgencyID(data.result.agency);
+        setClassificationId(data.result.classification);
+        setStaffPhoto2(data.result.staff_photo);
+        setNationalityAttachment2(data.result.national_id_attachment);
+        setPassportOrginalAttachment2(data.result.passport_original_attachment);
+        setPassportDuplicateAttachment2(data.result.passport_duplicate_attachment);
+    } catch (error) {
+        console.error('Error fetching agencies:', error);
+    }
+};
 
 
 
@@ -45,48 +102,63 @@ function StaffCreate() {
   const [passportDuplicateAttachment, setPassportDuplicateAttachment] = useState("");
   const [nationaltyAttachment, setNationalityAttachment] = useState("");
   const [nationlity, setNationlity] = useState("");
+  const [staffPhoto2, setStaffPhoto2] = useState("");
+  const [passportOrginalAttachment2, setPassportOrginalAttachment2] = useState("");
+  const [passportDuplicateAttachment2, setPassportDuplicateAttachment2] = useState("");
+  const [nationaltyAttachment2, setNationalityAttachment2] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-        try {
-            //const objectId = mongoose.Types.ObjectId(id);
-            const { data } = await axiosClient.get(`staff/${id}`);
-            console.log(data);
-            setStaffName(data.result.name);
-            setPhone(data.result.phone);
-            setEmail(data.result.user.email);
-            setJStatelitePhone(data.result.statelite_phone);
-            setWhatsupNumber(data.result.whatsup_number);
-            setCallSignin(data.result.call_signin);
-            setBloodType(data.result.blood_type);
-            setDateOfBirth(data.result.date_of_birth);
-            setDepartment(data.result.department);
-            setEmployeeId(data.result.employee_id);
-            setPhoneNumberOne(data.result.phone_number_one);
-            setPhoneNumberTwo(data.result.phone_number_two);
-            setNationlity(data.result.nationlity);
-            setNationalId(data.result.national_id);
-            setSignalNumber(data.result.signal_number);
-            setGender(data.result.gender);
-            setTitle(data.result.title);
-            setFamilyName(data.result.family_name);
-            setOtherName(data.result.other_name);
-            setPassportNumberOrginal(data.result.passport_number_orginal);
-            setPassportDuplicate(data.result.passport_number_duplicate);
-            setNationlity(data.result.nationlity);
-            setStaffRole(data.result.staff_role);
-            setAgencyID(data.result.agency);
-            setClassificationId(data.result.classification);
-        } catch (error) {
-            console.error('Error fetching agencies:', error);
-        }
-    };
 
-    fetchData();
+
+
+
+  useEffect(() => {
+
+    
+  const fetchData = async () => {
+    try {
+        //const objectId = mongoose.Types.ObjectId(id);
+        const { data } = await axiosClient.get(`staff/${id}`);
+        console.log(data);
+        setStaffName(data.result.name);
+        setPhone(data.result.phone);
+        setEmail(data.result.user.email);
+        setJStatelitePhone(data.result.statelite_phone);
+        setWhatsupNumber(data.result.whatsup_number);
+        setCallSignin(data.result.call_signin);
+        setBloodType(data.result.blood_type);
+        setDateOfBirth(data.result.date_of_birth);
+        setDepartment(data.result.department);
+        setEmployeeId(data.result.employee_id);
+        setPhoneNumberOne(data.result.phone_number_one);
+        setPhoneNumberTwo(data.result.phone_number_two);
+        setNationlity(data.result.nationlity);
+        setNationalId(data.result.national_id);
+        setSignalNumber(data.result.signal_number);
+        setGender(data.result.gender);
+        setTitle(data.result.title);
+        setFamilyName(data.result.family_name);
+        setOtherName(data.result.other_name);
+        setPassportNumberOrginal(data.result.passport_number_orginal);
+        setPassportDuplicate(data.result.passport_number_duplicate);
+        setNationlity(data.result.nationlity);
+        setStaffRole(data.result.staff_role);
+        setAgencyID(data.result.agency);
+        setClassificationId(data.result.classification);
+        setStaffPhoto2(data.result.staff_photo);
+        setNationalityAttachment2(data.result.national_id_attachment);
+        setPassportOrginalAttachment2(data.result.passport_original_attachment);
+        setPassportDuplicateAttachment2(data.result.passport_duplicate_attachment);
+    } catch (error) {
+        console.error('Error fetching agencies:', error);
+    }
+};
+
+fetchData();
+   
 }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
 
@@ -228,49 +300,65 @@ const inputFile4 = useRef(null);
       // Read the file as a data URL (base64)
       reader.readAsDataURL(file);
     }
+    else
+    {
+      setStaffPhoto("");
+    }
   };
 
   const handlePassportOrginalAttachment = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
+      const reader2 = new FileReader();
 
-      reader.onloadend = () => {
+      reader2.onloadend = () => {
         // Once the FileReader has read the file, set the base64 data
-        setPassportOrginalAttachment(reader.result);
+        setPassportOrginalAttachment(reader2.result);
       };
 
       // Read the file as a data URL (base64)
-      reader.readAsDataURL(file);
+      reader2.readAsDataURL(file);
+    }
+    else
+    {
+      setPassportOrginalAttachment("");
     }
   };
 
   const handlePassportDuplicateAttachment = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
+      const reader3 = new FileReader();
 
-      reader.onloadend = () => {
+      reader3.onloadend = () => {
         // Once the FileReader has read the file, set the base64 data
-        setPassportDuplicateAttachment(reader.result);
+        setPassportDuplicateAttachment(reader3.result);
       };
 
       // Read the file as a data URL (base64)
-      reader.readAsDataURL(file);
+      reader3.readAsDataURL(file);
+    }
+    else
+    {
+      setPassportDuplicateAttachment("");
     }
   };
   const handleNationalIdAttachment = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
+      const reader4 = new FileReader();
 
-      reader.onloadend = () => {
+      reader4.onloadend = () => {
         // Once the FileReader has read the file, set the base64 data
-        setNationalityAttachment(reader.result);
+        setNationalityAttachment(reader4.result);
       };
 
       // Read the file as a data URL (base64)
-      reader.readAsDataURL(file);
+      reader4.readAsDataURL(file);
+    }
+    else
+    {
+      setNationalityAttachment("");
     }
   };
 
@@ -353,6 +441,8 @@ useEffect(() => {
         if (response && response.data) {
           if(response.data.success==true)
           {
+            
+            fetchData();
             setSuccessMessage("Staff Update Successfully");
             // setStaffName("");
             // setPhone("");
@@ -463,6 +553,7 @@ useEffect(() => {
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={agencyID}
+                          disabled
                           onChange={(e) => handleAgencyChange(e.target.value)}
                         >
                           <option value="" disabled hidden>
@@ -699,18 +790,21 @@ useEffect(() => {
                         >
                           Department
                         </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="categoryName"
-                          type="text"
-                          placeholder="Enter your department"
+                        <select
+                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={department}
-                          onChange={(e) =>
-                            handleDepartmentChange(e.target.value)
-                          }
-
-                        />
-                      </div>
+                          onChange={(e) => handleDepartmentChange(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Select Department
+                          </option>
+                          {Array.isArray(departmentList) && departmentList.map((val) => (
+                            <option key={val.id} value={val._id}>
+                              {val.name}
+                            </option>
+                          ))}
+                        </select>
+                        </div>
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -764,7 +858,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your passport number one"
                           value={phoneNumberOne}
                           onChange={(e) =>
@@ -783,7 +877,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your passport number one"
                           value={phoneNumberTwo}
                           onChange={(e) =>
@@ -802,7 +896,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your signal number"
                           value={signalNumber}
                           onChange={(e) =>
@@ -852,7 +946,7 @@ useEffect(() => {
                         />
                       </div> */}
 
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
@@ -870,7 +964,7 @@ useEffect(() => {
                           }
 
                         />
-                      </div>
+                      </div> */}
 
                       <div className="mb-4">
                         <label
@@ -882,7 +976,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your statelite phone"
                           value={statelitePhone}
                           onChange={(e) =>
@@ -902,7 +996,7 @@ useEffect(() => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your whatsapp number"
                           value={whatsupNumber}
                           onChange={(e) =>
@@ -963,6 +1057,79 @@ useEffect(() => {
                         ))}
                       </select>
                     </div>
+
+                    <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                              Current Staff Photo
+                              </label>
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                    {staffPhoto2 && (
+                                        <img
+                                            className="w-8 h-8 rounded-full object-cover"
+                                            src={`${api_base_url}/${staffPhoto2}`}
+                                            
+                                        />
+                                    )}
+                                </p>
+                      </div>
+
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                               Current Passport Orginal Attachment
+                              </label>
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                    {passportOrginalAttachment2 && (
+                                        <img
+                                            className="w-8 h-8 rounded-full object-cover"
+                                            src={`${api_base_url}/${passportOrginalAttachment2}`}
+                                            
+                                        />
+                                    )}
+                                </p>
+                      </div>
+
+
+
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                               Current Passport Duplicate Attachment
+                              </label>
+                              {passportDuplicateAttachment2 && (
+                                        <img
+                                            className="w-8 h-8 rounded-full object-cover"
+                                            src={`${api_base_url}/${passportOrginalAttachment2}`}
+                                            
+                                        />
+                                    )}
+                      </div>
+
+
+                      <div className="mb-4">
+                            <label
+                                className="block text-grey-darker text-sm font-bold mb-2"
+                                htmlFor="questionName"
+                              >
+                               Current National Id Attachment
+                              </label>
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                    {nationaltyAttachment2 && (
+                                        <img
+                                            className="w-8 h-8 rounded-full object-cover"
+                                            src={`${api_base_url}/${nationaltyAttachment2}`}
+                                            
+                                        />
+                                    )}
+                                </p>
+                      </div>
 
                       <div className="mb-4">
                             <label

@@ -20,14 +20,14 @@ function MissionClassificationCreate() {
   };
   const handlerequestClassificationChange = (value) => {
     setRequests_classifications(value);
-    if (value === 'Coordination Request') {
-      setAbbreviation('CRQ');
-    } else if (value === 'Notification Request') {
-      setAbbreviation('NRQ');
-    } else {
-      setAbbreviation(''); // Clear abbreviation if no classification is selected
-      setIsVisible(false);
-    }
+    // if (value === 'Coordination Request') {
+    //   setAbbreviation('CRQ');
+    // } else if (value === 'Notification Request') {
+    //   setAbbreviation('NRQ');
+    // } else {
+    //   setAbbreviation(''); // Clear abbreviation if no classification is selected
+    //   setIsVisible(false);
+    // }
     setIsVisible(true);
   };
   const handleAbbrivationChange = (value) => {
@@ -150,32 +150,25 @@ function MissionClassificationCreate() {
                       </div> */}
 
 
+                      
                       <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          Request Classification
-                        </label>
-                        <select
-                          className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
+                          <label
+                            className="block text-grey-darker text-sm font-bold mb-2"
+                            htmlFor="abbreviation"
+                          >
+                            Request Classification
+                          </label>
+                          <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="categoryName"
+                          type="text"
+                          placeholder="Enter Request Classification"
                           value={requests_classifications}
-
-                          onChange={(e) => handlerequestClassificationChange(e.target.value)}
-                        >
-                          <option value="">
-                            Select One
-                          </option>
-                          <option value="Coordination Request">
-                            Coordination Request
-                          </option>
-
-                          <option value="Notification Request">
-                              Notification Request
-                          </option>
-
-                        </select>
-                      </div>
+                          onChange={(e) =>
+                            handlerequestClassificationChange(e.target.value)
+                          }
+                          />
+                        </div>
                         {/* Display the select element only when isVisible is true */}
                       {isVisible && (
                         <div className="mb-4">
@@ -189,11 +182,11 @@ function MissionClassificationCreate() {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Please First Select Request Classification"
+                          placeholder="Enter Abbrevation"
                           value={abbreviation}
-                          // onChange={(e) =>
-                          //   handleMissionClassificationChange(e.target.value)
-                          // }
+                          onChange={(e) =>
+                            handleAbbrivationChange(e.target.value)
+                          }
                           />
                         </div>
                       )}
