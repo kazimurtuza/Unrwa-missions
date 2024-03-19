@@ -28,6 +28,22 @@ function AgencyCreate() {
   const id = searchParames.get("id");
 
 
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const { data } = await axiosClient.get('mission-cluster');
+            setClusterList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error('Error fetching agencies:', error);
+        }
+    };
+  
+    fetchData();
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  
+
+
   const fetchData = async () => {
     try {
         //const objectId = mongoose.Types.ObjectId(id);

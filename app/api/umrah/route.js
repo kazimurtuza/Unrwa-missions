@@ -5,6 +5,9 @@ import {Umrah} from "../../../lib/model/umrah";
 import { PremiseType } from "@/lib/model/premiseType";
 import { Country } from "@/lib/model/country";
 import { Department } from "@/lib/model/department";
+import { Area } from "@/lib/model/area";
+import { SubArea } from "@/lib/model/sub_area";
+import { ClaList } from "@/lib/model/cla_list";
 
 export async function POST(request) {
     try {
@@ -34,6 +37,18 @@ export async function GET() {
             {
                 path: 'department',
                 model: 'Department'
+            },
+            {
+                path: 'location_area',
+                model: 'Area'
+            },
+            {
+                path: 'sub_area',
+                model: 'SubArea'
+            },
+            {
+                path: 'cls_list',
+                model: 'ClaList'
             },
     
         ])
