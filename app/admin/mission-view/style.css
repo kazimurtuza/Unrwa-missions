@@ -221,3 +221,77 @@ a {
 	flex: 1;
 	max-width: 49.5%;
   }
+
+  .table-wrap {
+	overflow-x: auto;
+	width: 100%;
+}
+
+.mdf-form-head p{
+	line-height: 2;
+}
+
+.table-wrap table {
+	font-family: "Open Sans", sans-serif;
+	position: relative;
+	table-layout: auto;
+	width: 100%;
+	padding-top: 20px;;
+	border-radius: 0.5rem;
+	border-collapse: initial!important;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  table thead tr {
+	color: #2d3748;
+	font-size: 1rem;
+	font-weight: 500;
+	text-align: left;
+  }
+
+  table thead tr th {
+	background: #cfe0f0;
+	padding: 0.75rem 1.5rem;
+	vertical-align: middle;
+  }
+
+  table tbody tr td {
+	background: #cfe0f0;
+  }
+
+  table tbody td {
+	color: #1a202c;
+	text-align: left;
+	vertical-align: middle;
+	font-size: 1.125rem;
+	font-weight: normal;
+	padding: 3px 10px;
+  }
+
+  table tr > th:first-child, table tr > td:first-child {
+	position: sticky;
+	left: 0;
+  }
+
+  .table-wrap th {
+	font-size: 19px;
+  }
+
+  .table-wrap td span,
+  .table-wrap th span{
+	font-size: 75%;
+  }
+
+  .table-wrap td span{
+	display: block;
+  }
+
+  .input-wrap input{
+	width: 100%;
+  }
+
+  .table-wrap h3{
+	font-size: 26px;
+	font-weight: 700;
+	margin-top: 40px;
+  }
