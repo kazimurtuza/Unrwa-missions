@@ -78,7 +78,7 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
             <div
                 id="sidebar"
                 ref={sidebar}
-                className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-1 transition-all duration-200 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-64"
+                className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-auto lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-1 transition-all duration-200 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-70"
                     }`}
             >
                 {/* Sidebar header */}

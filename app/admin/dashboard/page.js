@@ -1,10 +1,10 @@
 "use client";
 import styles from "@/app/admin/style/deshboard.module.css";
 import axiosClient from "@/app/axiosClient";
-import {useEffect, useState} from "react";
-import {AiOutlineUser} from "react-icons/ai";
-import {BsCart} from "react-icons/bs";
-import {FaProductHunt} from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import { AiOutlineUser } from "react-icons/ai";
+import { BsCart } from "react-icons/bs";
+import { FaProductHunt } from "react-icons/fa6";
 
 import {
     CategoryScale,
@@ -16,7 +16,7 @@ import {
     Title,
     Tooltip,
 } from 'chart.js';
-import {Line} from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
     CategoryScale,
@@ -41,7 +41,6 @@ export const options = {
     },
 };
 
-
 function Dashboard() {
     const [rejectCount, setrejectCount] = useState(0);
     const [totalMission, settotalMission] = useState(0);
@@ -52,7 +51,6 @@ function Dashboard() {
     const [rejectCountToday, setrejectCountToday] = useState(0);
     const [completedToday, setcompletedToday] = useState(0);
     const [totalMissionToday, settotalMissionToday] = useState(0);
-
 
     const [cluster, setcluster] = useState([]);
     const [isLoading, setLoading] = useState(1);
@@ -72,14 +70,13 @@ function Dashboard() {
             const dateString = new Date(year, month, day).toISOString().slice(0, 10);
             dateList.push(dateString);
         }
+
         setDataset(prevDataset => ({
             ...prevDataset,
             labels: dateList,
-
         }));
         return dateList;
     }
-
 
     const fetchData = async () => {
         try {
@@ -113,8 +110,6 @@ function Dashboard() {
                 setcompletedToday(data.result.completedToday)
                 settotalMissionToday(data.result.totalMissionToday)
 
-
-
                 setLoading(0)
             }
         } catch (error) {
@@ -124,7 +119,6 @@ function Dashboard() {
     };
 
     let loader = <div className={styles.loader}></div>
-
 
     const data = {
         labels: [],
@@ -152,7 +146,6 @@ function Dashboard() {
             borderColor: 'rgb(53, 162, 235)',
             ackgroundColor: 'rgb(53, 162, 235)',
         }],
-
     };
 
     const [dataset, setDataset] = useState(data);
@@ -172,10 +165,11 @@ function Dashboard() {
                     i = i + 1;
                     await additem(item.name, data.retsult, i);
                 }
+
                 console.log(dataset)
             }
-            setisloadmap(0)
 
+            setisloadmap(0)
         }
     }
 
@@ -186,12 +180,8 @@ function Dashboard() {
         fetchCluster();
         clusterList();
 
-
         // addDatasets();
-
-
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
 
     function additem(name, dataList, index) {
         // Generate random RGB values
@@ -212,13 +202,13 @@ function Dashboard() {
         }));
     }
 
-
     return (
         <div className="flex h-screen overflow-hidden">
 
             <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                <main>
-                    <div className="grid grid-cols-4 gap-4  p-3">
+                <main className="dashboar-main">
+                    <h3 className="text-2xl font-semibold leading-tight ml-2">Monthly Overview</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  p-3">
 
                         <div className={styles.itemcard} style={{backgroundColor: '#76978f4a'}}>
 
@@ -269,7 +259,8 @@ function Dashboard() {
                         </div>
 
                     </div>
-                    <div className="grid grid-cols-4 gap-4  p-3">
+                    <h3 className="text-2xl font-semibold leading-tight ml-2 mt-4">Daily Overview</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  p-3">
 
                         <div className={styles.itemcard} style={{backgroundColor: '#76978f4a'}}>
 
@@ -316,13 +307,12 @@ function Dashboard() {
                                     <h5 className={styles.subtitle}>Today Rejected</h5>
                                 </div>
 
-
                             </div>
                         </div>
 
                     </div>
 
-                    <div style={{width: 'calc(100vw - 500px)', padding: '50px 0 50px 20px'}}>
+                    <div className="chart-wrap mt-4">
                         {isloadmap==1? <Line options={options} data={data1}/>:<Line options={options} data={dataset}/>}
                     </div>
                 </main>
