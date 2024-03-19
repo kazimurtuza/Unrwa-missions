@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useRef, useState,useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function AreaCreate() {
+  const router = useRouter();
   const [areaName, setAreaName] = useState("");
   const [areaId, setAreaId] = useState("");
   const [name, setName] = useState("");
@@ -65,6 +67,7 @@ function AreaCreate() {
             setName("");
             setAreaId("");
             setErrorMessage("");
+            router.push("../sub-area", { scroll: false });
           }
           else
           {

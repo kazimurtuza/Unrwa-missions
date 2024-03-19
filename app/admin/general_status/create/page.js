@@ -2,8 +2,10 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function GeneralStatusCreate() {
+  const router = useRouter();
   const [name, setName] = useState("");
 
   //success message
@@ -39,6 +41,7 @@ function GeneralStatusCreate() {
           {
             setSuccessMessage("General Status Create Successfully");
             setName("");
+            router.push("../general_status", { scroll: false });
             setErrorMessage("");
           }
           else

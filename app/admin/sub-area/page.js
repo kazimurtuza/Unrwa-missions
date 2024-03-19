@@ -94,7 +94,7 @@ function SubArea() {
 
                             <Link
                                 href={{
-                                    pathname: '/admin/sub_area/edit',
+                                    pathname: '/admin/sub-area/edit',
                                     query: { id: item._id },
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"

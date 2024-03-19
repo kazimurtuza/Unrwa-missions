@@ -133,7 +133,7 @@ function DepartmentCreate() {
                           className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
                           type="submit"
                         >
-                          Submit
+                          Update
                         </button>
                       </div>
                     </div>
