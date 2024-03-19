@@ -101,6 +101,7 @@ function MissionVIew() {
         // the second time but not the first
         setHydrated(true);
     }, []);
+
     if (!hydrated) {
         // Returns null on first render, so the client and server match
         return null;
