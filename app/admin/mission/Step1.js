@@ -8,7 +8,6 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
             setAdminInfo(selectedOption.list);
         }
         if(name=='agency'){
-
             selectedOption.value = await selectedOption.map(item=>({agency_id:item.value,value:item.value,label:item.label}))
         }
         getdata(name, selectedOption.value); // Pass the input value to the parent component

@@ -83,9 +83,11 @@ const Collapsable2 = ({
         }
         if (name == 'agency') {
             driverListSet(value);
-            vehicleListSet(value)
         }
 
+        if(name=='vehicle_agency'){
+            vehicleListSet(value)
+        }
         if (name == "vehicle") {
             value = selectedOption;
         }
@@ -211,7 +213,7 @@ const Collapsable2 = ({
             driverListSet(info.agency);
         }
         if (info.vehicle) {
-            vehicleListSet(info.agency)
+            vehicleListSet(info.vehicle_agency)
         }
     }, []);
 
@@ -368,6 +370,34 @@ const Collapsable2 = ({
                             <h3 className='collapsable-item__body-title'>
                                 Vehicle
                             </h3>
+
+                            <div className='form__field collapsable-item__field'>
+                                <label
+                                    htmlFor='agency-name'
+                                    className='form__label'
+                                >
+                                    Agency Name
+                                </label>
+                                <div className='select-wrap'>
+                                    <Select
+                                        name='vehicle_agency'
+                                        value={agencyList.find(
+                                            (option) =>
+                                                option.value === info.vehicle_agency
+                                        )}
+                                        options={agencyList}
+                                        id='focus-point'
+                                        onChange={selectData}
+                                        isSearchable
+                                    ></Select>
+                                    {checkValidation && info.agency == null
+                                        ? errorTxt
+                                        : ""}
+                                </div>
+                            </div>
+
+
+
                             <div className='form__field collapsable-item__field'>
                                 <label
                                     htmlFor='vehicle-registration'

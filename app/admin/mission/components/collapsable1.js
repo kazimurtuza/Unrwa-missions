@@ -2,8 +2,8 @@ import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
 import Select from 'react-select';
 
-const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
-    const [collapse, setCollapse] = useState(true);
+const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem}) => {
+    const [collapse, setCollapse] = useState(totalItem!=item?true:false);
     const [premiseTypeList, setPremiseTypeList] = useState([]);
     const [unrahInfo, setumrahInfo] = useState([]);
     const [arrivalInstallationList, setarrivalInstallationList] = useState([]);
@@ -104,6 +104,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                         longitude: item.longitude,
                         latitude: item.latitude,
                         building_code: item.building_code,
+                        arrival_installation_name:item.arrival_installation_name,
                     },
                 }));
 
@@ -124,6 +125,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                         longitude: item.longitude,
                         latitude: item.latitude,
                         building_code: item.building_code,
+                        departure_installation_name:item.departure_installation_name,
                     },
                 }));
                 setDepartureInstallationList(old => updatedInstallatList);
@@ -140,9 +142,9 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
 
     return (
         <>
-            <div className={`collapsable-item ${collapse ? "active" : ""} `}>
+            <div className={`collapsable-item ${collapse ? "active" : ""}   `}     >
                 <div className="collapsable-item__header collapse-trigger" onClick={handleClick}>
-                    <h3 className="collapsable-item__header-title">Movement Stops {item + 1}</h3>
+                    <h3 className="collapsable-item__header-title">Movement Stops {item + 1}  {info.departure_installation_name}-{info.arrival_installation_name}  </h3>
                 </div>
                 <div className="collapsable-item__body">
                     <div className="collapsable-item__body-row flex-start-spb">
@@ -241,7 +243,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                                     Longitude
                                 </label>
                                 <input type="text" name="departure_longitude" value={info.departure_longitude}
-                                       onInput={setdata} className="form__input" id="longitude"/>
+                                       onInput={setdata} className="form__input" id="longitude"  readOnly={info.departure_umrah_type==0?0:1} />
                                 {(checkValidation && info.departure_longitude == "") ? errorTxt : ""}
                             </div>
                             <div className="form__field collapsable-item__field">
@@ -249,7 +251,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                                     Latitude
                                 </label>
                                 <input type="text" name="departure_latitude" value={info.departure_latitude}
-                                       onInput={setdata} className="form__input" id="latitude"/>
+                                       onInput={setdata} className="form__input"  readOnly={info.departure_umrah_type==0?0:1}  id="latitude"/>
                                 {(checkValidation && info.departure_latitude == "") ? errorTxt : ""}
                             </div>
                         </div>
@@ -345,7 +347,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                                 <label htmlFor="longitude2" className="form__label">
                                     Longitude
                                 </label>
-                                <input type="text" value={info.arrival_longitude} name="arrival_longitude"
+                                <input type="text" value={info.arrival_longitude} name="arrival_longitude"  readOnly={info.arrival_umrah_type==0?0:1}
                                        onInput={setdata} className="form__input" id="longitude2"/>
                                 {(checkValidation && info.arrival_longitude == "") ? errorTxt : ""}
                             </div>
@@ -354,7 +356,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation}) => {
                                     Latitude
                                 </label>
                                 <input type="text" value={info.arrival_latitude} name="arrival_latitude"
-                                       onInput={setdata} className="form__input" id="latitude2"/>
+                                       onInput={setdata} className="form__input" id="latitude2"  readOnly={info.arrival_umrah_type==0?0:1} />
                                 {(checkValidation && info.arrival_latitude == "") ? errorTxt : ""}
                             </div>
                         </div>

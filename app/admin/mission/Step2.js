@@ -65,7 +65,7 @@ const Step1 = ({data, locationSet,checkValidation,emptyLocation}) => {
         <div className="w-full mx-auto">
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14">
 
-                {locationList.map((item, index) => <Collapsable1 info={item} checkValidation={checkValidation} setInfo={handleChange} item={index}/>)}
+                {locationList && locationList.map((item, index) => <Collapsable1 info={item} totalItem={locationList.length} checkValidation={checkValidation} setInfo={handleChange} item={index}/>)}
 
                 <div className="collapsable-item__btn">
                     <button type="button" className="add-btn" onClick={handleClick}>
