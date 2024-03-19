@@ -9,7 +9,7 @@ import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
 import "./steps.css";
-
+import { useRouter } from "next/navigation";
 function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -20,6 +20,7 @@ function formatDate(dateString) {
 }
 
 function Steps() {
+    const router = useRouter();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const [data, setData] = useState({
@@ -222,6 +223,8 @@ function Steps() {
                 })
                 setStoreData(old => dataObject);
                 setActiveTab(old => 0);
+                router.push("/admin/mission/mission-list", { scroll: false });
+
             })
                 .catch(function (error) {
                     console.log(error.message);
