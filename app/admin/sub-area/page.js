@@ -19,9 +19,11 @@ function SubArea() {
         }
     };
 
-    fetchData();
+   
 
     useEffect(() => {
+
+        fetchData();
        
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
@@ -92,7 +94,7 @@ function SubArea() {
 
                             <Link
                                 href={{
-                                    pathname: '/admin/area/edit',
+                                    pathname: '/admin/sub_area/edit',
                                     query: { id: item._id },
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"
@@ -105,7 +107,7 @@ function SubArea() {
                                       if (confirmed) {
                                           // Make a DELETE request to your API to mark the question as deleted
                                           try {
-                                            await axiosClient.delete(`area/${item._id}`, {
+                                            await axiosClient.delete(`sub_area/${item._id}`, {
                                                   method: 'DELETE',
                                                   headers: {
                                                       'Content-Type': 'application/json',

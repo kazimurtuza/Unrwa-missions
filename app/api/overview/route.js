@@ -23,29 +23,22 @@ export async function GET(){
     try{
         console.log(connectionStr);
         await mongoose.connect(connectionStr);
-        pendingMission = await Mission
-        .find({is_delete:0,status:0}).countDocuments();
+        let currentDate = new Date().toJSON().slice(0, 10);
+        pendingMission = await Mission.countDocuments({ request_status: "request_received" });
 
-        completedMission = await Mission
-        .find({is_delete:0,status:1}).countDocuments();
+        completedMission = await Mission.countDocuments({ request_status: "mission_completed" });
 
-        rejectedMission = await Mission
-        .find({is_delete:0,status:2}).countDocuments();
+        rejectedMission = await Mission.countDocuments({ cla_decision: "denied" });
 
-        totalMission = await Mission
-        .find({is_delete:0}).countDocuments();
+        totalMission = await Mission.countDocuments();
 
-        todayPendingMission = await Mission
-        .find({is_delete:0,status:0}).countDocuments();
+        todayPendingMission = await Mission.countDocuments({ request_status: "request_received",create_date:currentDate });
 
-        todayCompletedMission = await Mission
-        .find({is_delete:0,status:1}).countDocuments();
+        todayCompletedMission =  await Mission.countDocuments({ request_status: "mission_completed",completed_date:currentDate});
+        todayRejectedMission = await Mission.countDocuments({ cla_decision: "denied",rejected_date:currentDate });
 
-        todayRejectedMission = await Mission
-        .find({is_delete:0,status:2}).countDocuments();
+        todayTotalMission = await Mission.countDocuments({create_date:currentDate});
 
-        todayTotalMission = await Mission
-        .find({is_delete:0}).countDocuments();
     }
     catch(error)
     {

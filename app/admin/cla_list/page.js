@@ -1,31 +1,33 @@
 "use client";
+
 import axiosClient from "@/app/axiosClient";
 import TableExample from "@/app/example-table/page";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
 
-function AcuStatusList() {
-    const [cla_list, setCla_list] = useState([]);
-    const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
+function CLU() {
+    const [claList, setClaList] = useState([]);
 
     const fetchData = async () => {
         try {
             const { data } = await axiosClient.get('cla_list');
-            setCla_list(data.result);
-            console.log(data.result);
+            setClaList(data.result);
         } catch (error) {
-            console.error('Error fetching agencies:', error);
+            console.error('Error fetching CLA list:', error);
+            // You might want to display an error message to the user here
         }
     };
 
-    fetchData();
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-  
 
-    let tableName = "Missions CLA List";
+    const tableName = "Missions CLA List";
     const headName = ["Name", "Action"];
-    let head = (
+
+    const head = (
         <tr>
             {headName.map((item, index) => (
                 <th
@@ -40,37 +42,19 @@ function AcuStatusList() {
 
     const body = (
         <>
-            {Array.isArray(cla_list) && cla_list.map((item, index) => (
-
+            {Array.isArray(claList) && claList.map((item, index) => (
                 <tr key={index}>
-                
-
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            <div className="ml-3">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.name}
-                                </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
-                            </div>
+                        <div className="ml-3">
+                            <p className="text-gray-900 whitespace-no-wrap">
+                                {item.name}
+                            </p>
                         </div>
                     </td>
-                  
-
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
-
-                            <Link
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{ whiteSpace: 'nowrap' }}>
+                    <Link
                                 href={{
-                                    pathname: '/admin/acu_status/edit',
+                                    pathname: '/admin/cla_list/edit',
                                     query: { id: item._id },
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"
@@ -83,7 +67,7 @@ function AcuStatusList() {
                                       if (confirmed) {
                                           // Make a DELETE request to your API to mark the question as deleted
                                           try {
-                                            await axiosClient.delete(`acu_status/${item._id}`, {
+                                            await axiosClient.delete(`cla_list/${item._id}`, {
                                                   method: 'DELETE',
                                                   headers: {
                                                       'Content-Type': 'application/json',
@@ -109,10 +93,6 @@ function AcuStatusList() {
                               >
                                   Delete
                               </button>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
-
                     </td>
                 </tr>
             ))}
@@ -124,4 +104,4 @@ function AcuStatusList() {
     );
 }
 
-export default AcuStatusList;
+export default CLU;

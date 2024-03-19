@@ -11,6 +11,9 @@ import { uploadBase64Img } from "@/app/helper";
 import { Area } from "@/lib/model/area";
 import SubArea from "@/app/admin/sub-area/page";
 import { RequestStatus } from "@/lib/model/request_status";
+import CoordinationDecision from "@/app/admin/coordinate-decision/page";
+import { ClaList } from "@/lib/model/cla_list";
+import { Cargo } from "@/lib/model/cargo";
 
 export async function PUT(request, content) {
     let result = [];
@@ -20,20 +23,20 @@ export async function PUT(request, content) {
         const payload = await request.json();
         // return NextResponse.json(payload.password);
         await mongoose.connect(connectionStr);
-        const missionCluster=await RequestStatus.findById(filter);
+        const missionCluster=await Cargo.findById(filter);
         const oldData=missionCluster._doc;
-        const record = { request_status: payload.request_status, is_delete: 0 };
-        const is_findData = await RequestStatus.findOne({
+        const record = { what_is_being_carried_out: payload.what_is_being_carried_out, is_delete: 0 };
+        const is_findData = await Cargo.findOne({
             ...record,
             _id: { $ne: missionCluster._id }
         });
 
         if (is_findData) {
-            return NextResponse.json({ msg: 'Request Status must be unique', success: false }, { status: 409 });
+            return NextResponse.json({ msg: 'Name must be unique', success: false }, { status: 409 });
         }
 
         const updatedata={...oldData,...payload}
-        result = await RequestStatus.findOneAndUpdate(filter, updatedata);
+        result = await Cargo.findOneAndUpdate(filter, updatedata);
     } catch (error) {
         return NextResponse.json({error:error.message, success: 'error found'});
     }
@@ -46,7 +49,7 @@ export async function GET(request, content) {
         const id = content.params.id;
         const record = {_id: id};
         await mongoose.connect(connectionStr);
-        const result = await RequestStatus.findById(record);
+        const result = await Cargo.findById(record);
         return NextResponse.json({result, success: true});
     } catch (error) {
         result = error;
@@ -60,7 +63,7 @@ export async function DELETE(request, content) {
         const filter = { _id: id };
 
         await mongoose.connect(connectionStr);
-        const mission = await RequestStatus.findById(filter);
+        const mission = await Cargo.findById(filter);
 
         // Update only the is_delete field to 1
         mission.is_delete = 1;

@@ -72,7 +72,7 @@ function GeneralStatus() {
 
                             <Link
                                 href={{
-                                    pathname: '/admin/coordinate_decision/edit',
+                                    pathname: '/admin/general_status/edit',
                                     query: { id: item._id },
                                 }}
                                 className="px-4 py-2 mx-2 bg-main text-white rounded"
@@ -85,7 +85,7 @@ function GeneralStatus() {
                                       if (confirmed) {
                                           // Make a DELETE request to your API to mark the question as deleted
                                           try {
-                                            await axiosClient.delete(`coordinate_decision/${item._id}`, {
+                                            await axiosClient.delete(`general_status/${item._id}`, {
                                                   method: 'DELETE',
                                                   headers: {
                                                       'Content-Type': 'application/json',

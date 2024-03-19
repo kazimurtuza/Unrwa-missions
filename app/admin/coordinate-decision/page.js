@@ -85,7 +85,7 @@ function CoordinationDecision() {
                                       if (confirmed) {
                                           // Make a DELETE request to your API to mark the question as deleted
                                           try {
-                                            await axiosClient.delete(`coordinate_decision/${item._id}`, {
+                                            await axiosClient.delete(`coordination_decision/${item._id}`, {
                                                   method: 'DELETE',
                                                   headers: {
                                                       'Content-Type': 'application/json',
