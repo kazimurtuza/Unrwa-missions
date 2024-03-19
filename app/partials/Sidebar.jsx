@@ -20,13 +20,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
     const trigger = useRef(null);
     const sidebar = useRef(null);
-    const storedSidebarExpanded = 'false';
-    if (typeof window !== 'undefined') {
-        const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
-    }
+    const storedSidebarExpanded = false;
 
     const [sidebarExpanded, setSidebarExpanded] = useState(
-        storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
+        storedSidebarExpanded === null ? false : storedSidebarExpanded === true
     );
 
     // close on click outside

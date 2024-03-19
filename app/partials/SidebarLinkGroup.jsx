@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function SidebarLinkGroup({
   children,
   activecondition,
 }) {
-
   const [open, setOpen] = useState(activecondition);
 
   const handleClick = () => {
+    console.log(open);
     setOpen(!open);
   }
 
