@@ -14,6 +14,9 @@ export async function GET() {
         await mongoose.connect(connectionStr);
         let currentDate = new Date().toJSON().slice(0, 10);
 
+
+
+
         let userInfo = await AuthUser();
         let user_type = userInfo.user_type;
         let user_id = await userInfo.staff_id;
