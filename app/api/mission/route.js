@@ -39,13 +39,13 @@ export async function POST(request) {
         let payload = await request.json();
         const location_list = await payload.location_list;
         const vehicle_list = await payload.vehicle_list;
-        const mission = payload;
+        var mission = payload;
         delete mission.location_list;
         delete mission.vehicle_list;
         var totalMission=await Mission.countDocuments();
         totalMission = String(totalMission).padStart(6, '0').slice(0, 6);
         mission.create_date= await getCurrentFormattedDate();
-        mission.mission_id= "UNRWA"+{totalMission};
+        mission.mission_id=  await `UNRWA${totalMission}`;
         // return NextResponse.json({mission, success: true});
         const missionAdd = await new Mission(mission);
         missionAdd.save();

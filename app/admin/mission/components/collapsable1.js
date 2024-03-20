@@ -19,6 +19,13 @@ const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem}) => {
     const selectData = async (selectedOption, {name}) => {
         if ("arrival_umrah_id" == name || "departure_umrah_id" == name) {
             var val = await selectedOption;
+            if("departure_umrah_id" == name){
+                info.departure_installation_name=selectedOption.label;
+            }
+            if("arrival_umrah_id" == name){
+                info.arrival_installation_name=selectedOption.label;
+            }
+
         } else {
             var val = await selectedOption.value;
         }
@@ -59,9 +66,12 @@ const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem}) => {
                 setPremiseTypeList(updatedAgencyList);
             }
         } catch (error) {
-            setPremiseTypeList([]);
+                setPremiseTypeList([]);
         }
+
+
     };
+
     const setInstallation = async () => {
         try {
             const {data} = await axiosClient.get('umrah');

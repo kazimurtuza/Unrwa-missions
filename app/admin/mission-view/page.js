@@ -169,7 +169,7 @@ function MissionVIew() {
                     bad_presence_eds_erw_uxo: missionData.bad_presence_eds_erw_uxo,
                     regular_presence_eds_erw_uxo: missionData.regular_presence_eds_erw_uxo,
                     humanitarian_assistance: missionData.humanitarian_assistance,
-                    humanitarian_observations:missionData.humanitarian_observations,
+                    humanitarian_observations: missionData.humanitarian_observations,
 
                 }))
             }
@@ -214,7 +214,7 @@ function MissionVIew() {
     };
 
     const storeReportDate = async () => {
-        console.log( report);
+        console.log(report);
         const response = await axiosClient.post(
             "mission-report",
             report
@@ -296,17 +296,15 @@ function MissionVIew() {
                                                     </p>
                                                     <p>
                                                         {mission &&
-                                                        mission.leader.name}
+                                                            mission.leader.name}
                                                     </p>
                                                 </div>
                                                 <div className='form__col'>
                                                     <p>
-                                                        <b>Satellite Phone</b>
+                                                        <b>ID</b>
                                                     </p>
                                                     <p>
-                                                        {mission &&
-                                                        mission.leader
-                                                            .statelite_phone}
+                                                        {mission && mission.mission_id}
                                                     </p>
                                                 </div>
                                             </div>
@@ -317,8 +315,8 @@ function MissionVIew() {
                                                     </p>
                                                     <p>
                                                         {mission &&
-                                                        mission.leader
-                                                            .phone}
+                                                            mission.leader
+                                                                .phone}
                                                     </p>
                                                 </div>
                                                 <div className='form__col'>
@@ -327,8 +325,8 @@ function MissionVIew() {
                                                     </p>
                                                     <p>
                                                         {mission &&
-                                                        mission.leader.user
-                                                            .email}
+                                                            mission.leader.user
+                                                                .email}
                                                     </p>
                                                 </div>
                                             </div>
@@ -339,8 +337,18 @@ function MissionVIew() {
                                                     </p>
                                                     <p>
                                                         {mission &&
-                                                        mission.leader
-                                                            .whatsup_number}
+                                                            mission.leader
+                                                                .whatsup_number}
+                                                    </p>
+                                                </div>
+                                                <div className='form__col'>
+                                                    <p>
+                                                        <b>Satellite Phone</b>
+                                                    </p>
+                                                    <p>
+                                                        {mission &&
+                                                            mission.leader
+                                                                .statelite_phone}
                                                     </p>
                                                 </div>
                                             </div>
@@ -354,25 +362,25 @@ function MissionVIew() {
                                                     </h4>
                                                     <ul className='meta-list'>
                                                         {mission &&
-                                                        mission.agency.map(
-                                                            (
-                                                                item,
-                                                                index
-                                                            ) => (
-                                                                <li
-                                                                    key={
-                                                                        index
-                                                                    }
+                                                            mission.agency.map(
+                                                                (
+                                                                    item,
+                                                                    index
+                                                                ) => (
+                                                                    <li
+                                                                        key={
+                                                                            index
+                                                                        }
 
-                                                                >
-                                                                    {
-                                                                        item
-                                                                            .agency_id
-                                                                            .name
-                                                                    }
-                                                                </li>
-                                                            )
-                                                        )}
+                                                                    >
+                                                                        {
+                                                                            item
+                                                                                .agency_id
+                                                                                .name
+                                                                        }
+                                                                    </li>
+                                                                )
+                                                            )}
                                                     </ul>
                                                 </div>
                                                 <div className='msb-meta__item'>
@@ -381,9 +389,9 @@ function MissionVIew() {
                                                     </h4>
                                                     <p>
                                                         {mission &&
-                                                        convertDateFormat(
-                                                            mission.movement_date
-                                                        )}
+                                                            convertDateFormat(
+                                                                mission.movement_date
+                                                            )}
                                                     </p>
                                                 </div>
                                             </div>
@@ -395,7 +403,7 @@ function MissionVIew() {
                                                     </h4>
                                                     <p>
                                                         {mission &&
-                                                        mission.purpose}
+                                                            mission.purpose}
                                                     </p>
                                                 </div>
                                                 <div className='msb-meta__item'>
@@ -404,7 +412,7 @@ function MissionVIew() {
                                                     </h4>
                                                     <p>
                                                         {mission &&
-                                                        mission.remarks}
+                                                            mission.remarks}
                                                     </p>
                                                 </div>
                                             </div>
@@ -414,342 +422,345 @@ function MissionVIew() {
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Movement Stops</h2>
                                         {places &&
-                                        places.map((item, index) => (
-                                            <div
-                                                key={index}
-                                                className='form__info-box'
-                                            >
-                                                <h3 className='form__info-box__title'>
-                                                    Departure
-                                                </h3>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Departure
-                                                                Time
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {convertDateTimeFormat(
-                                                                item.departure_time
-                                                            )}
-                                                        </p>
-                                                    </div>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Facility
-                                                                Ownership
-                                                            </b>
-                                                        </p>
-                                                        {item.departure_umrah_type ==
-                                                        0 ? (
-                                                            <p>NOT UNRAW</p>
-                                                        ) : (
-                                                            <p>UNRAW</p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    {item.departure_umrah_type ==
-                                                    1 ? (
+                                            places.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    className='form__info-box'
+                                                >
+                                                    <h3 className='form__info-box__title'>
+                                                        Departure
+                                                    </h3>
+                                                    <div className='form__row flex-ctr-spb'>
                                                         <div className='form__col'>
                                                             <p>
                                                                 <b>
-                                                                    Premise
-                                                                    Type
+                                                                    Departure
+                                                                    Time
                                                                 </b>
                                                             </p>
                                                             <p>
-                                                                {item.departure_umrah_type ==
-                                                                1
-                                                                    ? item
-                                                                        .departure_premise_type
-                                                                        .name
-                                                                    : ""}
+                                                                {convertDateTimeFormat(
+                                                                    item.departure_time
+                                                                )}
                                                             </p>
                                                         </div>
-                                                    ) : (
-                                                        ""
-                                                    )}
-
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Installation
-                                                                Name
-                                                            </b>
-                                                        </p>
-                                                        <p>
+                                                        <div className='form__col'>
                                                             <p>
-                                                                {" "}
-                                                                {item.departure_umrah_id !=
+                                                                <b>
+                                                                    Facility
+                                                                    Ownership
+                                                                </b>
+                                                            </p>
+                                                            {item.departure_umrah_type ==
+                                                            0 ? (
+                                                                <p>NOT UNRAW</p>
+                                                            ) : (
+                                                                <p>UNRAW</p>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        {item.departure_umrah_type ==
+                                                        1 ? (
+                                                            <div className='form__col'>
+                                                                <p>
+                                                                    <b>
+                                                                        Premise
+                                                                        Type
+                                                                    </b>
+                                                                </p>
+                                                                <p>
+                                                                    {item.departure_umrah_type ==
+                                                                    1
+                                                                        ? item
+                                                                            .departure_premise_type
+                                                                            .name
+                                                                        : ""}
+                                                                </p>
+                                                            </div>
+                                                        ) : (
+                                                            ""
+                                                        )}
+
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Installation
+                                                                    Name
+                                                                </b>
+                                                            </p>
+                                                            <p>
+                                                                <p>
+                                                                    {" "}
+                                                                    {item.departure_umrah_id !=
+                                                                    null
+                                                                        ? item
+                                                                            .departure_umrah_id
+                                                                            .installation_name
+                                                                        : item.departure_installation_name}
+                                                                </p>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        {item.departure_umrah_type == 1? <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Building
+                                                                    Code
+                                                                </b>
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.departure_building_code
+                                                                }
+                                                            </p>
+                                                        </div>:""}
+
+
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>Longitude</b>
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.departure_longitude
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>Latitude</b>
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.departure_latitude
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <h3 className='form__info-box__title has-divider'>
+                                                        Arrival
+                                                    </h3>
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Arrival Time
+                                                                </b>
+                                                            </p>
+                                                            <p>
+                                                                {convertDateTimeFormat(
+                                                                    item.arrival_time
+                                                                )}
+                                                            </p>
+                                                        </div>
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Facility
+                                                                    Ownership
+                                                                </b>
+                                                            </p>
+                                                            {item.arrival_umrah_type ==
+                                                            0 ? (
+                                                                <p>NOT UNRAW</p>
+                                                            ) : (
+                                                                <p>UNRAW</p>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        {item.arrival_umrah_type ==
+                                                        1 ? (
+                                                            <div className='form__col'>
+                                                                <p>
+                                                                    <b>
+                                                                        Premise
+                                                                        Type
+                                                                    </b>
+                                                                </p>
+                                                                <p>
+                                                                    {item.arrival_umrah_type ==
+                                                                    1
+                                                                        ? item
+                                                                            .arrival_premise_type
+                                                                            .name
+                                                                        : ""}
+                                                                </p>
+                                                            </div>
+                                                        ) : (
+                                                            ""
+                                                        )}
+
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Installation
+                                                                    Name
+                                                                </b>
+                                                            </p>
+                                                            <p>
+                                                                {item.arrival_umrah_id !=
                                                                 null
                                                                     ? item
-                                                                        .departure_umrah_id
+                                                                        .arrival_umrah_id
                                                                         .installation_name
-                                                                    : item.departure_installation_name}
+                                                                    : item.arrival_installation_name}
                                                             </p>
-                                                        </p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Building
-                                                                Code
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.departure_building_code
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>Longitude</b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.departure_longitude
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>Latitude</b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.departure_latitude
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <h3 className='form__info-box__title has-divider'>
-                                                    Arrival
-                                                </h3>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Arrival Time
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {convertDateTimeFormat(
-                                                                item.arrival_time
-                                                            )}
-                                                        </p>
-                                                    </div>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Facility
-                                                                Ownership
-                                                            </b>
-                                                        </p>
-                                                        {item.arrival_umrah_type ==
-                                                        0 ? (
-                                                            <p>NOT UNRAW</p>
-                                                        ) : (
-                                                            <p>UNRAW</p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    {item.arrival_umrah_type ==
-                                                    1 ? (
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        {item.arrival_umrah_type == 1?
                                                         <div className='form__col'>
                                                             <p>
                                                                 <b>
-                                                                    Premise
-                                                                    Type
+                                                                    Building
+                                                                    Code
                                                                 </b>
                                                             </p>
                                                             <p>
-                                                                {item.arrival_umrah_type ==
-                                                                1
-                                                                    ? item
-                                                                        .arrival_premise_type
-                                                                        .name
-                                                                    : ""}
+                                                                {
+                                                                    item.arrival_building_code
+                                                                }
+                                                            </p>
+                                                        </div>:""}
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>Longitude</b>
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.arrival_longitude
+                                                                }
                                                             </p>
                                                         </div>
-                                                    ) : (
-                                                        ""
-                                                    )}
-
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Installation
-                                                                Name
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {item.arrival_umrah_id !=
-                                                            null
-                                                                ? item
-                                                                    .arrival_umrah_id
-                                                                    .installation_name
-                                                                : item.arrival_installation_name}
-                                                        </p>
+                                                    </div>
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>Latitude</b>
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.arrival_latitude
+                                                                }
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Building
-                                                                Code
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.arrival_building_code
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>Longitude</b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.arrival_longitude
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>Latitude</b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.arrival_latitude
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
+                                            ))}
                                     </div>
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Vehicle and Driver Details</h2>
                                         {vehicles &&
-                                        vehicles.map((item) => (
-                                            <div className='form__info-box'>
-                                                <h3 className='form__info-box__title'>
-                                                    Driver
-                                                </h3>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Agency Name
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.agency
-                                                                    .name
-                                                            }{" "}
-                                                        </p>
-                                                    </div>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Driver Name
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.driver
-                                                                    .name
-                                                            }{" "}
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-                                                <h3 className='form__info-box__title has-divider'>
-                                                    Vehicle
-                                                </h3>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Vehicle
-                                                                Registration
-                                                                #
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.vehicle
-                                                                    .registration_number
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Vehicle Type
-                                                                (Model)
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.vehicle
-                                                                    .vehicle_type
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className='form__row flex-ctr-spb'>
-                                                    <div className='form__col'>
-                                                        <p>
-                                                            <b>
-                                                                Vehicle Body
-                                                                Description
-                                                            </b>
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.vehicle
-                                                                    .description
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-                                                <h3 className='form__info-box__title has-divider'>
-                                                    Staff
-                                                </h3>
-
-                                                <ul className='meta-list'>
-                                                    {item.staff.map(
-                                                        (item) => (
-                                                            <li>
+                                            vehicles.map((item) => (
+                                                <div className='form__info-box'>
+                                                    <h3 className='form__info-box__title'>
+                                                        Driver
+                                                    </h3>
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Agency Name
+                                                                </b>
+                                                            </p>
+                                                            <p>
                                                                 {
-                                                                    item
-                                                                        .staff_id
+                                                                    item.agency
                                                                         .name
+                                                                }{" "}
+                                                            </p>
+                                                        </div>
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Driver Name
+                                                                </b>
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.driver
+                                                                        .name
+                                                                }{" "}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <h3 className='form__info-box__title has-divider'>
+                                                        Vehicle
+                                                    </h3>
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Vehicle
+                                                                    Registration
+                                                                    #
+                                                                </b>
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.vehicle
+                                                                        .registration_number
                                                                 }
-                                                            </li>
-                                                        )
-                                                    )}
-                                                </ul>
-                                            </div>
-                                        ))}
+                                                            </p>
+                                                        </div>
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Vehicle Type
+                                                                    (Model)
+                                                                </b>
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.vehicle
+                                                                        .vehicle_type
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='form__row flex-ctr-spb'>
+                                                        <div className='form__col'>
+                                                            <p>
+                                                                <b>
+                                                                    Vehicle Body
+                                                                    Description
+                                                                </b>
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.vehicle
+                                                                        .description
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <h3 className='form__info-box__title has-divider'>
+                                                        Staff
+                                                    </h3>
+
+                                                    <ul className='meta-list'>
+                                                        {item.staff.map(
+                                                            (item) => (
+                                                                <li>
+                                                                    {
+                                                                        item
+                                                                            .staff_id
+                                                                            .name
+                                                                    }
+                                                                </li>
+                                                            )
+                                                        )}
+                                                    </ul>
+                                                </div>
+                                            ))}
                                     </div>
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
@@ -796,37 +807,30 @@ function MissionVIew() {
                                                                 }
 
                                                             >
-                                                                <option
-                                                                    value=''
-                                                                    disabled
-                                                                    hidden
-                                                                >
-                                                                    Select ACU
-                                                                    Status
-                                                                </option>
+                                                                <option value='' disabled hidden>Select ACU Status</option>
                                                                 {Array.isArray(
-                                                                    acuDataList
-                                                                ) &&
-                                                                acuDataList.map(
-                                                                    (
-                                                                        val
-                                                                    ) => (
-                                                                        <option
-                                                                            key={
-                                                                                val.id
-                                                                            }
+                                                                        acuDataList
+                                                                    ) &&
+                                                                    acuDataList.map(
+                                                                        (
+                                                                            val
+                                                                        ) => (
+                                                                            <option
+                                                                                key={
+                                                                                    val.id
+                                                                                }
 
-                                                                            value={
-                                                                                val._id
-                                                                            }
+                                                                                value={
+                                                                                    val._id
+                                                                                }
 
-                                                                        >
-                                                                            {
-                                                                                val.acu_status
-                                                                            }
-                                                                        </option>
-                                                                    )
-                                                                )}
+                                                                            >
+                                                                                {
+                                                                                    val.acu_status
+                                                                                }
+                                                                            </option>
+                                                                        )
+                                                                    )}
                                                             </select>
                                                         </div>
                                                     </div>
@@ -1123,7 +1127,7 @@ function MissionVIew() {
                                             </div>
                                         </div>
                                     </div>
-                                    {mission &&(mission.request_status=="mission_completed")?
+                                    {mission && (mission.request_status == "mission_completed") ?
                                         <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                             <h1>Mission Debriefing Form</h1>
                                             <div className='mdf-form-body'>
@@ -1133,16 +1137,16 @@ function MissionVIew() {
                                                         (Agencies):{" "}
 
                                                         {mission &&
-                                                        mission.agency.map(
-                                                            (
-                                                                item,
-                                                                index
-                                                            ) => (
-                                                                <span>{
-                                                                    item.agency_id.name
-                                                                }</span>
-                                                            )
-                                                        )}
+                                                            mission.agency.map(
+                                                                (
+                                                                    item,
+                                                                    index
+                                                                ) => (
+                                                                    <span>{
+                                                                        item.agency_id.name
+                                                                    }</span>
+                                                                )
+                                                            )}
 
                                                     </p>
                                                     <p>
@@ -1168,14 +1172,14 @@ function MissionVIew() {
                                                     <p>
                                                         Date of the mission:{" "}
                                                         <span> {mission &&
-                                                        convertDateFormat(
-                                                            mission.movement_date
-                                                        )}</span>
+                                                            convertDateFormat(
+                                                                mission.movement_date
+                                                            )}</span>
                                                     </p>
                                                     <p>
                                                         Mission Focal Point:{" "}
                                                         <span> {mission &&
-                                                        mission.leader.name}</span>
+                                                            mission.leader.name}</span>
                                                     </p>
                                                 </div>
                                                 <h3>
@@ -1422,8 +1426,7 @@ function MissionVIew() {
 
                                                 </div>
                                             </div>
-                                        </div>:""}
-
+                                        </div> : ""}
 
 
                                 </div>
