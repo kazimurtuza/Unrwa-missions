@@ -1,15 +1,15 @@
 "use client";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
 // import {MissionPDF} from "./components/missionPdf";
 
 import axiosClient from "@/app/axiosClient";
+import { useRouter } from "next/navigation";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
 import "./steps.css";
-import { useRouter } from "next/navigation";
 function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -183,8 +183,6 @@ function Steps() {
     }, []);
 
     async function saveMission() {
-
-
         try {
             var validationError = await checkStep3();
             await vehicleStaf.forEach(item => {
@@ -209,9 +207,7 @@ function Steps() {
                 };
             });
 
-
             let updateData = await {...storeData, vehicle_list: vehicle_list};
-
 
             setCheckValidation(0)
             const response = await axiosClient.post('mission', updateData).then(function (response) {
@@ -224,7 +220,6 @@ function Steps() {
                 setStoreData(old => dataObject);
                 setActiveTab(old => 0);
                 router.push("/admin/mission/mission-list", { scroll: false });
-
             })
                 .catch(function (error) {
                     console.log(error.message);

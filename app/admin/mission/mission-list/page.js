@@ -1,8 +1,10 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import TableExample from "@/app/example-table/page";
+import $ from 'jquery';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
+import '../../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
+import '../../../../node_modules/datatables/media/js/jquery.dataTables.min';
 function MissionList() {
     const [mission, setMissionList] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -10,6 +12,9 @@ function MissionList() {
         try {
             const { data } = await axiosClient.get('mission');
             setMissionList(data.result);
+            setTimeout( function(){
+                $('table').dataTable();
+            }, 300);
         } catch (error) {
             console.error('Error fetching users:', error);
         }
@@ -23,6 +28,7 @@ function MissionList() {
            mission_id:id,
            status:status,
        }
+
         const response = await axiosClient.post('mission-status-update', adminData);
         if(response.data.success==true){
             fetchData();
@@ -39,6 +45,7 @@ function MissionList() {
 
         return formattedDate;
     }
+
     function getStatusString(request_status) {
         return (
             request_status === "request_received" ? "Request Received" :
@@ -156,8 +163,6 @@ function MissionList() {
                         <span className="relative">
                             {getStatusString(item.request_status)}
 
-
-
                         </span>
                     </span>
 
@@ -186,9 +191,40 @@ function MissionList() {
         </>
     );
 
-    return (
-        <TableExample tableName={tableName} tableHead={head} body={body}/>
-    );
+        return (
+            <div className="flex h-screen overflow-hidden">
+
+            <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+              <main>
+                <div className="container mx-auto px-4 sm:px-8">
+                  <div className="py-8">
+                    <div className="flex gap-5 flex-wrap items-center justify-between">
+                      <h2 className="text-2xl font-semibold leading-tight">
+                      Mission List
+
+                      </h2>
+                    </div>
+                    {/* Table */}
+                    <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                      <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                        <table className="min-w-full leading-normal">
+                          <thead>
+                          {head}
+                          </thead>
+                          <tbody>
+                          {body}
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </main>
+            </div>
+          </div>
+        );
 }
 
 export default MissionList;
