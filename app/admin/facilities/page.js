@@ -29,9 +29,10 @@ function UmrahList() {
             // console.error('Error fetching categories:', error);
         }
     };
-    fetchData();
+   
 
     useEffect(() => {
+        fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     const indexOfLastItem = currentPage * perPage;

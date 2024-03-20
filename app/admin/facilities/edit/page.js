@@ -558,11 +558,20 @@ useEffect(() => {
                           <option value="" disabled hidden>
                             Select CLA
                           </option>
-                          {Array.isArray(clsDataList) && clsDataList.map((val) => (
+                          {/* {Array.isArray(clsDataList) && clsDataList.map((val) => (
                             <option key={val.id} value={val._id}>
                               {val.name}
                             </option>
-                          ))}
+                          ))} */}
+                          <option value="Approved">
+                            Approved
+                          </option>
+                          <option value="Partially Approved">
+                            Partially Approved
+                          </option>
+                          <option value="Denied">
+                            Denied
+                          </option>
                         </select>
                       </div>
 
