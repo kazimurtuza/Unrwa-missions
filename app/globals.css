@@ -147,7 +147,13 @@ table a {
 }
 
 .dashboar-main{
-  padding: 20px 20px 50px;
+    padding-bottom: 50px;
+}
+
+@media (min-width: 1025px ){
+    .dashboar-main{
+        padding: 20px 20px 50px;
+      }
 }
 
 .chart-wrap {
@@ -158,4 +164,14 @@ table a {
     .chart-wrap {
         width: calc(100vw - 500px);
     }
+}
+
+@media (max-width: 767px) {
+    .header {
+        padding-right: 20px;
+    }
+}
+
+#sidebar{
+    position: relative;
 }
