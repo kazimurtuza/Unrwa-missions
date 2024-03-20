@@ -17,9 +17,10 @@ function Vehicle() {
         }
     };
 
-    fetchData();
+   
 
     useEffect(() => {
+        fetchData();
        
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 

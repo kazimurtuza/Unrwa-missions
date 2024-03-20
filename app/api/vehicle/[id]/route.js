@@ -34,7 +34,7 @@ export async function PUT(request, content) {
         });
 
         if (is_findData2) {
-            return NextResponse.json({ msg: 'Vehicle ID must be unique', success: false }, { status: 409 });
+            return NextResponse.json({ msg: 'Vehicle Plate Number must be unique', success: false }, { status: 409 });
         }
         const oldData=missionCluster._doc;
 

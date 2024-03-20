@@ -32,7 +32,7 @@ export async function PUT(request, content) {
         }
 
         const updatedata={...oldData,...payload}
-        result = await Area.findOneAndUpdate(filter, updatedata);
+        result = await SubArea.findOneAndUpdate(filter, updatedata);
     } catch (error) {
         return NextResponse.json({error:error.message, success: 'error found'});
     }

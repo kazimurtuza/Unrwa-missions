@@ -72,6 +72,7 @@ export async function GET(request, content) {
 }
 
 export async function DELETE(request, content) {
+    //return NextResponse.json({ error:"api calling", success: false });
     try {
         const id = content.params.id;
         const filter = { _id: id };

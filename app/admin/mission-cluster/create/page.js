@@ -17,19 +17,22 @@ function MissionClusterCreate() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
+  const fetchData = async () => {
+    try {
+        const { data } = await axiosClient.get('agency');
+        setAgencyList(data.result);
+        console.log(data.result);
+    } catch (error) {
+        console.error('Error fetching agencies:', error);
+    }
+};
+
+
 
   useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const { data } = await axiosClient.get('agency');
-            setAgencyList(data.result);
-            console.log(data.result);
-        } catch (error) {
-            console.error('Error fetching agencies:', error);
-        }
-    };
 
     fetchData();
+    
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
 
