@@ -1,10 +1,11 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import TableExample from "@/app/example-table/page";
+import $ from 'jquery';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-
+import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
+import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 function Country() {
     const [country, setCountryList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -14,17 +15,16 @@ function Country() {
         try {
             const { data } = await axiosClient.get('country');
             setCountryList(data.result);
+            setTimeout( function(){
+                $('table').dataTable();
+            }, 300);
         } catch (error) {
             console.error('Error fetching vehicles:', error);
         }
     };
 
-   
-
     useEffect(() => {
-
         fetchData();
-        
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     const indexOfLastItem = currentPage * perPage;
@@ -57,7 +57,7 @@ function Country() {
                         <p className="text-gray-900 whitespace-no-wrap">
                             {index+1}
                         </p>
-                       
+
                     </td> */}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
@@ -157,7 +157,7 @@ function Country() {
                                                 icon: 'success',
                                                 // confirmButtonText: 'Cool'
                                             })
-                                          
+
                                               //setMessage('Delete successfully');
                                               // Remove the deleted question from the state
                                               //setData(data => data.filter(item => item._id !== val._id));
@@ -178,24 +178,42 @@ function Country() {
                     </td>
                 </tr>
             ))}
-
-        <ul className="flex justify-center my-4">
-                {Array.from({ length: Math.ceil(country.length / perPage) }, (_, i) => (
-                    <li key={i} className="mx-1">
-                        <button
-                            onClick={() => paginate(i + 1)}
-                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${currentPage === i + 1 ? 'bg-blue-700' : ''}`}
-                        >
-                            {i + 1}
-                        </button>
-                    </li>
-                ))}
-            </ul>
         </>
     );
 
     return (
-        <TableExample tableName={tableName} tableHead={head} body={body}/>
+        <div className="flex h-screen overflow-hidden">
+
+        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <main>
+            <div className="container mx-auto px-4 sm:px-8">
+              <div className="py-8">
+                <div className="flex gap-5 flex-wrap items-center justify-between">
+                  <h2 className="text-2xl font-semibold leading-tight">
+                  Country
+
+                  </h2>
+                </div>
+                {/* Table */}
+                <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                  <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                    <table className="min-w-full leading-normal">
+                      <thead>
+                      {head}
+                      </thead>
+                      <tbody>
+                      {body}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     );
 }
 
