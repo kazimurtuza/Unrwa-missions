@@ -176,7 +176,6 @@ function MissionVIew() {
                     regular_presence_eds_erw_uxo: missionData.regular_presence_eds_erw_uxo,
                     humanitarian_assistance: missionData.humanitarian_assistance,
                     humanitarian_observations: missionData.humanitarian_observations,
-
                 }))
             }
 
@@ -760,6 +759,7 @@ function MissionVIew() {
                                                         <div className='form__col'>
                                                             <p>
                                                                 <b>
+
                                                                     Vehicle Type
                                                                     (Model)
                                                                 </b>
@@ -786,8 +786,11 @@ function MissionVIew() {
                                                                         .description
                                                                 }
                                                             </p>
-                                                        </div>
+                                                         </div>
                                                     </div>
+
+
+
 
                                                     <h3 className='form__info-box__title has-divider'>
                                                         Staff
