@@ -39,7 +39,7 @@ function PremiseTypeCreate() {
             setSuccessMessage("Premise Type Create Successfully");
             setName("");
             setErrorMessage("");
-            router.push("../staff", { scroll: false });
+            router.push("../premise-type", { scroll: false });
           }
           else
           {
