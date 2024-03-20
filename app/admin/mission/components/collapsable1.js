@@ -59,9 +59,12 @@ const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem}) => {
                 setPremiseTypeList(updatedAgencyList);
             }
         } catch (error) {
-            setPremiseTypeList([]);
+                setPremiseTypeList([]);
         }
+
+
     };
+
     const setInstallation = async () => {
         try {
             const {data} = await axiosClient.get('umrah');

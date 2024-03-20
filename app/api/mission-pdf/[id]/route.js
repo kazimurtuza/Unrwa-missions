@@ -283,7 +283,7 @@ export async function GET(req, content) {
                     </div>
                     <div class="list-item">
                         <strong>UNRWA Request #</strong>
-                        <span>{data.mission.mission_id}</span>
+                        <span>${data.mission.mission_id}</span>
                     </div>
                     <div class="list-item">
                         <strong>UNOPS ACU #</strong>
