@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useRef, useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 function AreaCreate() {
   const router = useRouter();
@@ -67,6 +68,12 @@ function AreaCreate() {
             setName("");
             setAreaId("");
             setErrorMessage("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../sub-area", { scroll: false });
           }
           else
