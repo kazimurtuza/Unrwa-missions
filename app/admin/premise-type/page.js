@@ -21,9 +21,13 @@ function Driver() {
         }
     };
 
-    fetchData();
+    
 
     useEffect(() => {
+
+
+        fetchData();
+       
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Premise Type";
