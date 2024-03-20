@@ -4,13 +4,13 @@ import DualListBox from "react-dual-listbox";
 import "react-dual-listbox/lib/react-dual-listbox.css";
 import Select from "react-select";
 
-const carriList = [
-    {value: "Passengers", label: "Passengers"},
-    {value: "Fuel", label: "Fuel"},
-    {value: "Medicine", label: "Medicine"},
-    {value: "Food", label: "Food"},
-    {value: "Mixed_Items", label: "Mixed Emergency Response Items"},
-];
+// const carriList = [
+//     {value: "Passengers", label: "Passengers"},
+//     {value: "Fuel", label: "Fuel"},
+//     {value: "Medicine", label: "Medicine"},
+//     {value: "Food", label: "Food"},
+//     {value: "Mixed_Items", label: "Mixed Emergency Response Items"},
+// ];
 
 const customStyles = {
     color: "red",
@@ -46,6 +46,7 @@ const Collapsable2 = ({
     const [collapse, setCollapse] = useState(true);
     const [selected, setSelected] = useState([]);
     const [driverInfo, setDriverInfo] = useState();
+    const [carriList, setCarriList] = useState([]);
 
 
     const getDriverData = async () => {
@@ -157,6 +158,22 @@ const Collapsable2 = ({
             setStaffList([]);
         }
     };
+
+    const carriedList = async () => {
+        try {
+            const {data} = await axiosClient.get("cargo");
+            if (data.success === true) {
+                const carriList = data.result.map((item) => ({
+                    label: item.what_is_being_carried_out,
+                    value: item.what_is_being_carried_out,
+                }));
+                setCarriList(carriList);
+                // setStaffList((prevStaffList) => [...updatedStaffList]);
+            }
+        } catch (error) {
+            setStaffList([]);
+        }
+    };
     const vehicleListSet = async (id) => {
         try {
             const vehicleLink = `agency-wise-vehicle/${id}`
@@ -193,15 +210,14 @@ const Collapsable2 = ({
             let save = prevehicleStaf[item];
             setSelected((old) => save);
         }
-
         // var save=prevehicleStaf?prevehicleStaf[item]:[];
         // // let selectedStaffList = await info.staff.map((item) => item.staff_id);
-
     }
 
     useEffect(() => {
         selectedStaffSet();
         agencyListSet();
+        carriedList();
         // driverListSet();
         staffListSet();
         // vehicleListSet();
@@ -248,12 +264,9 @@ const Collapsable2 = ({
         // })
         prevehicleStaf[item] = data;
 
-
         // console.log(prevehicleStaf)
 
-
         updateVehicleStaf(prevehicleStaf)
-
         // let name = "staff"; // Assuming this is the name you want to use
         // vehicleStaffStore(value, item); // You need to define 'item' somewhere in your code
     };
