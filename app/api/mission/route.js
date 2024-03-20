@@ -39,13 +39,13 @@ export async function POST(request) {
         let payload = await request.json();
         const location_list = await payload.location_list;
         const vehicle_list = await payload.vehicle_list;
-        const mission = payload;
+        var mission = payload;
         delete mission.location_list;
         delete mission.vehicle_list;
         var totalMission=await Mission.countDocuments();
         totalMission = String(totalMission).padStart(6, '0').slice(0, 6);
         mission.create_date= await getCurrentFormattedDate();
-        mission.mission_id= "UNRWA"+{totalMission};
+        mission.mission_id=  await `UNRWA${totalMission}`;
         // return NextResponse.json({mission, success: true});
         const missionAdd = await new Mission(mission);
         missionAdd.save();
@@ -68,6 +68,8 @@ export async function POST(request) {
         }
 
 
+
+
         const mailContent = `New Mission Created `;
         // Set up email options
         // let user=User.findOne({user_type:'admin'}).email;
@@ -81,13 +83,15 @@ export async function POST(request) {
 
 
 
-
-
         return NextResponse.json({result, success: true});
     } catch (error) {
         return NextResponse.json({error: error.message, success: false});
     }
 }
+
+
+
+
 
 export async function GET() {
     try {
@@ -96,7 +100,7 @@ export async function GET() {
 
         let userInfo = await AuthUser()
         let user_type = userInfo.user_type;
-        let user_id = await userInfo.id;
+        let user_id = await userInfo.staff_id;
 
         if (user_type === "admin") {
             var result = await Mission.aggregate([
@@ -144,18 +148,28 @@ export async function GET() {
                 },
                 {
                     $sort: { /* Specify the field to sort by and set it to -1 for descending order */
-                        fieldToSortBy: -1
+                        _id: -1
                     }
                 }
             ]) // Adjust this line
                 .exec();
         }else{
+         var id= new mongoose.Types.ObjectId(user_id)
             var result = await Mission.aggregate([
                 {
                     $match: {
-                        leader: mongoose.Types.ObjectId(user_id) // Match documents where the leader field matches the given leader ID
+                        leader:id// Match documents where the leader field matches the given leader ID
                     }
                 },
+                {
+                    $lookup: {
+                        from: "staffs",
+                        localField: "leader",
+                        foreignField: "_id",
+                        as: "leader_details"
+                    }
+                },
+
                 {
                     $lookup: {
                         from: "staffs",
@@ -206,9 +220,6 @@ export async function GET() {
             ]) // Adjust this line
                 .exec();
         }
-
-
-
 
 
         return NextResponse.json({result, success: true});

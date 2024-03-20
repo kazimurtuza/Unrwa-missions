@@ -11,6 +11,7 @@ export async function GET() {
             <style>
             body{
                 font-family: arial;
+                padding: 30px;
             }
 
                 .divider{

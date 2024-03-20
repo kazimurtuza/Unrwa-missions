@@ -277,7 +277,7 @@ const handleAgencyChange = (value) => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="email"
                           placeholder="Enter your lead official email"
                           value={leadOfficeEmail}
                           onChange={(e) =>

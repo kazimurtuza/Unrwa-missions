@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 function MissionClusterCreate() {
   const router = useRouter();
@@ -17,19 +18,22 @@ function MissionClusterCreate() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
 
+  const fetchData = async () => {
+    try {
+        const { data } = await axiosClient.get('agency');
+        setAgencyList(data.result);
+        console.log(data.result);
+    } catch (error) {
+        console.error('Error fetching agencies:', error);
+    }
+};
+
+
 
   useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const { data } = await axiosClient.get('agency');
-            setAgencyList(data.result);
-            console.log(data.result);
-        } catch (error) {
-            console.error('Error fetching agencies:', error);
-        }
-    };
 
     fetchData();
+    
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
 
@@ -83,6 +87,12 @@ const handleAgencyChange = (value) => {
             setOfficeName("");
             setOfficePhone("");
             setErrorMessage("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../mission-cluster", { scroll: false });
           }
           else
@@ -228,7 +238,7 @@ const handleAgencyChange = (value) => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="number"
                           placeholder="Enter your lead official phone"
                           value={leadOfficePhone}
                           onChange={(e) =>
@@ -249,7 +259,7 @@ const handleAgencyChange = (value) => {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
-                          type="text"
+                          type="email"
                           placeholder="Enter your lead official email"
                           value={leadOfficeEmail}
                           onChange={(e) =>

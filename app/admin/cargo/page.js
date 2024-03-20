@@ -1,10 +1,10 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import TableExample from "@/app/example-table/page";
-import Link from "next/link";
+import $ from 'jquery';
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-
+import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
+import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 function Cargo() {
     const [cargo, setCargo] = useState([]);
 
@@ -12,15 +12,15 @@ function Cargo() {
         try {
             const { data } = await axiosClient.get('cargo');
             setCargo(data.result);
-            console.log(data.result);
+            setTimeout( function(){
+                $('table').dataTable();
+            }, 300);
         } catch (error) {
             console.error('Error fetching agencies:', error);
         }
     };
 
     useEffect(() => {
-       
-
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
@@ -92,7 +92,38 @@ function Cargo() {
     );
 
     return (
-        <TableExample tableName={tableName} tableHead={head} body={body}/>
+        <div className="flex h-screen overflow-hidden">
+
+        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <main>
+            <div className="container mx-auto px-4 sm:px-8">
+              <div className="py-8">
+                <div className="flex gap-5 flex-wrap items-center justify-between">
+                  <h2 className="text-2xl font-semibold leading-tight">
+                  Missions Vehicle Cargo
+
+                  </h2>
+                </div>
+                {/* Table */}
+                <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                  <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                    <table className="min-w-full leading-normal">
+                      <thead>
+                      {head}
+                      </thead>
+                      <tbody>
+                      {body}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     );
 }
 

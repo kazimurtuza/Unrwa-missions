@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 function CountryCreate() {
   const router = useRouter();
@@ -95,6 +96,12 @@ function CountryCreate() {
             setIso3166("");
             setRegion("");
             setErrorMessage("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../country", { scroll: false });
           } else {
             if(response.data.msg) {

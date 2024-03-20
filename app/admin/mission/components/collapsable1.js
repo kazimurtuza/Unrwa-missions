@@ -2,7 +2,8 @@ import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
 import Select from 'react-select';
 
-const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem}) => {
+const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem, isCollapse}) => {
+    console.log(isCollapse);
     const [collapse, setCollapse] = useState(totalItem!=item?true:false);
     const [premiseTypeList, setPremiseTypeList] = useState([]);
     const [unrahInfo, setumrahInfo] = useState([]);
@@ -19,6 +20,13 @@ const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem}) => {
     const selectData = async (selectedOption, {name}) => {
         if ("arrival_umrah_id" == name || "departure_umrah_id" == name) {
             var val = await selectedOption;
+            if("departure_umrah_id" == name){
+                info.departure_installation_name=selectedOption.label;
+            }
+
+            if("arrival_umrah_id" == name){
+                info.arrival_installation_name=selectedOption.label;
+            }
         } else {
             var val = await selectedOption.value;
         }
@@ -59,9 +67,10 @@ const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem}) => {
                 setPremiseTypeList(updatedAgencyList);
             }
         } catch (error) {
-            setPremiseTypeList([]);
+                setPremiseTypeList([]);
         }
     };
+
     const setInstallation = async () => {
         try {
             const {data} = await axiosClient.get('umrah');

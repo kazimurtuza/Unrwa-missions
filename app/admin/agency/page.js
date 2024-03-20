@@ -1,9 +1,11 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import TableExample from "@/app/example-table/page";
+import $ from 'jquery';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
+import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
+import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 
 function AgencyList() {
     const [agency, setAgencyList] = useState([]);
@@ -13,17 +15,16 @@ function AgencyList() {
         try {
             const { data } = await axiosClient.get('agency');
             setAgencyList(data.result);
+            setTimeout( function(){
+                $('table').dataTable();
+            }, 300);
         } catch (error) {
             console.error('Error fetching agencies:', error);
         }
     };
 
-    
-
     useEffect(() => {
-
         fetchData();
-       
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Agency";
@@ -46,7 +47,7 @@ function AgencyList() {
             {Array.isArray(agency) && agency.map((item, index) => (
 
                 <tr key={index}>
-                
+
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}
@@ -92,7 +93,7 @@ function AgencyList() {
                             </div>
                         </div>
                     </td>
-                  
+
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}
@@ -131,7 +132,6 @@ function AgencyList() {
                             </div>
                         </div>
                     </td>
-                   
 
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
 
@@ -150,19 +150,20 @@ function AgencyList() {
                                       if (confirmed) {
                                           // Make a DELETE request to your API to mark the question as deleted
                                           try {
-                                            await axiosClient.delete(`agency/${item._id}`, {
+                                           const res= await axiosClient.delete(`agency/${item._id}`, {
                                                   method: 'DELETE',
                                                   headers: {
                                                       'Content-Type': 'application/json',
                                                   },
                                               });
+                                              console.log(res);
                                               Swal.fire({
                                                 title: 'success',
                                                 text: 'Successfully Deleted',
                                                 icon: 'success',
                                                 // confirmButtonText: 'Cool'
                                             })
-                                          
+
                                               //setMessage('Delete successfully');
                                               // Remove the deleted question from the state
                                               //setData(data => data.filter(item => item._id !== val._id));
@@ -187,7 +188,37 @@ function AgencyList() {
     );
 
     return (
-        <TableExample tableName={tableName} tableHead={head} body={body}/>
+        <div className="flex h-screen overflow-hidden">
+
+        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <main>
+            <div className="container mx-auto px-4 sm:px-8">
+              <div className="py-8">
+                <div className="flex gap-5 flex-wrap items-center justify-between">
+                  <h2 className="text-2xl font-semibold leading-tight">
+                  Agency
+                  </h2>
+                </div>
+                {/* Table */}
+                <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                  <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                    <table className="min-w-full leading-normal">
+                      <thead>
+                      {head}
+                      </thead>
+                      <tbody>
+                      {body}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     );
 }
 

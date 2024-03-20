@@ -48,6 +48,38 @@ export async function PUT(request, content) {
         const oldData=missionCluster._doc;
         //return NextResponse.json({error:payload.staff_photo, success: false});
 
+        const record = { email: payload.email, is_delete: 0 };
+        const is_findData = await Staff.findOne({
+            ...record,
+            _id: { $ne: missionCluster._id }
+        });
+
+        if (is_findData) {
+            return NextResponse.json({ msg: 'Email must be unique', success: false }, { status: 409 });
+        }
+        
+
+        const record2 = { national_id: payload.national_id, is_delete: 0 };
+        const is_findData2 = await Staff.findOne({
+            ...record2,
+            _id: { $ne: missionCluster._id }
+        });
+
+        if (is_findData2) {
+            return NextResponse.json({ msg: 'National ID must be unique', success: false }, { status: 409 });
+        }
+
+        const record3 = { employee_id: payload.employee_id, is_delete: 0 };
+        const is_findData3 = await Staff.findOne({
+            ...record3,
+            _id: { $ne: missionCluster._id }
+        });
+
+        if (is_findData3) {
+            return NextResponse.json({ msg: 'Employee ID must be unique', success: false }, { status: 409 });
+        }
+
+
         if(payload.staff_photo)
         {
             try {

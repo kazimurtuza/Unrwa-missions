@@ -45,11 +45,7 @@ export async function GET() {
             {
                 path: 'sub_area',
                 model: 'SubArea'
-            },
-            {
-                path: 'cls_list',
-                model: 'ClaList'
-            },
+            }
     
         ])
         .sort({created_at:-1});

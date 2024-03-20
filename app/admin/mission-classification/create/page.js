@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 function MissionClassificationCreate() {
   const router = useRouter();
@@ -62,6 +63,12 @@ function MissionClassificationCreate() {
             setRequests_classifications("");
             setAbbreviation("");
             setErrorMessage("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../mission-classification", { scroll: false });
           }
           else

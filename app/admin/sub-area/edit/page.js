@@ -84,8 +84,8 @@ function AreaCreate() {
           if(response.data.success==true)
           {
             setSuccessMessage("Sub Area Update Successfully");
-            setName("");
-            setAreaId("");
+            // setName("");
+            // setAreaId("");
             setErrorMessage("");
           }
           else
@@ -127,7 +127,7 @@ function AreaCreate() {
                   <div className="w-5/6 mx-auto bg-white rounded shadow">
                     <div className="p-8">
                       <p className="text-2xl text-black font-bold">
-                        Emergency Response Gaza Sub Area Create
+                        Emergency Response Gaza Sub Area Edit
                       </p>
                       <br></br>
                       {successMessage && (

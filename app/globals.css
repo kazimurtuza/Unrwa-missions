@@ -36,9 +36,9 @@ body {
     background-color: var(--main-color);
 }
 
-#sidebar {
+/* #sidebar {
     width: 18rem !important;
-}
+} */
 
 ul .menu-legend {
     color: #ffffff;
@@ -140,14 +140,28 @@ table a {
     display: inline-block;
 }
 
+#sidebar{
+    position: relative;
+    z-index: 999999999999999999;
+    width: 18rem!important;
+}
+
 @media (max-width: 1024px) {
-    .-translate-x-70 {
-        transform: translateX(-18rem) !important;
+    #sidebar.-translate-x-70 {
+        transform: translateX(-19rem) !important;
+        width: 0!important;
+        padding: 0;
     }
 }
 
 .dashboar-main{
-  padding: 20px 20px 50px;
+    padding-bottom: 50px;
+}
+
+@media (min-width: 1025px ){
+    .dashboar-main{
+        padding: 20px 20px 50px;
+      }
 }
 
 .chart-wrap {
@@ -157,5 +171,44 @@ table a {
 @media (min-width: 1024px) {
     .chart-wrap {
         width: calc(100vw - 500px);
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        padding-right: 20px;
+    }
+}
+
+@media (min-width: 1024px){
+    .f-row-wrap{
+        display: flex;
+        gap: 30px;
+    }
+
+    .f-row-wrap .f-col{
+        flex: 1;
+    }
+}
+
+div:where(.swal2-container){
+    z-index: 99999999999999999999!important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
+    background-color: var(--main-color)!important;
+}
+
+@media (max-width: 767px){
+    .dataTables_wrapper{
+        width: calc(100vw - 12px);
+        overflow-x: auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1400px){
+    .dataTables_wrapper{
+        min-width: 1200px;
+        overflow-x: auto;
     }
 }

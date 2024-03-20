@@ -47,15 +47,16 @@ function MissionVIew() {
     const mission_id = searchParames.get("id");
     const [mission, setMission] = useState();
     const [places, setplaces] = useState([]);
+    const [imageListData, setImageList] = useState([""]);
     const [vehicles, setvehicles] = useState([]);
     const options = [
-        { value: "1", label: "Staff One" },
-        { value: "2", label: "Staff Two" },
-        { value: "3", label: "Staff Three" },
-        { value: "4", label: "Staff Four" },
-        { value: "5", label: "Staff Five" },
-        { value: "6", label: "Staff Six" },
-        { value: "7", label: "Staff Seven" },
+        {value: "1", label: "Staff One"},
+        {value: "2", label: "Staff Two"},
+        {value: "3", label: "Staff Three"},
+        {value: "4", label: "Staff Four"},
+        {value: "5", label: "Staff Five"},
+        {value: "6", label: "Staff Six"},
+        {value: "7", label: "Staff Seven"},
     ];
 
     let dataList = {
@@ -71,7 +72,27 @@ function MissionVIew() {
         admin_info_set: 1,
     };
 
+    let reportData = {
+        mission_id: mission_id,
+        not_passable_road_condition: '',
+        very_bad_road_condition: '',
+        bad_road_condition: '',
+        regular_road_condition: '',
+        not_passable_presence_eds_erw_uxo: '',
+        very_bad_presence_eds_erw_uxo: '',
+        bad_presence_eds_erw_uxo: '',
+        regular_presence_eds_erw_uxo: '',
+        humanitarian_assistance: '',
+        humanitarian_observations: '',
+        report_image_list:[],
+    }
+
+    function addImage(){
+        setImageList(old=>[...old,""])
+    }
+
     const [adminData, setadminData] = useState(dataList);
+    const [report, setReport] = useState(reportData);
     const [claDataList, setClaDataList] = useState("");
     const [claList, setClaList] = useState("");
     const [requestStatusDataList, setRequestStatusDataList] = useState("");
@@ -80,7 +101,7 @@ function MissionVIew() {
     useEffect(() => {
         const fetchData3 = async () => {
             try {
-                const { data } = await axiosClient.get("cla_list");
+                const {data} = await axiosClient.get("cla_list");
                 setClaDataList(data.result);
                 console.log(data.result);
             } catch (error) {
@@ -94,7 +115,7 @@ function MissionVIew() {
     useEffect(() => {
         const fetchData4 = async () => {
             try {
-                const { data } = await axiosClient.get("request_status");
+                const {data} = await axiosClient.get("request_status");
                 setRequestStatusDataList(data.result);
                 console.log(data.result);
             } catch (error) {
@@ -108,7 +129,7 @@ function MissionVIew() {
     useEffect(() => {
         const fetchData2 = async () => {
             try {
-                const { data } = await axiosClient.get("acu_status");
+                const {data} = await axiosClient.get("acu_status");
                 setAcuStatusDataList(data.result);
                 console.log(data.result);
             } catch (error) {
@@ -119,45 +140,103 @@ function MissionVIew() {
         fetchData2();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const id = await mission_id;
-                const url = `mission/${id}`;
+    const fetchData = async () => {
+        try {
+            const id = await mission_id;
+            const url = `mission/${id}`;
 
-                const { data } = await axiosClient.get(url);
-                if (data.success) {
-                    let missionData = await data.result.mission;
-                    setMission(missionData);
-                    setplaces(data.result.places);
-                    setvehicles(data.result.vehicles);
-                    setadminData((old) => ({
-                        ...old,
-                        request_status: missionData.request_status,
-                        greenlight_recieve: missionData.greenlight_recieve,
-                        unops_acu_status: missionData.unops_acu_status,
-                        cla_decision: missionData.cla_decision,
-                        mission_classification_info:
-                            missionData.mission_classification_info,
-                        does_mission: missionData.does_mission,
-                        unops_acu: missionData.unops_acu,
-                        cla: missionData.cla,
-                    }));
-                }
+            const {data} = await axiosClient.get(url);
+            if (data.success) {
+                let missionData = await data.result.mission;
+                setMission(missionData);
+                setplaces(data.result.places);
+                setvehicles(data.result.vehicles);
+                setadminData((old) => ({
+                    ...old,
+                    request_status: missionData.request_status,
+                    greenlight_recieve: missionData.greenlight_recieve,
+                    unops_acu_status: missionData.unops_acu_status,
+                    cla_decision: missionData.cla_decision,
+                    mission_classification_info:
+                    missionData.mission_classification_info,
+                    does_mission: missionData.does_mission,
+                    unops_acu: missionData.unops_acu,
+                    cla: missionData.cla,
+                }));
 
-                console.log(data.result);
-            } catch (error) {
-                console.error("Error fetching users:", error);
+                setReport(old => ({
+                    ...old,
+                    not_passable_road_condition: missionData.not_passable_road_condition,
+                    very_bad_road_condition: missionData.very_bad_road_condition,
+                    bad_road_condition: missionData.bad_road_condition,
+                    regular_road_condition: missionData.regular_road_condition,
+                    not_passable_presence_eds_erw_uxo: missionData.not_passable_presence_eds_erw_uxo,
+                    very_bad_presence_eds_erw_uxo: missionData.very_bad_presence_eds_erw_uxo,
+                    bad_presence_eds_erw_uxo: missionData.bad_presence_eds_erw_uxo,
+                    regular_presence_eds_erw_uxo: missionData.regular_presence_eds_erw_uxo,
+                    humanitarian_assistance: missionData.humanitarian_assistance,
+                    humanitarian_observations: missionData.humanitarian_observations,
+                }))
             }
-        };
 
+            console.log(data.result);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
+
+    // function storeImage(e){
+    //     const {name, value} = e.target;
+    //     const file = e.target.files[0];
+    //     var base64=null;
+    //     if (file) {
+    //         const reader = new FileReader();
+    //
+    //         reader.onloadend = () => {
+    //             // Once the FileReader has read the file, set the base64 data
+    //             base64=reader.result;
+    //         };
+    //
+    //         // Read the file as a data URL (base64)
+    //         reader.readAsDataURL(file);
+    //     }
+    //     console.log(base64);
+    //
+    //     imageList[name]=base64;
+    //     setImageList(old => imageList);
+    //
+    //     console.log(imageList);
+    // }
+
+    const storeImage = (e) => {
+        const {name, value} = e.target;
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                imageListData[name]=reader.result;
+                console.log(imageListData)
+                setImageList(old => imageListData);
+            };
+        }
+    };
+
+    useEffect(() => {
         fetchData();
     }, []);
 
     const [downloading, setDownloading] = useState(0);
     const setdata = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setadminData((old) => ({
+            ...old, // Copy the previous state
+            [name]: value, // Update the property with the given name
+        }));
+    };
+    const setReportData = (e) => {
+        const {name, value} = e.target;
+        setReport((old) => ({
             ...old, // Copy the previous state
             [name]: value, // Update the property with the given name
         }));
@@ -170,14 +249,27 @@ function MissionVIew() {
             adminData
         );
         if (response.data.success == true) {
+            fetchData()
             alert("success fully updated");
         }
+    };
+
+    const storeReportDate = async () => {
+        report.report_image_list=imageListData;
+        console.log(report);
+        // const response = await axiosClient.post(
+        //     "mission-report",
+        //     report
+        // );
+        // if (response.data.success == true) {
+        //     alert("success fully updated Report");
+        // }
     };
 
     async function downloadPdf() {
         setDownloading(1);
         let urlLink = `mission-pdf/${mission_id}`;
-        const { data } = await axiosClient.get(urlLink);
+        const {data} = await axiosClient.get(urlLink);
         const fileName = "test.pdf"; // Name of the file in the public folder
         // Construct the URL to the file in the public folder
         const url = new URL(fileName, window.location.origin + "/");
@@ -251,12 +343,10 @@ function MissionVIew() {
                                                 </div>
                                                 <div className='form__col'>
                                                     <p>
-                                                        <b>Satellite Phone</b>
+                                                        <b>ID</b>
                                                     </p>
                                                     <p>
-                                                        {mission &&
-                                                            mission.leader
-                                                                .statelite_phone}
+                                                        {mission && mission.mission_id}
                                                     </p>
                                                 </div>
                                             </div>
@@ -291,6 +381,16 @@ function MissionVIew() {
                                                         {mission &&
                                                             mission.leader
                                                                 .whatsup_number}
+                                                    </p>
+                                                </div>
+                                                <div className='form__col'>
+                                                    <p>
+                                                        <b>Satellite Phone</b>
+                                                    </p>
+                                                    <p>
+                                                        {mission &&
+                                                            mission.leader
+                                                                .statelite_phone}
                                                     </p>
                                                 </div>
                                             </div>
@@ -415,8 +515,8 @@ function MissionVIew() {
                                                                     {item.departure_umrah_type ==
                                                                     1
                                                                         ? item
-                                                                              .departure_premise_type
-                                                                              .name
+                                                                            .departure_premise_type
+                                                                            .name
                                                                         : ""}
                                                                 </p>
                                                             </div>
@@ -437,15 +537,15 @@ function MissionVIew() {
                                                                     {item.departure_umrah_id !=
                                                                     null
                                                                         ? item
-                                                                              .departure_umrah_id
-                                                                              .installation_name
+                                                                            .departure_umrah_id
+                                                                            .installation_name
                                                                         : item.departure_installation_name}
                                                                 </p>
                                                             </p>
                                                         </div>
                                                     </div>
                                                     <div className='form__row flex-ctr-spb'>
-                                                        <div className='form__col'>
+                                                        {item.departure_umrah_type == 1? <div className='form__col'>
                                                             <p>
                                                                 <b>
                                                                     Building
@@ -457,7 +557,8 @@ function MissionVIew() {
                                                                     item.departure_building_code
                                                                 }
                                                             </p>
-                                                        </div>
+                                                        </div>:""}
+
                                                         <div className='form__col'>
                                                             <p>
                                                                 <b>Longitude</b>
@@ -526,8 +627,8 @@ function MissionVIew() {
                                                                     {item.arrival_umrah_type ==
                                                                     1
                                                                         ? item
-                                                                              .arrival_premise_type
-                                                                              .name
+                                                                            .arrival_premise_type
+                                                                            .name
                                                                         : ""}
                                                                 </p>
                                                             </div>
@@ -546,26 +647,27 @@ function MissionVIew() {
                                                                 {item.arrival_umrah_id !=
                                                                 null
                                                                     ? item
-                                                                          .arrival_umrah_id
-                                                                          .installation_name
+                                                                        .arrival_umrah_id
+                                                                        .installation_name
                                                                     : item.arrival_installation_name}
                                                             </p>
                                                         </div>
                                                     </div>
                                                     <div className='form__row flex-ctr-spb'>
-                                                        <div className='form__col'>
-                                                            <p>
-                                                                <b>
-                                                                    Building
-                                                                    Code
-                                                                </b>
-                                                            </p>
-                                                            <p>
-                                                                {
-                                                                    item.arrival_building_code
-                                                                }
-                                                            </p>
-                                                        </div>
+                                                        {item.arrival_umrah_type == 1?
+                                                            <div className='form__col'>
+                                                                <p>
+                                                                    <b>
+                                                                        Building
+                                                                        Code
+                                                                    </b>
+                                                                </p>
+                                                                <p>
+                                                                    {
+                                                                        item.arrival_building_code
+                                                                    }
+                                                                </p>
+                                                            </div>:""}
                                                         <div className='form__col'>
                                                             <p>
                                                                 <b>Longitude</b>
@@ -704,7 +806,7 @@ function MissionVIew() {
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Admin Mission Set</h2>
-                                        <div className='collapsable-item__body'>
+                                        <div className='collapsable-item__body ams' style={{height: 'auto'}}>
                                             <div className='collapsable-item__body-row flex-start-spb'>
                                                 <div className='collapsable-item__body-col'>
                                                     <div className='form__field collapsable-item__field'>
@@ -746,17 +848,10 @@ function MissionVIew() {
                                                                 }
 
                                                             >
-                                                                <option
-                                                                    value=''
-                                                                    disabled
-                                                                    hidden
-                                                                >
-                                                                    Select ACU
-                                                                    Status
-                                                                </option>
+                                                                <option value='' disabled hidden>Select ACU Status</option>
                                                                 {Array.isArray(
-                                                                    acuDataList
-                                                                ) &&
+                                                                        acuDataList
+                                                                    ) &&
                                                                     acuDataList.map(
                                                                         (
                                                                             val
@@ -1073,38 +1168,67 @@ function MissionVIew() {
                                             </div>
                                         </div>
                                     </div>
+                                    { /*mission && (mission.request_status == "mission_completed") ? */
+                                        <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
+                                            <h2>Mission Debriefing Form</h2>
+                                            <div className='mdf-form-body'>
+                                                <div className='mdf-form-head'>
+                                                    <p>
+                                                        Convoy composition
+                                                        (Agencies):{" "}
 
-                                    <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
-                                        <h1>Mission Debriefing Form</h1>
-                                        <div className='mdf-form-body'>
-                                            <div className='mdf-form-head'>
-                                                <p>
-                                                    Convoy composition
-                                                    (Agencies):{" "}
-                                                    <span>Sample Data</span>
-                                                </p>
-                                                <p>
-                                                    Mission Locations visited
-                                                    and route:{" "}
-                                                    <span>Sample Data</span>
-                                                </p>
-                                                <p>
-                                                    Date of the mission:{" "}
-                                                    <span>Sample Data</span>
-                                                </p>
-                                                <p>
-                                                    Mission Focal Point:{" "}
-                                                    <span>Sample Data</span>
-                                                </p>
-                                            </div>
-                                            <h3>
-                                                A Road Assessment (few bullet
-                                                points in relevant section)
-                                            </h3>
+                                                        {mission &&
+                                                            mission.agency.map(
+                                                                (
+                                                                    item,
+                                                                    index
+                                                                ) => (
+                                                                    <span>{
+                                                                        item.agency_id.name
+                                                                    }</span>
+                                                                )
+                                                            )}
 
-                                            <div class='table-wrap'>
-                                                <table>
-                                                    <thead>
+                                                    </p>
+                                                    <p>
+                                                        Mission Locations visited
+                                                        and route:{" "}
+
+                                                        {/*{places &&*/}
+                                                        {/*places.map((item, index) => (*/}
+                                                        {/*<span>{item.departure_umrah_id != null ? item*/}
+                                                        {/*.departure_umrah_id.installation_name : item.departure_installation_name}</span> -*/}
+                                                        {/*<span>{item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name} ,</span>*/}
+                                                        {/*)*/}
+                                                        {/*)*/}
+                                                        {/*}*/}
+
+                                                        {places.map((item, index) =>
+                                                            <span>{item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name}-{item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name},</span>)}
+
+                                                        <span>Sample Data</span>
+                                                    </p>
+                                                    <p>
+                                                        Date of the mission:{" "}
+                                                        <span> {mission &&
+                                                            convertDateFormat(
+                                                                mission.movement_date
+                                                            )}</span>
+                                                    </p>
+                                                    <p>
+                                                        Mission Focal Point:{" "}
+                                                        <span> {mission &&
+                                                            mission.leader.name}</span>
+                                                    </p>
+                                                </div>
+                                                <h3>
+                                                    A Road Assessment (few bullet
+                                                    points in relevant section)
+                                                </h3>
+
+                                                <div className='table-wrap'>
+                                                    <table>
+                                                        <thead>
                                                         <tr>
                                                             <th>
                                                                 Road Condition
@@ -1142,8 +1266,8 @@ function MissionVIew() {
                                                                 </span>
                                                             </th>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
+                                                        </thead>
+                                                        <tbody>
                                                         <tr>
                                                             <td>
                                                                 A. Not Passable
@@ -1154,12 +1278,18 @@ function MissionVIew() {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+                                                                <textarea onInput={setReportData} name='not_passable_road_condition' rows="3">{report.not_passable_road_condition}</textarea>
+
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='not_passable_presence_eds_erw_uxo'
+                                                                rows="3"
+                                                                >{report.not_passable_presence_eds_erw_uxo}</textarea>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1180,12 +1310,23 @@ function MissionVIew() {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='very_bad_road_condition'
+                                                                rows="3"
+                                                                >{report.very_bad_road_condition}</textarea>
+
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='very_bad_presence_eds_erw_uxo'
+                                                                rows="3"
+                                                                >{report.very_bad_presence_eds_erw_uxo}</textarea>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1205,12 +1346,21 @@ function MissionVIew() {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='bad_road_condition'
+                                                                rows="3"
+                                                                >{report.bad_road_condition}</textarea>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='bad_presence_eds_erw_uxo'
+                                                                rows="3"
+                                                                >{report.bad_presence_eds_erw_uxo}</textarea>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1229,82 +1379,120 @@ function MissionVIew() {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='regular_road_condition'
+                                                                rows="3"
+                                                                >{report.regular_road_condition}</textarea>
+
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='regular_presence_eds_erw_uxo'
+                                                                rows="3"
+                                                                >{report.regular_presence_eds_erw_uxo}</textarea>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                    </tbody>
-                                                </table>
-                                                <p>Please provide with maps and photographs below if possible</p>
-                                            </div>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>Please provide with maps and photographs below if possible</p>
+                                                    <div>
 
-                                            <div class='table-wrap'>
-                                                                        <h3>Section B
-                                                                        </h3>
-                                                <table>
-                                                    <thead>
+                                                        <ul>
+                                                            {
+                                                                imageListData.map((item,index)=><li><input name={index} onChange={storeImage} type="file"/></li> )
+                                                            }
+
+                                                        </ul>
+
+                                                        <button onClick={addImage}>add</button>
+                                                    </div>
+                                                </div>
+
+                                                <div className='table-wrap'>
+                                                    <h3>Section B
+                                                    </h3>
+                                                    <table>
+                                                        <thead>
                                                         <tr>
                                                             <th>
-                                                            Insecurity or hostilities affecting humanitarian assistance
-                                                            <span>(report observation in military operation area, presence of check points, (without coordinates, or specific incidents that impacted the mission)</span>
+                                                                Insecurity or hostilities affecting humanitarian
+                                                                assistance
+                                                                <span>(report observation in military operation area, presence of check points, (without coordinates, or specific incidents that impacted the mission)</span>
                                                             </th>
 
                                                             <th>
-                                                            Humanitarian Observations
-                                                            <span>(i.e notable presence of IDPs, urgent needs or gaps in response etc)</span>
+                                                                Humanitarian Observations
+                                                                <span>(i.e notable presence of IDPs, urgent needs or gaps in response etc)</span>
                                                             </th>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
+                                                        </thead>
+                                                        <tbody>
                                                         <tr>
 
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+                                                                <textarea type='text' name='humanitarian_assistance'
+                                                                          style={{width: '100%', height: '300px'}}
+                                                                          value={report.humanitarian_assistance}
+                                                                          onInput={setReportData}/>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' />
+                                                                <textarea type='text' name="humanitarian_observations"
+                                                                          style={{width: '100%', height: '300px'}}
+                                                                          value={report.humanitarian_observations}
+                                                                          onInput={setReportData}/>
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div className='input-wrap'>
-                                                                    <input type='text' />
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className='input-wrap'>
-                                                                    <input type='text' />
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div className='input-wrap'>
-                                                                    <input type='text' />
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className='input-wrap'>
-                                                                    <input type='text' />
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                        {/*<tr>*/}
+                                                        {/*<td>*/}
+                                                        {/*<div className='input-wrap'>*/}
+                                                        {/*<input type='text' name="bad_road_condition" onInput={setReportData}  />*/}
+                                                        {/*</div>*/}
+                                                        {/*</td>*/}
+                                                        {/*<td>*/}
+                                                        {/*<div className='input-wrap'>*/}
+                                                        {/*<input type='text' name="regular_road_condition" onInput={setReportData}/>*/}
+                                                        {/*</div>*/}
+                                                        {/*</td>*/}
+                                                        {/*</tr>*/}
+                                                        {/*<tr>*/}
+                                                        {/*<td>*/}
+                                                        {/*<div className='input-wrap'>*/}
+                                                        {/*<input type='text'  name="not_passable_presence_eds_erw_uxo" onInput={setReportData}/>*/}
+                                                        {/*</div>*/}
+                                                        {/*</td>*/}
+                                                        {/*<td>*/}
+                                                        {/*<div className='input-wrap'>*/}
+                                                        {/*<input type='text' name="very_bad_presence_eds_erw_uxo" onInput={setReportData}/>*/}
+                                                        {/*</div>*/}
+                                                        {/*</td>*/}
+                                                        {/*</tr>*/}
 
-                                                    </tbody>
-                                                </table>
+                                                        <div>
+                                                            <button
+                                                                className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
+                                                                onClick={storeReportDate}
+                                                            >
+                                                                Submit
+                                                            </button>
+                                                        </div>
 
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div> }
+
                                 </div>
                             </main>
                         </div>

@@ -2,9 +2,6 @@
 import styles from "@/app/admin/style/deshboard.module.css";
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
-import { AiOutlineUser } from "react-icons/ai";
-import { BsCart } from "react-icons/bs";
-import { FaProductHunt } from "react-icons/fa6";
 
 import {
     CategoryScale,
@@ -100,7 +97,6 @@ function Dashboard() {
         try {
             const {data} = await axiosClient.get('admin-dashboard');
             if (data.success == true) {
-
                 setrejectCount(data.result.rejectCount)
                 settotalMission(data.result.totalMission)
                 setcompleted(data.result.completed)
@@ -208,15 +204,16 @@ function Dashboard() {
 
             <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                 <main className="dashboar-main">
-                    
+
                     <h3 className="text-2xl font-semibold leading-tight ml-2 mt-4">Today</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  p-3">
 
                         <div className={styles.itemcard} style={{backgroundColor: '#76978f4a'}}>
 
                             <div className="grid grid-cols-2 gap-2 ">
-                                <div className={styles.round} style={{backgroundColor: '#eaf3f3'}}><AiOutlineUser
-                                    size={40}/></div>
+                                <div className={styles.round} style={{backgroundColor: '#eaf3f3'}}>
+                                <svg width="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="#1b7c85" d="M41 7C31.6-2.3 16.4-2.3 7 7S-2.3 31.6 7 41l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L41 7zM599 7L527 79c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0zM7 505c9.4 9.4 24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L7 471c-9.4 9.4-9.4 24.6 0 33.9zm592 0c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-72-72c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72zM320 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128zM212.1 336c-2.7 7.5-4.1 15.6-4.1 24c0 13.3 10.7 24 24 24H408c13.3 0 24-10.7 24-24c0-8.4-1.4-16.5-4.1-24c-.5-1.4-1-2.7-1.6-4c-9.4-22.3-29.8-38.9-54.3-43c-3.9-.7-7.9-1-12-1H280c-4.1 0-8.1 .3-12 1c-.8 .1-1.7 .3-2.5 .5c-24.9 5.1-45.1 23-53.4 46.5zM175.8 224a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm-26.5 32C119.9 256 96 279.9 96 309.3c0 14.7 11.9 26.7 26.7 26.7h56.1c8-34.1 32.8-61.7 65.2-73.6c-7.5-4.1-16.2-6.4-25.3-6.4H149.3zm368 80c14.7 0 26.7-11.9 26.7-26.7c0-29.5-23.9-53.3-53.3-53.3H421.3c-9.2 0-17.8 2.3-25.3 6.4c32.4 11.9 57.2 39.5 65.2 73.6h56.1zM464 224a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"></path></svg>
+                                </div>
                                 <div>
                                     <h1 className={styles.totalnumber}>{isLoading ? loader : totalMissionToday}</h1>
                                     <h5 className={styles.subtitle}>Today Mission Submitted </h5>
@@ -227,8 +224,7 @@ function Dashboard() {
                         <div className={styles.itemcard} style={{backgroundColor: '#cbcbcb'}}>
 
                             <div className="grid grid-cols-2 gap-2 ">
-                                <div className={styles.round} style={{backgroundColor: '#d9d7d7'}}><FaProductHunt
-                                    size={40}/></div>
+                                <div className={styles.round} style={{backgroundColor: '#d9d7d7'}}><svg width="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#1b7c85" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg></div>
                                 <div>
                                     <h1 className={styles.totalnumber}>{isLoading ? loader : completedToday}</h1>
                                     <h5 className={styles.subtitle}>Today Mission Completed</h5>
@@ -238,7 +234,8 @@ function Dashboard() {
                         <div className={styles.itemcard} style={{backgroundColor: '#e7a93c63'}}>
 
                             <div className="grid grid-cols-2 gap-2 ">
-                                <div className={styles.round} style={{backgroundColor: '#e9c27d'}}><BsCart size={40}/>
+                                <div className={styles.round} style={{backgroundColor: '#e9c27d'}}>
+                                <svg width="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#1b7c85" d="M96 80c0-26.5 21.5-48 48-48H432c26.5 0 48 21.5 48 48V384H96V80zm313 47c-9.4-9.4-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L409 161c9.4-9.4 9.4-24.6 0-33.9zM0 336c0-26.5 21.5-48 48-48H64V416H512V288h16c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V336z"/></svg>
                                 </div>
                                 <div>
                                     <h1 className={styles.totalnumber}>{isLoading ? loader : approvedToday}</h1>
@@ -250,7 +247,9 @@ function Dashboard() {
                         <div className={styles.itemcard} style={{backgroundColor: '#65ebacd6'}}>
 
                             <div className="grid grid-cols-2 gap-2 ">
-                                <div className={styles.round} style={{backgroundColor: '#cbcb4145'}}><BsCart size={40}/>
+                                <div className={styles.round} style={{backgroundColor: '#cbcb4145'}}>
+
+                                <svg width={40} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#1b7c85" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
                                 </div>
                                 <div>
                                     <h1 className={styles.totalnumber}>{isLoading ? loader : rejectCountToday}</h1>
@@ -261,14 +260,15 @@ function Dashboard() {
                         </div>
 
                     </div>
-                    <h3 className="text-2xl font-semibold leading-tight ml-2">Over all</h3>
+                    <h3 className="text-2xl font-semibold leading-tight ml-2 mt-4">Over all</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  p-3">
 
                         <div className={styles.itemcard} style={{backgroundColor: '#76978f4a'}}>
 
                             <div className="grid grid-cols-2 gap-2 ">
-                                <div className={styles.round} style={{backgroundColor: '#eaf3f3'}}><AiOutlineUser
-                                    size={40}/></div>
+                            <div className={styles.round} style={{backgroundColor: '#eaf3f3'}}>
+                            <svg width="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="#1b7c85" d="M41 7C31.6-2.3 16.4-2.3 7 7S-2.3 31.6 7 41l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L41 7zM599 7L527 79c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0zM7 505c9.4 9.4 24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L7 471c-9.4 9.4-9.4 24.6 0 33.9zm592 0c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-72-72c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72zM320 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128zM212.1 336c-2.7 7.5-4.1 15.6-4.1 24c0 13.3 10.7 24 24 24H408c13.3 0 24-10.7 24-24c0-8.4-1.4-16.5-4.1-24c-.5-1.4-1-2.7-1.6-4c-9.4-22.3-29.8-38.9-54.3-43c-3.9-.7-7.9-1-12-1H280c-4.1 0-8.1 .3-12 1c-.8 .1-1.7 .3-2.5 .5c-24.9 5.1-45.1 23-53.4 46.5zM175.8 224a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm-26.5 32C119.9 256 96 279.9 96 309.3c0 14.7 11.9 26.7 26.7 26.7h56.1c8-34.1 32.8-61.7 65.2-73.6c-7.5-4.1-16.2-6.4-25.3-6.4H149.3zm368 80c14.7 0 26.7-11.9 26.7-26.7c0-29.5-23.9-53.3-53.3-53.3H421.3c-9.2 0-17.8 2.3-25.3 6.4c32.4 11.9 57.2 39.5 65.2 73.6h56.1zM464 224a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"></path></svg>
+                            </div>
                                 <div>
                                     <h1 className={styles.totalnumber}>{isLoading ? loader : totalMission}</h1>
                                     <h5 className={styles.subtitle}>Total Mission Submitted </h5>
@@ -279,8 +279,7 @@ function Dashboard() {
                         <div className={styles.itemcard} style={{backgroundColor: '#cbcbcb'}}>
 
                             <div className="grid grid-cols-2 gap-2 ">
-                                <div className={styles.round} style={{backgroundColor: '#d9d7d7'}}><FaProductHunt
-                                    size={40}/></div>
+                            <div className={styles.round} style={{backgroundColor: '#d9d7d7'}}><svg width="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#1b7c85" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg></div>
                                 <div>
                                     <h1 className={styles.totalnumber}>{isLoading ? loader : completed}</h1>
                                     <h5 className={styles.subtitle}>Total Mission Completed</h5>
@@ -290,8 +289,9 @@ function Dashboard() {
                         <div className={styles.itemcard} style={{backgroundColor: '#e7a93c63'}}>
 
                             <div className="grid grid-cols-2 gap-2 ">
-                                <div className={styles.round} style={{backgroundColor: '#e9c27d'}}><BsCart size={40}/>
-                                </div>
+                            <div className={styles.round} style={{backgroundColor: '#e9c27d'}}>
+                            <svg width="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#1b7c85" d="M96 80c0-26.5 21.5-48 48-48H432c26.5 0 48 21.5 48 48V384H96V80zm313 47c-9.4-9.4-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L409 161c9.4-9.4 9.4-24.6 0-33.9zM0 336c0-26.5 21.5-48 48-48H64V416H512V288h16c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V336z"/></svg>
+                            </div>
                                 <div>
                                     <h1 className={styles.totalnumber}>{isLoading ? loader : approved}</h1>
                                     <h5 className={styles.subtitle}>Total CLA Approved</h5>
@@ -302,8 +302,10 @@ function Dashboard() {
                         <div className={styles.itemcard} style={{backgroundColor: '#65ebacd6'}}>
 
                             <div className="grid grid-cols-2 gap-2 ">
-                                <div className={styles.round} style={{backgroundColor: '#cbcb4145'}}><BsCart size={40}/>
-                                </div>
+                            <div className={styles.round} style={{backgroundColor: '#cbcb4145'}}>
+
+                            <svg width={40} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#1b7c85" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
+                            </div>
                                 <div>
                                     <h1 className={styles.totalnumber}>{isLoading ? loader : rejectCount}</h1>
                                     <h5 className={styles.subtitle}>Total Rejected</h5>
@@ -365,7 +367,6 @@ function Dashboard() {
                         </div>
 
                     </div> */}
-
 
                     <div className="chart-wrap mt-4">
                         {isloadmap==1? <Line options={options} data={data1}/>:<Line options={options} data={dataset}/>}

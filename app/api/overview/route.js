@@ -5,7 +5,7 @@ import { User } from "@/lib/model/users";
 import { connectionStr } from "@/lib/db";
 import bcrypt from 'bcrypt';
 import validator from 'validator';
-import { uploadBase64Img } from "@/app/helper";
+import { AuthUser, uploadBase64Img } from "@/app/helper";
 import { Mission } from "@/lib/model/mission";
 
 export async function GET(){
@@ -21,23 +21,27 @@ export async function GET(){
     let todayTotalMission;
  
     try{
+        let userInfo = await AuthUser();
+        let user_type = userInfo.user_type;
+        let user_id = await userInfo.staff_id;
         console.log(connectionStr);
         await mongoose.connect(connectionStr);
         let currentDate = new Date().toJSON().slice(0, 10);
-        pendingMission = await Mission.countDocuments({ request_status: "request_received" });
+        //return NextResponse.json({user_id,success:true});
+        pendingMission = await Mission.countDocuments({leader: user_id, request_status: "request_received" });
 
-        completedMission = await Mission.countDocuments({ request_status: "mission_completed" });
+        completedMission = await Mission.countDocuments({leader: user_id, request_status: "mission_completed" });
 
-        rejectedMission = await Mission.countDocuments({ cla_decision: "denied" });
+        rejectedMission = await Mission.countDocuments({leader: user_id, cla_decision: "denied" });
 
-        totalMission = await Mission.countDocuments();
+        totalMission = await Mission.countDocuments({ leader: user_id });
 
-        todayPendingMission = await Mission.countDocuments({ request_status: "request_received",create_date:currentDate });
+        todayPendingMission = await Mission.countDocuments({leader: user_id, request_status: "request_received",create_date:currentDate });
 
-        todayCompletedMission =  await Mission.countDocuments({ request_status: "mission_completed",completed_date:currentDate});
-        todayRejectedMission = await Mission.countDocuments({ cla_decision: "denied",rejected_date:currentDate });
+        todayCompletedMission =  await Mission.countDocuments({leader: user_id, request_status: "mission_completed",completed_date:currentDate});
+        todayRejectedMission = await Mission.countDocuments({leader: user_id, cla_decision: "denied",rejected_date:currentDate });
 
-        todayTotalMission = await Mission.countDocuments({create_date:currentDate});
+        todayTotalMission = await Mission.countDocuments({leader: user_id,create_date:currentDate});
 
     }
     catch(error)
