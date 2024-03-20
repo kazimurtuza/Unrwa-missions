@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Swal from 'sweetalert2';
 
 function StaffCreate() {
   const router = useRouter();
@@ -340,6 +341,12 @@ useEffect(() => {
             setAgencyID("");
             setClassificationId("");
             setStaffPhoto(null);
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../staff", { scroll: false });
           } else {
             if(response.data.msg) {

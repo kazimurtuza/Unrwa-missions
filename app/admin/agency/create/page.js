@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useRef,useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 function AgencyCreate() {
   const router = useRouter();
@@ -129,6 +130,12 @@ function AgencyCreate() {
             setAgency_cluster("");
             setIntervision_note("");
             setErrorMessage("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../agency", { scroll: false });
           }
           else
