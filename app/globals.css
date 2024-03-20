@@ -175,3 +175,22 @@ table a {
 #sidebar{
     position: relative;
 }
+
+@media (min-width: 1024px){
+    .f-row-wrap{
+        display: flex;
+        gap: 30px;
+    }
+
+    .f-row-wrap .f-col{
+        flex: 1;
+    }
+}
+
+div:where(.swal2-container){
+    z-index: 99999999999999999999;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
+    background-color: var(--main-color);
+}
