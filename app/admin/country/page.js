@@ -34,7 +34,7 @@ function Country() {
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     let tableName = "Country";
-    const headName = ["Si", "Name","Alpha 2", "Iso 3166 -2","Alpha 3", "Cuntry Code","Region", "Action"];
+    const headName = ["Name","Alpha 2", "Iso 3166 -2","Alpha 3", "Country Code","Region", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -53,14 +53,12 @@ function Country() {
             {Array.isArray(country) && currentItems.map((item, index) => (
 
                 <tr key={index}>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                             {index+1}
                         </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
+                       
+                    </td> */}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}

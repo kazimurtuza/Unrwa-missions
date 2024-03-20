@@ -49,7 +49,7 @@ export async function PUT(request, content) {
         //return NextResponse.json({error:payload.staff_photo, success: false});
 
         const record = { email: payload.email, is_delete: 0 };
-        const is_findData = await Agency.findOne({
+        const is_findData = await Staff.findOne({
             ...record,
             _id: { $ne: missionCluster._id }
         });
@@ -60,7 +60,7 @@ export async function PUT(request, content) {
         
 
         const record2 = { national_id: payload.national_id, is_delete: 0 };
-        const is_findData2 = await Agency.findOne({
+        const is_findData2 = await Staff.findOne({
             ...record2,
             _id: { $ne: missionCluster._id }
         });
@@ -70,7 +70,7 @@ export async function PUT(request, content) {
         }
 
         const record3 = { employee_id: payload.employee_id, is_delete: 0 };
-        const is_findData3 = await Agency.findOne({
+        const is_findData3 = await Staff.findOne({
             ...record3,
             _id: { $ne: missionCluster._id }
         });

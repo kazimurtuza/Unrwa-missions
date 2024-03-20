@@ -287,6 +287,7 @@ function AgencyCreate() {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="email"
+                          required
                           placeholder="Enter your agency email"
                           value={agency_email}
                           onChange={(e) =>

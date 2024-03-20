@@ -17,7 +17,7 @@ export async function PUT(request, content) {
         await mongoose.connect(connectionStr);
         const missionCluster=await Vehicle.findById(filter);
         const record = { vehicle_id: payload.vehicle_id, is_delete: 0 };
-        const is_findData = await Agency.findOne({
+        const is_findData = await Vehicle.findOne({
             ...record,
             _id: { $ne: missionCluster._id }
         });
@@ -28,7 +28,7 @@ export async function PUT(request, content) {
 
 
         const record2 = { vehicle_plate_number: payload.vehicle_plate_number, is_delete: 0 };
-        const is_findData2 = await Agency.findOne({
+        const is_findData2 = await Vehicle.findOne({
             ...record2,
             _id: { $ne: missionCluster._id }
         });
