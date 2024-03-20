@@ -214,11 +214,10 @@ function MissionVIew() {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-
             reader.onloadend = () => {
-                imageListData[name]=reader.result;
-                console.log(imageListData)
-                setImageList(old => imageListData);
+                // imageListData[name]=reader.result;
+                console.log(reader.result)
+                // setImageList(old => imageListData);
             };
 
         }
