@@ -217,14 +217,12 @@ function MissionVIew() {
 
             reader.onloadend = () => {
                 imageListData[name]=reader.result;
-                console.log(reader.result)
+                console.log(imageListData)
                 setImageList(old => imageListData);
             };
 
         }
     };
-
-
 
 
     useEffect(() => {
@@ -259,8 +257,6 @@ function MissionVIew() {
             alert("success fully updated");
         }
     };
-
-
 
     const storeReportDate = async () => {
         report.report_image_list=imageListData;
@@ -815,11 +811,7 @@ function MissionVIew() {
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Admin Mission Set</h2>
-<<<<<<< HEAD
                                         <div className='collapsable-item__body'>
-=======
-                                        <div className='collapsable-item__body' style={{height: 'auto!imortant'}}>
->>>>>>> 722f1f689321cb84476a8682a13e80802bdb7905
                                             <div className='collapsable-item__body-row flex-start-spb'>
                                                 <div className='collapsable-item__body-col'>
                                                     <div className='form__field collapsable-item__field'>

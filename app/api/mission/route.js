@@ -68,6 +68,8 @@ export async function POST(request) {
         }
 
 
+
+
         const mailContent = `New Mission Created `;
         // Set up email options
         // let user=User.findOne({user_type:'admin'}).email;
@@ -81,13 +83,15 @@ export async function POST(request) {
 
 
 
-
-
         return NextResponse.json({result, success: true});
     } catch (error) {
         return NextResponse.json({error: error.message, success: false});
     }
 }
+
+
+
+
 
 export async function GET() {
     try {
