@@ -1,15 +1,16 @@
-import Select from 'react-select'
-import {useEffect, useState} from "react";
-import axiosClient from "@/app/axiosClient";
+import { useEffect, useState } from "react";
+import Select from 'react-select';
 
 const Step1 = ({getdata, storeData, staffList, agencyList, classification, checkValidation,cluster}) => {
     const selectData = async (selectedOption, {name}) => {
         if (name == 'leader') {
             setAdminInfo(selectedOption.list);
         }
+
         if(name=='agency'){
             selectedOption.value = await selectedOption.map(item=>({agency_id:item.value,value:item.value,label:item.label}))
         }
+
         getdata(name, selectedOption.value); // Pass the input value to the parent component
     };
     const setdata = (e) => {
@@ -38,7 +39,6 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
 
     let errorTxt = <p style={customStyles}>This field is required.</p>
 
-
     let options = [
         {value: "1", label: "one"},
         {value: "2", label: "two"}
@@ -51,7 +51,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                 <h2 className="form__title">Title</h2>
                 <div className="form__fields">
                     <div className="form__row flex-start-spb">
-                        <div className="form__field">
+                        <div className="form__field" style={{position: 'relative', zIndex: '99999'}}>
                             <label htmlFor="focus-point" className="form__label">
                                 Mission Leader
                             </label>
@@ -116,7 +116,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                             <label htmlFor="agencies" className="form__label">
                                 Agencies
                             </label>
-                            <div className="select-wrap">
+                            <div className="select-wrap" style={{position: 'relative', zIndex: '9999'}}>
                                 <Select
                                     name="agency"
                                     value={storeData.agency}
@@ -192,7 +192,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                             <label htmlFor="classification" className="form__label">
                                 Mission Cluster
                             </label>
-                            <div className="select-wrap">
+                            <div className="select-wrap" style={{position: 'relative', zIndex: '999'}}>
                                 <Select
                                     name="mission_cluster"
                                     options={cluster}

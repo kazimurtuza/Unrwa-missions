@@ -1,10 +1,10 @@
-import {NextResponse} from "next/server";
-import puppeteer from "puppeteer";
 import mongoose from "mongoose";
-import {connectionStr} from "../../../../lib/db";
-import {Mission} from "../../../../lib/model/mission";
-import {MissionDepartureArrival} from "../../../../lib/model/missionDepartureArrival";
-import {MissionVehicle} from "../../../../lib/model/missionVehicle";
+import { NextResponse } from "next/server";
+import puppeteer from "puppeteer";
+import { connectionStr } from "../../../../lib/db";
+import { Mission } from "../../../../lib/model/mission";
+import { MissionDepartureArrival } from "../../../../lib/model/missionDepartureArrival";
+import { MissionVehicle } from "../../../../lib/model/missionVehicle";
 
 function convertDateFormat(dateString, newFormat) {
     // Parse the input date string
@@ -47,13 +47,11 @@ function getStatusString(request_status) {
     // Format the date and time
     let formattedDateTime = new Intl.DateTimeFormat('en-US', options).format(parsedDate);
 
-
     return formattedDateTime;
 }
 
 export async function GET(req, content) {
     try {
-
         const id = content.params.id;
 
         await mongoose.connect(connectionStr);
@@ -81,7 +79,6 @@ export async function GET(req, content) {
         }
 
         let newDateFormat = "DD/MM/YYYY";
-
 
         let alldata = await data.missionLocation.map((item, index) => `
     <div style="margin-top: 10px;" class="table-row ">
@@ -119,7 +116,6 @@ export async function GET(req, content) {
     </div>
 `);
 
-
         let vicleList = await data.missionVehicle.map((item, index) => `<div style="margin-bottom: 10px; background: gray">Vehicle ${index+1}</div>
                 <div class="table-row">
                     <div class="table-col">
@@ -150,7 +146,7 @@ export async function GET(req, content) {
                         <p>
                             <strong>Phone Number: </strong>
                             <span>${item.driver.whatsup_number}</span>
-                           
+
                         </p>
                         <p>
                             <strong>ID Number: </strong>
@@ -159,9 +155,9 @@ export async function GET(req, content) {
 
                     </div>
                      <div class="table-col">
-                    
+
                     ${item.staff.map((staff,index)=>`
-                     
+
                         <h3>Passenger ${index+1}</h3>
                         <p>
                             <strong>Names: </strong>
@@ -175,10 +171,10 @@ export async function GET(req, content) {
                             <strong>ID</strong>
                             <span>${staff.staff_id.employee_id}</span>
                         </p>
-                   
+
                     `)}
                      </div>
-                 
+
                 </div>`);
 
         const browser = await puppeteer.launch();
@@ -189,6 +185,7 @@ export async function GET(req, content) {
             <style>
             body{
                 font-family: arial;
+                padding: 30px;
             }
 
                 .divider{
@@ -233,7 +230,7 @@ export async function GET(req, content) {
                 }
 
                 .table-row .left{
-                    flex: 0 0 150px;
+                    flex: 0 0 110px;
                 }
 
                 .table-row .right{
@@ -253,11 +250,11 @@ export async function GET(req, content) {
                 }
 
                 .right-row div:first-child{
-                    width: 50px;
+                    width: 40px;
                 }
 
                 .right-row div:nth-child(2){
-                    width: 170px;
+                    width: 150px;
                 }
 
                 h3{
@@ -288,7 +285,7 @@ export async function GET(req, content) {
                     <div class="list-item">
                         <strong>UNOPS ACU #</strong>
                        <span>${data.mission.unops_acu}</span>
-                    
+
                     </div>
                     <div class="list-item">
                         <strong>CLA #</strong>
@@ -311,7 +308,7 @@ export async function GET(req, content) {
                     <div class="list-item">
                         <strong>Agencies</strong>
                         ${data.mission.agency.map(item => `<span>${item.agency_id.name}</span>`).join('')}
-                        
+
                     </div>
                 </div>
 
@@ -465,7 +462,7 @@ export async function GET(req, content) {
 
                 <div class="divider" style="margin-top: 10px;"></div>
                 <div class="main-title" style="margin-bottom: 10px;">Vehicles / Drivers / Passengers</div>
-              
+
               ${vicleList}
                 <!--<div style="margin-bottom: 10px; background: gray">Vehicle One</div>-->
                 <!--<div class="table-row">-->
