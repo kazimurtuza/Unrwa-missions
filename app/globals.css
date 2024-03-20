@@ -198,3 +198,17 @@ div:where(.swal2-container){
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
     background-color: var(--main-color)!important;
 }
+
+@media (max-width: 767px){
+    .dataTables_wrapper{
+        width: calc(100vw - 12px);
+        overflow-x: auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1400px){
+    .dataTables_wrapper{
+        min-width: 1200px;
+        overflow-x: auto;
+    }
+}

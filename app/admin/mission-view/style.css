@@ -286,8 +286,10 @@ a {
 	display: block;
   }
 
+  .input-wrap textarea,
   .input-wrap input{
 	width: 100%;
+	padding: 12px;
   }
 
   .table-wrap h3{
@@ -295,3 +297,18 @@ a {
 	font-weight: 700;
 	margin-top: 40px;
   }
+
+.mdf-form-wrap h2{
+	font-size: 30px;
+}
+
+@media (max-width: 767px){
+	.collapsable-item__body.ams .collapsable-item__body-col{
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.collapsable-item__body.ams .collapsable-item__body-row{
+		flex-direction: column;
+	}
+}

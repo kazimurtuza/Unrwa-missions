@@ -1,9 +1,9 @@
 "use client";
 
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import axiosClient from "@/app/axiosClient";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
 
 function convertDateFormat(dateString, newFormat) {
@@ -40,7 +40,6 @@ function convertDateTimeFormat(dateString) {
 
     return formattedDateTime;
 }
-
 
 function MissionVIew() {
     const router = useRouter();
@@ -87,6 +86,7 @@ function MissionVIew() {
         humanitarian_observations: '',
         report_image_list:[],
     }
+
     function addImage(){
         setImageList(old=>[...old,""])
     }
@@ -185,7 +185,6 @@ function MissionVIew() {
         }
     };
 
-
     // function storeImage(e){
     //     const {name, value} = e.target;
     //     const file = e.target.files[0];
@@ -220,10 +219,8 @@ function MissionVIew() {
                 console.log(imageListData)
                 setImageList(old => imageListData);
             };
-
         }
     };
-
 
     useEffect(() => {
         fetchData();
@@ -243,7 +240,6 @@ function MissionVIew() {
             ...old, // Copy the previous state
             [name]: value, // Update the property with the given name
         }));
-
     };
 
     const storeDate = async () => {
@@ -563,7 +559,6 @@ function MissionVIew() {
                                                             </p>
                                                         </div>:""}
 
-
                                                         <div className='form__col'>
                                                             <p>
                                                                 <b>Longitude</b>
@@ -811,7 +806,7 @@ function MissionVIew() {
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Admin Mission Set</h2>
-                                        <div className='collapsable-item__body'>
+                                        <div className='collapsable-item__body ams' style={{height: 'auto'}}>
                                             <div className='collapsable-item__body-row flex-start-spb'>
                                                 <div className='collapsable-item__body-col'>
                                                     <div className='form__field collapsable-item__field'>
@@ -1173,9 +1168,9 @@ function MissionVIew() {
                                             </div>
                                         </div>
                                     </div>
-                                    {mission && (mission.request_status == "mission_completed") ?
-                                        <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
-                                            <h1>Mission Debriefing Form</h1>
+                                    { /*mission && (mission.request_status == "mission_completed") ? */
+                                        <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
+                                            <h2>Mission Debriefing Form</h2>
                                             <div className='mdf-form-body'>
                                                 <div className='mdf-form-head'>
                                                     <p>
@@ -1199,7 +1194,6 @@ function MissionVIew() {
                                                         Mission Locations visited
                                                         and route:{" "}
 
-
                                                         {/*{places &&*/}
                                                         {/*places.map((item, index) => (*/}
                                                         {/*<span>{item.departure_umrah_id != null ? item*/}
@@ -1211,7 +1205,6 @@ function MissionVIew() {
 
                                                         {places.map((item, index) =>
                                                             <span>{item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name}-{item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name},</span>)}
-
 
                                                         <span>Sample Data</span>
                                                     </p>
@@ -1285,18 +1278,18 @@ function MissionVIew() {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text'
-                                                                           name='not_passable_road_condition'
-                                                                           value={report.not_passable_road_condition}
-                                                                           onInput={setReportData}/>
+                                                                <textarea onInput={setReportData} name='not_passable_road_condition' rows="3">{report.not_passable_road_condition}</textarea>
+
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text'
-                                                                           name="not_passable_presence_eds_erw_uxo"
-                                                                           value={report.not_passable_presence_eds_erw_uxo}
-                                                                           onInput={setReportData}/>
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='not_passable_presence_eds_erw_uxo'
+                                                                rows="3"
+                                                                >{report.not_passable_presence_eds_erw_uxo}</textarea>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1317,17 +1310,23 @@ function MissionVIew() {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' name="very_bad_road_condition"
-                                                                           value={report.very_bad_road_condition}
-                                                                           onInput={setReportData}/>
+
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='very_bad_road_condition'
+                                                                rows="3"
+                                                                >{report.very_bad_road_condition}</textarea>
+
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text'
-                                                                           name="very_bad_presence_eds_erw_uxo"
-                                                                           value={report.very_bad_presence_eds_erw_uxo}
-                                                                           onInput={setReportData}/>
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='very_bad_presence_eds_erw_uxo'
+                                                                rows="3"
+                                                                >{report.very_bad_presence_eds_erw_uxo}</textarea>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1347,16 +1346,21 @@ function MissionVIew() {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' name="bad_road_condition"
-                                                                           value={report.bad_road_condition}
-                                                                           onInput={setReportData}/>
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='bad_road_condition'
+                                                                rows="3"
+                                                                >{report.bad_road_condition}</textarea>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' name="bad_presence_eds_erw_uxo"
-                                                                           value={report.bad_presence_eds_erw_uxo}
-                                                                           onInput={setReportData}/>
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='bad_presence_eds_erw_uxo'
+                                                                rows="3"
+                                                                >{report.bad_presence_eds_erw_uxo}</textarea>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1375,17 +1379,22 @@ function MissionVIew() {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text' name="regular_road_condition"
-                                                                           value={report.regular_road_condition}
-                                                                           onInput={setReportData}/>
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='regular_road_condition'
+                                                                rows="3"
+                                                                >{report.regular_road_condition}</textarea>
+
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                    <input type='text'
-                                                                           name="regular_presence_eds_erw_uxo"
-                                                                           value={report.regular_presence_eds_erw_uxo}
-                                                                           onInput={setReportData}/>
+                                                                <textarea
+                                                                onInput={setReportData}
+                                                                name='regular_presence_eds_erw_uxo'
+                                                                rows="3"
+                                                                >{report.regular_presence_eds_erw_uxo}</textarea>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1468,7 +1477,6 @@ function MissionVIew() {
                                                         {/*</td>*/}
                                                         {/*</tr>*/}
 
-
                                                         <div>
                                                             <button
                                                                 className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
@@ -1483,8 +1491,7 @@ function MissionVIew() {
 
                                                 </div>
                                             </div>
-                                        </div> : ""}
-
+                                        </div> }
 
                                 </div>
                             </main>
