@@ -7,6 +7,7 @@ import {v4 as uuidv4} from "uuid";
 import path from "path";
 import fs from "fs";
 import nodemailer from "nodemailer";
+import ejs from "ejs";
 
 export async function PUT(request, content) {
     let result = [];
@@ -35,7 +36,7 @@ export async function PUT(request, content) {
         
         const updatedata={...oldData,...payload}
         result = await User.findOneAndUpdate(filter, updatedata);
-        const mailOptions={};
+        //const mailOptions={};
 
         
         // if(userInfo.status==0)
@@ -56,12 +57,24 @@ export async function PUT(request, content) {
         });
 
         const password = newPassword;
-        const mailContent = `Your password: ${password}`;
+        //const mailContent = `Your password: ${password}`;
 
         // Set up email options
-        mailOptions.to = userInfo.email;
-        mailOptions.subject = "User Creation Email";
-        mailOptions.text = mailContent;
+        // mailOptions.to = userInfo.email;
+        // mailOptions.subject = "User Creation Email";
+        // mailOptions.text = mailContent;
+
+        const emailTemplatePath = path.resolve("./app/emails/account_creation.ejs");
+        const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
+        const mailContent = ejs.render(emailTemplate, { password,email:userInfo.email,username:userInfo.username});
+
+
+        const mailOptions = {
+           from: process.env.EMAIL_USER,
+           to: userInfo.email,
+           subject: "Welcome Email",
+           html: mailContent,
+       };
 
         // Send the email
         await transporter.sendMail(mailOptions);

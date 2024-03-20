@@ -6,6 +6,9 @@ import {MissionDepartureArrival} from "@/lib/model/missionDepartureArrival";
 import {MissionVehicle} from "@/lib/model/missionVehicle";
 import nodemailer from "nodemailer";
 import {AuthUser} from "@/app/helper";
+import ejs from "ejs";
+import fs from "fs";
+import path from "path";
 
 function getCurrentFormattedDate() {
     const currentDate = new Date(); // Get the current date
@@ -32,7 +35,7 @@ export async function POST(request) {
                 //rejectUnauthorized: false,
             },
         });
-        const mailOptions={};
+       // const mailOptions={};
 
         var result;
         await mongoose.connect(connectionStr);
@@ -70,13 +73,26 @@ export async function POST(request) {
 
 
 
-        const mailContent = `New Mission Created `;
+        //const mailContent = `New Mission Created `;
         // Set up email options
         // let user=User.findOne({user_type:'admin'}).email;
         if(1){
-            mailOptions.to = 'lipan@technovicinity.com';
-            mailOptions.subject = "UNRWA New Mission Created";
-            mailOptions.text = mailContent;
+            // mailOptions.to = 'lipan@technovicinity.com';
+            // mailOptions.subject = "UNRWA New Mission Created";
+            // mailOptions.text = mailContent;
+            const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
+            const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
+            const mailContent = ejs.render(emailTemplate, { missionId:missionId,date:mission.create_date });
+
+
+            const mailOptions = {
+               from: process.env.EMAIL_USER,
+            //    to: 'lipan@technovicinity.com',
+                to: 'sajeebchakraborty.cse2000@gmail.com',  
+               subject: "UNRWA New Mission Created",
+               html: mailContent,
+           };
+
             // Send the email
             await transporter.sendMail(mailOptions);
         }

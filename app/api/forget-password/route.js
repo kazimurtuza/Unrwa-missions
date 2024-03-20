@@ -5,6 +5,9 @@ import jwt from "jsonwebtoken";
 import { User } from "@/lib/model/users";
 // import { mailOptions} from "../../config/nodemailer";
 import nodemailer from "nodemailer";
+import ejs from "ejs";
+import fs from "fs";
+import path from "path";
 
 
 export async function POST(request) {
@@ -54,13 +57,27 @@ export async function POST(request) {
 
             // Compose the email content
             const resetLink = code;
-            const mailContent = `For reset your password Code: ${code}`;
+            //const mailContent = `For reset your password Code: ${code}`;
 
             // Set up email options
-            mailOptions.from = process.env.EMAIL_USER;
-            mailOptions.to = email;
-            mailOptions.subject = "Password Reset";
-            mailOptions.text = mailContent;
+            // mailOptions.from = process.env.EMAIL_USER;
+            // mailOptions.to = email;
+            // mailOptions.subject = "Password Reset";
+            // mailOptions.text = mailContent;
+
+             // Compose the email content using EJS
+
+             const emailTemplatePath = path.resolve("./app/emails/forget_password.ejs");
+             const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
+             const mailContent = ejs.render(emailTemplate, { resetLink });
+
+
+             const mailOptions = {
+                from: process.env.EMAIL_USER,
+                to: email,
+                subject: "Password Reset",
+                html: mailContent,
+            };
 
             // Send the email
             await transporter.sendMail(mailOptions);
