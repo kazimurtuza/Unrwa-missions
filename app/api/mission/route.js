@@ -87,8 +87,8 @@ export async function POST(request) {
 
             const mailOptions = {
                from: process.env.EMAIL_USER,
-            //    to: 'lipan@technovicinity.com',
-                to: 'sajeebchakraborty.cse2000@gmail.com',  
+                to: 'lipan@technovicinity.com',
+                //to: 'sajeebchakraborty.cse2000@gmail.com',  
                subject: "UNRWA New Mission Created",
                html: mailContent,
            };
