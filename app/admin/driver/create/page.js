@@ -2,6 +2,7 @@
 
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 
 function DriverCreate() {
   const [driverName, setDriverName] = useState("");
@@ -143,6 +144,12 @@ function DriverCreate() {
             setWhatsupNumber("");
             setErrorMessage("");
             setClasificationID("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
           }
           else
           {

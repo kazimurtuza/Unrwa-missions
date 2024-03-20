@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Swal from 'sweetalert2';
 
 function UmraCreate() {
   const router = useRouter();
@@ -213,6 +214,12 @@ useEffect(() => {
             setOwenership("");
             setSubArea("");
             setLocationArea("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../facilities", { scroll: false });
 
           }

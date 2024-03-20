@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 function PremiseTypeCreate() {
   const router = useRouter();
@@ -39,6 +40,12 @@ function PremiseTypeCreate() {
             setSuccessMessage("Premise Type Create Successfully");
             setName("");
             setErrorMessage("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../premise-type", { scroll: false });
           }
           else

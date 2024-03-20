@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 function DepartmentCreate() { 
   const router = useRouter();
@@ -48,6 +49,12 @@ function DepartmentCreate() {
             setDepartmentName("");
             setAbbrevation("");
             setErrorMessage("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../department", { scroll: false });
           }
           else
