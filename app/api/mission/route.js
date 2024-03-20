@@ -9,6 +9,8 @@ import {AuthUser} from "@/app/helper";
 import ejs from "ejs";
 import fs from "fs";
 import path from "path";
+import { User } from "@/lib/model/users";
+import { Staff } from "@/lib/model/staff";
 
 function getCurrentFormattedDate() {
     const currentDate = new Date(); // Get the current date
@@ -80,9 +82,10 @@ export async function POST(request) {
             // mailOptions.to = 'lipan@technovicinity.com';
             // mailOptions.subject = "UNRWA New Mission Created";
             // mailOptions.text = mailContent;
+            const leaderInfo = await Staff.findOne({ _id: mission.leader });
             const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
             const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
-            const mailContent = ejs.render(emailTemplate, { missionId:missionId,date:mission.create_date });
+            const mailContent = ejs.render(emailTemplate, { missionId:mission.mission_id,date:mission.create_date,leader:leaderInfo.name });
 
 
             const mailOptions = {
