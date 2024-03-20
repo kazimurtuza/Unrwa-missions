@@ -10,6 +10,7 @@ function Area() {
     const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     const fetchData = async () => {
+        console.log("api calling");
         try {
             const { data } = await axiosClient.get('area');
             setArea(data.result);
@@ -19,9 +20,11 @@ function Area() {
         }
     };
 
-    fetchData();
+  
 
     useEffect(() => {
+
+        fetchData();
        
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 

@@ -23,11 +23,11 @@ export async function GET(){
     try{
         let userInfo = await AuthUser();
         let user_type = userInfo.user_type;
-        let user_id = await userInfo.id;
+        let user_id = await userInfo.staff_id;
         console.log(connectionStr);
-        return NextResponse.json({user_id,success:true});
         await mongoose.connect(connectionStr);
         let currentDate = new Date().toJSON().slice(0, 10);
+        //return NextResponse.json({user_id,success:true});
         pendingMission = await Mission.countDocuments({leader: user_id, request_status: "request_received" });
 
         completedMission = await Mission.countDocuments({leader: user_id, request_status: "mission_completed" });
