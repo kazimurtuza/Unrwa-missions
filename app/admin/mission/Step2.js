@@ -1,10 +1,7 @@
-import {useState, useEffect} from "react";
+import { useState } from "react";
 import Collapsable1 from "./components/collapsable1";
 
-
 const Step1 = ({data, locationSet,checkValidation,emptyLocation}) => {
-
-
     const [locationList, setLocationList] = useState(data);
     const handleChange = async (name, value, index_no) => {
         let isAdd = 1;
@@ -39,8 +36,8 @@ const Step1 = ({data, locationSet,checkValidation,emptyLocation}) => {
                 } else {
                     return {...item, [name]: value};
                 }
-
             }
+
             return item;
         });
 
@@ -57,15 +54,13 @@ const Step1 = ({data, locationSet,checkValidation,emptyLocation}) => {
         let newdata = [...locationList, {...emptyLocation,index_no: locationList.length,}];
         setLocationList(newdata);
         locationSet(newdata);
-
-
     }
 
     return (
         <div className="w-full mx-auto">
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14">
 
-                {locationList && locationList.map((item, index) => <Collapsable1 info={item} totalItem={locationList.length} checkValidation={checkValidation} setInfo={handleChange} item={index}/>)}
+                {locationList && locationList.map((item, index) => <Collapsable1 isCollapse={(locationList.length-1) === index} info={item} totalItem={locationList.length} checkValidation={checkValidation} setInfo={handleChange} item={index}/>)}
 
                 <div className="collapsable-item__btn">
                     <button type="button" className="add-btn" onClick={handleClick}>

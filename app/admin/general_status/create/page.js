@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 function GeneralStatusCreate() {
   const router = useRouter();
@@ -41,6 +42,12 @@ function GeneralStatusCreate() {
           {
             setSuccessMessage("General Status Create Successfully");
             setName("");
+            Swal.fire({
+              title: 'success',
+              text: 'Successfully Created',
+              icon: 'success',
+              // confirmButtonText: 'Cool'
+            })
             router.push("../general_status", { scroll: false });
             setErrorMessage("");
           }

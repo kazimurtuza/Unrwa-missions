@@ -1,9 +1,9 @@
 "use client";
 
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import axiosClient from "@/app/axiosClient";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
 
 function convertDateFormat(dateString, newFormat) {
@@ -184,6 +184,7 @@ function MissionVIew() {
             console.error("Error fetching users:", error);
         }
     };
+<<<<<<< HEAD
 
 
     // function storeImage(e){
@@ -224,6 +225,8 @@ function MissionVIew() {
     };
 
 
+=======
+>>>>>>> dcee81910fb2baacbf8c860dce63312e46b8fc35
     useEffect(() => {
         fetchData();
     }, []);
@@ -242,7 +245,6 @@ function MissionVIew() {
             ...old, // Copy the previous state
             [name]: value, // Update the property with the given name
         }));
-
     };
 
     const storeDate = async () => {
@@ -562,7 +564,6 @@ function MissionVIew() {
                                                             </p>
                                                         </div>:""}
 
-
                                                         <div className='form__col'>
                                                             <p>
                                                                 <b>Longitude</b>
@@ -814,7 +815,7 @@ function MissionVIew() {
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Admin Mission Set</h2>
-                                        <div className='collapsable-item__body'>
+                                        <div className='collapsable-item_body' style={{height: 'auto!imortant'}}>
                                             <div className='collapsable-item__body-row flex-start-spb'>
                                                 <div className='collapsable-item__body-col'>
                                                     <div className='form__field collapsable-item__field'>
@@ -1202,7 +1203,6 @@ function MissionVIew() {
                                                         Mission Locations visited
                                                         and route:{" "}
 
-
                                                         {/*{places &&*/}
                                                         {/*places.map((item, index) => (*/}
                                                         {/*<span>{item.departure_umrah_id != null ? item*/}
@@ -1214,7 +1214,6 @@ function MissionVIew() {
 
                                                         {places.map((item, index) =>
                                                             <span>{item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name}-{item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name},</span>)}
-
 
                                                         <span>Sample Data</span>
                                                     </p>
@@ -1471,7 +1470,6 @@ function MissionVIew() {
                                                         {/*</td>*/}
                                                         {/*</tr>*/}
 
-
                                                         <div>
                                                             <button
                                                                 className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
@@ -1487,7 +1485,6 @@ function MissionVIew() {
                                                 </div>
                                             </div>
                                         </div> : ""}
-
 
                                 </div>
                             </main>
