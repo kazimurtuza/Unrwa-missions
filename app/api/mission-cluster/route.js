@@ -12,7 +12,7 @@ export async function GET(){
  
     let data=[];
     try{
-        console.log(connectionStr);
+        //console.log(connectionStr);
         await mongoose.connect(connectionStr);
         data = await MissionCluster.find({is_delete:0}).populate({
             path:'agency',
