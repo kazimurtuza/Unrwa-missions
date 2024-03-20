@@ -96,7 +96,7 @@ export async function GET() {
 
         let userInfo = await AuthUser()
         let user_type = userInfo.user_type;
-        let user_id = await userInfo.id;
+        let user_id = await userInfo.staff_id;
 
         if (user_type === "admin") {
             var result = await Mission.aggregate([

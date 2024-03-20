@@ -8,20 +8,13 @@ import {AuthUser} from "@/app/helper";
 
 export async function GET() {
 
-
     var data = {}; // Declare data as an empty object
     try {
         await mongoose.connect(connectionStr);
         let currentDate = new Date().toJSON().slice(0, 10);
-
-
-
-
         let userInfo = await AuthUser();
         let user_type = userInfo.user_type;
         let user_id = await userInfo.staff_id;
-
-
         try {
             if (user_type === "admin") {
                 var totalMission = await Mission.countDocuments();
@@ -34,9 +27,6 @@ export async function GET() {
                     request_status: "mission_completed",
                     completed_date: currentDate
                 });
-
-
-
                 var rejectCountToday = await Mission.countDocuments({cla_decision: "denied", rejected_date: currentDate});
                 var approvedToday = await Mission.countDocuments({cla_decision: "approved", approved_date: currentDate});
                 var totalMissionToday = await Mission.countDocuments({create_date: currentDate});
@@ -79,7 +69,6 @@ export async function GET() {
             approvedToday: approvedToday,
             totalMissionToday: totalMissionToday,
         };
-
         return NextResponse.json({result: data, success: true});
     } catch (error) {
         data = {success: false, message: error.message};
