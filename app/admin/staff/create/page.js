@@ -24,7 +24,7 @@ function StaffCreate() {
   const [otherName, setOtherName] = useState("");
   const [title, setTitle] = useState("");
   const [employeeId, setEmployeeId] = useState("");
-  const [classificationId, setClassificationId] = useState("");
+  const [classificationId, setClassificationId] = useState("National Staff");
   const [nationalId, setNationalId] = useState("");
   const [passportNumberOrginal, setPassportNumberOrginal] = useState("");
   const [passportNumberDuplicate, setPassportDuplicate] = useState("");
@@ -641,8 +641,9 @@ useEffect(() => {
                           onChange={(e) => handleGender(e.target.value)}
                         >
                           <option value="" disabled>Select your gender</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
                         </select>
                       </div>
 

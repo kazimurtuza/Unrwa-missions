@@ -567,7 +567,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                Create ACU Status
+                                                                Create UNOPS
                                                             </span>
                                                         </Link>
                                                     </li>
@@ -578,7 +578,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
                                                         >
                                                             <span className="text-sm font-medium  lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                                ACU Status List
+                                                                UNOPS List
                                                             </span>
                                                         </Link>
                                                     </li>
@@ -605,7 +605,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                         </Link>
                                                     </li> */}
 
-                                                    <li className="mb-1 last:mb-0">
+                                                    {/* <li className="mb-1 last:mb-0">
                                                         <Link
                                                             href="/admin/cla_list/create"
 
@@ -625,7 +625,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                                 CLA List
                                                             </span>
                                                         </Link>
-                                                    </li>
+                                                    </li> */}
 
                                                     <li className="mb-1 last:mb-0">
                                                         <Link

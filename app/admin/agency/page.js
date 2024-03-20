@@ -150,12 +150,13 @@ function AgencyList() {
                                       if (confirmed) {
                                           // Make a DELETE request to your API to mark the question as deleted
                                           try {
-                                            await axiosClient.delete(`agency/${item._id}`, {
+                                           const res= await axiosClient.delete(`agency/${item._id}`, {
                                                   method: 'DELETE',
                                                   headers: {
                                                       'Content-Type': 'application/json',
                                                   },
                                               });
+                                              console.log(res);
                                               Swal.fire({
                                                 title: 'success',
                                                 text: 'Successfully Deleted',
