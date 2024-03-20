@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import {User} from "@/lib/model/users";
 import {connectionStr} from "@/lib/db";
 import jwt from "jsonwebtoken"
+import {Staff} from "@/lib/model/staff";
 
 export async function POST(request) {
     try {
@@ -16,6 +17,8 @@ export async function POST(request) {
         const srcky=process.env.JWT_SECRET
         const record = {email: email};
         const user = await User.findOne(record);
+        const staffInfo = await Staff.findOne({user:user._id});
+        const staff_id=staffInfo._id;
         if (user) {
             if(user.is_delete==1)
             {
@@ -31,7 +34,7 @@ export async function POST(request) {
             const user_type=user.user_type;
             if (is_user) {
                 // let token = jwt.sign({name, email, id,user_type}, srcky,{ expiresIn: '1h' });
-                let token = jwt.sign({name, email, id,user_type}, srcky);
+                let token = jwt.sign({name,email,id,staff_id,user_type}, srcky);
                 return NextResponse.json({user,message:"Login Successfully", 'token': token}, {status: 200});
             }
         }
