@@ -184,6 +184,49 @@ function MissionVIew() {
             console.error("Error fetching users:", error);
         }
     };
+<<<<<<< HEAD
+
+
+    // function storeImage(e){
+    //     const {name, value} = e.target;
+    //     const file = e.target.files[0];
+    //     var base64=null;
+    //     if (file) {
+    //         const reader = new FileReader();
+    //
+    //         reader.onloadend = () => {
+    //             // Once the FileReader has read the file, set the base64 data
+    //             base64=reader.result;
+    //         };
+    //
+    //         // Read the file as a data URL (base64)
+    //         reader.readAsDataURL(file);
+    //     }
+    //     console.log(base64);
+    //
+    //     imageList[name]=base64;
+    //     setImageList(old => imageList);
+    //
+    //     console.log(imageList);
+    // }
+
+    const storeImage = (e) => {
+        const {name, value} = e.target;
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // imageListData[name]=reader.result;
+                console.log(reader.result)
+                // setImageList(old => imageListData);
+            };
+
+        }
+    };
+
+
+=======
+>>>>>>> dcee81910fb2baacbf8c860dce63312e46b8fc35
     useEffect(() => {
         fetchData();
     }, []);
