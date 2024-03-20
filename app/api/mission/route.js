@@ -68,6 +68,8 @@ export async function POST(request) {
         }
 
 
+
+
         const mailContent = `New Mission Created `;
         // Set up email options
         // let user=User.findOne({user_type:'admin'}).email;
@@ -81,13 +83,15 @@ export async function POST(request) {
 
 
 
-
-
         return NextResponse.json({result, success: true});
     } catch (error) {
         return NextResponse.json({error: error.message, success: false});
     }
 }
+
+
+
+
 
 export async function GET() {
     try {
@@ -96,7 +100,7 @@ export async function GET() {
 
         let userInfo = await AuthUser()
         let user_type = userInfo.user_type;
-        let user_id = await userInfo.id;
+        let user_id = await userInfo.staff_id;
 
         if (user_type === "admin") {
             var result = await Mission.aggregate([
