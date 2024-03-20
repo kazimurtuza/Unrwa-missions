@@ -41,12 +41,14 @@ function convertDateTimeFormat(dateString) {
     return formattedDateTime;
 }
 
+
 function MissionVIew() {
     const router = useRouter();
     const searchParames = useSearchParams();
     const mission_id = searchParames.get("id");
     const [mission, setMission] = useState();
     const [places, setplaces] = useState([]);
+    const [imageListData, setImageList] = useState([""]);
     const [vehicles, setvehicles] = useState([]);
     const options = [
         {value: "1", label: "Staff One"},
@@ -83,6 +85,10 @@ function MissionVIew() {
         regular_presence_eds_erw_uxo: '',
         humanitarian_assistance: '',
         humanitarian_observations: '',
+        report_image_list:[],
+    }
+    function addImage(){
+        setImageList(old=>[...old,""])
     }
 
     const [adminData, setadminData] = useState(dataList);
@@ -179,8 +185,48 @@ function MissionVIew() {
             console.error("Error fetching users:", error);
         }
     };
-    useEffect(() => {
 
+
+    // function storeImage(e){
+    //     const {name, value} = e.target;
+    //     const file = e.target.files[0];
+    //     var base64=null;
+    //     if (file) {
+    //         const reader = new FileReader();
+    //
+    //         reader.onloadend = () => {
+    //             // Once the FileReader has read the file, set the base64 data
+    //             base64=reader.result;
+    //         };
+    //
+    //         // Read the file as a data URL (base64)
+    //         reader.readAsDataURL(file);
+    //     }
+    //     console.log(base64);
+    //
+    //     imageList[name]=base64;
+    //     setImageList(old => imageList);
+    //
+    //     console.log(imageList);
+    // }
+
+    const storeImage = (e) => {
+        const {name, value} = e.target;
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                imageListData[name]=reader.result;
+                console.log(imageListData)
+                setImageList(old => imageListData);
+            };
+
+        }
+    };
+
+
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -214,14 +260,15 @@ function MissionVIew() {
     };
 
     const storeReportDate = async () => {
+        report.report_image_list=imageListData;
         console.log(report);
-        const response = await axiosClient.post(
-            "mission-report",
-            report
-        );
-        if (response.data.success == true) {
-            alert("success fully updated Report");
-        }
+        // const response = await axiosClient.post(
+        //     "mission-report",
+        //     report
+        // );
+        // if (response.data.success == true) {
+        //     alert("success fully updated Report");
+        // }
     };
 
     async function downloadPdf() {
@@ -1346,6 +1393,17 @@ function MissionVIew() {
                                                         </tbody>
                                                     </table>
                                                     <p>Please provide with maps and photographs below if possible</p>
+                                                    <div>
+
+                                                        <ul>
+                                                            {
+                                                                imageListData.map((item,index)=><li><input name={index} onChange={storeImage} type="file"/></li> )
+                                                            }
+
+                                                        </ul>
+
+                                                        <button onClick={addImage}>add</button>
+                                                    </div>
                                                 </div>
 
                                                 <div className='table-wrap'>
