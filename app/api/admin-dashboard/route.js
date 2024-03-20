@@ -18,6 +18,7 @@ export async function GET() {
         let user_type = userInfo.user_type;
         let user_id = await userInfo.staff_id;
 
+
         try {
             if (user_type === "admin") {
                 var totalMission = await Mission.countDocuments();
@@ -30,6 +31,9 @@ export async function GET() {
                     request_status: "mission_completed",
                     completed_date: currentDate
                 });
+
+
+
                 var rejectCountToday = await Mission.countDocuments({cla_decision: "denied", rejected_date: currentDate});
                 var approvedToday = await Mission.countDocuments({cla_decision: "approved", approved_date: currentDate});
                 var totalMissionToday = await Mission.countDocuments({create_date: currentDate});
@@ -61,7 +65,6 @@ export async function GET() {
             console.error("Error:", error);
             // Handle error appropriately
         }
-
         data = {
             totalMission: totalMission,
             completed: completed,

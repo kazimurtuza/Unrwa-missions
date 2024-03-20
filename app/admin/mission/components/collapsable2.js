@@ -1,5 +1,5 @@
 import axiosClient from "@/app/axiosClient";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import DualListBox from "react-dual-listbox";
 import "react-dual-listbox/lib/react-dual-listbox.css";
 import Select from "react-select";
@@ -48,14 +48,12 @@ const Collapsable2 = ({
     const [driverInfo, setDriverInfo] = useState();
     const [carriList, setCarriList] = useState([]);
 
-
     const getDriverData = async () => {
         const selectedStaff = await driverList.find(option => option.value === info.driver)
         if (selectedStaff) {
             setDriverInfo(selectedStaff.list);
         }
     };
-
 
     const selectData = async (selectedOption, {name}) => {
         var value;
@@ -78,10 +76,10 @@ const Collapsable2 = ({
 
         // Pass the input value to the parent component
 
-
         if (name == 'driver') {
             setDriverInfo(selectedOption.list);
         }
+
         if (name == 'agency') {
             driverListSet(value);
         }
@@ -89,9 +87,11 @@ const Collapsable2 = ({
         if(name=='vehicle_agency'){
             vehicleListSet(value)
         }
+
         if (name == "vehicle") {
             value = selectedOption;
         }
+
         if (name == "carried") {
             value = selectedOption;
             // console.log("data carry")
@@ -210,6 +210,7 @@ const Collapsable2 = ({
             let save = prevehicleStaf[item];
             setSelected((old) => save);
         }
+
         // var save=prevehicleStaf?prevehicleStaf[item]:[];
         // // let selectedStaffList = await info.staff.map((item) => item.staff_id);
     }
@@ -225,9 +226,11 @@ const Collapsable2 = ({
         if (info.vehicle) {
             setSelectedVehicleInfo();
         }
+
         if (info.agency) {
             driverListSet(info.agency);
         }
+
         if (info.vehicle) {
             vehicleListSet(info.vehicle_agency)
         }
@@ -238,7 +241,6 @@ const Collapsable2 = ({
     };
 
     const employeeSet = async (data) => {
-
         // updateVehicleStaf()
         setSelected(data);
         // // Map each item in the data array to an object with a key staff_id
@@ -248,7 +250,6 @@ const Collapsable2 = ({
 
         // console.log(value)
         // console.log('-----------------')
-
 
         // var  newData = await prevehicleStaf.map((info,index)=>{
         //     if(index==item){
@@ -377,7 +378,6 @@ const Collapsable2 = ({
                                 </div>
                             </div> : ''}
 
-
                         </div>
                         <div className='collapsable-item__body-col'>
                             <h3 className='collapsable-item__body-title'>
@@ -408,8 +408,6 @@ const Collapsable2 = ({
                                         : ""}
                                 </div>
                             </div>
-
-
 
                             <div className='form__field collapsable-item__field'>
                                 <label
@@ -463,7 +461,7 @@ const Collapsable2 = ({
                                     id='dsc'
                                 />
                             </div>
-                            <div className='form__field'>
+                            <div className='form__field' style={{width: '100%', maxWidth: '100%'}}>
                                 <label
                                     htmlFor='agencies'
                                     className='form__label'
