@@ -288,3 +288,23 @@ a {
 	background-color:var(--line-border-fill);
 	color: #fff;
   }
+
+  span.rdl-icon.rdl-icon-move-all-to-selected::before{
+	content: ">>";
+	font-family: initial!important;
+  }
+
+  span.rdl-icon.rdl-icon-move-to-selected::before{
+	content: ">";
+	font-family: initial!important;
+  }
+
+  span.rdl-icon.rdl-icon-move-to-available::before{
+	content: "<";
+	font-family: initial!important;
+  }
+
+  span.rdl-icon.rdl-icon-move-all-to-available::before{
+	content: "<<";
+	font-family: initial!important;
+  }

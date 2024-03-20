@@ -36,9 +36,9 @@ body {
     background-color: var(--main-color);
 }
 
-#sidebar {
+/* #sidebar {
     width: 18rem !important;
-}
+} */
 
 ul .menu-legend {
     color: #ffffff;
@@ -140,9 +140,17 @@ table a {
     display: inline-block;
 }
 
+#sidebar{
+    position: relative;
+    z-index: 999999999999999999;
+    width: 18rem!important;
+}
+
 @media (max-width: 1024px) {
-    .-translate-x-70 {
-        transform: translateX(-18rem) !important;
+    #sidebar.-translate-x-70 {
+        transform: translateX(-19rem) !important;
+        width: 0!important;
+        padding: 0;
     }
 }
 
@@ -172,10 +180,6 @@ table a {
     }
 }
 
-#sidebar{
-    position: relative;
-}
-
 @media (min-width: 1024px){
     .f-row-wrap{
         display: flex;
@@ -188,9 +192,9 @@ table a {
 }
 
 div:where(.swal2-container){
-    z-index: 99999999999999999999;
+    z-index: 99999999999999999999!important;
 }
 
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
-    background-color: var(--main-color);
+    background-color: var(--main-color)!important;
 }

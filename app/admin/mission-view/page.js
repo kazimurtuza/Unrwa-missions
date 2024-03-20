@@ -761,7 +761,7 @@ function MissionVIew() {
 
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Admin Mission Set</h2>
-                                        <div className='collapsable-item_body' style={{height: 'auto!imortant'}}>
+                                        <div className='collapsable-item__body' style={{height: 'auto!imortant'}}>
                                             <div className='collapsable-item__body-row flex-start-spb'>
                                                 <div className='collapsable-item__body-col'>
                                                     <div className='form__field collapsable-item__field'>
