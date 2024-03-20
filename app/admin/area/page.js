@@ -1,10 +1,11 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import TableExample from "@/app/example-table/page";
+import $ from 'jquery';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-
+import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
+import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 function Area() {
     const [area, setArea] = useState([]);
     const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -14,18 +15,16 @@ function Area() {
         try {
             const { data } = await axiosClient.get('area');
             setArea(data.result);
-            console.log(data.result);
+            setTimeout( function(){
+                $('table').dataTable();
+            }, 300);
         } catch (error) {
             console.error('Error fetching agencies:', error);
         }
     };
 
-  
-
     useEffect(() => {
-
         fetchData();
-       
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Emergency Response Gaza Areas";
@@ -48,7 +47,6 @@ function Area() {
             {Array.isArray(area) && area.map((item, index) => (
 
                 <tr key={index}>
-                
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
@@ -69,7 +67,6 @@ function Area() {
                             </div>
                         </div>
                     </td>
-                  
 
                     <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
 
@@ -100,7 +97,7 @@ function Area() {
                                                 icon: 'success',
                                                 // confirmButtonText: 'Cool'
                                             })
-                                          
+
                                               //setMessage('Delete successfully');
                                               // Remove the deleted question from the state
                                               //setData(data => data.filter(item => item._id !== val._id));
@@ -125,7 +122,38 @@ function Area() {
     );
 
     return (
-        <TableExample tableName={tableName} tableHead={head} body={body}/>
+        <div className="flex h-screen overflow-hidden">
+
+        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <main>
+            <div className="container mx-auto px-4 sm:px-8">
+              <div className="py-8">
+                <div className="flex gap-5 flex-wrap items-center justify-between">
+                  <h2 className="text-2xl font-semibold leading-tight">
+                  Emergency Response Gaza Areas
+
+                  </h2>
+                </div>
+                {/* Table */}
+                <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                  <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                    <table className="min-w-full leading-normal">
+                      <thead>
+                      {head}
+                      </thead>
+                      <tbody>
+                      {body}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     );
 }
 

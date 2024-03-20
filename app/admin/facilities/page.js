@@ -29,7 +29,6 @@ function UmrahList() {
             // console.error('Error fetching categories:', error);
         }
     };
-   
 
     useEffect(() => {
         fetchData();
