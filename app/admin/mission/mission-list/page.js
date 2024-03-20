@@ -55,7 +55,7 @@ function MissionList() {
     let newDateFormat = "DD/MM/YYYY"; // Example new format
 
     let tableName = "Mission List";
-    const headName = ["Si", "Name", "movement_date","Status","Action"];
+    const headName = ["Name", "movement_date","Status","Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -74,14 +74,14 @@ function MissionList() {
             {mission && mission.map((item, index) => (
 
                 <tr key={index}>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                            {index+1}
-                        </p>
-                        {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                        {/*    USD*/}
-                        {/*</p>*/}
-                    </td>
+                    {/*<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">*/}
+                    {/*    <p className="text-gray-900 whitespace-no-wrap">*/}
+                    {/*        {index+1}*/}
+                    {/*    </p>*/}
+                    {/*    /!*<p className="text-gray-600 whitespace-no-wrap">*!/*/}
+                    {/*    /!*    USD*!/*/}
+                    {/*    /!*</p>*!/*/}
+                    {/*</td>*/}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             {/*<div className="flex-shrink-0 w-10 h-10">*/}

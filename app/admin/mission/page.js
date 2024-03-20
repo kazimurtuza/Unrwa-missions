@@ -205,7 +205,7 @@ function Steps() {
                 // Return the updated item with the updatedStaf array
                 return {
                     ...item,
-                    staf: updatedStaf // Assuming 'staf' is the property where you want to store the updated staff list
+                    staff: updatedStaf // Assuming 'staf' is the property where you want to store the updated staff list
                 };
             });
 
