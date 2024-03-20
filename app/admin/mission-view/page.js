@@ -41,12 +41,14 @@ function convertDateTimeFormat(dateString) {
     return formattedDateTime;
 }
 
+
 function MissionVIew() {
     const router = useRouter();
     const searchParames = useSearchParams();
     const mission_id = searchParames.get("id");
     const [mission, setMission] = useState();
     const [places, setplaces] = useState([]);
+    const [imageListData, setImageList] = useState([""]);
     const [vehicles, setvehicles] = useState([]);
     const options = [
         {value: "1", label: "Staff One"},
@@ -83,6 +85,10 @@ function MissionVIew() {
         regular_presence_eds_erw_uxo: '',
         humanitarian_assistance: '',
         humanitarian_observations: '',
+        report_image_list:[],
+    }
+    function addImage(){
+        setImageList(old=>[...old,""])
     }
 
     const [adminData, setadminData] = useState(dataList);
@@ -211,14 +217,15 @@ function MissionVIew() {
     };
 
     const storeReportDate = async () => {
+        report.report_image_list=imageListData;
         console.log(report);
-        const response = await axiosClient.post(
-            "mission-report",
-            report
-        );
-        if (response.data.success == true) {
-            alert("success fully updated Report");
-        }
+        // const response = await axiosClient.post(
+        //     "mission-report",
+        //     report
+        // );
+        // if (response.data.success == true) {
+        //     alert("success fully updated Report");
+        // }
     };
 
     async function downloadPdf() {
@@ -709,6 +716,7 @@ function MissionVIew() {
                                                         <div className='form__col'>
                                                             <p>
                                                                 <b>
+
                                                                     Vehicle Type
                                                                     (Model)
                                                                 </b>
@@ -735,8 +743,11 @@ function MissionVIew() {
                                                                         .description
                                                                 }
                                                             </p>
-                                                        </div>
+                                                         </div>
                                                     </div>
+
+
+
 
                                                     <h3 className='form__info-box__title has-divider'>
                                                         Staff
@@ -1340,6 +1351,17 @@ function MissionVIew() {
                                                         </tbody>
                                                     </table>
                                                     <p>Please provide with maps and photographs below if possible</p>
+                                                    <div>
+
+                                                        <ul>
+                                                            {
+                                                                imageListData.map((item,index)=><li><input name={index} onChange={storeImage} type="file"/></li> )
+                                                            }
+
+                                                        </ul>
+
+                                                        <button onClick={addImage}>add</button>
+                                                    </div>
                                                 </div>
 
                                                 <div className='table-wrap'>
