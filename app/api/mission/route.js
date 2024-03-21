@@ -92,7 +92,7 @@ export async function POST(request) {
                from: process.env.EMAIL_USER,
                 to: 'lipan@technovicinity.com',
                 //to: 'sajeebchakraborty.cse2000@gmail.com',  
-               subject: "UNRWA New Mission Created",
+                subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
                html: mailContent,
            };
 

@@ -9,6 +9,7 @@ import { uploadBase64Img } from "@/app/helper";
 import { Department } from "@/lib/model/department";
 import { AcuStatus } from "@/lib/model/acu_status";
 
+
 export async function GET(){
  
     let data=[];
