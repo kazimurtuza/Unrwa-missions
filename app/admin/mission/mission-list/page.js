@@ -13,7 +13,7 @@ function MissionList() {
             const { data } = await axiosClient.get('mission');
             setMissionList(data.result);
             setTimeout( function(){
-                $('table').dataTable();
+                $('table.mission-view').dataTable();
             }, 300);
         } catch (error) {
             console.error('Error fetching users:', error);
@@ -207,7 +207,7 @@ function MissionList() {
                     {/* Table */}
                     <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                       <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
-                        <table className="min-w-full leading-normal">
+                        <table className="min-w-full leading-normal mission-view">
                           <thead>
                           {head}
                           </thead>

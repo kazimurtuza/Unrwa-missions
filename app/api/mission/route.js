@@ -84,7 +84,9 @@ export async function POST(request) {
             // mailOptions.text = mailContent;
             const leaderInfo = await Staff.findOne({_id: mission.leader});
             const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
+            const emailFocalData = path.resolve("./app/emails/focal-point-mission.ejs");
             const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
+            const emailfocalTemplate = fs.readFileSync(emailFocalData, "utf-8");
 
             // mail data
             let mission_info = await Mission.findOne({_id: missionId}).populate('mission_cluster').populate('agency.agency_id').populate({
@@ -111,6 +113,9 @@ export async function POST(request) {
             const mailContent = ejs.render(emailTemplate, {
                    mission:mission_info,
             });
+            const focalContent = ejs.render(emailfocalTemplate, {
+                   mission:mission_info,
+            });
 
 
             const mailOptions = {
@@ -123,8 +128,19 @@ export async function POST(request) {
                 html: mailContent,
             };
 
+            const focalOptions = {
+                from: process.env.EMAIL_USER,
+                // to: 'lipan@technovicinity.com',
+                to: 'kazimurtuza11@gmail.com',
+                //to: 'sajeebchakraborty.cse2000@gmail.com',
+                //   to: 'mailto:anjumsakib@gmail.com',
+                subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
+                html: focalContent,
+            };
+
             // Send the email
-            await transporter.sendMail(mailOptions);
+            // await transporter.sendMail(mailOptions);
+            await transporter.sendMail(focalOptions);
         }
 
 
