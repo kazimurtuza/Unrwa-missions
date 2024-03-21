@@ -275,13 +275,11 @@ function MissionVIew() {
             [name]: value, // Update the property with the given name
         }));
     };
-
     const storeDate = async () => {
         if(adminData.mission_classification_info==""){
           alert("complete mission classification info need to complete")
             return false;
         }
-
         const response = await axiosClient.post(
             "mission-admin-update",
             adminData
@@ -900,6 +898,7 @@ function MissionVIew() {
                                                         <div className='select-wrap'>
                                                             <select
                                                                 className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
+                                                                name="unops_acu_status"
                                                                 value={
                                                                     adminData.unops_acu_status
                                                                 }
@@ -1068,6 +1067,7 @@ function MissionVIew() {
                                                         </label>
                                                         <input
                                                             type='text'
+                                                            name="unops_acu"
                                                             value={
                                                                 adminData.unops_acu
                                                             }
@@ -1128,8 +1128,7 @@ function MissionVIew() {
                                                                     SELECT
                                                                 </option>
                                                                 <option value='request_recieved'>
-                                                                    Request
-                                                                    Recieved
+                                                                    Request Recieved
                                                                 </option>
                                                                 <option value='request_submitted_cla'>
                                                                     Request
@@ -1224,7 +1223,7 @@ function MissionVIew() {
                                             </div>
                                         </div>
                                     </div>
-                                    { mission && (mission.request_status == "mission_completed") ?
+                                    { mission && mission.request_status ?
                                         <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
                                             <h2>Mission Debriefing Form</h2>
                                             <button

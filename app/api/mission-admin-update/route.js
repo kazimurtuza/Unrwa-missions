@@ -45,7 +45,7 @@ export async function POST(request) {
         const missionUpdate = await Mission.findOneAndUpdate(filter, update, {new: true});
 
         let missionId = info.mission_id
-        let mission_info = await Mission.findOne({_id: missionId}).populate('mission_cluster').populate('agency.agency_id').populate({
+        let mission_info = await Mission.findOne({_id: missionId}).populate('mission_cluster').populate('unops_acu_status').populate('agency.agency_id').populate({
             path: 'leader',
             populate: {
                 path: 'user'
@@ -81,17 +81,11 @@ export async function POST(request) {
             },
         });
         const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
-        const emailTemplatePathComplete = path.resolve("./app/emails/complete-mission.ejs");
         const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
-        const emailTemplateComplete = fs.readFileSync(emailTemplatePathComplete, "utf-8");
-
         const mailContent = ejs.render(emailTemplate, {
             mission: mission_info,
             missionLocation_info: missionLocation_info,
-        });
-        const mailContentComplete = ejs.render(emailTemplateComplete, {
-            mission: mission_info,
-            missionLocation_info: missionLocation_info,
+            missionVehicle_info: missionVehicle_info,
         });
         var agencies = await Promise.all(mission_info.agency.map(async (item) => {
             return `${item.agency_id.name}`;
@@ -105,22 +99,14 @@ export async function POST(request) {
             subject: "MR " + mission_info.mission_id + " MNR Agencies " + agencies.join(''),
             html: mailContent,
         };
-        const mailOptionsComplete = {
-            from: process.env.EMAIL_USER,
-            to: 'lipan@technovicinity.com',
-            // to: 'kazimurtuza11@gmail.com',
-            //to: 'sajeebchakraborty.cse2000@gmail.com',
-            //   to: 'mailto:anjumsakib@gmail.com',
-            subject: "MR " + mission_info.mission_id + " MNR Agencies " + agencies.join(''),
-            html: mailContentComplete,
-        };
 
-        await transporter.sendMail(mailOptions);
+
+        if (payload.request_status == "request_submitted_cla") {
+            await transporter.sendMail(mailOptions);
+        }
 
 
         // ----------Email----------------
-
-
 
 
         if (missionUpdate) {
