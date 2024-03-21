@@ -304,6 +304,7 @@ function MissionVIew() {
         }
     };
 
+
     async function downloadPdf() {
         setDownloading(1);
         let urlLink = `mission-pdf/${mission_id}`;
