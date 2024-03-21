@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,7 +22,7 @@
                 text-align: center;
                 font-family: verdana;
             }
-            .header h1 {
+            .header .main {
                 font-size: 2em;
                 color: #fff;
                 font-weight: bold;
@@ -29,7 +30,7 @@
                 text-transform: uppercase;
                 margin: 0;
             }
-            .header h2 {
+            .header .sub {
                 padding: 20px 0 0 0;
                 font-size: 1em;
                 color: #efefef;
@@ -75,7 +76,7 @@
                 justify-content: space-between;
             }
             .form__info-box .form__col {
-                flex: 1;
+                width: 50%;
                 max-width: 49.5em;
             }
             .form__info-box .form__col p {
@@ -92,7 +93,8 @@
                 margin-bottom: 25px;
             }
             .msb-meta .msb-meta__item {
-                flex: 1;
+                width: 50%;
+                max-width: 49.5em;
             }
             .form__info-box__title {
                 font-size: 16px;
@@ -124,10 +126,8 @@
         <div class="email-body">
             <div class="email-container">
                 <div class="header">
-                    <hgroup>
-                        <h1>Thank You</h1>
-                        <h2>Mission Successfully Created</h2>
-                    </hgroup>
+                    <h1 class="main">Thank You</h1>
+                    <h2 class="sub">Mission Successfully Created</h2>
                 </div>
                 <div class="msv-block">
                     <h2>Section heading</h2>
@@ -136,34 +136,36 @@
                         <h3 class="form__info-box__title">
                             Mission Focal Point Contact Details
                         </h3>
+
+
                         <div class="form__row flex-ctr-spb">
                             <div class="form__col">
                                 <p><b>Name</b></p>
-                                <p>1233</p>
+                                <p><%= mission && mission.leader.name %></p>
                             </div>
                             <div class="form__col">
                                 <p><b>ID</b></p>
-                                <p>65faabbcf7ff4c38d5f6b6ba</p>
+                                <p><%= mission && mission.mission_id %></p>
                             </div>
                         </div>
                         <div class="form__row flex-ctr-spb">
                             <div class="form__col">
                                 <p><b>Phone</b></p>
-                                <p></p>
+                                <p><%= mission && mission.leader.phone %></p>
                             </div>
                             <div class="form__col">
                                 <p><b>Email Address</b></p>
-                                <p>121qq2@gmail.com</p>
+                                <p><%= mission && mission.leader.user.email %></p>
                             </div>
                         </div>
                         <div class="form__row flex-ctr-spb">
                             <div class="form__col">
                                 <p><b>Whatsapp</b></p>
-                                <p></p>
+                                <p><%= mission && mission.leader.whatsup_number %></p>
                             </div>
                             <div class="form__col">
                                 <p><b>Satellite Phone</b></p>
-                                <p></p>
+                                <p><%= mission && mission.leader.statelite_phone%></p>
                             </div>
                         </div>
                     </div>
@@ -275,7 +277,7 @@
                         <div class="form__row flex-ctr-spb">
                             <div class="form__col">
                                 <p><b>Latitude</b></p>
-                                <p>34.44006126</p>
+                                <p>34.44006126 </p>
                             </div>
                         </div>
                     </div>
