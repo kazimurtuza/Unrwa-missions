@@ -82,31 +82,12 @@ function Dashboard() {
                 setrejectCount(data.result.rejectCount)
                 settotalMission(data.result.totalMission)
                 setcompleted(data.result.completed)
-
-                await setapproved(data.result.approved)
-                await setcluster(old => data.result.clusterList)
-                setLoading(0)
-            }
-        } catch (error) {
-            setProductList([]);
-            // console.error('Error fetching categories:', error);
-        }
-    };
-
-    const fetchCluster = async () => {
-        try {
-            const {data} = await axiosClient.get('admin-dashboard');
-            if (data.success == true) {
-                setrejectCount(data.result.rejectCount)
-                settotalMission(data.result.totalMission)
-                setcompleted(data.result.completed)
                 setapproved(data.result.approved)
 
                 setapprovedToday(data.result.approvedToday)
                 setrejectCountToday(data.result.rejectCountToday)
                 setcompletedToday(data.result.completedToday)
                 settotalMissionToday(data.result.totalMissionToday)
-
                 setLoading(0)
             }
         } catch (error) {
@@ -114,6 +95,19 @@ function Dashboard() {
             // console.error('Error fetching categories:', error);
         }
     };
+
+    // const fetchCluster = async () => {
+    //     try {
+    //         const {data} = await axiosClient.get('admin-dashboard');
+    //         if (data.success == true) {
+    //             await setcluster(old => data.result.clusterList)
+    //             setLoading(0)
+    //         }
+    //     } catch (error) {
+    //         setProductList([]);
+    //         // console.error('Error fetching categories:', error);
+    //     }
+    // };
 
     let loader = <div className={styles.loader}></div>
 
@@ -172,9 +166,8 @@ function Dashboard() {
 
     useEffect(() => {
         fetchData()
-        fetchData()
         getCurrentMonthDateList()
-        fetchCluster();
+        // fetchCluster();
         clusterList();
 
         // addDatasets();

@@ -18,6 +18,12 @@ function convertDateFormat(dateString, newFormat) {
     return formattedDate;
 }
 
+function isBase64(str) {
+    // Regular expression to match the base64 pattern
+    const base64Regex = /^(data:image\/[a-zA-Z]*;base64,)/;
+    return base64Regex.test(str);
+}
+
 function convertDateTimeFormat(dateString) {
     // Parse the input date string
     let parsedDate = new Date(dateString);
@@ -89,6 +95,8 @@ function MissionVIew() {
 
     function addImage(){
         setImageList(old=>[...old,""])
+
+        console.log(imageListData);
     }
 
     const [adminData, setadminData] = useState(dataList);
@@ -98,16 +106,17 @@ function MissionVIew() {
     const [requestStatusDataList, setRequestStatusDataList] = useState("");
     const [acuDataList, setAcuStatusDataList] = useState("");
 
+    const fetchData3 = async () => {
+        try {
+            const {data} = await axiosClient.get("cla_list");
+            setClaDataList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error("Error fetching agencies:", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchData3 = async () => {
-            try {
-                const {data} = await axiosClient.get("cla_list");
-                setClaDataList(data.result);
-                console.log(data.result);
-            } catch (error) {
-                console.error("Error fetching agencies:", error);
-            }
-        };
 
         fetchData3();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
@@ -176,7 +185,13 @@ function MissionVIew() {
                     regular_presence_eds_erw_uxo: missionData.regular_presence_eds_erw_uxo,
                     humanitarian_assistance: missionData.humanitarian_assistance,
                     humanitarian_observations: missionData.humanitarian_observations,
+                    report_image_list: missionData.report_image_list,
+
                 }))
+
+                setImageList(missionData.report_image_list)
+
+
             }
 
             console.log(data.result);
@@ -208,17 +223,20 @@ function MissionVIew() {
     //     console.log(imageList);
     // }
 
-    const storeImage = (e) => {
-        const {name, value} = e.target;
+    const storeImage = (e,index) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
 
             reader.onloadend = () => {
-                imageListData[name]=reader.result;
-                console.log(imageListData)
-                setImageList(old => imageListData);
+                var newList=imageListData;
+                    newList[index]=reader.result,
+                 setImageList(old=>newList)
+
             };
+
+            // Read the file as a data URL (base64)
+            reader.readAsDataURL(file);
         }
     };
 
@@ -255,15 +273,14 @@ function MissionVIew() {
     };
 
     const storeReportDate = async () => {
-        report.report_image_list=imageListData;
-        console.log(report);
-        // const response = await axiosClient.post(
-        //     "mission-report",
-        //     report
-        // );
-        // if (response.data.success == true) {
-        //     alert("success fully updated Report");
-        // }
+        const newReport={...report,report_image_list:imageListData}
+        const response = await axiosClient.post(
+            "mission-report",
+            newReport
+        );
+        if (response.data.success == true) {
+            alert("success fully updated Report");
+        }
     };
 
     async function downloadPdf() {
@@ -271,6 +288,28 @@ function MissionVIew() {
         let urlLink = `mission-pdf/${mission_id}`;
         const {data} = await axiosClient.get(urlLink);
         const fileName = "test.pdf"; // Name of the file in the public folder
+        // Construct the URL to the file in the public folder
+        const url = new URL(fileName, window.location.origin + "/");
+        // Create a new anchor element
+        const a = document.createElement("a");
+        // Set the anchor's href attribute to the file path
+        a.href = url;
+        // Set the anchor's download attribute with the desired filename
+        a.download = "mission.pdf";
+        // Append the anchor to the body
+        document.body.appendChild(a);
+        // Click the anchor to trigger the download
+        a.click();
+        // Remove the anchor from the body
+        document.body.removeChild(a);
+        setDownloading(0);
+    }
+
+    async function downloadReport() {
+        setDownloading(1);
+        let urlLink = `mission-report-pdf/${mission_id}`;
+        const {data} = await axiosClient.get(urlLink);
+        const fileName = "report.pdf"; // Name of the file in the public folder
         // Construct the URL to the file in the public folder
         const url = new URL(fileName, window.location.origin + "/");
         // Create a new anchor element
@@ -1171,6 +1210,12 @@ function MissionVIew() {
                                     { /*mission && (mission.request_status == "mission_completed") ? */
                                         <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
                                             <h2>Mission Debriefing Form</h2>
+                                            <button
+                                                className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
+                                                onClick={downloadReport}
+                                            >
+                                                Download PDF
+                                            </button>
                                             <div className='mdf-form-body'>
                                                 <div className='mdf-form-head'>
                                                     <p>
@@ -1278,7 +1323,7 @@ function MissionVIew() {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea onInput={setReportData} name='not_passable_road_condition' rows="3">{report.not_passable_road_condition}</textarea>
+                                                                <textarea onInput={setReportData} name='not_passable_road_condition'       value={report.not_passable_road_condition} rows="3"></textarea>
 
                                                                 </div>
                                                             </td>
@@ -1288,7 +1333,8 @@ function MissionVIew() {
                                                                 onInput={setReportData}
                                                                 name='not_passable_presence_eds_erw_uxo'
                                                                 rows="3"
-                                                                >{report.not_passable_presence_eds_erw_uxo}</textarea>
+                                                                value={report.not_passable_presence_eds_erw_uxo}
+                                                                ></textarea>
 
                                                                 </div>
                                                             </td>
@@ -1315,7 +1361,8 @@ function MissionVIew() {
                                                                 onInput={setReportData}
                                                                 name='very_bad_road_condition'
                                                                 rows="3"
-                                                                >{report.very_bad_road_condition}</textarea>
+                                                                value={report.very_bad_road_condition}
+                                                                ></textarea>
 
                                                                 </div>
                                                             </td>
@@ -1325,7 +1372,8 @@ function MissionVIew() {
                                                                 onInput={setReportData}
                                                                 name='very_bad_presence_eds_erw_uxo'
                                                                 rows="3"
-                                                                >{report.very_bad_presence_eds_erw_uxo}</textarea>
+                                                                value={report.very_bad_presence_eds_erw_uxo}
+                                                                ></textarea>
 
                                                                 </div>
                                                             </td>
@@ -1350,7 +1398,8 @@ function MissionVIew() {
                                                                 onInput={setReportData}
                                                                 name='bad_road_condition'
                                                                 rows="3"
-                                                                >{report.bad_road_condition}</textarea>
+                                                                value={report.bad_road_condition}
+                                                                ></textarea>
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -1359,7 +1408,8 @@ function MissionVIew() {
                                                                 onInput={setReportData}
                                                                 name='bad_presence_eds_erw_uxo'
                                                                 rows="3"
-                                                                >{report.bad_presence_eds_erw_uxo}</textarea>
+                                                                value={report.bad_presence_eds_erw_uxo}
+                                                                ></textarea>
 
                                                                 </div>
                                                             </td>
@@ -1383,7 +1433,8 @@ function MissionVIew() {
                                                                 onInput={setReportData}
                                                                 name='regular_road_condition'
                                                                 rows="3"
-                                                                >{report.regular_road_condition}</textarea>
+                                                                value={report.regular_road_condition}
+                                                                ></textarea>
 
                                                                 </div>
                                                             </td>
@@ -1393,7 +1444,8 @@ function MissionVIew() {
                                                                 onInput={setReportData}
                                                                 name='regular_presence_eds_erw_uxo'
                                                                 rows="3"
-                                                                >{report.regular_presence_eds_erw_uxo}</textarea>
+                                                                value={report.regular_presence_eds_erw_uxo}
+                                                                ></textarea>
 
                                                                 </div>
                                                             </td>
@@ -1404,13 +1456,19 @@ function MissionVIew() {
                                                     <div>
 
                                                         <ul>
+
                                                             {
-                                                                imageListData.map((item,index)=><li><input name={index} onChange={storeImage} type="file"/></li> )
+                                                                imageListData.map((item,index)=>(isBase64(item)||item=="")?<li><input name={index} onChange={(e)=>storeImage(e,index)} type='file'/></li>:<img src={`http://localhost:3000/${item}`} alt="Image" />)
                                                             }
 
                                                         </ul>
+                                                        <button
+                                                            className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
+                                                            onClick={addImage}
+                                                        >
+                                                            Add Image
+                                                        </button>
 
-                                                        <button onClick={addImage}>add</button>
                                                     </div>
                                                 </div>
 

@@ -66,13 +66,13 @@ export async function PUT(request, content) {
 
         const emailTemplatePath = path.resolve("./app/emails/account_creation.ejs");
         const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
-        const mailContent = ejs.render(emailTemplate, { password,email:userInfo.email,username:userInfo.username});
+        const mailContent = ejs.render(emailTemplate, { password,email:userInfo.email,name:userInfo.name});
 
 
         const mailOptions = {
            from: process.env.EMAIL_USER,
            to: userInfo.email,
-           subject: "Welcome Email",
+           subject: "ERCS Account Creation Notification",
            html: mailContent,
        };
 

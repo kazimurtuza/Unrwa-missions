@@ -69,13 +69,13 @@ export async function POST(request) {
 
              const emailTemplatePath = path.resolve("./app/emails/forget_password.ejs");
              const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
-             const mailContent = ejs.render(emailTemplate, { resetLink });
+             const mailContent = ejs.render(emailTemplate, { resetLink,name:userInfo.name,date:new Date()});
 
 
              const mailOptions = {
                 from: process.env.EMAIL_USER,
                 to: email,
-                subject: "Password Reset",
+                subject: "ERCS Account Password Reset",
                 html: mailContent,
             };
 
