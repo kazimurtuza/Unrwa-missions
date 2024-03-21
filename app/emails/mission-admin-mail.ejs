@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Change Request</title>
+  </head>
+  <body>
+    <center><img src="https://emergencysystem.info/uploads/logo2.jpg"  width="100px"></img>
+
+ <p>
+ Hello ACT,
+
+ A Mission Request (MR) <%= mission && mission.leader.name %> with the following details has been submitted. To process the MR, please login to the ERCS
+
+MR ID:<%= mission && mission.mission_id %>
+Mission Date: <%= mission && mission.create_date %>
+Mission Stops: <% mission?.places?.forEach(item => { %>
+                   <span><%= item.departure_umrah_id?.installation_name %></span>
+               <% }) %>
+</br>
+Mission Focal Person: <%= mission && mission.leader.user.name %>
+ </p>
+  </body>
+</html>

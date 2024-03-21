@@ -302,6 +302,13 @@ a {
 	font-size: 30px;
 }
 
+.img-grid{
+	display: grid;
+	grid-gap: 30px;
+	grid-template-columns: repeat(4, 1fr);
+	padding: 30px 0;
+}
+
 @media (max-width: 767px){
 	.collapsable-item__body.ams .collapsable-item__body-col{
 		width: 100%;

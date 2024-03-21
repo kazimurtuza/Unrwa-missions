@@ -105,19 +105,40 @@ function MissionVIew() {
     const [claList, setClaList] = useState("");
     const [requestStatusDataList, setRequestStatusDataList] = useState("");
     const [acuDataList, setAcuStatusDataList] = useState("");
+    const [classificationList, setclassification] = useState([]);
+
+    const fetchData3 = async () => {
+        try {
+            const {data} = await axiosClient.get("cla_list");
+            setClaDataList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error("Error fetching agencies:", error);
+        }
+    };
+
+    const classification = async () => {
+        try {
+            const {data} = await axiosClient.get("misson-classification");
+            let classificationData = data.result.map(item => (
+                <option key={item._id} value={item._id}>
+                    {item.requests_classifications}
+                </option>
+            ));
+
+            setclassification(classificationData);
+            console.log(data.result);
+        } catch (error) {
+            console.error("Error fetching classification:", error);
+        }
+    };
+
+
+
 
     useEffect(() => {
-        const fetchData3 = async () => {
-            try {
-                const {data} = await axiosClient.get("cla_list");
-                setClaDataList(data.result);
-                console.log(data.result);
-            } catch (error) {
-                console.error("Error fetching agencies:", error);
-            }
-        };
-
         fetchData3();
+        classification();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     useEffect(() => {
@@ -185,12 +206,9 @@ function MissionVIew() {
                     humanitarian_assistance: missionData.humanitarian_assistance,
                     humanitarian_observations: missionData.humanitarian_observations,
                     report_image_list: missionData.report_image_list,
-
                 }))
 
                 setImageList(missionData.report_image_list)
-
-
             }
 
             console.log(data.result);
@@ -231,7 +249,6 @@ function MissionVIew() {
                 var newList=imageListData;
                     newList[index]=reader.result,
                  setImageList(old=>newList)
-
             };
 
             // Read the file as a data URL (base64)
@@ -260,11 +277,16 @@ function MissionVIew() {
     };
 
     const storeDate = async () => {
-        console.log(adminData);
+        if(adminData.mission_classification_info==""){
+          alert("complete mission classification info need to complete")
+            return false;
+        }
+
         const response = await axiosClient.post(
             "mission-admin-update",
             adminData
         );
+        console.log(response);
         if (response.data.success == true) {
             fetchData()
             alert("success fully updated");
@@ -939,12 +961,7 @@ function MissionVIew() {
                                                                 <option value=''>
                                                                     Select
                                                                 </option>
-                                                                <option value='MRC'>
-                                                                    MRC
-                                                                </option>
-                                                                <option value='MNR'>
-                                                                    MNR
-                                                                </option>
+                                                                {classificationList}
                                                             </select>
                                                         </div>
                                                     </div>
@@ -1206,11 +1223,11 @@ function MissionVIew() {
                                             </div>
                                         </div>
                                     </div>
-                                    { /*mission && (mission.request_status == "mission_completed") ? */
+                                    { mission && (mission.request_status == "mission_completed") ?
                                         <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
                                             <h2>Mission Debriefing Form</h2>
                                             <button
-                                                className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
+                                                className='mt-4 mb-4 px-4 py-2 mx-2 bg-main text-white rounded'
                                                 onClick={downloadReport}
                                             >
                                                 Download PDF
@@ -1454,10 +1471,10 @@ function MissionVIew() {
                                                     <p>Please provide with maps and photographs below if possible</p>
                                                     <div>
 
-                                                        <ul>
+                                                        <ul className="img-grid">
 
                                                             {
-                                                                imageListData.map((item,index)=>(isBase64(item)||item=="")?<li><input name={index} onChange={(e)=>storeImage(e,index)} type='file'/></li>:<img src={`http://localhost:3000/${item}`} alt="Image" />)
+                                                                imageListData.map((item,index)=>(isBase64(item)||item=="")?<li><label><input name={index} onChange={(e)=>storeImage(e,index)} type='file'/></label></li>: <li><img src={`http://localhost:3000/${item}`} alt="Image" /></li>)
                                                             }
 
                                                         </ul>
@@ -1548,7 +1565,7 @@ function MissionVIew() {
 
                                                 </div>
                                             </div>
-                                        </div> }
+                                        </div>:"" }
 
                                 </div>
                             </main>

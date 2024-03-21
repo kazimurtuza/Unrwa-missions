@@ -9,6 +9,10 @@ import {AuthUser} from "@/app/helper";
 import ejs from "ejs";
 import fs from "fs";
 import path from "path";
+import {User} from "@/lib/model/users";
+import {Staff} from "@/lib/model/staff";
+// import axiosClient from "@/app/axiosClient";
+// import {useState} from "react";
 
 function getCurrentFormattedDate() {
     const currentDate = new Date(); // Get the current date
@@ -35,7 +39,7 @@ export async function POST(request) {
                 //rejectUnauthorized: false,
             },
         });
-       // const mailOptions={};
+        // const mailOptions={};
 
         var result;
         await mongoose.connect(connectionStr);
@@ -45,21 +49,21 @@ export async function POST(request) {
         var mission = payload;
         delete mission.location_list;
         delete mission.vehicle_list;
-        var totalMission=await Mission.countDocuments();
+        var totalMission = await Mission.countDocuments();
         totalMission = String(totalMission).padStart(6, '0').slice(0, 6);
-        mission.create_date= await getCurrentFormattedDate();
-        mission.mission_id=  await `UNRWA${totalMission}`;
+        mission.create_date = await getCurrentFormattedDate();
+        mission.mission_id = await `UNRWA${totalMission}`;
         // return NextResponse.json({mission, success: true});
         const missionAdd = await new Mission(mission);
         missionAdd.save();
-        result=missionAdd;
+        result = missionAdd;
         const missionId = await missionAdd._id;
 
         if (location_list.length > 0) {
             location_list.map(async (item, index) => {
                 item.mission = await missionId;
                 const missionLocation = await new MissionDepartureArrival(item);
-                 missionLocation.save();
+                missionLocation.save();
             })
         }
         if (vehicle_list.length > 0) {
@@ -71,32 +75,84 @@ export async function POST(request) {
         }
 
 
-
-
         //const mailContent = `New Mission Created `;
         // Set up email options
         // let user=User.findOne({user_type:'admin'}).email;
-        if(1){
+        if (1) {
             // mailOptions.to = 'lipan@technovicinity.com';
             // mailOptions.subject = "UNRWA New Mission Created";
             // mailOptions.text = mailContent;
-            const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
+            const leaderInfo = await Staff.findOne({_id: mission.leader});
+            // const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
+            const emailTemplatePath = path.resolve("./app/emails/focal-point-mission.ejs");
+            const emailFocalData = path.resolve("./app/emails/focal-point-mission.ejs");
             const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
-            const mailContent = ejs.render(emailTemplate, { missionId:missionId,date:mission.create_date });
+            const emailfocalTemplate = fs.readFileSync(emailFocalData, "utf-8");
 
+            // mail data
+            let mission_info = await Mission.findOne({_id: missionId}).populate('mission_cluster').populate('agency.agency_id').populate({
+                path: 'leader',
+                populate: {
+                    path: 'user'
+                }
+            });
+            let missionLocation_info = await MissionDepartureArrival.find({mission: missionId})
+                .populate('departure_umrah_id')
+                .populate('departure_premise_type')
+                .populate('arrival_premise_type')
+                .populate('arrival_umrah_id')
+
+
+            let missionVehicle_info = await MissionVehicle.find({mission: missionId})
+                .populate('staff.staff_id')
+                .populate('vehicle')
+                .populate('driver')
+                .populate('agency');
+            // mail data
+
+
+            const mailContent = ejs.render(emailTemplate, {
+                   mission:mission_info,
+            });
+            const focalContent = ejs.render(emailfocalTemplate, {
+                   mission:mission_info,
+            });
+
+
+            // const mailOptions = {
+            //     from: process.env.EMAIL_USER,
+            //     // to: 'lipan@technovicinity.com',
+            //     to: 'kazimurtuza11@gmail.com',
+            //     //to: 'sajeebchakraborty.cse2000@gmail.com',
+            //     //   to: 'mailto:anjumsakib@gmail.com',
+            //     subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
+            //     html: mailContent,
+            // };
 
             const mailOptions = {
-               from: process.env.EMAIL_USER,
+                from: process.env.EMAIL_USER,
                 to: 'lipan@technovicinity.com',
-                //to: 'sajeebchakraborty.cse2000@gmail.com',  
-               subject: "UNRWA New Mission Created",
-               html: mailContent,
-           };
+                // to: 'kazimurtuza11@gmail.com',
+                //to: 'sajeebchakraborty.cse2000@gmail.com',
+                //   to: 'mailto:anjumsakib@gmail.com',
+                subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
+                html: mailContent,
+            };
+
+            const focalOptions = {
+                from: process.env.EMAIL_USER,
+                to: 'lipan@technovicinity.com',
+                // to: 'kazimurtuza11@gmail.com',
+                //to: 'sajeebchakraborty.cse2000@gmail.com',
+                //   to: 'mailto:anjumsakib@gmail.com',
+                subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
+                html: focalContent,
+            };
 
             // Send the email
             await transporter.sendMail(mailOptions);
+            await transporter.sendMail(focalOptions);
         }
-
 
 
         return NextResponse.json({result, success: true});
@@ -104,9 +160,6 @@ export async function POST(request) {
         return NextResponse.json({error: error.message, success: false});
     }
 }
-
-
-
 
 
 export async function GET() {
@@ -120,6 +173,80 @@ export async function GET() {
 
         if (user_type === "admin") {
             var result = await Mission.aggregate([
+                {
+                    $lookup: {
+                        from: "staffs",
+                        localField: "leader",
+                        foreignField: "_id",
+                        as: "leader_details"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "missionclusters",
+                        localField: "mission_cluster",
+                        foreignField: "_id",
+                        as: "cluster"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "missionvehicles",
+                        localField: "_id",
+                        foreignField: "mission",
+                        as: "vehicle_list"
+                    }
+                }
+                ,
+                {
+                    $lookup: {
+                        from: "vehicles", // Collection to join with
+                        localField: "vehicle_list.vehicle", // Field from the "missionvehicles" array
+                        foreignField: "_id", // Field from the "vehicles" collection
+                        as: "vehicle_details" // Output array field where joined documents will be stored
+                    }
+                },
+
+                {
+                    $lookup: {
+                        from: "staffs",
+                        localField: "vehicle_list.staff.staff_id",
+                        foreignField: "_id",
+                        as: "staff_details"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "missiondeparturearrivallists",
+                        localField: "_id",
+                        foreignField: "mission",
+                        as: "depature_arrival_details"
+                    }
+                },
+                {
+                    $sort: { /* Specify the field to sort by and set it to -1 for descending order */
+                        _id: -1
+                    }
+                }
+            ]) // Adjust this line
+                .exec();
+        } else {
+            var id = new mongoose.Types.ObjectId(user_id)
+            var result = await Mission.aggregate([
+                {
+                    $match: {
+                        leader: id// Match documents where the leader field matches the given leader ID
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "staffs",
+                        localField: "leader",
+                        foreignField: "_id",
+                        as: "leader_details"
+                    }
+                },
+
                 {
                     $lookup: {
                         from: "staffs",
@@ -169,74 +296,7 @@ export async function GET() {
                 }
             ]) // Adjust this line
                 .exec();
-        }else{
-         var id= new mongoose.Types.ObjectId(user_id)
-            var result = await Mission.aggregate([
-                {
-                    $match: {
-                        leader:id// Match documents where the leader field matches the given leader ID
-                    }
-                },
-                {
-                    $lookup: {
-                        from: "staffs",
-                        localField: "leader",
-                        foreignField: "_id",
-                        as: "leader_details"
-                    }
-                },
-
-                {
-                    $lookup: {
-                        from: "staffs",
-                        localField: "leader",
-                        foreignField: "_id",
-                        as: "leader_details"
-                    }
-                },
-                {
-                    $lookup: {
-                        from: "missionvehicles",
-                        localField: "_id",
-                        foreignField: "mission",
-                        as: "vehicle_list"
-                    }
-                }
-                ,
-                {
-                    $lookup: {
-                        from: "vehicles", // Collection to join with
-                        localField: "vehicle_list.vehicle", // Field from the "missionvehicles" array
-                        foreignField: "_id", // Field from the "vehicles" collection
-                        as: "vehicle_details" // Output array field where joined documents will be stored
-                    }
-                },
-
-                {
-                    $lookup: {
-                        from: "staffs",
-                        localField: "vehicle_list.staff.staff_id",
-                        foreignField: "_id",
-                        as: "staff_details"
-                    }
-                },
-                {
-                    $lookup: {
-                        from: "missiondeparturearrivallists",
-                        localField: "_id",
-                        foreignField: "mission",
-                        as: "depature_arrival_details"
-                    }
-                },
-                {
-                    $sort: { /* Specify the field to sort by and set it to -1 for descending order */
-                        fieldToSortBy: -1
-                    }
-                }
-            ]) // Adjust this line
-                .exec();
         }
-
 
         return NextResponse.json({result, success: true});
     } catch (error) {
