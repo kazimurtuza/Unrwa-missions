@@ -117,7 +117,6 @@ function MissionVIew() {
     };
 
     useEffect(() => {
-
         fetchData3();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
@@ -186,12 +185,9 @@ function MissionVIew() {
                     humanitarian_assistance: missionData.humanitarian_assistance,
                     humanitarian_observations: missionData.humanitarian_observations,
                     report_image_list: missionData.report_image_list,
-
                 }))
 
                 setImageList(missionData.report_image_list)
-
-
             }
 
             console.log(data.result);
@@ -232,7 +228,6 @@ function MissionVIew() {
                 var newList=imageListData;
                     newList[index]=reader.result,
                  setImageList(old=>newList)
-
             };
 
             // Read the file as a data URL (base64)
@@ -1211,7 +1206,7 @@ function MissionVIew() {
                                         <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
                                             <h2>Mission Debriefing Form</h2>
                                             <button
-                                                className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
+                                                className='mt-4 mb-4 px-4 py-2 mx-2 bg-main text-white rounded'
                                                 onClick={downloadReport}
                                             >
                                                 Download PDF
@@ -1455,10 +1450,10 @@ function MissionVIew() {
                                                     <p>Please provide with maps and photographs below if possible</p>
                                                     <div>
 
-                                                        <ul>
+                                                        <ul className="img-grid">
 
                                                             {
-                                                                imageListData.map((item,index)=>(isBase64(item)||item=="")?<li><input name={index} onChange={(e)=>storeImage(e,index)} type='file'/></li>:<img src={`http://localhost:3000/${item}`} alt="Image" />)
+                                                                imageListData.map((item,index)=>(isBase64(item)||item=="")?<li><label><input name={index} onChange={(e)=>storeImage(e,index)} type='file'/></label></li>: <li><img src={`http://localhost:3000/${item}`} alt="Image" /></li>)
                                                             }
 
                                                         </ul>
