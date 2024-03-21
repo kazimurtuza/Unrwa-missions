@@ -90,8 +90,10 @@ export async function POST(request) {
 
             const mailOptions = {
                from: process.env.EMAIL_USER,
-                to: 'lipan@technovicinity.com',
-                //to: 'sajeebchakraborty.cse2000@gmail.com',  
+                // to: 'lipan@technovicinity.com',
+                //    to: 'kazimurtuza11@gmail.com',
+                //to: 'sajeebchakraborty.cse2000@gmail.com',
+                  to: 'mailto:anjumsakib@gmail.com',
                 subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
                html: mailContent,
            };
@@ -233,13 +235,12 @@ export async function GET() {
                 },
                 {
                     $sort: { /* Specify the field to sort by and set it to -1 for descending order */
-                        fieldToSortBy: -1
+                        _id: -1
                     }
                 }
             ]) // Adjust this line
                 .exec();
         }
-
 
         return NextResponse.json({result, success: true});
     } catch (error) {
