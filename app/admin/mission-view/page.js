@@ -277,11 +277,16 @@ function MissionVIew() {
     };
 
     const storeDate = async () => {
-        console.log(adminData);
+        if(adminData.mission_classification_info==""){
+          alert("complete mission classification info need to complete")
+            return false;
+        }
+
         const response = await axiosClient.post(
             "mission-admin-update",
             adminData
         );
+        console.log(response);
         if (response.data.success == true) {
             fetchData()
             alert("success fully updated");
