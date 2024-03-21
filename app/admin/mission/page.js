@@ -184,6 +184,7 @@ function Steps() {
 
     async function saveMission() {
         try {
+
             var validationError = await checkStep3();
             await vehicleStaf.forEach(item => {
                 if (item.length == 0) {
@@ -210,6 +211,7 @@ function Steps() {
             let updateData = await {...storeData, vehicle_list: vehicle_list};
 
             setCheckValidation(0)
+            console.log(updateData);
             const response = await axiosClient.post('mission', updateData).then(function (response) {
                 Swal.fire({
                     title: 'success',

@@ -106,16 +106,17 @@ function MissionVIew() {
     const [requestStatusDataList, setRequestStatusDataList] = useState("");
     const [acuDataList, setAcuStatusDataList] = useState("");
 
+    const fetchData3 = async () => {
+        try {
+            const {data} = await axiosClient.get("cla_list");
+            setClaDataList(data.result);
+            console.log(data.result);
+        } catch (error) {
+            console.error("Error fetching agencies:", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchData3 = async () => {
-            try {
-                const {data} = await axiosClient.get("cla_list");
-                setClaDataList(data.result);
-                console.log(data.result);
-            } catch (error) {
-                console.error("Error fetching agencies:", error);
-            }
-        };
 
         fetchData3();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
