@@ -106,223 +106,6 @@ export async function GET(req, content) {
                 --main-color:#1B7C85;
             }
 
-            a {
-                text-decoration: none;
-                transition: 0.3s;
-              }
-
-            .flex-ctr-spb {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-              }
-
-              .flex-start-spb {
-                display: flex;
-                align-items: flex-start;
-                justify-content: space-between;
-                /* background-color: rgba(0, 0, 0, .2); */
-              }
-
-            /********************************
-            *	       Dashboard              *
-            ********************************/
-            /******* Dashboard Form ********/
-            .dashboard__form {
-                background-color: var(--light-color);
-                border-radius: 8px;
-                padding: 24px;
-              }
-
-              .form__title {
-                font-size: 18px;
-                line-height: 1.3;
-                font-weight: 600;
-                color: var(--black-color);
-                font-family: var(--global-font);
-                margin: 0;
-              }
-
-              .form__fields {
-                margin: 20px 0 0;
-              }
-
-              .form__row {
-                gap: 16px;
-                margin-bottom: 20px;
-              }
-
-              .form__row:last-child {
-                margin: 0;
-              }
-
-              .form__field {
-                margin-bottom: 25px;
-              }
-
-              .form__label {
-                font-size: 14px;
-                line-height: 1.2;
-                font-weight: 500;
-                font-family: var(--global-font);
-                color: var(--black-color);
-                margin: 0 0 8px;
-                display: inline-block;
-              }
-
-              .form__select,
-              .form__input,
-              .form__textarea {
-                font-size: 14px;
-                line-height: 1.2;
-                font-weight: 400;
-                color: var(--black-color);
-                width: 100%;
-                padding: 10px 12px;
-                border-radius: 4px;
-                border: 1px solid rgba(0, 0, 0, 0.2);
-              }
-
-              .form__textarea {
-                height: 115px;
-                resize: vertical;
-              }
-
-              .form__info-box {
-                border-radius: 5px;
-                border: 1px solid rgba(0, 0, 0, 0.15);
-                padding: 16px;
-                margin-bottom: 20px;
-              }
-
-              .form__info-box__title.has-divider {
-                border-top: 1px solid rgba(0, 0, 0, 0.15);
-                padding-top: 10px;
-              }
-
-              .form__info-box__title {
-                font-size: 16px;
-                line-height: 1.2;
-                font-family: var(--global-font);
-                font-weight: 600;
-                color: var(--black-color);
-                margin: 0 0 16px;
-              }
-
-              .form__info-box .form__row:not(:last-child) {
-                margin-bottom: 16px;
-              }
-
-              .form__info-box .form__col {
-                flex: 1;
-                max-width: 49.5em;
-              }
-
-              .form__info-box .form__col p {
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 1.2;
-                color: #262939;
-                margin: 0;
-                font-family: var(--global-font);
-              }
-
-              .form__info-box .form__col p b {
-                display: block;
-                color: var(--black-color);
-                margin: 0 0 8px;
-              }
-
-            .msv-block h2{
-                font-weight: 700;
-                font-size: 24px;
-                margin-bottom: 15px;
-            }
-
-            .msb-meta{
-                display: flex;
-                gap: 20px;
-                margin-bottom: 25px;
-            }
-
-            .msb-meta .msb-meta__item{
-                flex: 1;
-            }
-
-            .msb-meta .msb-meta__item p{
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 1.5;
-                color: #262939;
-                margin: 0;
-                font-family: var(--global-font);
-            }
-
-            .meta-list{
-                display: flex;
-                gap: 7px;
-            }
-
-            .meta-list li{
-                border-radius: 4px;
-                padding: 5px 8px;
-                font-size: 13px;
-                background-color: var(--main-color);
-                color: #ffffff;
-            }
-
-            .pdf-btn-wrap{
-                text-align: right;
-                padding: 0 25px;
-            }
-
-            .collapsable-item {
-                margin: 0 0 20px;
-              }
-
-              .collapsable-item__header {
-                padding: 21px 16px;
-                background-color: rgba(0, 0, 0, 0.08);
-                position: relative;
-                cursor: pointer;
-                border-radius: 4px 4px 0 0;
-              }
-
-              .collapsable-item__header::after {
-                content: "";
-                height: 0;
-                width: 0;
-                border: 10px solid;
-                border-color: #000000 transparent transparent transparent;
-                position: absolute;
-                top: 40%;
-                right: 35px;
-                /* transition: 0.2s; */
-              }
-
-              .active .collapsable-item__header::after {
-                top: 30%;
-                transform: rotateX(180deg);
-              }
-
-              .collapsable-item__header-title {
-                font-size: 18px;
-                line-height: 1.2;
-                font-family: var(--global-font);
-                color: var(--black-color);
-                margin: 0;
-              }
-
-              .collapsable-item__body-row {
-                gap: 16px;
-                margin-bottom: 20px;
-              }
-
-              .collapsable-item__body-col {
-                flex: 1;
-                max-width: 49.5%;
-              }
-
               .table-wrap {
                 overflow-x: auto;
                 width: 100%;
@@ -332,20 +115,21 @@ export async function GET(req, content) {
                 line-height: 2;
             }
 
+            .table-wrap table div,
+            .table-wrap table p{
+                font-size: 13px;
+            }
+
             .table-wrap table {
-                font-family: "Open Sans", sans-serif;
-                position: relative;
                 table-layout: auto;
                 width: 100%;
-                padding-top: 20px;;
-                border-radius: 0.5rem;
+                padding-top: 20px;
                 border-collapse: initial!important;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
               }
 
               table thead tr {
                 color: #2d3748;
-                font-size: 1rem;
+                font-size: 14px;
                 font-weight: 500;
                 text-align: left;
               }
@@ -354,6 +138,7 @@ export async function GET(req, content) {
                 background: #cfe0f0;
                 padding: 0.75rem 1.5rem;
                 vertical-align: middle;
+                font-size: 14px!important;
               }
 
               table tbody tr td {
@@ -364,23 +149,20 @@ export async function GET(req, content) {
                 color: #1a202c;
                 text-align: left;
                 vertical-align: middle;
-                font-size: 1.125rem;
+                font-size: 12px;
                 font-weight: normal;
                 padding: 3px 10px;
               }
 
-              table tr > th:first-child, table tr > td:first-child {
-                position: sticky;
-                left: 0;
-              }
-
+              .table-wrap p,
+              .table-wrap div,
               .table-wrap th {
-                font-size: 19px;
+                font-size: 14px!important;
               }
 
               .table-wrap td span,
-              .table-wrap th span{
-                font-size: 75%;
+              table thead tr th span{
+                font-size: 10px!important;
               }
 
               .table-wrap td span{
@@ -394,52 +176,26 @@ export async function GET(req, content) {
               }
 
               .table-wrap h3{
-                font-size: 26px;
+                font-size: 20px;
                 font-weight: 700;
                 margin-top: 40px;
               }
 
             .mdf-form-wrap h2{
-                font-size: 30px;
+                font-size: 22px;
             }
 
-            @media (max-width: 767px){
-                .collapsable-item__body.ams .collapsable-item__body-col{
-                    width: 100%;
-                    max-width: 100%;
-                }
-
-                .collapsable-item__body.ams .collapsable-item__body-row{
-                    flex-direction: column;
-                }
-            }
             </style>
-            <body>
+            <body style="padding: 30px; font-family: arial; font-size: 13px;">
+
             <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
                                             <h2>Mission Debriefing Form</h2>
-                                            <button
-                                                className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
-                                                onClick={downloadReport}
-                                            >
-                                                Download PDF
-                                            </button>
+
                                             <div className='mdf-form-body'>
                                                 <div className='mdf-form-head'>
                                                     <p>
                                                         Convoy composition
-                                                        (Agencies):{" "}
-
-                                                        {mission &&
-                                                            mission.agency.map(
-                                                                (
-                                                                    item,
-                                                                    index
-                                                                ) => (
-                                                                    <span>{
-                                                                        item.agency_id.name
-                                                                    }</span>
-                                                                )
-                                                            )}
+                                                        (Agencies): <span> Sample data</span>
 
                                                     </p>
                                                     <p>
@@ -448,16 +204,12 @@ export async function GET(req, content) {
                                                         <span>Sample Data</span>
                                                     </p>
                                                     <p>
-                                                        Date of the mission:{" "}
-                                                        <span> {mission &&
-                                                            convertDateFormat(
-                                                                mission.movement_date
-                                                            )}</span>
+                                                        Date of the mission:
+                                                        <span>Sample Data</span>
                                                     </p>
                                                     <p>
-                                                        Mission Focal Point:{" "}
-                                                        <span> {mission &&
-                                                            mission.leader.name}</span>
+                                                        Mission Focal Point:
+                                                        <span>Sample Data</span>
                                                     </p>
                                                 </div>
                                                 <h3>
@@ -477,8 +229,8 @@ export async function GET(req, content) {
                                                                 description next
                                                                 to the relevant
                                                                 cell under
-                                                                column ‘road
-                                                                condition’{" "}
+                                                                column 'road
+                                                                condition'
                                                                 <span>
                                                                     (include
                                                                     stretch of
@@ -517,18 +269,13 @@ export async function GET(req, content) {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea onInput={setReportData} name='not_passable_road_condition'       value={report.not_passable_road_condition} rows="3"></textarea>
+                                                                <p>Include remarks description next to the relevant</p>
 
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea
-                                                                onInput={setReportData}
-                                                                name='not_passable_presence_eds_erw_uxo'
-                                                                rows="3"
-                                                                value={report.not_passable_presence_eds_erw_uxo}
-                                                                ></textarea>
+                                                                <p>Include remarks description next to the relevant</p>
 
                                                                 </div>
                                                             </td>
@@ -551,24 +298,13 @@ export async function GET(req, content) {
                                                             <td>
                                                                 <div className='input-wrap'>
 
-                                                                <textarea
-                                                                onInput={setReportData}
-                                                                name='very_bad_road_condition'
-                                                                rows="3"
-                                                                value={report.very_bad_road_condition}
-                                                                ></textarea>
+                                                                <p>Include remarks description next to the relevant</p>
 
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea
-                                                                onInput={setReportData}
-                                                                name='very_bad_presence_eds_erw_uxo'
-                                                                rows="3"
-                                                                value={report.very_bad_presence_eds_erw_uxo}
-                                                                ></textarea>
-
+                                                                <p>Include remarks description next to the relevant</p>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -588,22 +324,12 @@ export async function GET(req, content) {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea
-                                                                onInput={setReportData}
-                                                                name='bad_road_condition'
-                                                                rows="3"
-                                                                value={report.bad_road_condition}
-                                                                ></textarea>
+                                                                <p>Include remarks description next to the relevant</p>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea
-                                                                onInput={setReportData}
-                                                                name='bad_presence_eds_erw_uxo'
-                                                                rows="3"
-                                                                value={report.bad_presence_eds_erw_uxo}
-                                                                ></textarea>
+                                                                <p>Include remarks description next to the relevant</p>
 
                                                                 </div>
                                                             </td>
@@ -623,29 +349,20 @@ export async function GET(req, content) {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea
-                                                                onInput={setReportData}
-                                                                name='regular_road_condition'
-                                                                rows="3"
-                                                                value={report.regular_road_condition}
-                                                                ></textarea>
+                                                                <p>Include remarks description next to the relevant</p>
 
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea
-                                                                onInput={setReportData}
-                                                                name='regular_presence_eds_erw_uxo'
-                                                                rows="3"
-                                                                value={report.regular_presence_eds_erw_uxo}
-                                                                ></textarea>
+                                                                <p>Include remarks description next to the relevant</p>
 
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
+
                                                     <p>Please provide with maps and photographs below if possible</p>
 
                                                 </div>
@@ -673,23 +390,15 @@ export async function GET(req, content) {
 
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea type='text' name='humanitarian_assistance'/>
+                                                                <p>Include remarks description next to the relevant</p>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <textarea type='text' name="humanitarian_observations"/>
+                                                                <p>Include remarks description next to the relevant</p>
                                                                 </div>
                                                             </td>
                                                         </tr>
-
-                                                        <div>
-                                                            <button
-                                                                className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
-                                                            >
-                                                                Submit
-                                                            </button>
-                                                        </div>
 
                                                         </tbody>
                                                     </table>
