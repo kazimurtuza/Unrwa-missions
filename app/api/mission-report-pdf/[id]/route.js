@@ -86,11 +86,11 @@ export async function GET(req, content) {
             .populate("vehicle")
             .populate("driver")
             .populate("agency");
-        let data = {
-            mission: mission,
-            missionLocation: missionLocation,
-            missionVehicle: missionVehicle,
-        };
+        // let data = {
+        //     mission: mission,
+        //     missionLocation: missionLocation,
+        //     missionVehicle: missionVehicle,
+        // };
 
         let newDateFormat = "DD/MM/YYYY";
 
@@ -193,23 +193,29 @@ export async function GET(req, content) {
 
                                             <div className='mdf-form-body'>
                                                 <div className='mdf-form-head'>
-                                                    <p>
-                                                        Convoy composition
-                                                        (Agencies): <span> Sample data</span>
+<!--                                                    <p>-->
+<!--                                                        Convoy composition-->
+<!--                                                        (Agencies): <span></span>-->
 
-                                                    </p>
-                                                    <p>
-                                                        Mission Locations visited
-                                                        and route:
-                                                        <span>Sample Data</span>
-                                                    </p>
+<!--                                                    </p>-->
+                                                  <p>
+    Mission Locations visited and route:
+    ${missionLocation.map((item, index) =>
+        `${item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name}- ${item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name}`
+    ).join(', ')}
+</p>
+
                                                     <p>
                                                         Date of the mission:
-                                                        <span>Sample Data</span>
+                                                      ${mission &&
+                                                            convertDateFormat(
+                                                                mission.movement_date
+                                                            )}
                                                     </p>
                                                     <p>
                                                         Mission Focal Point:
-                                                        <span>Sample Data</span>
+                                                        <span>${mission &&
+                                                            mission.leader.name}</span>
                                                     </p>
                                                 </div>
                                                 <h3>
@@ -269,13 +275,13 @@ export async function GET(req, content) {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.not_passable_road_condition}</p>
 
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.not_passable_presence_eds_erw_uxo}</p>
 
                                                                 </div>
                                                             </td>
@@ -298,13 +304,13 @@ export async function GET(req, content) {
                                                             <td>
                                                                 <div className='input-wrap'>
 
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.very_bad_road_condition}</p>
 
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.bad_presence_eds_erw_uxo}</p>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -324,12 +330,12 @@ export async function GET(req, content) {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.bad_road_condition}</p>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.bad_presence_eds_erw_uxo}</p>
 
                                                                 </div>
                                                             </td>
@@ -349,13 +355,13 @@ export async function GET(req, content) {
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.regular_road_condition}</p>
 
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.regular_presence_eds_erw_uxo}</p>
 
                                                                 </div>
                                                             </td>
@@ -390,12 +396,12 @@ export async function GET(req, content) {
 
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.humanitarian_assistance}</p>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div className='input-wrap'>
-                                                                <p>Include remarks description next to the relevant</p>
+                                                                <p>${mission.humanitarian_observations}</p>
                                                                 </div>
                                                             </td>
                                                         </tr>

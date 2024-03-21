@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -138,31 +139,31 @@
                         <div class="form__row flex-ctr-spb">
                             <div class="form__col">
                                 <p><b>Name</b></p>
-                                <p>1233</p>
+                                <p><%= mission && mission.leader.name %></p>
                             </div>
                             <div class="form__col">
                                 <p><b>ID</b></p>
-                                <p>65faabbcf7ff4c38d5f6b6ba</p>
+                                <p><%= mission && mission.mission_id %></p>
                             </div>
                         </div>
                         <div class="form__row flex-ctr-spb">
                             <div class="form__col">
                                 <p><b>Phone</b></p>
-                                <p>dfsdfdsf</p>
+                                <p><%= mission && mission.leader.phone %></p>
                             </div>
                             <div class="form__col">
                                 <p><b>Email Address</b></p>
-                                <p>121qq2@gmail.com</p>
+                                <p><%= mission && mission.leader.user.email %></p>
                             </div>
                         </div>
                         <div class="form__row flex-ctr-spb">
                             <div class="form__col">
                                 <p><b>Whatsapp</b></p>
-                                <p>fsdfsdfdf</p>
+                                <p><%= mission && mission.leader.whatsup_number %></p>
                             </div>
                             <div class="form__col">
                                 <p><b>Satellite Phone</b></p>
-                                <p></p>
+                                <p><%= mission && mission.leader.statelite_phone%></p>
                             </div>
                         </div>
                     </div>
@@ -274,7 +275,7 @@
                         <div class="form__row flex-ctr-spb">
                             <div class="form__col">
                                 <p><b>Latitude</b></p>
-                                <p>34.44006126</p>
+                                <p>34.44006126 </p>
                             </div>
                         </div>
                     </div>

@@ -105,6 +105,7 @@ function MissionVIew() {
     const [claList, setClaList] = useState("");
     const [requestStatusDataList, setRequestStatusDataList] = useState("");
     const [acuDataList, setAcuStatusDataList] = useState("");
+    const [classificationList, setclassification] = useState([]);
 
     const fetchData3 = async () => {
         try {
@@ -116,8 +117,28 @@ function MissionVIew() {
         }
     };
 
+    const classification = async () => {
+        try {
+            const {data} = await axiosClient.get("misson-classification");
+            let classificationData = data.result.map(item => (
+                <option key={item._id} value={item._id}>
+                    {item.requests_classifications}
+                </option>
+            ));
+
+            setclassification(classificationData);
+            console.log(data.result);
+        } catch (error) {
+            console.error("Error fetching classification:", error);
+        }
+    };
+
+
+
+
     useEffect(() => {
         fetchData3();
+        classification();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     useEffect(() => {
@@ -935,12 +956,7 @@ function MissionVIew() {
                                                                 <option value=''>
                                                                     Select
                                                                 </option>
-                                                                <option value='MRC'>
-                                                                    MRC
-                                                                </option>
-                                                                <option value='MNR'>
-                                                                    MNR
-                                                                </option>
+                                                                {classificationList}
                                                             </select>
                                                         </div>
                                                     </div>
@@ -1202,7 +1218,7 @@ function MissionVIew() {
                                             </div>
                                         </div>
                                     </div>
-                                    { /*mission && (mission.request_status == "mission_completed") ? */
+                                    { mission && (mission.request_status == "mission_completed") ?
                                         <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
                                             <h2>Mission Debriefing Form</h2>
                                             <button
@@ -1544,7 +1560,7 @@ function MissionVIew() {
 
                                                 </div>
                                             </div>
-                                        </div> }
+                                        </div>:"" }
 
                                 </div>
                             </main>
