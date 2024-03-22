@@ -108,7 +108,7 @@ function MissionList() {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                            {item.cluster[0].name}
+                            {item.cluster && item.cluster.length>0?item.cluster[0].name:''}
                         </p>
                         {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                         {/*    USD*/}
