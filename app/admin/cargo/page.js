@@ -52,7 +52,7 @@ function Cargo() {
                             </div>
                         </div>
                     </td>
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm" style={{whiteSpace: 'nowrap'}}>
                     <a
                         href={`/admin/cargo/edit?id=${item._id}`}
                         className="px-4 py-2 mx-2 bg-main text-white rounded"

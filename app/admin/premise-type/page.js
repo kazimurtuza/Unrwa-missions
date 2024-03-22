@@ -21,13 +21,8 @@ function Driver() {
         }
     };
 
-    
-
     useEffect(() => {
-
-
         fetchData();
-       
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Premise Type";
@@ -81,7 +76,7 @@ function Driver() {
 
                     </td>
 
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <div className="ml-3">
                             <Link
                                 href={{
