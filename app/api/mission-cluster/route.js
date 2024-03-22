@@ -33,6 +33,11 @@ export async function POST(request) {
 
         await mongoose.connect(connectionStr);
 
+        //check if payload agency is empty
+        if (!payload.agency) {
+            payload.agency = null;
+        }
+
         //mission classification create
         let missionCluster = new MissionCluster(payload);
         let result = await missionCluster.save();
