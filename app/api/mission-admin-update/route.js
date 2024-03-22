@@ -94,9 +94,9 @@ export async function POST(request) {
         var sendto=await mission_info.leader.user.email
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            // to: 'lipan@technovicinity.com',
+            to: 'lipan@technovicinity.com',
             // to: 'kazimurtuza11@gmail.com',
-            to: sendto,
+            // to: sendto,
             subject: "MR " + mission_info.mission_id + " MNR Agencies " + agencies.join(''),
             html: mailContent,
         };
