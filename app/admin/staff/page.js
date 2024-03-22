@@ -139,6 +139,14 @@ function Staff() {
 
                         <Link
                                 href={{
+                                    pathname: '/admin/staff/log-history',
+                                    query: { id: item._id },
+                                }}
+                                className="px-4 py-2 mx-2 bg-main text-white rounded"
+                              > Log</Link>
+
+                        <Link
+                                href={{
                                     pathname: '/admin/staff/details',
                                     query: { id: item._id },
                                 }}
