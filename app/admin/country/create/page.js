@@ -1,8 +1,8 @@
 "use client";
 
 import axiosClient from "@/app/axiosClient";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
 
 function CountryCreate() {
@@ -167,6 +167,9 @@ function CountryCreate() {
                                                 </span>
                                                 </div>
                                             )}
+
+                      <div className="f-row-wrap">
+                      <div className="f-col">
                       <div className="mb-4">
                       <label
                         className="block text-grey-darker text-sm font-bold mb-2"
@@ -235,7 +238,9 @@ function CountryCreate() {
 
                         />
                       </div>
+                      </div>
 
+                      <div className="f-col">
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -326,6 +331,8 @@ function CountryCreate() {
 
                       </select>
 
+                      </div>
+                      </div>
                       </div>
 
                       <div className="flex items-center justify-between mt-8">

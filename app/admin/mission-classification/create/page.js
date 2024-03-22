@@ -1,8 +1,8 @@
 "use client";
 
 import axiosClient from "@/app/axiosClient";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Swal from 'sweetalert2';
 
 function MissionClassificationCreate() {
@@ -11,13 +11,10 @@ function MissionClassificationCreate() {
   const [requests_classifications, setRequests_classifications] = useState("");
   const [abbreviation, setAbbreviation] = useState("");
   const [isVisible, setIsVisible] = useState(true);
-  
 
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
-
-
 
   const handleMissionClassificationChange = (value) => {
     setMissionClassificationName(value);
@@ -51,13 +48,11 @@ function MissionClassificationCreate() {
     };
 
     try {
-
         const response = await axiosClient.post('misson-classification', postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
-          if(response.data.success==true)
-          {
+          if(response.data.success==true) {
             setSuccessMessage("Mission Classification Create Successfully");
             setMissionClassificationName("");
             setRequests_classifications("");
@@ -70,15 +65,10 @@ function MissionClassificationCreate() {
               // confirmButtonText: 'Cool'
             })
             router.push("../mission-classification", { scroll: false });
-          }
-          else
-          {
-            if(response.data.msg)
-            {
+          } else {
+            if(response.data.msg) {
               setErrorMessage(response.data.msg);
-            }
-            else
-            {
+            } else {
             //   const allErrors = extractErrors(response.data.error.errors);
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
@@ -98,7 +88,6 @@ function MissionClassificationCreate() {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -160,8 +149,8 @@ function MissionClassificationCreate() {
                         />
                       </div> */}
 
-
-                      
+                      <div className="f-row-wrap">
+                      <div className="f-col">
                       <div className="mb-4">
                           <label
                             className="block text-grey-darker text-sm font-bold mb-2"
@@ -178,10 +167,13 @@ function MissionClassificationCreate() {
                           onChange={(e) =>
                             handlerequestClassificationChange(e.target.value)
                           }
+
                           />
+                        </div>
                         </div>
                         {/* Display the select element only when isVisible is true */}
                       {isVisible && (
+                        <div className="f-col">
                         <div className="mb-4">
                           <label
                             className="block text-grey-darker text-sm font-bold mb-2"
@@ -198,11 +190,12 @@ function MissionClassificationCreate() {
                           onChange={(e) =>
                             handleAbbrivationChange(e.target.value)
                           }
+
                           />
                         </div>
+                        </div>
                       )}
-
-
+                      </div>
                       <div className="flex items-center justify-between mt-8">
                         <button
                           className="bg-main duration-300 leading-normal transition opacity-80 hover:opacity-100 text-white font-bold py-2 px-4 rounded"
@@ -232,8 +225,8 @@ function extractErrors(errors) {
         result.push(`${key}: ${errorMessage}`);
       }
     }
+
     return result;
 }
 
 export default MissionClassificationCreate;
-
