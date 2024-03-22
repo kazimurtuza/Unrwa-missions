@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
-import {connectionStr} from "@/lib/db";
-import {NextResponse} from "next/server";
-import {Mission} from "@/lib/model/mission";
-import {MissionDepartureArrival} from "@/lib/model/missionDepartureArrival";
-import {MissionVehicle} from "@/lib/model/missionVehicle";
-import nodemailer from "nodemailer";
-import fs from "fs";
+import { connectionStr } from "@/lib/db";
+import { Mission } from "@/lib/model/mission";
+import { MissionDepartureArrival } from "@/lib/model/missionDepartureArrival";
+import { MissionVehicle } from "@/lib/model/missionVehicle";
+import { AppSetting } from "@/lib/model/setting";
 import ejs from "ejs";
+import fs from "fs";
+import mongoose from "mongoose";
+import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 import path from "path";
-import {AppSetting} from "@/lib/model/setting";
 
 function getCurrentFormattedDate() {
     const currentDate = new Date(); // Get the current date
@@ -33,12 +33,15 @@ export async function POST(request) {
         if (info.request_status == "mission_completed") {
             info.completed_date = getCurrentFormattedDate()
         }
+
         if (info.cla_decision == "approved") {
             info.approved_date = getCurrentFormattedDate()
         }
+
         if (info.cla_decision == "approved") {
             info.rejected_date = getCurrentFormattedDate()
         }
+
         // Perform the update operation using findOneAndUpdate
         const missionUpdate = await Mission.findOneAndUpdate(filter, update, {new: true});
 
@@ -54,7 +57,6 @@ export async function POST(request) {
             .populate('departure_premise_type')
             .populate('arrival_premise_type')
             .populate('arrival_umrah_id')
-
 
         let missionVehicle_info = await MissionVehicle.find({mission: missionId})
             .populate('staff.staff_id')
@@ -90,8 +92,6 @@ export async function POST(request) {
         var setting=await AppSetting.findOne();
         // setting.to
         // setting.cla
-
-
 
         var sendto=await mission_info.leader.user.email
         const mailOptions = {
