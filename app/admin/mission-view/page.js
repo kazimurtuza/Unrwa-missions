@@ -383,7 +383,7 @@ function MissionVIew() {
                                 </div>
                                 <div className='px-4 sm:px-6 lg:px-8 py-8 w-full mx-auto'>
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
-                                        <h2>Section heading</h2>
+                                        <h2>Identifier Information</h2>
 
                                         <div className='form__info-box'>
                                             <h3 className='form__info-box__title'>
@@ -858,6 +858,25 @@ function MissionVIew() {
                                                                 </li>
                                                             )
                                                         )}
+                                                    </ul>
+
+
+                                                    <h3 className='form__info-box__title has-divider'>
+                                                        Cargo
+                                                    </h3>
+
+
+                                                    <ul className='meta-list'>
+                                                        {item.carried.map(
+                                                            (item) => (
+                                                                <li>
+                                                                    {
+                                                                        item.value
+                                                                    }
+                                                                </li>
+                                                            )
+                                                        )}
+
                                                     </ul>
                                                 </div>
                                             ))}

@@ -58,8 +58,8 @@ export async function POST(request) {
         const missionUpdate = await Mission.findOneAndUpdate(filter, info, {new: true});
 
         //email data
-        const transporter = await nodemailer.createTransport({
-            host: "smtp.gmail.com",
+        const transporter = nodemailer.createTransport({
+            host: process.env.HOST,
             port: 465,
             secure: true, // Set to false for explicit TLS
             auth: {
@@ -67,8 +67,6 @@ export async function POST(request) {
                 pass: process.env.EMAIL_PASSWORD,
             },
             tls: {
-                // Do not fail on invalid certificates
-                //rejectUnauthorized: false,
             },
         });
         let missionId = info.mission_id
@@ -101,31 +99,19 @@ export async function POST(request) {
         var agencies = await Promise.all(mission_info.agency.map(async (item) => {
             return `${item.agency_id.name}`;
         }));
+
+        var sendto=await mission_info.leader.user.email
+
+
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            // to: 'lipan@technovicinity.com',
-            to: 'kazimurtuza11@gmail.com',
-            //to: 'sajeebchakraborty.cse2000@gmail.com',
-            //   to: 'mailto:anjumsakib@gmail.com',
+            to: sendto,
             subject: "MR " + mission_info.mission_id + " MNR Agencies " + agencies.join(''),
             html: mailContent,
         };
 
         await transporter.sendMail(mailOptions);
-
-
-
-
-
-
         //email data
-
-
-
-
-
-
-
 
         if (missionUpdate) {
             // Return the updated mission if found

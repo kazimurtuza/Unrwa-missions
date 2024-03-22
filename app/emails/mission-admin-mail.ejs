@@ -8,18 +8,19 @@
   </head>
   <body>
     <center><img src="https://emergencysystem.info/uploads/logo2.jpg"  width="100px"></img>
+      <p style="font-size:20px;"><b>ERCS New Mission Submitted</b></p></center>
 
  <p>
- Hello ACT,
+ Hello <%= mission && mission.leader.name %>, <br>
 
- A Mission Request (MR) <%= mission && mission.leader.name %> with the following details has been submitted. To process the MR, please login to the ERCS
-
-MR ID:<%= mission && mission.mission_id %>
-Mission Date: <%= mission && mission.create_date %>
-Mission Stops: <% mission?.places?.forEach(item => { %>
-                   <span><%= item.departure_umrah_id?.installation_name %></span>
-               <% }) %>
-</br>
+ A Mission Request (MR) <%= mission && mission.mission_id %> with the following details has been submitted. To process the MR, please login to the ERCS
+<br><br>
+MR ID:<%= mission && mission.mission_id %><br>
+Mission Date: <%= mission && mission.create_date %><br>
+Mission Stops: <% missionLocation_info.forEach((item, index) => { %>
+                                          <span><%= item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name %>-<%= item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name %>,</span>
+                                      <% }); %>
+<br>
 Mission Focal Person: <%= mission && mission.leader.user.name %>
  </p>
   </body>

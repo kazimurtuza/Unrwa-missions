@@ -11,6 +11,7 @@ import fs from "fs";
 import path from "path";
 import {User} from "@/lib/model/users";
 import {Staff} from "@/lib/model/staff";
+import {AppSetting} from "@/lib/model/setting";
 // import axiosClient from "@/app/axiosClient";
 // import {useState} from "react";
 
@@ -26,8 +27,23 @@ function getCurrentFormattedDate() {
 export async function POST(request) {
     try {
 
-        const transporter = await nodemailer.createTransport({
-            host: "smtp.gmail.com",
+        // const transporter = await nodemailer.createTransport({
+        //     host: "smtp.gmail.com",
+        //     port: 465,
+        //     secure: true, // Set to false for explicit TLS
+        //     auth: {
+        //         user: process.env.EMAIL_USER,
+        //         pass: process.env.EMAIL_PASSWORD,
+        //     },
+        //     tls: {
+        //         // Do not fail on invalid certificates
+        //         //rejectUnauthorized: false,
+        //     },
+        // });
+
+
+        const transporter = nodemailer.createTransport({
+            host: process.env.HOST,
             port: 465,
             secure: true, // Set to false for explicit TLS
             auth: {
@@ -39,6 +55,10 @@ export async function POST(request) {
                 //rejectUnauthorized: false,
             },
         });
+
+
+
+
         // const mailOptions={};
 
         var result;
@@ -84,7 +104,7 @@ export async function POST(request) {
             // mailOptions.text = mailContent;
             const leaderInfo = await Staff.findOne({_id: mission.leader});
             // const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
-            const emailTemplatePath = path.resolve("./app/emails/focal-point-mission.ejs");
+            const emailTemplatePath = path.resolve("./app/emails/mission-admin-mail.ejs");
             const emailFocalData = path.resolve("./app/emails/focal-point-mission.ejs");
             const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
             const emailfocalTemplate = fs.readFileSync(emailFocalData, "utf-8");
@@ -113,9 +133,11 @@ export async function POST(request) {
 
             const mailContent = ejs.render(emailTemplate, {
                    mission:mission_info,
+                   missionLocation_info:missionLocation_info,
             });
             const focalContent = ejs.render(emailfocalTemplate, {
                    mission:mission_info,
+                   missionLocation_info:missionLocation_info,
             });
 
 
@@ -129,12 +151,15 @@ export async function POST(request) {
             //     html: mailContent,
             // };
 
+            let userData=await AuthUser();
+            var userEmail=userData.email;
+
+
+            var setting=await AppSetting.findOne();
+
             const mailOptions = {
                 from: process.env.EMAIL_USER,
-                to: 'lipan@technovicinity.com',
-                // to: 'kazimurtuza11@gmail.com',
-                //to: 'sajeebchakraborty.cse2000@gmail.com',
-                //   to: 'mailto:anjumsakib@gmail.com',
+                to: setting.to,
                 subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
                 html: mailContent,
             };
@@ -143,15 +168,14 @@ export async function POST(request) {
             const focalOptions = {
                 from: process.env.EMAIL_USER,
                 to:sendto,
-                // to: 'kazimurtuza11@gmail.com',
-                //to: 'sajeebchakraborty.cse2000@gmail.com',
-                //   to: 'mailto:anjumsakib@gmail.com',
                 subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
                 html: focalContent,
             };
 
             // Send the email
-            await transporter.sendMail(mailOptions);
+            if(userEmail){
+                await transporter.sendMail(mailOptions);
+            }
             await transporter.sendMail(focalOptions);
         }
 
