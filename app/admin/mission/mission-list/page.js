@@ -65,7 +65,7 @@ function MissionList() {
 
     let tableName = "Mission List";
 
-    const headName = ["MR ID","Cluster","Mission Leader", "Movement Date","Status","Action"];
+    const headName = ["MR ID","Cluster","Mission Leader", "Movement Date","CLA Decision","Status","Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -160,6 +160,14 @@ function MissionList() {
                     {/*        Due in 3 days*/}
                     {/*    </p>*/}
                     {/*</td>*/}
+
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                            {item.cla_decision=="partially_approved"?"partially approved":item.cla_decision}
+                        </p>
+                    </td>
+
+
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         {/*{item.status?(   <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">*/}
                         {/*<span*/}

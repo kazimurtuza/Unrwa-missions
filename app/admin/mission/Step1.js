@@ -92,7 +92,7 @@ const Step1 = ({getdata, storeData, staffList, agencyList, classification, check
                                 <p>
                                     <b>Phone</b>
                                 </p>
-                                <p>{adminInfo.phone}</p>
+                                <p>{adminInfo.phone_number_one}</p>
                             </div>
                             <div className="form__col">
                                 <p>

@@ -359,7 +359,7 @@ const Collapsable2 = ({
                                         <p>
                                             <b>Ooredoo Phone</b>
                                         </p>
-                                        <p>ND</p>
+                                        <p>{driverInfo.phone_number_one}</p>
                                     </div>
                                     <div className='form__col'>
                                         <p>
@@ -373,7 +373,7 @@ const Collapsable2 = ({
                                         <p>
                                             <b>Whatsapp</b>
                                         </p>
-                                        <p>ND</p>
+                                        <p>{driverInfo.whatsup_number}</p>
                                     </div>
                                 </div>
                             </div> : ''}

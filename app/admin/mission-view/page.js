@@ -417,7 +417,7 @@ function MissionVIew() {
                                                     <p>
                                                         {mission &&
                                                             mission.leader
-                                                                .phone}
+                                                                .phone_number_one}
                                                     </p>
                                                 </div>
                                                 <div className='form__col'>
@@ -1043,6 +1043,9 @@ function MissionVIew() {
                                                                 <option value='approved'>
                                                                     Approved
                                                                 </option>
+                                                                <option value='partially_approved'>
+                                                                Partially Approved
+                                                            </option>
                                                                 <option value='denied'>
                                                                     Denied
                                                                 </option>

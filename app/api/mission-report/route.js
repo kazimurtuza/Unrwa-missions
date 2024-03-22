@@ -102,11 +102,11 @@ export async function POST(request) {
 
         var sendto=await mission_info.leader.user.email
 
-
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: sendto,
-            subject: "MR " + mission_info.mission_id + " MNR Agencies " + agencies.join(''),
+            subject: "MR #" + mission_info.mission_id + " CLA Decision on your MCR or MNR",
+            // subject: "MR " + mission_info.mission_id + " MNR Agencies " + agencies.join(''),
             html: mailContent,
         };
 
