@@ -49,6 +49,7 @@
                 font-size: 17px;
             }
 
+
             .form__info-box {
                 border-radius: 5px;
                 border: 1px solid rgba(0, 0, 0, 0.15);
@@ -74,10 +75,11 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                flex-wrap: wrap;
             }
             .form__info-box .form__col {
-                width: 50%;
-                max-width: 49.5em;
+                width: 48%;
+                max-width: 48%;
             }
             .form__info-box .form__col p {
                 font-size: 14px;
@@ -91,10 +93,11 @@
                 display: flex;
                 gap: 20px;
                 margin-bottom: 25px;
+                flex-wrap: wrap;
             }
             .msb-meta .msb-meta__item {
-                width: 50%;
-                max-width: 49.5em;
+                width: 48%;
+                max-width: 48%;
             }
             .form__info-box__title {
                 font-size: 16px;
@@ -119,6 +122,86 @@
             .form__info-box__title.has-divider {
                 border-top: 1px solid rgba(0, 0, 0, 0.15);
                 padding-top: 10px;
+            }
+
+            .table-wrap {
+                overflow-x: auto;
+                width: 100%;
+            }
+
+            .mdf-form-head p{
+                line-height: 2;
+            }
+
+            .table-wrap table div,
+            .table-wrap table p{
+                font-size: 13px;
+            }
+
+            .table-wrap table {
+                table-layout: auto;
+                width: 100%;
+                padding-top: 20px;
+                border-collapse: initial!important;
+              }
+
+              table thead tr {
+                color: #2d3748;
+                font-size: 14px;
+                font-weight: 500;
+                text-align: left;
+              }
+
+              table thead tr th {
+                background: #cfe0f0;
+                padding: 0.75rem 1.5rem;
+                vertical-align: middle;
+                font-size: 14px!important;
+              }
+
+              table tbody tr td {
+                background: #cfe0f0;
+              }
+
+              table tbody td {
+                color: #1a202c;
+                text-align: left;
+                vertical-align: middle;
+                font-size: 14px;
+                font-weight: normal;
+                padding: 3px 10px;
+              }
+
+              .table-wrap p,
+              .table-wrap div,
+              .table-wrap th {
+                font-size: 14px!important;
+              }
+
+              .table-wrap td span,
+              table thead tr th span{
+                font-size: 10px!important;
+              }
+
+              .table-wrap td span{
+                display: block;
+              }
+
+              .input-wrap textarea,
+              .input-wrap input{
+                width: 100%;
+                padding: 12px;
+              }
+
+              .table-wrap h3{
+                font-size: 20px;
+                font-weight: 700;
+                margin-top: 40px;
+                margin-bottom: 15px;
+              }
+
+            .mdf-form-wrap h2{
+                font-size: 22px;
             }
         </style>
     </head>
@@ -405,7 +488,164 @@
 </div>
 
 <div>
-<h1>
+
+
+    <h2>Mission Debriefing Form</h2>
+    <div class="form__info-box">
+        <div class="form__row flex-ctr-spb">
+            <div class="form__col">
+                <p><b>Convoy composition (Agencies)</b></p>
+                <p>qwwqw</p>
+            </div>
+            <div class="form__col">
+                <p><b>Mission Locations visited and route</b></p>
+                <p>Mission Locations visited and route</p>
+            </div>
+            <div class="form__col">
+                <p><b>Date of the mission</b></p>
+                <p>12-12-2012</p>
+            </div>
+            <div class="form__col">
+                <p><b>Mission Focal Point</b></p>
+                <p>4545</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class='table-wrap'>
+        <h3>Section A</h3>
+        <table>
+            <thead>
+            <tr>
+                <th style="white-space: nowrap;">
+                    Road Condition
+                </th>
+                <th>
+                    Include remarks
+                    description next
+                    to the relevant
+                    cell under
+                    column 'road
+                    condition'
+                </th>
+                <th>
+                    Presence of EDs,
+                    ERWs, and UXO
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    A. Not Passable
+                </td>
+                <td>
+                    <div class='input-wrap'>
+                    <p> Data </p>
+
+                    </div>
+                </td>
+                <td>
+                    <div class='input-wrap'>
+                    <p>Data</p>
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    B. Very bad
+                    condition
+                </td>
+                <td>
+                    <div class='input-wrap'>
+
+                    <p>Data</p>
+
+                    </div>
+                </td>
+                <td>
+                    <div class='input-wrap'>
+                    <p>Data</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    C. Bad condition
+                </td>
+                <td>
+                    <div class='input-wrap'>
+                    <p>Data</p>
+                    </div>
+                </td>
+                <td>
+                    <div class='input-wrap'>
+                    <p>Data</p>
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    D. Regular
+                    condition
+                </td>
+                <td>
+                    <div class='input-wrap'>
+                    <p>Data</p>
+
+                    </div>
+                </td>
+                <td>
+                    <div class='input-wrap'>
+                    <p>Data</p>
+
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class='table-wrap' style="margin-bottom: 30px;">
+        <h3>Section B</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    Insecurity or hostilities affecting humanitarian
+                    assistance
+                </th>
+
+                <th>
+                    Humanitarian Observations
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class='input-wrap'>
+                    <p>Data</p>
+                    </div>
+                </td>
+                <td>
+                    <div class='input-wrap'>
+                    <p>Data</p>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+<!-- <h1>
 Mission Debriefing Form
 </h1>
 
@@ -477,7 +717,7 @@ Mission Debriefing Form
                                                            <p><b>Humanitarian Observations(i.e notable presence of IDPs, urgent needs or gaps in response etc)</b></p>
                                                            <p><%= mission.humanitarian_observations %></p>
                                                        </div>
-                                                   </div>
+                                                   </div> -->
 
 
 </div>
