@@ -64,12 +64,6 @@ function MissionList() {
     let newDateFormat = "DD/MM/YYYY"; // Example new format
 
     let tableName = "Mission List";
-    // MR_ID
-    // Movement Date
-    // Mission Leader
-    // Cluster
-    // Status
-    // CLA Decision
 
     const headName = ["MR ID","Cluster","Mission Leader", "movement_date","Status","Action"];
     let head = (
