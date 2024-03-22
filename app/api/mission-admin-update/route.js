@@ -67,8 +67,8 @@ export async function POST(request) {
 
         // ----------Email----------------
 
-        const transporter = await nodemailer.createTransport({
-            host: "smtp.gmail.com",
+        const transporter = nodemailer.createTransport({
+            host: process.env.HOST,
             port: 465,
             secure: true, // Set to false for explicit TLS
             auth: {
@@ -80,6 +80,7 @@ export async function POST(request) {
                 //rejectUnauthorized: false,
             },
         });
+
         const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
         const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
         const mailContent = ejs.render(emailTemplate, {
@@ -96,8 +97,6 @@ export async function POST(request) {
             // to: 'lipan@technovicinity.com',
             // to: 'kazimurtuza11@gmail.com',
             to: sendto,
-            //to: 'sajeebchakraborty.cse2000@gmail.com',
-            //   to: 'mailto:anjumsakib@gmail.com',
             subject: "MR " + mission_info.mission_id + " MNR Agencies " + agencies.join(''),
             html: mailContent,
         };
