@@ -17,7 +17,7 @@ function UmrahList() {
 
     const fetchData = async () => {
         try {
-            const {data} = await axiosClient.get('umrah');
+            const {data} = await axiosClient.get('facility');
             if (data.success == true) {
                 setUmrahList(data.result);
                 setTimeout( function(){
@@ -148,20 +148,20 @@ function UmrahList() {
                     </td> */}
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {item.status ? (<span
-                            className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span
-                            aria-hidden
-                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                        ></span>
-                        <span className="relative">Active</span>
-                    </span>) : (<span
+                        {item.is_delete ? (<span
                             className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                         <span
                             aria-hidden
                             className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
                         ></span>
                         <span className="relative">Inactive</span>
+                    </span>) : (<span
+                            className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                        <span
+                            aria-hidden
+                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                        ></span>
+                        <span className="relative">Active</span>
                     </span>)}
 
                     </td>
@@ -177,20 +177,21 @@ function UmrahList() {
                                 <button
                                   onClick={async () => {
                                       // Show a confirmation alert
-                                      const confirmed = window.confirm("Are you sure you want to delete?");
+                                      const confirmed = window.confirm("Are you sure you want to change the state?");
 
                                       if (confirmed) {
                                           // Make a DELETE request to your API to mark the question as deleted
                                           try {
-                                            await axiosClient.delete(`umrah/${item._id}`, {
+                                            const res= await axiosClient.delete(`umrah/${item._id}`, {
                                                   method: 'DELETE',
                                                   headers: {
                                                       'Content-Type': 'application/json',
                                                   },
                                               });
+                                              console.log(res);
                                               Swal.fire({
                                                 title: 'success',
-                                                text: 'Successfully Deleted',
+                                                text: 'Successfully Change the Status',
                                                 icon: 'success',
                                                 // confirmButtonText: 'Cool'
                                             })
@@ -206,7 +207,7 @@ function UmrahList() {
                                   }}
                                   className="px-4 py-2 mx-2 bg-red-500 text-white rounded hover:bg-red-600"
                               >
-                                  Delete
+                                  {item.is_delete ? "Active": "Delete" }
                               </button>
                                 {/*<p className="text-gray-600 whitespace-no-wrap">*/}
                                 {/*    000004*/}
