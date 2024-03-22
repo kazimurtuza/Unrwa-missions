@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Change Request</title>
+  </head>
+  <body>
+    <center><img src="https://emergencysystem.info/uploads/logo2.jpg"  width="100px"></img>
+<p>
+Hello <%= mission && mission.leader.name %>
+
+This is a friendly reminder to update the status for the mission with the following details has not been updated.
+
+Please login to the ERCS to update the mission status
+
+
+Mission UNRWA ID: <%= mission && mission.mission_id %>
+Mission Date: <%= new Date(mission.movement_date).toLocaleDateString() %>
+Mission Stops:
+<% missionLocation_info.forEach(item => { %>
+    <p>
+        <%= item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name %> -
+        <%= item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name %>
+    </p>
+<% }); %>
+Mission Focal Person:<%= mission && mission.leader.name %>
+CLA Decision: <<>> [Only for missions which are partially approved or Approved]
+Mission Status: Mission Completed
+
+Sincerely
+
+Access Coordination Team,
+
+</p>
+  </body>
+</html>

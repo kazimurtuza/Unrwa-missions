@@ -11,10 +11,6 @@ function Setting() {
   const [aboutAr, setAboutAr] = useState([]);
   const [image, setImage] = useState([]);
   const [app_logo, setApp_logo] = useState("");
-  const [to, setTo] = useState("");
-  const [copy, setCopy] = useState("");
-  const [bcc, setBcc] = useState("");
-  const [cla, setCla] = useState("");
   //success message
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage,setErrorMessage]=useState("");
@@ -32,18 +28,6 @@ function Setting() {
 
   const handleAboutAr = (value) => {
     setAboutAr(value);
-  };
-  const handleTo = (value) => {
-    setTo(value);
-  };
-  const handleCopy = (value) => {
-    setCopy(value);
-  };
-  const handleBcc = (value) => {
-    setBcc(value);
-  };
-  const handleCla = (value) => {
-    setCla(value);
   };
 
   const handleImage = (e) => {
@@ -74,10 +58,6 @@ function Setting() {
         setAppName(data.app_name);
         setAboutEn(data.about_app_en);
         setAboutAr(data.about_app_ar);
-        setTo(data.to);
-        setCopy(data.copy);
-        setBcc(data.bcc);
-        setCla(data.cla);
         setSettings(data);
 
     } catch (error) {
@@ -104,10 +84,6 @@ function Setting() {
       app_name:appName,
       about_app_en: aboutEn,
       about_app_ar:aboutAr,
-      to:to,
-      copy:copy,
-      bcc:bcc,
-      cla:cla,
       //app_logo:app_logo
     };
 
@@ -227,85 +203,6 @@ function Setting() {
                           value={aboutEn}
                           onChange={(e) =>
                             handleAboutEn(e.target.value)
-                          }
-
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          TO
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="aboutEn"
-                          type="email"
-                          placeholder="Enter Email"
-                          value={to}
-                          onChange={(e) =>
-                            handleTo(e.target.value)
-                          }
-
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          COPY
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="aboutEn"
-                          type="email"
-                          placeholder="Enter Email"
-                          value={copy}
-                          onChange={(e) =>
-                            handleCopy(e.target.value)
-                          }
-
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          BCC
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="aboutEn"
-                          type="email"
-                          placeholder="Enter Email"
-                          value={bcc}
-                          onChange={(e) =>
-                            handleBcc(e.target.value)
-                          }
-
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label
-                          className="block text-grey-darker text-sm font-bold mb-2"
-                          htmlFor="questionName"
-                        >
-                          CLA
-                        </label>
-                        <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="aboutEn"
-                          type="email"
-                          placeholder="Enter Email"
-                          value={cla}
-                          onChange={(e) =>
-                            handleCla(e.target.value)
                           }
 
                         />

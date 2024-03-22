@@ -83,7 +83,8 @@ export async function POST(request) {
             // mailOptions.subject = "UNRWA New Mission Created";
             // mailOptions.text = mailContent;
             const leaderInfo = await Staff.findOne({_id: mission.leader});
-            const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
+            // const emailTemplatePath = path.resolve("./app/emails/mission_creation.ejs");
+            const emailTemplatePath = path.resolve("./app/emails/focal-point-mission.ejs");
             const emailFocalData = path.resolve("./app/emails/focal-point-mission.ejs");
             const emailTemplate = fs.readFileSync(emailTemplatePath, "utf-8");
             const emailfocalTemplate = fs.readFileSync(emailFocalData, "utf-8");
@@ -118,20 +119,31 @@ export async function POST(request) {
             });
 
 
+            // const mailOptions = {
+            //     from: process.env.EMAIL_USER,
+            //     // to: 'lipan@technovicinity.com',
+            //     to: 'kazimurtuza11@gmail.com',
+            //     //to: 'sajeebchakraborty.cse2000@gmail.com',
+            //     //   to: 'mailto:anjumsakib@gmail.com',
+            //     subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
+            //     html: mailContent,
+            // };
+
             const mailOptions = {
                 from: process.env.EMAIL_USER,
-                // to: 'lipan@technovicinity.com',
-                to: 'kazimurtuza11@gmail.com',
+                to: 'lipan@technovicinity.com',
+                // to: 'kazimurtuza11@gmail.com',
                 //to: 'sajeebchakraborty.cse2000@gmail.com',
                 //   to: 'mailto:anjumsakib@gmail.com',
                 subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
                 html: mailContent,
             };
 
+            var sendto=await mission_info.leader.user.email
             const focalOptions = {
                 from: process.env.EMAIL_USER,
-                // to: 'lipan@technovicinity.com',
-                to: 'kazimurtuza11@gmail.com',
+                to:sendto,
+                // to: 'kazimurtuza11@gmail.com',
                 //to: 'sajeebchakraborty.cse2000@gmail.com',
                 //   to: 'mailto:anjumsakib@gmail.com',
                 subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
@@ -139,7 +151,7 @@ export async function POST(request) {
             };
 
             // Send the email
-            // await transporter.sendMail(mailOptions);
+            await transporter.sendMail(mailOptions);
             await transporter.sendMail(focalOptions);
         }
 
@@ -149,7 +161,6 @@ export async function POST(request) {
         return NextResponse.json({error: error.message, success: false});
     }
 }
-
 
 
 export async function GET() {
@@ -169,6 +180,14 @@ export async function GET() {
                         localField: "leader",
                         foreignField: "_id",
                         as: "leader_details"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "missionclusters",
+                        localField: "mission_cluster",
+                        foreignField: "_id",
+                        as: "cluster"
                     }
                 },
                 {
