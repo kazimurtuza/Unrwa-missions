@@ -543,13 +543,13 @@
                 </td>
                 <td>
                     <div class='input-wrap'>
-                    <p> Data </p>
+                    <%= mission.not_passable_road_condition %>
 
                     </div>
                 </td>
                 <td>
                     <div class='input-wrap'>
-                    <p>Data</p>
+                  <p><%= mission.not_passable_presence_eds_erw_uxo %></p>
 
                     </div>
                 </td>
@@ -562,13 +562,13 @@
                 <td>
                     <div class='input-wrap'>
 
-                    <p>Data</p>
+                    <p><%= mission.very_bad_road_condition %></p>
 
                     </div>
                 </td>
                 <td>
                     <div class='input-wrap'>
-                    <p>Data</p>
+                     <p><%= mission.very_bad_presence_eds_erw_uxo %></p>
                     </div>
                 </td>
             </tr>
@@ -578,12 +578,12 @@
                 </td>
                 <td>
                     <div class='input-wrap'>
-                    <p>Data</p>
+                    <p><%= mission.bad_road_condition %></p>
                     </div>
                 </td>
                 <td>
                     <div class='input-wrap'>
-                    <p>Data</p>
+                     <p><%= mission.bad_presence_eds_erw_uxo %></p>
 
                     </div>
                 </td>
@@ -595,13 +595,13 @@
                 </td>
                 <td>
                     <div class='input-wrap'>
-                    <p>Data</p>
+                    <p><%= mission.regular_road_condition %></p>
 
                     </div>
                 </td>
                 <td>
                     <div class='input-wrap'>
-                    <p>Data</p>
+                    <p><%= mission.regular_presence_eds_erw_uxo %></p>
 
                     </div>
                 </td>
@@ -630,12 +630,12 @@
             <tr>
                 <td>
                     <div class='input-wrap'>
-                    <p>Data</p>
+                    <p><%= mission.humanitarian_assistance %></p>
                     </div>
                 </td>
                 <td>
                     <div class='input-wrap'>
-                    <p>Data</p>
+                    <p><%= mission.humanitarian_observations %></p>
                     </div>
                 </td>
             </tr>
@@ -645,81 +645,18 @@
 
     </div>
 
-<!-- <h1>
-Mission Debriefing Form
-</h1>
-
-          <p>
-             Convoy composition (Agencies):
-            <% mission && mission.agency.forEach((item, index) => { %>
-                <span><%= item.agency_id.name %></span>
-            <% }); %>
-        </p>
-
-          <p>
-                       Mission Locations visited and route:
-                       <% missionLocation_info.forEach((item, index) => { %>
-                           <span><%= item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name %>-<%= item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name %>,</span>
-                       <% }); %>
-
-                   </p>
-                     <p>
-                                          Date of the mission: <span><%= mission && mission.movement_date %></span>
-                                      </p>
-                                      <p>
-                                          Mission Focal Point: <span><%= mission && mission.leader.name %></span>
-                                      </p>
-
-                                           <div class="form__info-box">
-                                              <div class="form__row flex-ctr-spb">
-                                                  <div class="form__col">
-                                                      <p><b>CLA</b></p>
-                                                      <p><%= mission.cla %></p>
-                                                  </div>
-                                                  <div class="form__col">
-                                                      <p><b>CLA Decision</b></p>
-                                                      <p><%= mission.cla_decision %></p>
-                                                  </div>
-                                              </div>
-                                               <div class="form__row flex-ctr-spb">
-
-                                                       <div class="form__col">
-                                                           <p><b>very_bad_road_condition</b></p>
-                                                           <p><%= mission.very_bad_road_condition %></p>
-                                                       </div>
-                                                       <div class="form__col">
-                                                           <p><b>very_bad_presence_eds_erw_uxo</b></p>
-                                                           <p><%= mission.very_bad_presence_eds_erw_uxo %></p>
-                                                       </div>
-                                                   </div>
-
-                                                <div class="form__row flex-ctr-spb">
-                                                       <div class="form__col">
-                                                           <p><b>regular_road_condition</b></p>
-                                                           <p><%= mission.regular_road_condition %></p>
-                                                       </div>
-                                                       <div class="form__col">
-                                                           <p><b>regular_presence_eds_erw_uxo</b></p>
-                                                           <p><%= mission.regular_presence_eds_erw_uxo %></p>
-                                                       </div>
-                                                   </div>
-
+</div>
 
 <div>
-<h1>Section B</h1>
-    <div class="form__row flex-ctr-spb">
+<p>
+If you require any clarifications, please reach out to the ACT.<br>
 
-                                                       <div class="form__col">
-                                                           <p><b>Insecurity or hostilities affecting humanitarian assistance(report observation in military operation area, presence of check points, (without coordinates, or specific incidents that impacted the mission)</b></p>
-                                                           <p><%= mission.humanitarian_assistance %></p>
-                                                       </div>
-                                                       <div class="form__col">
-                                                           <p><b>Humanitarian Observations(i.e notable presence of IDPs, urgent needs or gaps in response etc)</b></p>
-                                                           <p><%= mission.humanitarian_observations %></p>
-                                                       </div>
-                                                   </div> -->
+Sincere regards,<br>
 
+Access Coordination Team,<br>
+UNRWA
 
+</p>
 </div>
 
 
