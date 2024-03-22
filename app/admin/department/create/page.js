@@ -128,7 +128,8 @@ function DepartmentCreate() {
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                             id='categoryName'
                                                             type='text'
-                                                            placeholder='Enter your department name'
+                                                            required
+                          placeholder='Enter your department name'
                                                             value={
                                                                 departmentName
                                                             }
@@ -157,7 +158,8 @@ function DepartmentCreate() {
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                             id='categoryName'
                                                             type='text'
-                                                            placeholder='Enter your abbrevation'
+                                                            required
+                          placeholder='Enter your abbrevation'
                                                             value={abbrevation}
                                                             onChange={(e) =>
                                                                 handleAbbrevation(

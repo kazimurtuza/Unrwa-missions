@@ -168,6 +168,7 @@ function MissionClusterCreate() {
                                                         <select
                                                             className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                             value={agencyID}
+                          required
                                                             onChange={(e) =>
                                                                 handleAgencyChange(
                                                                     e.target
@@ -217,7 +218,8 @@ function MissionClusterCreate() {
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                             id='categoryName'
                                                             type='text'
-                                                            placeholder='Enter your mission cluster name'
+                                                            required
+                          placeholder='Enter your mission cluster name'
                                                             value={
                                                                 missionClusterName
                                                             }
@@ -296,7 +298,8 @@ function MissionClusterCreate() {
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                             id='categoryName'
                                                             type='email'
-                                                            placeholder='Enter your lead official email'
+                                                            required
+                          placeholder='Enter your lead official email'
                                                             value={
                                                                 leadOfficeEmail
                                                             }

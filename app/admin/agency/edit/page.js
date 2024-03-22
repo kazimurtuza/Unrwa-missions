@@ -277,13 +277,13 @@ function AgencyCreate() {
                           className="block text-grey-darker text-sm font-bold mb-2"
                           htmlFor="questionName"
                         >
-                          Name Acroynm
+                          Name Acronym
                         </label>
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
-                          placeholder="Enter your agency acroymn name"
+                          placeholder="Enter your agency acronym name"
                           value={agency_name_acroynm}
                           onChange={(e) =>
                             handleAgencyNameAcronoym(e.target.value)
@@ -385,6 +385,7 @@ function AgencyCreate() {
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={agency_cluster}
+                          required
                           onChange={(e) => handleClusterChange(e.target.value)}
                         >
                           <option value="" disabled hidden>

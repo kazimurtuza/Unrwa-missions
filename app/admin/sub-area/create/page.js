@@ -200,7 +200,8 @@ function AreaCreate() {
                                                             type='text'
                                                             placeholder='Enter your area name'
                                                             value={name}
-                                                            onChange={(e) =>
+                                                            required
+                          onChange={(e) =>
                                                                 handleNameChange(
                                                                     e.target
                                                                         .value

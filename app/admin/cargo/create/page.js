@@ -126,6 +126,7 @@ function CargoCreate() {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
+                          required
                           placeholder="Enter your carried out"
                           value={name}
                           onChange={(e) =>

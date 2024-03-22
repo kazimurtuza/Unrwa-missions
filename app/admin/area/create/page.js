@@ -126,6 +126,7 @@ function AreaCreate() {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
+                          required
                           placeholder="Enter your area name"
                           value={name}
                           onChange={(e) =>
