@@ -128,7 +128,7 @@ function Country() {
                         {/*</p>*/}
                     </td>
 
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm" style={{whiteSpace: 'nowrap'}}>
 
                             <Link
                                 href={{
