@@ -1,0 +1,52 @@
+.itemcard{
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    padding: 20px;
+    background: #ff0062;
+}
+
+.round {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    background: rgba(255, 0, 0, 0.09);
+    color: blue;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    text-align: center;
+    height: 60px;
+    width: 65px;
+    padding: 9px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #5f5f5f;
+    font-weight: 700;
+}
+
+.totalnumber {
+    display: flex;
+    font-size: 25px;
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
