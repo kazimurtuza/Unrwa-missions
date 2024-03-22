@@ -61,7 +61,13 @@ export async function DELETE(request, content) {
         const mission = await PremiseType.findById(filter);
 
         // Update only the is_delete field to 1
-        mission.is_delete = 1;
+        if(mission.is_delete==0)
+        {
+            mission.is_delete = 1;
+        }
+        else{
+            mission.is_delete = 0;
+        }
 
         const result = await mission.save();
     } catch (error) {

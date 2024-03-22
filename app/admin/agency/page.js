@@ -28,7 +28,7 @@ function AgencyList() {
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Agency";
-    const headName = ["Logo", "Name","agency name acroynm","agency head", "Action"];
+    const headName = ["Logo", "Name","agency name acronym","agency head", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
@@ -133,7 +133,7 @@ function AgencyList() {
                         </div>
                     </td>
 
-                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm text-right" style={{whiteSpace: 'nowrap'}}>
+                    <td className="relative px-5 py-5 border-b border-gray-200 bg-white text-sm" style={{whiteSpace: 'nowrap'}}>
 
                             <Link
                                 href={{

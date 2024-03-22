@@ -58,14 +58,23 @@ export async function DELETE(request, content) {
 
         await mongoose.connect(connectionStr);
         const mission = await Umrah.findById(filter);
+        //return NextResponse.json({ success: mission });
 
         // Update only the is_delete field to 1
-        mission.is_delete = 1;
+        if(mission.is_delete==0)
+        {
+            mission.is_delete = 1;
+        }
+        else{
+            mission.is_delete = 0;
+        }
+      
 
         const result = await mission.save();
+        const mission2 = await Umrah.findById(filter);
     } catch (error) {
         return NextResponse.json({ error:error.message, success: false });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true,mission:mission2 });
 }

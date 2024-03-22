@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 
 function VehicleCreate() {
     const router = useRouter();
@@ -131,6 +132,12 @@ function VehicleCreate() {
                     setCapacity("");
                     setVehicle_id("");
                     setAgencyID("");
+                    Swal.fire({
+                        title: 'success',
+                        text: 'Successfully Created',
+                        icon: 'success',
+                        // confirmButtonText: 'Cool'
+                      })
                     router.push("../vehicle", { scroll: false });
                 } else {
                     if (response.data.msg) {

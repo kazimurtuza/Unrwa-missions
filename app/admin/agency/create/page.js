@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Swal from 'sweetalert2';
 
 function AgencyCreate() {
     const router = useRouter();
@@ -122,6 +123,12 @@ function AgencyCreate() {
                     setAgency_cluster("");
                     setIntervision_note("");
                     setErrorMessage("");
+                    Swal.fire({
+                        title: 'success',
+                        text: 'Successfully Created',
+                        icon: 'success',
+                        // confirmButtonText: 'Cool'
+                      })
                     router.push("../agency", { scroll: false });
                 } else {
                     if (response.data.msg) {
@@ -217,13 +224,13 @@ function AgencyCreate() {
                                                             className='block text-grey-darker text-sm font-bold mb-2'
                                                             htmlFor='questionName'
                                                         >
-                                                            Name Acroynm
+                                                            Name Acronym
                                                         </label>
                                                         <input
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                             id='categoryName'
                                                             type='text'
-                                                            placeholder='Enter your agency acroymn name'
+                                                            placeholder='Enter your agency acronym name'
                                                             value={
                                                                 agency_name_acroynm
                                                             }
@@ -344,6 +351,7 @@ function AgencyCreate() {
                                                         </label>
                                                         <select
                                                             className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
+                                                            required
                                                             value={
                                                                 agency_cluster
                                                             }
@@ -449,6 +457,7 @@ function AgencyCreate() {
                                                         <input
                                                             type='file'
                                                             className='upload-field'
+                                                            required
                                                             ref={inputFile}
                                                             onChange={
                                                                 handleAgency_logoChange
