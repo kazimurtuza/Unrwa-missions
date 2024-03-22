@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Swal from 'sweetalert2';
 
 function StaffCreate() {
     const router = useRouter();
@@ -344,6 +345,12 @@ function StaffCreate() {
                     setAgencyID("");
                     setClassificationId("");
                     setStaffPhoto(null);
+                    Swal.fire({
+                        title: 'success',
+                        text: 'Successfully Created',
+                        icon: 'success',
+                        // confirmButtonText: 'Cool'
+                      })
                     router.push("../staff", { scroll: false });
                 } else {
                     if (response.data.msg) {
@@ -424,6 +431,7 @@ function StaffCreate() {
                                                         <select
                                                             className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                             value={agencyID}
+                                                            required
                                                             onChange={(e) =>
                                                                 handleAgencyChange(
                                                                     e.target
@@ -478,6 +486,7 @@ function StaffCreate() {
                                                             value={
                                                                 classificationId
                                                             }
+                                                            required
 
                                                             onChange={(e) =>
                                                                 handleClassificationChange(
@@ -513,6 +522,7 @@ function StaffCreate() {
                                                                         .value
                                                                 )
                                                             }
+                                                            required
 
                                                         >
                                                             <option value=''>
@@ -541,6 +551,7 @@ function StaffCreate() {
                                                         <input
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                             id='categoryName'
+                                                            required
                                                             type='text'
                                                             placeholder='Enter your staff name'
                                                             value={staffName}
@@ -630,6 +641,7 @@ function StaffCreate() {
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                             id='categoryName'
                                                             type='text'
+                                                        
                                                             placeholder='Enter your employee id'
                                                             value={employeeId}
                                                             required
@@ -728,6 +740,7 @@ function StaffCreate() {
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                             id='genderSelect'
                                                             value={gender}
+                                                            required
                                                             onChange={(e) =>
                                                                 handleGender(
                                                                     e.target
@@ -765,6 +778,7 @@ function StaffCreate() {
                                                         <select
                                                             className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                             value={department}
+                                                            required
                                                             onChange={(e) =>
                                                                 handleDepartmentChange(
                                                                     e.target
@@ -819,6 +833,7 @@ function StaffCreate() {
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                             id='categoryName'
                                                             type='date'
+                                                            required
                                                             placeholder='Enter your date of birth'
                                                             value={dateOfBirth}
                                                             onChange={(e) =>
@@ -969,6 +984,7 @@ function StaffCreate() {
                                                             type='text'
                                                             placeholder='Enter your email'
                                                             value={email}
+                                                            required
                                                             onChange={(e) =>
                                                                 handleEmailChange(
                                                                     e.target
@@ -1067,6 +1083,7 @@ function StaffCreate() {
                                                             className='appearance-none border rounded w-full py-2 px-3 text-grey-darker mt-2'
                                                             id='countryDropdown'
                                                             value={nationlity}
+                                                            required
                                                             onChange={(e) =>
                                                                 handleNationality(
                                                                     e.target
@@ -1119,6 +1136,7 @@ function StaffCreate() {
                                                             type='file'
                                                             className='upload-field'
                                                             ref={inputFile}
+                                                            required
                                                             onChange={
                                                                 handleStaffPhotoChange
                                                             }
@@ -1138,6 +1156,7 @@ function StaffCreate() {
                                                             type='file'
                                                             className='upload-field'
                                                             ref={inputFile2}
+                                                            required
                                                             onChange={
                                                                 handlePassportOrginalAttachment
                                                             }
@@ -1176,6 +1195,7 @@ function StaffCreate() {
                                                             type='file'
                                                             className='upload-field'
                                                             ref={inputFile4}
+                                                            required
                                                             onChange={
                                                                 handleNationalIdAttachment
                                                             }

@@ -3,6 +3,7 @@
 import axiosClient from "@/app/axiosClient";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 
 function UmraCreate() {
     const router = useRouter();
@@ -200,6 +201,12 @@ function UmraCreate() {
                     setOwenership("");
                     setSubArea("");
                     setLocationArea("");
+                    Swal.fire({
+                        title: 'success',
+                        text: 'Successfully Created',
+                        icon: 'success',
+                        // confirmButtonText: 'Cool'
+                      })
                     router.push("../facilities", { scroll: false });
                 } else {
                     if (response.data.msg) {
@@ -278,6 +285,7 @@ function UmraCreate() {
                                                 <select
                                                     className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                     value={countryId}
+                                                    required
                                                     onChange={(e) =>
                                                         handleCountryIdChange(
                                                             e.target.value
@@ -310,6 +318,7 @@ function UmraCreate() {
                                                 <select
                                                     className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                     value={premiseTypeId}
+                                                    required
                                                     onChange={(e) =>
                                                         handlePremiseTypeIdChange(
                                                             e.target.value
@@ -353,6 +362,7 @@ function UmraCreate() {
                                                     className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                     id='categoryName'
                                                     type='text'
+                                                    required
                                                     placeholder='Enter your installation name'
                                                     value={name}
                                                     onChange={(e) =>
@@ -374,6 +384,7 @@ function UmraCreate() {
                                                 <select
                                                     className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                     value={locationArea}
+                                                    required
                                                     onChange={(e) =>
                                                         handleLocaltionAreaChange(
                                                             e.target.value
@@ -417,6 +428,7 @@ function UmraCreate() {
                                                 <select
                                                     className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                     value={subArea}
+                                                    required
                                                     onChange={(e) =>
                                                         handleSubAreaChange(
                                                             e.target.value
@@ -461,6 +473,7 @@ function UmraCreate() {
                                                     className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                     id='categoryName'
                                                     type='text'
+                                                    required
                                                     placeholder='Enter your latitude'
                                                     value={latitude}
                                                     onChange={(e) =>
@@ -486,6 +499,7 @@ function UmraCreate() {
                                                     type='text'
                                                     placeholder='Enter your longitude'
                                                     value={longitude}
+                                                    required
                                                     onChange={(e) =>
                                                         handleLongitudeChange(
                                                             e.target.value
@@ -506,6 +520,7 @@ function UmraCreate() {
                                                     className='appearance-none border rounded w-full py-2 px-3 text-grey-darker'
                                                     id='categoryName'
                                                     type='text'
+                                                    required
                                                     placeholder='Enter your building code'
                                                     value={buildingCode}
                                                     onChange={(e) =>
@@ -527,6 +542,7 @@ function UmraCreate() {
                                                 <select
                                                     className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                     value={department}
+                                                    required
                                                     onChange={(e) =>
                                                         handleDepartmentChange(
                                                             e.target.value
@@ -570,6 +586,7 @@ function UmraCreate() {
                                                 <select
                                                     className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                     value={ownership}
+                                                    required
                                                     onChange={(e) =>
                                                         handleOwnershipChange(
                                                             e.target.value
@@ -609,6 +626,7 @@ function UmraCreate() {
                                                 <select
                                                     className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                     value={clsList}
+                                                    required
                                                     onChange={(e) =>
                                                         handleClsListChange(
                                                             e.target.value
@@ -645,6 +663,7 @@ function UmraCreate() {
                                                 <select
                                                     className='appearance-none border rounded w-full py-2 px-3  text-grey-darker'
                                                     value={des}
+                                                    required
                                                     onChange={(e) =>
                                                         handleDesChange(
                                                             e.target.value

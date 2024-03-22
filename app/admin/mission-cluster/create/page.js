@@ -175,6 +175,7 @@ const handleAgencyChange = (value) => {
                         <select
                           className="appearance-none border rounded w-full py-2 px-3  text-grey-darker"
                           value={agencyID}
+                          required
                           onChange={(e) => handleAgencyChange(e.target.value)}
                         >
                           <option value="" disabled hidden>
@@ -198,6 +199,7 @@ const handleAgencyChange = (value) => {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="text"
+                          required
                           placeholder="Enter your mission cluster name"
                           value={missionClusterName}
                           onChange={(e) =>
@@ -260,6 +262,7 @@ const handleAgencyChange = (value) => {
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="categoryName"
                           type="email"
+                          required
                           placeholder="Enter your lead official email"
                           value={leadOfficeEmail}
                           onChange={(e) =>

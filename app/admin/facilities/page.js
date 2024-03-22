@@ -43,11 +43,11 @@ function UmrahList() {
     let tableName = "Facilities List";
     const headName = [
 
-        "installation_name",
-        "premise_type",
+        "installation name",
+        "premise type",
         // "country",
-        "location_area",
-        "sub_area",
+        "location area",
+        "sub area",
         // "longitude",
         // "latitude",
         // "building_code",

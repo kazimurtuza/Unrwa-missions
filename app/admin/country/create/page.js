@@ -187,6 +187,7 @@ function CountryCreate() {
                       <select
                         className="appearance-none border rounded w-full py-2 px-3 text-grey-darker mt-2"
                         id="countryDropdown"
+                        required
                         onChange={(e) => handleCountryNameChange(e.target.value)}
                       >
                         <option value="">Select a country</option>

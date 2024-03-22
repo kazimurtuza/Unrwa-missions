@@ -28,7 +28,7 @@ function AgencyList() {
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     let tableName = "Agency";
-    const headName = ["Logo", "Name","agency name acroynm","agency head", "Action"];
+    const headName = ["Logo", "Name","agency name acronym","agency head", "Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
