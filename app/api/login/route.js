@@ -5,6 +5,7 @@ import {User} from "@/lib/model/users";
 import {connectionStr} from "@/lib/db";
 import jwt from "jsonwebtoken"
 import {Staff} from "@/lib/model/staff";
+import { LogHistory } from "@/lib/model/logHistory";
 
 export async function POST(request) {
     try {
@@ -26,7 +27,15 @@ export async function POST(request) {
             {
                 let staffInfo = await Staff.findOne({user:user._id});
                 staff_id=staffInfo._id;
+                //store login history
+                const logHistory = new LogHistory({
+                    user: user._id,
+                    staff: staffInfo._id,
+                    action: 'Login',
+                });
+                await logHistory.save();
             }
+
             //return NextResponse.json({error:staffInfo});
             if(user.is_delete==1)
             {
