@@ -37,6 +37,7 @@ function MissionList() {
         }
     }
 
+
     function convertDateFormat(dateString, newFormat) {
         // Parse the input date string
         let parsedDate = new Date(dateString);
