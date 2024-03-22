@@ -8,6 +8,7 @@ import nodemailer from "nodemailer";
 import fs from "fs";
 import ejs from "ejs";
 import path from "path";
+import {AppSetting} from "@/lib/model/setting";
 
 function getCurrentFormattedDate() {
     const currentDate = new Date(); // Get the current date
@@ -20,8 +21,6 @@ function getCurrentFormattedDate() {
 
 export async function POST(request) {
     try {
-
-
         // Connect to the MongoDB database
         await mongoose.connect(connectionStr);
 
@@ -40,7 +39,6 @@ export async function POST(request) {
         if (info.cla_decision == "approved") {
             info.rejected_date = getCurrentFormattedDate()
         }
-
         // Perform the update operation using findOneAndUpdate
         const missionUpdate = await Mission.findOneAndUpdate(filter, update, {new: true});
 
@@ -63,10 +61,7 @@ export async function POST(request) {
             .populate('vehicle')
             .populate('driver')
             .populate('agency');
-
-
         // ----------Email----------------
-
         const transporter = nodemailer.createTransport({
             host: process.env.HOST,
             port: 465,
@@ -91,24 +86,28 @@ export async function POST(request) {
         var agencies = await Promise.all(mission_info.agency.map(async (item) => {
             return `${item.agency_id.name}`;
         }));
+
+        var setting=await AppSetting.findOne();
+        // setting.to
+        // setting.cla
+
+
+
         var sendto=await mission_info.leader.user.email
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: 'lipan@technovicinity.com',
+            to: setting.cla,
             // to: 'kazimurtuza11@gmail.com',
             // to: sendto,
             subject: "MR " + mission_info.mission_id + " MNR Agencies " + agencies.join(''),
             html: mailContent,
         };
 
-
         if (payload.request_status == "request_submitted_cla") {
             await transporter.sendMail(mailOptions);
         }
 
-
         // ----------Email----------------
-
 
         if (missionUpdate) {
             // Return the updated mission if found

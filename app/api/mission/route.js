@@ -11,6 +11,7 @@ import fs from "fs";
 import path from "path";
 import {User} from "@/lib/model/users";
 import {Staff} from "@/lib/model/staff";
+import {AppSetting} from "@/lib/model/setting";
 // import axiosClient from "@/app/axiosClient";
 // import {useState} from "react";
 
@@ -154,9 +155,11 @@ export async function POST(request) {
             var userEmail=userData.email;
 
 
+            var setting=await AppSetting.findOne();
+
             const mailOptions = {
                 from: process.env.EMAIL_USER,
-                to: userEmail,
+                to: setting.to,
                 subject: "MR " + mission.mission_id + " Received (Submission Date " + mission.create_date + ")",
                 html: mailContent,
             };

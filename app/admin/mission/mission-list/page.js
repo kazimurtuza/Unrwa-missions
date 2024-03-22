@@ -65,7 +65,7 @@ function MissionList() {
 
     let tableName = "Mission List";
 
-    const headName = ["MR ID","Cluster","Mission Leader", "movement_date","Status","Action"];
+    const headName = ["MR ID","Cluster","Mission Leader", "Movement Date","Status","Action"];
     let head = (
         <tr>
             {headName.map((item, index) => (
