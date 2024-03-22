@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import {User} from "@/lib/model/users";
 import { connectionStr } from "@/lib/db";
-import {Product} from "@/lib/model/product";
 import jwt from "jsonwebtoken";
 import {headers} from "next/headers";
 
