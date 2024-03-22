@@ -139,9 +139,10 @@ export async function POST(request) {
                 html: mailContent,
             };
 
+            var sendto=await mission_info.leader.user.email
             const focalOptions = {
                 from: process.env.EMAIL_USER,
-                to: 'lipan@technovicinity.com',
+                to:sendto,
                 // to: 'kazimurtuza11@gmail.com',
                 //to: 'sajeebchakraborty.cse2000@gmail.com',
                 //   to: 'mailto:anjumsakib@gmail.com',

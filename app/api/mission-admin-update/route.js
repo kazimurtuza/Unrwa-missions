@@ -90,10 +90,12 @@ export async function POST(request) {
         var agencies = await Promise.all(mission_info.agency.map(async (item) => {
             return `${item.agency_id.name}`;
         }));
+        var sendto=await mission_info.leader.user.email
         const mailOptions = {
             from: process.env.EMAIL_USER,
             // to: 'lipan@technovicinity.com',
-            to: 'kazimurtuza11@gmail.com',
+            // to: 'kazimurtuza11@gmail.com',
+            to: sendto,
             //to: 'sajeebchakraborty.cse2000@gmail.com',
             //   to: 'mailto:anjumsakib@gmail.com',
             subject: "MR " + mission_info.mission_id + " MNR Agencies " + agencies.join(''),
