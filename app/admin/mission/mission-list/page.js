@@ -237,11 +237,10 @@ function MissionList() {
                       <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
                         <table className="min-w-full leading-normal mission-view">
                           <thead>
-                          {head}
+                            {head}
                           </thead>
                           <tbody>
-                          {body}
-
+                            {body}
                           </tbody>
                         </table>
                       </div>
