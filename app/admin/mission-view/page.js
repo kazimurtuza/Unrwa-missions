@@ -79,7 +79,7 @@ function MissionVIew() {
     };
 
     let reportData = {
-        mission_id: mission_id,
+        m_id: mission_id,
         not_passable_road_condition: '',
         very_bad_road_condition: '',
         bad_road_condition: '',

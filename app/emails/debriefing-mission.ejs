@@ -423,6 +423,14 @@
                         <li><%= staffItem.staff_id.name %></li>
                     <% }); %>
                 </ul>
+
+                <h3 class="form__info-box__title has-divider">Cargo</h3>
+
+                  <ul class="meta-list">
+                      <% item.carried.forEach(function(item) { %>
+                          <li><%= item.value %></li>
+                      <% }); %>
+                  </ul>
             </div>
         <% }); %>
     <% } %>
@@ -461,7 +469,7 @@
              <div class="form__row flex-ctr-spb">
                 <div class="form__col">
                     <p><b>Mission Classification</b></p>
-                    <p><%= mission.mission_classification_info %></p>
+                              <p><%= mission.mission_classification_info.requests_classifications %></p>
                 </div>
                 <div class="form__col">
                     <p><b>Request Status</b></p>

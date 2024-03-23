@@ -46,7 +46,7 @@ export async function POST(request) {
         const missionUpdate = await Mission.findOneAndUpdate(filter, update, {new: true});
 
         let missionId = info.m_id
-        let mission_info = await Mission.findOne({_id: missionId}).populate('mission_cluster').populate('unops_acu_status').populate('agency.agency_id').populate({
+        let mission_info = await Mission.findOne({_id: missionId}).populate('mission_classification_info').populate('mission_cluster').populate('unops_acu_status').populate('agency.agency_id').populate({
             path: 'leader',
             populate: {
                 path: 'user'

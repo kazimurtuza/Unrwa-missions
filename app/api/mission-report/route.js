@@ -34,7 +34,7 @@ export async function POST(request) {
         let payload = await request.json();
         var info = payload; // No need for await here
 
-        const filter = {_id: info.mission_id};
+        const filter = {_id: info.m_id};
         const update = info;
         const imageList=info.report_image_list;
         const newimglist = imageList.filter(item => item !== "");
@@ -69,8 +69,8 @@ export async function POST(request) {
             tls: {
             },
         });
-        let missionId = info.mission_id
-        let mission_info = await Mission.findOne({_id: missionId}).populate('mission_cluster').populate('unops_acu_status').populate('agency.agency_id').populate({
+        let missionId = info.m_id
+        let mission_info = await Mission.findOne({_id: missionId}).populate('mission_cluster').populate('mission_classification_info').populate('unops_acu_status').populate('agency.agency_id').populate({
             path: 'leader',
             populate: {
                 path: 'user'

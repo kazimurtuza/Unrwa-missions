@@ -272,7 +272,14 @@ export async function GET() {
                         as: "leader_details"
                     }
                 },
-
+                {
+                    $lookup: {
+                        from: "missionclusters",
+                        localField: "mission_cluster",
+                        foreignField: "_id",
+                        as: "cluster"
+                    }
+                },
                 {
                     $lookup: {
                         from: "staffs",
