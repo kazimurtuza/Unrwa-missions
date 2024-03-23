@@ -502,28 +502,22 @@
 
 
     <h2>Mission Debriefing Form</h2>
-    <div class="form__info-box">
-        <div class="form__row flex-ctr-spb">
-            <div class="form__col">
-                <p><b>Convoy composition (Agencies)</b></p>
-                <p>qwwqw</p>
-            </div>
-            <div class="form__col">
-                <p><b>Mission Locations visited and route</b></p>
-                <p>Mission Locations visited and route</p>
-            </div>
-            <div class="form__col">
-                <p><b>Date of the mission</b></p>
-                <p>12-12-2012</p>
-            </div>
-            <div class="form__col">
-                <p><b>Mission Focal Point</b></p>
-                <p>4545</p>
-            </div>
-        </div>
 
-    </div>
-
+     <p><b>Convoy composition (Agencies)</b>  :  <% if (mission) { %>
+                                                                                 <% mission.agency.forEach((item, index) => { %>
+                                                                                     <li><%= item.agency_id.name %></li>
+                                                                                 <% }); %>
+                                                                             <% } %></p>
+     <p><b>Mission Locations visited and route</b>  :
+     <% missionLocation_info.forEach((item, index) => { %>
+         <li><%= item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name %>
+             - <%= item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name %>,
+         </li>
+     <% }); %>
+     </p>
+     <p><b>Date of the mission</b> : <%= mission.movement_date %></p>
+     <p><b>Mission Focal Point</b> : <%= mission && mission.leader.name %></p>
+     <br>
 
     <div class='table-wrap'>
         <h3>Section A</h3>
