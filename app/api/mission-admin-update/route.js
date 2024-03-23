@@ -28,7 +28,7 @@ export async function POST(request) {
         let payload = await request.json();
         const info = payload; // No need for await here
 
-        const filter = {_id: info.mission_id};
+        const filter = {_id: info.m_id};
         const update = info;
         if (info.request_status == "mission_completed") {
             info.completed_date = getCurrentFormattedDate()
@@ -45,7 +45,7 @@ export async function POST(request) {
         // Perform the update operation using findOneAndUpdate
         const missionUpdate = await Mission.findOneAndUpdate(filter, update, {new: true});
 
-        let missionId = info.mission_id
+        let missionId = info.m_id
         let mission_info = await Mission.findOne({_id: missionId}).populate('mission_cluster').populate('unops_acu_status').populate('agency.agency_id').populate({
             path: 'leader',
             populate: {

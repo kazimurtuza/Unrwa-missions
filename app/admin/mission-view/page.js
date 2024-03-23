@@ -66,7 +66,7 @@ function MissionVIew() {
     ];
 
     let dataList = {
-        mission_id: mission_id,
+        m_id: mission_id,
         mission_classification_info: "",
         does_mission: "",
         unops_acu_status: "",
@@ -276,19 +276,23 @@ function MissionVIew() {
         }));
     };
     const storeDate = async () => {
-        if(adminData.mission_classification_info==""){
-          alert("complete mission classification info need to complete")
+        if(adminData.mission_classification_info=="" || adminData.mission_classification_info==null){
+            console.log(adminData)
+            alert("Mission classification information must be completed")
             return false;
+        }else{
+            const response = await axiosClient.post(
+                "mission-admin-update",
+                adminData
+            );
+            console.log(response);
+            if (response.data.success == true) {
+                fetchData()
+                alert("success fully updated");
+            }
+
         }
-        const response = await axiosClient.post(
-            "mission-admin-update",
-            adminData
-        );
-        console.log(response);
-        if (response.data.success == true) {
-            fetchData()
-            alert("success fully updated");
-        }
+
     };
 
     const storeReportDate = async () => {
