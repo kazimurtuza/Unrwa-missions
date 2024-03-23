@@ -243,7 +243,7 @@ function Setting() {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="aboutEn"
-                          type="email"
+                          type="text"
                           placeholder="Enter Email"
                           value={to}
                           onChange={(e) =>
@@ -263,7 +263,7 @@ function Setting() {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="aboutEn"
-                          type="email"
+                          type="text"
                           placeholder="Enter Email"
                           value={copy}
                           onChange={(e) =>
@@ -283,7 +283,7 @@ function Setting() {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="aboutEn"
-                          type="email"
+                          type="text"
                           placeholder="Enter Email"
                           value={bcc}
                           onChange={(e) =>
@@ -303,7 +303,7 @@ function Setting() {
                         <input
                           className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                           id="aboutEn"
-                          type="email"
+                          type="text"
                           placeholder="Enter Email"
                           value={cla}
                           onChange={(e) =>
