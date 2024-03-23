@@ -241,6 +241,7 @@ function MissionList() {
                           </thead>
                           <tbody>
                             {body}
+
                           </tbody>
                         </table>
                       </div>
