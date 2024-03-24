@@ -1,6 +1,7 @@
 "use client";
 
 import axiosClient from "@/app/axiosClient";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -27,7 +28,6 @@ function AgencyCreate() {
   const searchParames = useSearchParams();
   const id = searchParames.get("id");
 
-
   useEffect(() => {
     const fetchData = async () => {
         try {
@@ -38,11 +38,9 @@ function AgencyCreate() {
             console.error('Error fetching agencies:', error);
         }
     };
-  
+
     fetchData();
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-  
-
 
   const fetchData = async () => {
     try {
@@ -64,7 +62,6 @@ function AgencyCreate() {
         console.error('Error fetching agencies:', error);
     }
 };
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,10 +88,7 @@ function AgencyCreate() {
     fetchData();
 }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-
-
   const inputFile = useRef(null);
-
 
   const handleAgencyNameChange = (value) => {
     setAgencyName(value);
@@ -129,7 +123,6 @@ function AgencyCreate() {
     setIntervision_note (value);
   };
 
-
   const handleAgency_logoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -162,19 +155,15 @@ function AgencyCreate() {
       agency_website:agency_website,
       agency_logo:agency_logo,
       intervision_note:intervision_note
-
-
     };
 
     try {
-
         const response = await axiosClient.put(`agency/${id}`, postData);
 
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
-          if(response.data.success==true)
-          {
+          if(response.data.success==true) {
             fetchData();
             setSuccessMessage("Agency update Successfully");
             // setAgencyName("");
@@ -187,15 +176,10 @@ function AgencyCreate() {
             // setAgency_cluster("");
             // setIntervision_note("");
             setErrorMessage("");
-          }
-          else
-          {
-            if(response.data.msg)
-            {
+          } else {
+            if(response.data.msg) {
               setErrorMessage(response.data.msg);
-            }
-            else
-            {
+            } else {
             //   const allErrors = extractErrors(response.data.error.errors);
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
@@ -291,7 +275,6 @@ function AgencyCreate() {
 
                         />
                       </div>
-
 
                       <div className="mb-4">
                         <label
@@ -446,18 +429,17 @@ function AgencyCreate() {
                               >
                               Current Agency Logo
                               </label>
-                              <p className="text-gray-900 whitespace-no-wrap">
+                              <p className="text-gray-900 whitespace-no-wrap nx-image" style={{width: '220px', position: 'relative'}}>
                                     {agency_logo2 && (
-                                        <img
-                                            className="w-8 h-8 rounded-full object-cover"
-                                            src={`${api_base_url}/${agency_logo2}`}
-                                            
+                                        <Image
+                                        fill={true}
+                                            className="w-8 h-8"
+                                            src={`/${agency_logo2}`}
+                                            alt=""
                                         />
                                     )}
                                 </p>
                       </div>
-
-
 
                       <div className="mb-4">
                             <label
@@ -473,7 +455,6 @@ function AgencyCreate() {
                                 onChange={handleAgency_logoChange}
                               />
                       </div>
-
 
                       <div className="flex items-center justify-between mt-8">
                         <button
@@ -504,8 +485,8 @@ function extractErrors(errors) {
         result.push(`${key}: ${errorMessage}`);
       }
     }
+
     return result;
 }
 
 export default AgencyCreate;
-

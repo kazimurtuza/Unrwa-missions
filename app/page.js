@@ -1,6 +1,7 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
 import { setCookie } from "cookies-next";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // Changed from 'next/navigation' to 'next/router'
 import { useEffect, useState } from "react";
@@ -62,6 +63,7 @@ function Login() {
         }
     };
 
+    console.log(settings.app_logo);
     return (
         <div className='flex h-screen overflow-hidden'>
             {/* Content area */}
@@ -73,27 +75,30 @@ function Login() {
                             <div className='w-full bg-grey-lightest min-h-screen flex items-center justify-center py-16'>
                                 <div className='container max-w-[650px] px-2 sm:px-4 mx-auto'>
                                     <div className='user-page-logo'>
-                                        <a
+                                        <Link
                                             href='/'
+                                            style={{width: '220px'}}
                                             className='max-w-[120px] mx-auto mb-2.5 block'
                                         >
                                             {settings.app_logo && (
-                                                <>
-                                                    <img
+
+                                                    <Image
                                                         src={
-                                                            api_base_url +
-                                                            "/" +
-                                                            settings.app_logo
+                                                            '/'+settings.app_logo
                                                         }
 
+                                                        blurDataURL={
+                                                            '/'+settings.app_logo
+                                                        }
+
+                                                        width={307}
+                                                        height={221}
                                                         alt='Image'
-                                                        // onClick={popupImg}
+                                                        placeholder="blur"
                                                         className='cursor-pointer object-cover mx-auto my-5 w-80'
-                                                        style={{ float: "" }}
                                                     />
-                                                </>
                                             )}
-                                        </a>
+                                        </Link>
                                     </div>
                                     <div className='mx-auto bg-white rounded-xl shadow'>
                                         <div className='px-8 py-10'>
@@ -161,7 +166,7 @@ function Login() {
                                                 <div className='flex items-center justify-between mt-8'>
                                                     <button
                                                         className='bg-main duration-300 leading-normal transition hover:opacity-80 text-white font-bold py-3 px-7 rounded'
-                                                        type='submit'
+                                                        type='buttton'
                                                     >
                                                         Log in
                                                     </button>

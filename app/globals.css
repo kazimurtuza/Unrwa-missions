@@ -212,3 +212,12 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
         overflow-x: auto;
     }
 }
+
+.user-page-logo img{
+    width: 150px;
+}
+
+.nx-image img{
+    position: static!important;
+    height: auto!important;
+}

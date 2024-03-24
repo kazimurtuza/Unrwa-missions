@@ -29,8 +29,6 @@ function UmraCreate() {
   const searchParames = useSearchParams();
   const id = searchParames.get("id");
 
-
-
   useEffect(() => {
     const fetchData = async () => {
         try {
@@ -41,11 +39,9 @@ function UmraCreate() {
             console.error('Error fetching agencies:', error);
         }
     };
-  
+
     fetchData();
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-  
-
 
   useEffect(() => {
  const fetchData = async () => {
@@ -72,9 +68,6 @@ function UmraCreate() {
 
  fetchData();
 }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
-
-
 
   const handleNameChange = (value) => {
     setName(value);
@@ -137,7 +130,6 @@ function UmraCreate() {
     fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-
 useEffect(() => {
     const fetchData = async () => {
         try {
@@ -150,7 +142,6 @@ useEffect(() => {
 
     fetchData();
 }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -171,17 +162,14 @@ useEffect(() => {
         ownership:ownership,
         cls_list:clsList,
         des:des
-
     };
 
     try {
-
         const response = await axiosClient.put(`umrah/${id}`, postData);
         // Check if the response contains data
         console.log(response);
         if (response && response.data) {
-          if(response.data.success==true)
-          {
+          if(response.data.success==true) {
             setSuccessMessage("Umra Update Successfully");
             // setName("");
             // setCountryId("");
@@ -195,16 +183,10 @@ useEffect(() => {
             // setOwenership("");
             // setSubArea("");
             // setLocationArea("");
-
-          }
-          else
-          {
-            if(response.data.msg)
-            {
+          } else {
+            if(response.data.msg) {
               setErrorMessage(response.data.msg);
-            }
-            else
-            {
+            } else {
             //   const allErrors = extractErrors(response.data.error.errors);
             //   const errorMessageString = allErrors.join(', '); // Join errors into a single string
               setErrorMessage(response.data.error);
@@ -224,7 +206,6 @@ useEffect(() => {
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -266,7 +247,6 @@ useEffect(() => {
                                                 </span>
                                                 </div>
                                             )}
-
 
                       <div className="mb-4">
                         <label className="block text-grey-darker text-sm font-bold mb-2">
@@ -326,8 +306,6 @@ useEffect(() => {
                         />
                       </div>
 
-
-
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -355,8 +333,6 @@ useEffect(() => {
 
                         </select>
                       </div>
-
-
 
                       <div className="mb-4">
                         <label
@@ -411,18 +387,16 @@ useEffect(() => {
                           </option>
 
                           <option value="Khuza'a">
-                          Khuza'a
+                          {"Khuza'a"}
                           </option>
 
                           <option value="Ma'en">
-                          Ma'en
+                          {"Ma'en"}
                           </option>
-
 
                           <option value="Mawasi">
                           Mawasi
                           </option>
-
 
                           <option value="Qarara">
                           Qarara
@@ -436,11 +410,9 @@ useEffect(() => {
                           Rafah Camp
                           </option>
 
-
                           <option value="Rafah Town">
                           Rafah Town
                           </option>
-
 
                           <option value="Shajaiya">
                           Shajaiya
@@ -536,8 +508,6 @@ useEffect(() => {
                         </select>
                         </div>
 
-
-
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -594,7 +564,6 @@ useEffect(() => {
                         </select>
                       </div>
 
-
                       <div className="mb-4">
                         <label
                           className="block text-grey-darker text-sm font-bold mb-2"
@@ -620,9 +589,6 @@ useEffect(() => {
 
                         </select>
                       </div>
-
-
-
 
                       <div className="flex items-center justify-between mt-8">
                         <button
@@ -653,8 +619,8 @@ function extractErrors(errors) {
         result.push(`${key}: ${errorMessage}`);
       }
     }
+
     return result;
 }
 
 export default UmraCreate;
-

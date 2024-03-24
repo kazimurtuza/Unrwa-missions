@@ -1,6 +1,7 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
 import $ from 'jquery';
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
@@ -74,11 +75,12 @@ function Staff() {
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
                             <div className="ml-3">
-                                <p className="text-gray-900 whitespace-no-wrap">
+                                <p className="text-gray-900 whitespace-no-wrap w-8 h-8 nx-image">
                                     {item.staff_photo && (
-                                        <img
-                                            className="w-8 h-8 rounded-full object-cover"
-                                            src={`${api_base_url}/${item.staff_photo}`}
+                                        <Image
+                                        className="rounded-full"
+                                            fill={true}
+                                            src={`/${item.staff_photo}`}
                                             alt={`${item.name}'s image`}
                                         />
                                     )}

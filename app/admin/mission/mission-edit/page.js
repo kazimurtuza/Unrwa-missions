@@ -11,7 +11,6 @@ import Step3 from "../Step3";
 import Step4 from "../Step4";
 import "../steps.css";
 
-
 function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -103,7 +102,6 @@ function Steps() {
         await setStoreData(old => ({...old, vehicle_list: value}));
     };
 
-
     const fetchData = async () => {
         try {
             const id = await mission_id;
@@ -161,19 +159,17 @@ function Steps() {
 
                 setStoreData(mission)
 
-
                 // console.log(data.result.mission);
                 // setMission(data.result.mission);
                 // setplaces(data.result.places);
                 // setvehicles(data.result.vehicles);
-
             }
+
             // console.log(data.result);
         } catch (error) {
             console.error('Error fetching users:', error);
         }
     };
-
 
     const agenciesSet = async () => {
         try {
@@ -220,7 +216,6 @@ function Steps() {
         }
     };
 
-
     const staffListSet = async () => {
         try {
             const {data} = await axiosClient.get('staff');
@@ -246,16 +241,15 @@ function Steps() {
         classificationListSet();
     }, []);
 
-
     async function saveMission() {
         var validationError = await checkStep3()
         if (validationError == 1) {
             setCheckValidation(1)
             return false;
         }
+
         try {
             const response = await axiosClient.post('mission-edit', storeData).then(function (response) {
-
                 setActiveTab(old => 0);
                 Swal.fire({
                     title: 'success',
@@ -270,27 +264,24 @@ function Steps() {
                 });
             if (response.data.success == true) {
                 alert("Successfully Created")
-
             }
         } catch (error) {
             console.log(error.message)
         }
-
-
     }
 
     const [activeTab, setActiveTab] = useState(0);
 
     const formElements = [
-        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster}
+        <Step1 key={1} data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster}
                classification={classification}
                staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
-        <Step2 data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
+        <Step2 key={2} data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
                checkValidation={checkValidation} locationSet={locationStore}/>,
-        <Step3 data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]}
+        <Step3 key={3} data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]}
                checkValidation={checkValidation}
                vehicleStore={vehicleSet}/>,
-        <Step4 data={data} setData={setData}/>,
+        <Step4 key={4} data={data} setData={setData}/>,
     ];
     const nextPage = async () => {
         let validationError = 0;
@@ -300,11 +291,9 @@ function Steps() {
             setCheckValidation(0)
             setActiveTab((prev) => prev + 1);
         }
-
     }
 
     function checkStep1() {
-
         if (storeData.leader == null ||
             storeData.agency.length == 0 ||
             // storeData.mission_classification == null ||
@@ -312,7 +301,6 @@ function Steps() {
             storeData.purpose == "" ||
             storeData.remarks == "" ||
             storeData.mission_cluster == null
-
         ) {
             setCheckValidation(old => 1)
             return 1;
@@ -330,12 +318,14 @@ function Steps() {
                     result = 1;
                 }
             }
+
             if (item.arrival_umrah_type == 1) {
                 if (item.arrival_umrah_id == null || item.arrival_premise_type == null || item.arrival_building_code == "") {
                     setCheckValidation(old => 1)
                     result = 1;
                 }
             }
+
             if (
                 // item.departure_installation_name == "" ||
                 item.departure_time == "" ||
@@ -348,7 +338,6 @@ function Steps() {
             ) {
                 result = 1;
             }
-
         })
         if (result == 1) {
             setCheckValidation(old => 1)
@@ -367,11 +356,9 @@ function Steps() {
                 item.driver == null ||
                 item.agency == null ||
                 item.staff.length == 0
-
             ) {
                 result = 1;
             }
-
         })
         if (result == 1) {
             setCheckValidation(old => 1)
@@ -425,6 +412,7 @@ function Steps() {
                                                     ? "disabled"
                                                     : ""
                                             }
+
                                             onClick={nextPage}
                                             className={`px-4 py-2 rounded bg-main text-white transition duration-300 ${
                                                 activeTab === formElements.length - 2
@@ -450,8 +438,6 @@ function Steps() {
                 </main>
             </div>
         </div>
-
-
     );
 }
 

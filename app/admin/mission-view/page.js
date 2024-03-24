@@ -133,9 +133,6 @@ function MissionVIew() {
         }
     };
 
-
-
-
     useEffect(() => {
         fetchData3();
         classification();
@@ -290,9 +287,7 @@ function MissionVIew() {
                 fetchData()
                 alert("success fully updated");
             }
-
         }
-
     };
 
     const storeReportDate = async () => {
@@ -305,7 +300,6 @@ function MissionVIew() {
             alert("success fully updated Report");
         }
     };
-
 
     async function downloadPdf() {
         setDownloading(1);
@@ -764,8 +758,8 @@ function MissionVIew() {
                                     <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14'>
                                         <h2>Vehicle and Driver Details</h2>
                                         {vehicles &&
-                                            vehicles.map((item) => (
-                                                <div className='form__info-box'>
+                                            vehicles.map((item, index) => (
+                                                <div key={index} className='form__info-box'>
                                                     <h3 className='form__info-box__title'>
                                                         Driver
                                                     </h3>
@@ -855,8 +849,8 @@ function MissionVIew() {
 
                                                     <ul className='meta-list'>
                                                         {item.staff.map(
-                                                            (item) => (
-                                                                <li>
+                                                            (item, index) => (
+                                                                <li key={index}>
                                                                     {
                                                                         item
                                                                             .staff_id
@@ -867,16 +861,14 @@ function MissionVIew() {
                                                         )}
                                                     </ul>
 
-
                                                     <h3 className='form__info-box__title has-divider'>
                                                         Cargo
                                                     </h3>
 
-
                                                     <ul className='meta-list'>
                                                         {item.carried.map(
-                                                            (item) => (
-                                                                <li>
+                                                            (item, index) => (
+                                                                <li key={index}>
                                                                     {
                                                                         item.value
                                                                     }
