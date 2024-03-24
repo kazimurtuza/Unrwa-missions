@@ -1244,7 +1244,7 @@ function MissionVIew() {
                                             </div>
                                         </div>
                                     </div>
-                                    { mission && mission.request_status ?
+                                    { mission && mission.request_status=="mission_completed" ?
                                         <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
                                             <h2>Mission Debriefing Form</h2>
                                             <button
