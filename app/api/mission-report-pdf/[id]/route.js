@@ -22,18 +22,18 @@ function getStatusString(request_status) {
     return request_status === "request_received"
         ? "Request Received"
         : request_status === "request_submitted_cla"
-        ? "Request Submitted CLA"
-        : request_status === "mission_completed"
-        ? "Mission Completed"
-        : request_status === "request_cancelled_request"
-        ? "Request Cancelled Request"
-        : request_status === "mission_postponed"
-        ? "Mission Postponed"
-        : request_status === "mission_pending"
-        ? "Mission Pending"
-        : request_status === "mission_aborted"
-        ? "Mission Aborted"
-        : "Unknown Status";
+            ? "Request Submitted CLA"
+            : request_status === "mission_completed"
+                ? "Mission Completed"
+                : request_status === "request_cancelled_request"
+                    ? "Request Cancelled Request"
+                    : request_status === "mission_postponed"
+                        ? "Mission Postponed"
+                        : request_status === "mission_pending"
+                            ? "Mission Pending"
+                            : request_status === "mission_aborted"
+                                ? "Mission Aborted"
+                                : "Unknown Status";
 }
 
 function convertDateTimeFormat(dateString) {
@@ -201,21 +201,21 @@ export async function GET(req, content) {
                                                   <p>
     Mission Locations visited and route:
     ${missionLocation.map((item, index) =>
-        `${item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name}- ${item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name}`
-    ).join(', ')}
+                `${item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name}- ${item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name}`
+            ).join(', ')}
 </p>
 
                                                     <p>
                                                         Date of the mission:
                                                       ${mission &&
-                                                            convertDateFormat(
-                                                                mission.movement_date
-                                                            )}
+            convertDateFormat(
+                mission.movement_date
+            )}
                                                     </p>
                                                     <p>
                                                         Mission Focal Point:
                                                         <span>${mission &&
-                                                            mission.leader.name}</span>
+            mission.leader.name}</span>
                                                     </p>
                                                 </div>
                                                 <h3>
@@ -418,10 +418,17 @@ export async function GET(req, content) {
             { waitUntil: "domcontentloaded" }
         );
 
-        var name=`public/mission-pdf/${mission.mission_id}_report.pdf`
+        // var name=`public/mission-pdf/${mission.mission_id}_report.pdf`
+
+        const path = require('path');
+        const missionPdfDirectory = path.join(process.cwd(), 'public', 'mission-pdf');
+        const filePath = path.join(missionPdfDirectory, `${mission.mission_id}_report.pdf`);
+
+
+
         const pdfBuffer = await page.pdf({
             format: "A4",
-            path:name,
+            path:filePath,
             printBackground: true,
 
         });

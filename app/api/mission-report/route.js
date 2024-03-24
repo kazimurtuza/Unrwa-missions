@@ -8,7 +8,6 @@ import nodemailer from "nodemailer";
 import {uploadBase64Img} from "../../helper";
 import fs from "fs";
 import ejs from "ejs";
-import path from "path";
 
 function getCurrentFormattedDate() {
     const currentDate = new Date(); // Get the current date

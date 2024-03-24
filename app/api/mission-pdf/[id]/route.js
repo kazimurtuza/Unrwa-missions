@@ -351,201 +351,32 @@ export async function GET(req, content) {
 
                 <div class="divider" style="margin-top: 10px;"></div>
                 <div class="main-title" style="margin-bottom: 10px;">Movement Stops</div>
-
                 ${alldata}
-                <!--<div style="margin-top: 10px;" class="table-row ">-->
-                    <!--<div class="left">Stop 1</div>-->
-                    <!--<div class="right">-->
-                        <!--<div class="right-row">-->
-                            <!--<div>From</div>-->
-                            <!--<div>Departure DateTime</div>-->
-                            <!--<div>Location</div>-->
-                            <!--<div>Longitude</div>-->
-                            <!--<div>Latitude</div>-->
-                        <!--</div>-->
-                        <!--<div class="right-row">-->
-                            <!--<div></div>-->
-                            <!--<div>03/12/2015</div>-->
-                            <!--<div>Dhaka</div>-->
-                            <!--<div>65656</div>-->
-                            <!--<div>565656</div>-->
-                        <!--</div>-->
-                        <!--<div class="right-row">-->
-                            <!--<div>To</div>-->
-                            <!--<div>Departure DateTime</div>-->
-                            <!--<div>Location</div>-->
-                            <!--<div>Longitude</div>-->
-                            <!--<div>Latitude</div>-->
-                        <!--</div>-->
-                        <!--<div class="right-row">-->
-                            <!--<div></div>-->
-                            <!--<div>03/12/2015</div>-->
-                            <!--<div>Dhaka</div>-->
-                            <!--<div>65656</div>-->
-                            <!--<div>565656</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-                <!--</div>-->
-
-                <!--<div class="table-row" style="margin-top: 10px;">-->
-                    <!--<div class="left">Stop 2</div>-->
-                    <!--<div class="right">-->
-                        <!--<div class="right-row">-->
-                            <!--<div>From</div>-->
-                            <!--<div>Departure DateTime</div>-->
-                            <!--<div>Location</div>-->
-                            <!--<div>Longitude</div>-->
-                            <!--<div>Latitude</div>-->
-                        <!--</div>-->
-                        <!--<div class="right-row">-->
-                            <!--<div></div>-->
-                            <!--<div>03/12/2015</div>-->
-                            <!--<div>Dhaka</div>-->
-                            <!--<div>65656</div>-->
-                            <!--<div>565656</div>-->
-                        <!--</div>-->
-                        <!--<div class="right-row">-->
-                            <!--<div>To</div>-->
-                            <!--<div>Departure DateTime</div>-->
-                            <!--<div>Location</div>-->
-                            <!--<div>Longitude</div>-->
-                            <!--<div>Latitude</div>-->
-                        <!--</div>-->
-                        <!--<div class="right-row">-->
-                            <!--<div></div>-->
-                            <!--<div>03/12/2015</div>-->
-                            <!--<div>Dhaka</div>-->
-                            <!--<div>65656</div>-->
-                            <!--<div>565656</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-                <!--</div>-->
-
-                <!--<div class="table-row" style="margin-top: 10px;">-->
-                    <!--<div class="left">Stop 3</div>-->
-                    <!--<div class="right">-->
-                        <!--<div class="right-row">-->
-                            <!--<div>From</div>-->
-                            <!--<div>Departure DateTime</div>-->
-                            <!--<div>Location</div>-->
-                            <!--<div>Longitude</div>-->
-                            <!--<div>Latitude</div>-->
-                        <!--</div>-->
-                        <!--<div class="right-row">-->
-                            <!--<div></div>-->
-                            <!--<div>03/12/2015</div>-->
-                            <!--<div>Dhaka</div>-->
-                            <!--<div>65656</div>-->
-                            <!--<div>565656</div>-->
-                        <!--</div>-->
-                        <!--<div class="right-row">-->
-                            <!--<div>To</div>-->
-                            <!--<div>Departure DateTime</div>-->
-                            <!--<div>Location</div>-->
-                            <!--<div>Longitude</div>-->
-                            <!--<div>Latitude</div>-->
-                        <!--</div>-->
-                        <!--<div class="right-row">-->
-                            <!--<div></div>-->
-                            <!--<div>03/12/2015</div>-->
-                            <!--<div>Dhaka</div>-->
-                            <!--<div>65656</div>-->
-                            <!--<div>565656</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-                <!--</div>-->
-
                 <div style={page-break-after: always;}>
 
                 <div class="divider" style="margin-top: 10px;"></div>
                 <div class="main-title" style="margin-bottom: 10px;">Vehicles / Drivers / Passengers</div>
 
               ${vicleList}
-                <!--<div style="margin-bottom: 10px; background: gray">Vehicle One</div>-->
-                <!--<div class="table-row">-->
-                    <!--<div class="table-col">-->
-                        <!--<h3>Vehicle Details</h3>-->
-                        <!--<p>-->
-                            <!--<strong>Description</strong>-->
-                            <!--<span>Description</span>-->
-                        <!--</p>-->
-                        <!--<p>-->
-                            <!--<strong>Vehicle ID #</strong>-->
-                            <!--<span>6565656</span>-->
-                        <!--</p>-->
-                        <!--<p>-->
-                            <!--<strong>Registration / Number Plate:</strong>-->
-                            <!--<span>6565656</span>-->
-                        <!--</p>-->
-                        <!--<p>-->
-                            <!--<strong>Cargo:</strong>-->
-                            <!--<span>CS 2526</span>-->
-                        <!--</p>-->
-                    <!--</div>-->
-                    <!--<div class="table-col">-->
-                        <!--<h3>Driver Details</h3>-->
-                        <!--<p>-->
-                            <!--<strong>Names: </strong>-->
-                            <!--<span>Description</span>-->
-                        <!--</p>-->
-                        <!--<p>-->
-                            <!--<strong>Phone Number: </strong>-->
-                            <!--<span>6565656</span>-->
-                        <!--</p>-->
-                        <!--<p>-->
-                            <!--<strong>ID Number: </strong>-->
-                            <!--<span>6565656</span>-->
-                        <!--</p>-->
-
-                    <!--</div>-->
-                    <!--<div class="table-col">-->
-                        <!--<h3>Passenger 1</h3>-->
-                        <!--<p>-->
-                            <!--<strong>Names: </strong>-->
-                            <!--<span>Names</span>-->
-                        <!--</p>-->
-                        <!--<p>-->
-                            <!--<strong>Phone</strong>-->
-                            <!--<span>6565656</span>-->
-                        <!--</p>-->
-                        <!--<p>-->
-                            <!--<strong>ID</strong>-->
-                            <!--<span>6565656</span>-->
-                        <!--</p>-->
-                        <!--<h3>Passenger 2</h3>-->
-                        <!--<p>-->
-                            <!--<strong>Names: </strong>-->
-                            <!--<span>Names</span>-->
-                        <!--</p>-->
-                        <!--<p>-->
-                            <!--<strong>Phone</strong>-->
-                            <!--<span>6565656</span>-->
-                        <!--</p>-->
-                        <!--<p>-->
-                            <!--<strong>ID</strong>-->
-                            <!--<span>6565656</span>-->
-                        <!--</p>-->
-
-                    <!--</div>-->
-                <!--</div>-->
-
             </body>
         </html>`, {waitUntil: 'domcontentloaded'});
 
-        var name=`public/mission-pdf/${mission.mission_id}.pdf`
+
+        const path = require('path');
+        const missionPdfDirectory = path.join(process.cwd(), 'public', 'mission-pdf');
+        const filePath = path.join(missionPdfDirectory, `${mission.mission_id}.pdf`);
+
+
         const pdfBuffer = await page.pdf({
             format: 'A4',
-            path: name,
+            path: filePath,
             printBackground: true
         });
 
         // Close the browser to free up resources
         await browser.close();
 
-        return NextResponse.json({result: 'success', success: true});
+        return NextResponse.json({result:filePath, success: true});
     } catch (error) {
         console.error("Error:", error);
         return NextResponse.error(error.message);

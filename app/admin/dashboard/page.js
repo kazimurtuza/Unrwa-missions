@@ -171,7 +171,7 @@ function Dashboard() {
         clusterList();
 
         // addDatasets();
-    }, [clusterList]); // Empty dependency array means this effect runs only once, similar to componentDidMount
+    }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
     function additem(name, dataList, index) {
         // Generate random RGB values
