@@ -184,7 +184,6 @@ function Steps() {
 
     async function saveMission() {
         try {
-
             var validationError = await checkStep3();
             await vehicleStaf.forEach(item => {
                 if (item.length == 0) {
@@ -242,16 +241,16 @@ function Steps() {
     };
 
     const formElements = [
-        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster}
+        <Step1 key={1} data={data} storeData={storeData} checkValidation={checkValidation} cluster={cluster}
                classification={classification}
                staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
-        <Step2 data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
+        <Step2 key={2} data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
                checkValidation={checkValidation} locationSet={locationStore}/>,
-        <Step3 data={storeData} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]}
+        <Step3 key={3} data={storeData} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]}
                checkValidation={checkValidation}
                vehicleStore={vehicleSet} vehicleStaffStore={vehicleStaffStore} prevehicleStaf={vehicleStaf}
                updateVehicleStaf={updateVehicleStaf}/>,
-        <Step4 data={data} setData={setData}/>,
+        <Step4 key={4} data={data} setData={setData}/>,
     ];
     const nextPage = async () => {
         let validationError = 0;

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { deleteCookie } from "cookies-next";
+import Image from "next/image";
 import Link from 'next/link';
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
@@ -101,8 +102,21 @@ function UserSidebar({ sidebarOpen, setSidebarOpen }) {
                         </svg>
                     </button>
                     {/* Logo */}
-                    <Link href="/" className="block mx-auto text-slate-200 pt-3">
-                        <img width={150} src="/uploads/logo.png" alt="logo" />
+                    <Link href="/" className="block mx-auto text-slate-200 pt-3 nx-image" style={{ width: '150px' }}>
+                        <Image
+                            src={
+                                '/uploads/logo.png'
+                            }
+
+                            blurDataURL={
+                                '/uploads/logo.png'
+                            }
+
+                            width={150}
+                            height={0}
+                            alt='Image'
+                            placeholder="blur"
+                        />
                     </Link>
                 </div>
 

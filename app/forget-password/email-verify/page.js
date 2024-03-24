@@ -1,10 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
 import axiosClient from "@/app/axiosClient";
+import { getCookie } from 'cookies-next';
+import Image from "next/image";
 import { useRouter } from 'next/navigation'; // Changed from 'next/navigation' to 'next/router'
-import { NextResponse } from "next/server"; // Unclear use, consider removing if not needed
-import { now } from "mongoose"; // Unused import, consider removing
-import { deleteCookie, getCookie, setCookie } from 'cookies-next';
+import { useEffect, useState } from "react";
 
 function Login() {
     const router = useRouter();
@@ -17,22 +16,19 @@ function Login() {
 
     const api_base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const { data } = await axiosClient.get('settings');
                 console.log(data);
                 setSettings(data);
-                
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
         };
-    
+
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-    
 
     const submitForm = async (e) => {
         e.preventDefault(); // Prevent default form submission behavior
@@ -54,8 +50,7 @@ function Login() {
             if (response.data.success==true) {
                 setSuccessMessage("Email Verification Successful");
                 router.push('/reset-password', { scroll: false });
-            }
-             else {
+            } else {
                 setErrorMessage(response.data.msg);
             }
         } catch (error) {
@@ -78,16 +73,21 @@ function Login() {
                                         <div className='px-8 py-10'>
                                             <a href='/' className='max-w-[120px] mx-auto mb-2.5 block'>
                                             {settings.app_logo && (
-                                                    <>
-                                                        <img
-                                                        src={api_base_url + "/" + settings.app_logo}
-                                                        alt="Image"
-                                                        // onClick={popupImg}
-                                                        className="cursor-pointer object-cover mx-auto my-5 w-80"
-                                                        style={{ float: "" }}
-                                                        />
-                                                        <br />
-                                                    </>
+                                                <Image
+                                                    src={
+                                                        '/'+settings.app_logo
+                                                    }
+
+                                                    blurDataURL={
+                                                        '/'+settings.app_logo
+                                                    }
+
+                                                    width={307}
+                                                    height={221}
+                                                    alt='Image'
+                                                    placeholder="blur"
+                                                    className='cursor-pointer object-cover mx-auto my-5 w-80'
+                                                />
                                             )}
                                             </a>
                                             <h2 className='text-[24px] sm:text-[28px] text-grey-darker text-center mb-10'>
@@ -135,7 +135,7 @@ function Login() {
                                                 </div>
 
                                                 <div className='flex items-center justify-between mt-8'>
-                                                    <button className='bg-indigo-600 duration-300 leading-normal transition opacity-90 hover:opacity-100 text-white font-bold py-2 px-4 rounded' type="submit">
+                                                    <button className='bg-indigo-600 duration-300 leading-normal transition opacity-90 hover:opacity-100 text-white font-bold py-2 px-4 rounded' type="button">
                                                         Verify
                                                     </button>
                                                 </div>

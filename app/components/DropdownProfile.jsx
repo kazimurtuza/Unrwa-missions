@@ -1,14 +1,14 @@
+import { deleteCookie, getCookie } from 'cookies-next';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import Transition from '../utils/Transition';
-import { deleteCookie, getCookie } from 'cookies-next';
-import { get } from 'jquery';
 
 function DropdownProfile({
   align
 }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const [name, setName] = useState(getCookie('authUserName'));  
+  const [name, setName] = useState(getCookie('authUserName'));
   const [userType, setUserType] = useState(getCookie('authUserType'));
 
   const trigger = useRef(null);
@@ -52,7 +52,7 @@ function DropdownProfile({
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
-        <img className="w-8 h-8 rounded-full" src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" width="32" height="32" alt="User" />
+        <Image src="/uploads/avatar-1577909_1280.webp" width="32" height="32" alt="User" />
         <div className="flex items-center truncate">
           <span className="truncate ml-2 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{name}</span>
           <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">

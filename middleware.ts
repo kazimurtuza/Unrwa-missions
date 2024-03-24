@@ -1,10 +1,5 @@
-import {NextResponse} from 'next/server'
-import {NextRequest} from 'next/server'
-import *as jose from "jose"
-import jwt from 'jsonwebtoken'
-import {setCookie} from 'cookies-next';
-import {getCookie} from 'cookies-next';
-import {url} from "inspector";
+import * as jose from "jose";
+import { NextRequest, NextResponse } from 'next/server';
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -25,23 +20,21 @@ export async function middleware(request: NextRequest) {
                 if (userType != 'admin') {
                     //return NextResponse.redirect(new URL('/login', request.nextUrl))
                 }
-
             }catch (error){
                 return NextResponse.redirect(new URL('/login', request.nextUrl)).clone
             }
         }
-
     } else {
         if (!bearerToken) {
             return new NextResponse(JSON.stringify({error: "Bearer Token Not Defined"}))
         }
+
         const token = bearerToken.split(' ')[1];
         try {
             await jose.jwtVerify(token, srcky)
         } catch (error) {
             return new NextResponse(JSON.stringify({error: "Bearer Token Not incorrect"}))
         }
-
     }
 }
 

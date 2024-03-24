@@ -117,7 +117,6 @@ function Steps() {
         }
     };
 
-
     const staffListSet = async () => {
         try {
             const {data} = await axiosClient.get('staff');
@@ -141,7 +140,6 @@ function Steps() {
         classificationListSet();
     }, []);
 
-
     async function saveMission() {
         var validationError =await checkStep3()
         console.log(storeData);
@@ -149,9 +147,9 @@ function Steps() {
             setCheckValidation(1)
             return false;
         }
+
         try {
             const response = await axiosClient.post('mission', storeData).then(function (response) {
-
                 Swal.fire({
                     title: 'success',
                     text: 'Successfully Mission Created',
@@ -170,20 +168,18 @@ function Steps() {
         } catch (error) {
             console.log(error.message)
         }
-
-
     }
 
     const [activeTab, setActiveTab] = useState(0);
 
     const formElements = [
-        <Step1 data={data} storeData={storeData} checkValidation={checkValidation} classification={classification}
+        <Step1 key={121} data={data} storeData={storeData} checkValidation={checkValidation} classification={classification}
                staffList={staffList} agencyList={agencyList} getdata={handleChange}/>,
-        <Step2 data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
+        <Step2 key={122} data={storeData.location_list} emptyLocation={dataObject.location_list[0]}
                checkValidation={checkValidation} locationSet={locationStore}/>,
-        <Step3 data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]} checkValidation={checkValidation}
+        <Step3 key={123} data={storeData.vehicle_list} vehicleStaff={vehicleStaff} emptyVehicle={dataObject.vehicle_list[0]} checkValidation={checkValidation}
                vehicleStore={vehicleSet}/>,
-        <Step4 data={data} setData={setData}/>,
+        <Step4 key={124} data={data} setData={setData}/>,
     ];
     const nextPage = async () => {
         let validationError = 0;
@@ -193,11 +189,9 @@ function Steps() {
             setCheckValidation(0)
             setActiveTab((prev) => prev + 1);
         }
-
     }
 
     function checkStep1() {
-
         if (storeData.leader == null ||
             storeData.agency.length==0 ||
             // storeData.mission_classification == null ||
@@ -220,12 +214,14 @@ function Steps() {
                     result = 1;
                 }
             }
+
             if (item.arrival_umrah_type == 1) {
                 if (item.arrival_umrah_id == null || item.arrival_premise_type == null || item.arrival_building_code == "") {
                     setCheckValidation(old => 1)
                     result = 1;
                 }
             }
+
             if (
                 // item.departure_installation_name == "" ||
                 item.departure_time == "" ||
@@ -238,7 +234,6 @@ function Steps() {
             ) {
                 result = 1;
             }
-
         })
         if (result == 1) {
             setCheckValidation(old => 1)
@@ -257,11 +252,9 @@ function Steps() {
                 item.driver == null ||
                 item.agency == null ||
                 item.staff.length == 0
-
             ) {
                 result = 1;
             }
-
         })
         if (result == 1) {
             setCheckValidation(old => 1)
@@ -341,8 +334,6 @@ function Steps() {
                 </main>
             </div>
         </div>
-
-
     );
 }
 

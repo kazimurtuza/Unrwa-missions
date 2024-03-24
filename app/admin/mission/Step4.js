@@ -3,8 +3,8 @@ import Collapsable3 from "./components/collapsable3";
 const Step4 = (props) => {
   const { data, setData } = props;
 
-  const [items, setitems] = useState([<Collapsable3/>]);
-  
+  const [items, setitems] = useState([<Collapsable3 key={5665}/>]);
+
   const handleClick = () => {
     setitems([...items, items[0]]);
   }
