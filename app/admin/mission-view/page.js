@@ -311,7 +311,7 @@ function MissionVIew() {
         setDownloading(1);
         let urlLink = `mission-pdf/${mission_id}`;
         const {data} = await axiosClient.get(urlLink);
-        const fileName = "test.pdf"; // Name of the file in the public folder
+        const fileName =`mission-pdf/${mission.mission_id}.pdf`; // Name of the file in the public folder
         // Construct the URL to the file in the public folder
         const url = new URL(fileName, window.location.origin + "/");
         // Create a new anchor element
@@ -319,7 +319,7 @@ function MissionVIew() {
         // Set the anchor's href attribute to the file path
         a.href = url;
         // Set the anchor's download attribute with the desired filename
-        a.download = "mission.pdf";
+        a.download = `${mission.mission_id}.pdf`;
         // Append the anchor to the body
         document.body.appendChild(a);
         // Click the anchor to trigger the download
@@ -333,7 +333,7 @@ function MissionVIew() {
         setDownloading(1);
         let urlLink = `mission-report-pdf/${mission_id}`;
         const {data} = await axiosClient.get(urlLink);
-        const fileName = "report.pdf"; // Name of the file in the public folder
+        const fileName = `mission-pdf/${mission.mission_id}_report.pdf`; // Name of the file in the public folder
         // Construct the URL to the file in the public folder
         const url = new URL(fileName, window.location.origin + "/");
         // Create a new anchor element
@@ -341,7 +341,7 @@ function MissionVIew() {
         // Set the anchor's href attribute to the file path
         a.href = url;
         // Set the anchor's download attribute with the desired filename
-        a.download = "mission.pdf";
+        a.download = `${mission.mission_id}_Report.pdf`;
         // Append the anchor to the body
         document.body.appendChild(a);
         // Click the anchor to trigger the download
@@ -374,8 +374,11 @@ function MissionVIew() {
                                     <button
                                         className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
                                         onClick={downloadPdf}
+                                        disabled={!mission}
+
                                     >
-                                        Download PDF
+                                        {mission?"Download PDF":"processing..."}
+
                                     </button>
 
                                     {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'}/>}*/}

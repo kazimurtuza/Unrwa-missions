@@ -534,9 +534,11 @@ export async function GET(req, content) {
 
             </body>
         </html>`, {waitUntil: 'domcontentloaded'});
+
+        var name=`public/mission-pdf/${mission.mission_id}.pdf`
         const pdfBuffer = await page.pdf({
             format: 'A4',
-            path: 'public/test.pdf',
+            path: name,
             printBackground: true
         });
 

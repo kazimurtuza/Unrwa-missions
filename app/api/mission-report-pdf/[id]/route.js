@@ -417,10 +417,13 @@ export async function GET(req, content) {
             </html>`,
             { waitUntil: "domcontentloaded" }
         );
+
+        var name=`public/mission-pdf/${mission.mission_id}_report.pdf`
         const pdfBuffer = await page.pdf({
             format: "A4",
-            path: "public/report.pdf",
+            path:name,
             printBackground: true,
+
         });
 
         // Close the browser to free up resources
