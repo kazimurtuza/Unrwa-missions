@@ -3,11 +3,10 @@
 import { useRouter, useSearchParams } from "next/navigation";
 
 import axiosClient from "@/app/axiosClient";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import PDFFile from './component/pdf';
 
+import { Document, Page, Text, PDFDownloadLink } from '@react-pdf/renderer';
 function convertDateFormat(dateString, newFormat) {
     // Parse the input date string
     let parsedDate = new Date(dateString);
@@ -367,14 +366,19 @@ function MissionVIew() {
                         <div className='py-8'>
                             <main>
                                 <div className='pdf-btn-wrap'>
+                                    <div>
 
-                                    <div className="App">
-                                        <PDFDownloadLink document={<PDFFile/>} filename="FORM">
-                                            {({loading}) => (loading ? <button>Loading Document...</button> : <button>Download</button> )}
-                                        </PDFDownloadLink>
-                                        {/* <PDFFile /> */}
+                                            <PDFDownloadLink document={<Document>
+                                                <Page>
+                                                    <Text>Sample PDF Content---------</Text>
+                                                </Page>
+                                            </Document>} fileName="sample.pdf">
+                                                {({ blob, url, loading, error }) =>
+                                                    loading ? 'Loading document...' : 'Download PDF'
+                                                }
+                                            </PDFDownloadLink>
+
                                     </div>
-
 
 
                                     <button

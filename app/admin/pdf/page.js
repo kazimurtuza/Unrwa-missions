@@ -5,7 +5,6 @@ import { Document, Page, Text, PDFDownloadLink } from '@react-pdf/renderer';
 const MyPDF = () => {
     // State to track whether the PDF content is ready for download
     const [pdfReady, setPdfReady] = useState(true);
-
     // Function to handle generating the PDF content
     const generatePDF = () => {
         // Your PDF content generation logic here
