@@ -166,7 +166,7 @@ function Login() {
                                                 <div className='flex items-center justify-between mt-8'>
                                                     <button
                                                         className='bg-main duration-300 leading-normal transition hover:opacity-80 text-white font-bold py-3 px-7 rounded'
-                                                        type='buttton'
+                                                        type='submit'
                                                     >
                                                         Log in
                                                     </button>
