@@ -3,10 +3,11 @@
 import { useRouter, useSearchParams } from "next/navigation";
 
 import axiosClient from "@/app/axiosClient";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
 
-import { Document, Page, Text, PDFDownloadLink } from '@react-pdf/renderer';
+import { Document, PDFDownloadLink, Page } from '@react-pdf/renderer';
+import PDFFile from "./component/pdf";
 function convertDateFormat(dateString, newFormat) {
     // Parse the input date string
     let parsedDate = new Date(dateString);
@@ -56,15 +57,6 @@ function MissionVIew() {
     const [places, setplaces] = useState([]);
     const [imageListData, setImageList] = useState([""]);
     const [vehicles, setvehicles] = useState([]);
-    const options = [
-        {value: "1", label: "Staff One"},
-        {value: "2", label: "Staff Two"},
-        {value: "3", label: "Staff Three"},
-        {value: "4", label: "Staff Four"},
-        {value: "5", label: "Staff Five"},
-        {value: "6", label: "Staff Six"},
-        {value: "7", label: "Staff Seven"},
-    ];
 
     let dataList = {
         m_id: mission_id,
@@ -369,9 +361,8 @@ function MissionVIew() {
                                     <div>
 
                                             <PDFDownloadLink document={<Document>
-                                                <Page>
-                                                    <Text>Sample PDF Content---------</Text>
-                                                </Page>
+                                                <Page style={{padding: '12px'}}>
+                                                    <PDFFile/>                                                </Page>
                                             </Document>} fileName="sample.pdf">
                                                 {({ blob, url, loading, error }) =>
                                                     loading ? 'Loading document...' : 'Download PDF'
@@ -379,7 +370,6 @@ function MissionVIew() {
                                             </PDFDownloadLink>
 
                                     </div>
-
 
                                     <button
                                         className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
