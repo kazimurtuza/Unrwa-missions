@@ -6,6 +6,8 @@ import axiosClient from "@/app/axiosClient";
 import { useEffect, useState } from "react";
 import "./style.css";
 
+import { Document, PDFDownloadLink, Page } from '@react-pdf/renderer';
+import PDFFile from "./component/pdf";
 function convertDateFormat(dateString, newFormat) {
     // Parse the input date string
     let parsedDate = new Date(dateString);
@@ -55,15 +57,6 @@ function MissionVIew() {
     const [places, setplaces] = useState([]);
     const [imageListData, setImageList] = useState([""]);
     const [vehicles, setvehicles] = useState([]);
-    const options = [
-        {value: "1", label: "Staff One"},
-        {value: "2", label: "Staff Two"},
-        {value: "3", label: "Staff Three"},
-        {value: "4", label: "Staff Four"},
-        {value: "5", label: "Staff Five"},
-        {value: "6", label: "Staff Six"},
-        {value: "7", label: "Staff Seven"},
-    ];
 
     let dataList = {
         m_id: mission_id,
@@ -106,6 +99,7 @@ function MissionVIew() {
     const [requestStatusDataList, setRequestStatusDataList] = useState("");
     const [acuDataList, setAcuStatusDataList] = useState("");
     const [classificationList, setclassification] = useState([]);
+    const name="kazi";
 
     const fetchData3 = async () => {
         try {
@@ -356,6 +350,7 @@ function MissionVIew() {
         // Returns null on first render, so the client and server match
         return null;
     }
+    var pdfdata= <PDFFile mission={mission} missionLocation={places} missionVehicle={vehicles}/>
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -365,15 +360,28 @@ function MissionVIew() {
                         <div className='py-8'>
                             <main>
                                 <div className='pdf-btn-wrap'>
-                                    <button
-                                        className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'
-                                        onClick={downloadPdf}
-                                        disabled={!mission}
+                                    <div>
 
-                                    >
-                                        {mission?"Download PDF":"processing..."}
+                                            <PDFDownloadLink document={<Document>
+                                                <Page style={{padding: '12px'}}
+                                                >
+                                                    {pdfdata}
+                                                </Page>
+                                            </Document>} fileName={`${mission && mission.mission_id}.pdf`}>
+                                                {mission?"Download PDF":"processing..."}
+                                            </PDFDownloadLink>
 
-                                    </button>
+                                    </div>
+
+                                    {/*<button*/}
+                                        {/*className='mt-4 px-4 py-2 mx-2 bg-main text-white rounded'*/}
+                                        {/*onClick={downloadPdf}*/}
+                                        {/*disabled={!mission}*/}
+
+                                    {/*>*/}
+                                        {/*{mission?"Download PDF":"processing..."}*/}
+
+                                    {/*</button>*/}
 
                                     {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'}/>}*/}
                                     {/*fileName="example.pdf">*/}

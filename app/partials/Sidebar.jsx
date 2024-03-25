@@ -116,14 +116,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                 '/uploads/logo.png'
                             }
 
-                            blurDataURL={
-                                '/uploads/logo.png'
-                            }
-
                             width={150}
                             height={0}
                             alt='Image'
-                            placeholder="blur"
                         />
                     </Link>
                 </div>
@@ -180,7 +175,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                     );
                                 }}
                             </SidebarLinkGroup>
-
 
                             {/* Forms */}
 
