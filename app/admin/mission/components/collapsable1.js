@@ -242,7 +242,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem, isCollaps
 
                                     <input type="text" name="departure_building_code"
                                            value={info.departure_building_code} onInput={setdata}
-                                           className="form__input" id="latitude"/>
+                                           className="form__input" id="latitude" readOnly={info.departure_umrah_type==0?0:1} />
                                     {(checkValidation && info.departure_building_code == "") ? errorTxt : ""}
                                 </div> : ""
                             }
@@ -347,6 +347,7 @@ const Collapsable1 = ({info, setInfo, item, checkValidation,totalItem, isCollaps
                                     </label>
                                     <div className="select-wrap">
                                         <input type="text" name="arrival_building_code"
+                                               readOnly={info.arrival_umrah_type==0?0:1}
                                                value={info.arrival_building_code} onInput={setdata}
                                                className="form__input" id="latitude"/>
                                         {(checkValidation && info.arrival_building_code == "") ? errorTxt : ""}
