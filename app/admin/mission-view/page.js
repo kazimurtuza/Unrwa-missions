@@ -367,7 +367,11 @@ function MissionVIew() {
                             <main>
                                 <div className='pdf-btn-wrap'>
                                     <div>
+                                        {/* Render PDF content */}
+                                        {renderPDFContent()}
 
+                                        {/* Download link */}
+                                        {pdfReady && (
                                             <PDFDownloadLink document={<Document>
                                                 <Page>
                                                     <Text>Sample PDF Content---------</Text>
@@ -377,7 +381,7 @@ function MissionVIew() {
                                                     loading ? 'Loading document...' : 'Download PDF'
                                                 }
                                             </PDFDownloadLink>
-
+                                        )}
                                     </div>
 
 
