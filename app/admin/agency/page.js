@@ -1,11 +1,9 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import $ from 'jquery';
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
-import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 
 function AgencyList() {
     const [agency, setAgencyList] = useState([]);
@@ -15,9 +13,6 @@ function AgencyList() {
         try {
             const { data } = await axiosClient.get('agency');
             setAgencyList(data.result);
-            setTimeout( function(){
-                $('table').dataTable();
-            }, 300);
         } catch (error) {
             console.error('Error fetching agencies:', error);
         }
@@ -50,13 +45,7 @@ function AgencyList() {
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
+
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
                                     {item.agency_logo && (
@@ -67,68 +56,40 @@ function AgencyList() {
                                         />
                                     )}
                                 </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
+
                             </div>
                         </div>
                     </td>
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
                                     {item.name}
                                 </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
                             </div>
                         </div>
                     </td>
 
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
+
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
                                     {item.agency_name_acroynm}
                                 </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
+
                             </div>
                         </div>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex">
-                            {/*<div className="flex-shrink-0 w-10 h-10">*/}
-                            {/*    <img*/}
-                            {/*        className="w-full h-full rounded-full"*/}
-                            {/*        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"*/}
-                            {/*        alt=""*/}
-                            {/*    />*/}
-                            {/*</div>*/}
+
                             <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap">
                                     {item.agency_head}
                                 </p>
-                                {/*<p className="text-gray-600 whitespace-no-wrap">*/}
-                                {/*    000004*/}
-                                {/*</p>*/}
+
                             </div>
                         </div>
                     </td>
@@ -202,6 +163,7 @@ function AgencyList() {
                 {/* Table */}
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                   <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                    <div className="table-wrap">
                     <table className="min-w-full leading-normal">
                       <thead>
                       {head}
@@ -211,6 +173,7 @@ function AgencyList() {
 
                       </tbody>
                     </table>
+                  </div>
                   </div>
                 </div>
 

@@ -112,27 +112,9 @@ function MissionVIew() {
         }
     };
 
-    // const classification = async () => {
-    //     try {
-    //         // const {data} = await axiosClient.get("misson-classification");
-    //         let classificationData = data.result.map(item => (
-    //             <option key={item._id} value={item._id}>
-    //                 {item.requests_classifications}
-    //             </option>
-    //         ));
-    //
-    //
-    //         setclassification(classificationData);
-    //         console.log(data.result);
-    //     } catch (error) {
-    //         console.error("Error fetching classification:", error);
-    //     }
-    // };
-
     useEffect(() => {
         fetchData3();
-        // classification();
-    }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+    }, []);
 
     useEffect(() => {
         const fetchData4 = async () => {
@@ -146,7 +128,7 @@ function MissionVIew() {
         };
 
         fetchData4();
-    }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+    }, []);
 
     useEffect(() => {
         const fetchData2 = async () => {
@@ -160,7 +142,7 @@ function MissionVIew() {
         };
 
         fetchData2();
-    }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+    }, []);
 
     const fetchData = async () => {
         try {
@@ -209,29 +191,6 @@ function MissionVIew() {
             console.error("Error fetching users:", error);
         }
     };
-
-    // function storeImage(e){
-    //     const {name, value} = e.target;
-    //     const file = e.target.files[0];
-    //     var base64=null;
-    //     if (file) {
-    //         const reader = new FileReader();
-    //
-    //         reader.onloadend = () => {
-    //             // Once the FileReader has read the file, set the base64 data
-    //             base64=reader.result;
-    //         };
-    //
-    //         // Read the file as a data URL (base64)
-    //         reader.readAsDataURL(file);
-    //     }
-    //     console.log(base64);
-    //
-    //     imageList[name]=base64;
-    //     setImageList(old => imageList);
-    //
-    //     console.log(imageList);
-    // }
 
     const storeImage = (e,index) => {
         const file = e.target.files[0];

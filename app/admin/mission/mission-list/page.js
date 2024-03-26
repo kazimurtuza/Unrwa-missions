@@ -23,13 +23,17 @@ function MissionList() {
                             : "",
                     leader: item.leader_details[0].name,
                     date: convertDateFormat(item.movement_date, newDateFormat),
-                    timeStamp: new Date(convertDateFormat(item.movement_date, newDateFormat)).getTime(),
+                    timeStamp: new Date(
+                        convertDateFormat(item.movement_date, newDateFormat)
+                    ).getTime(),
                     cla:
                         item.cla_decision == "partially_approved"
                             ? "partially approved"
-                            : item.cla_decision ? item.cla_decision : '',
+                            : item.cla_decision
+                            ? item.cla_decision
+                            : "",
                     status: getStatusString(item.request_status),
-                    _id: item._id
+                    _id: item._id,
                 };
 
                 resData.push(tDeta);
@@ -106,10 +110,10 @@ function MissionList() {
             : "Unknown Status";
     }
 
-    let newDateFormat = "DD/MM/YYYY"; // Example new format
+    let newDateFormat = "DD/MM/YYYY";
 
     let head = (
-        <tr className="has-sorting">
+        <tr className='has-sorting'>
             <th
                 onClick={() => handleSort("id")}
                 className='px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider'
@@ -178,9 +182,7 @@ function MissionList() {
                         </td>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                             <p className='text-gray-900 whitespace-no-wrap'>
-                                {convertDateFormat(
-                                    item.date
-                                )}
+                                {convertDateFormat(item.date)}
                             </p>
                         </td>
 
@@ -212,7 +214,6 @@ function MissionList() {
                                 }}
                                 className='px-4 py-2 mx-2 bg-main text-white rounded'
                             >
-
                                 Details
                             </Link>
                             <Link
@@ -222,7 +223,6 @@ function MissionList() {
                                 }}
                                 className='px-4 py-2 mx-1 bg-main text-white rounded'
                             >
-
                                 Edit
                             </Link>
                         </td>
@@ -245,10 +245,12 @@ function MissionList() {
                             {/* Table */}
                             <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
                                 <div className='inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite'>
-                                    <table className='min-w-full leading-normal mission-view'>
-                                        <thead>{head}</thead>
-                                        <tbody>{body}</tbody>
-                                    </table>
+                                    <div className='table-wrap'>
+                                        <table className='min-w-full leading-normal mission-view'>
+                                            <thead>{head}</thead>
+                                            <tbody>{body}</tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

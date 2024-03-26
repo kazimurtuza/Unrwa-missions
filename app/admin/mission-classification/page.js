@@ -1,11 +1,9 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import $ from 'jquery';
+
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
-import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 function MissionClassificationList() {
     const [missionClassification, setMissionClassificationList] = useState([]);
 
@@ -13,9 +11,6 @@ function MissionClassificationList() {
         try {
             const { data } = await axiosClient.get('misson-classification');
             setMissionClassificationList(data.result);
-            setTimeout( function(){
-                $('table').dataTable();
-            }, 300);
         } catch (error) {
             console.error('Error fetching misson-classifications:', error);
         }
@@ -153,6 +148,7 @@ function MissionClassificationList() {
                 {/* Table */}
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                   <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                    <div className="table-wrap">
                     <table className="min-w-full leading-normal">
                       <thead>
                       {head}
@@ -162,6 +158,7 @@ function MissionClassificationList() {
 
                       </tbody>
                     </table>
+                  </div>
                   </div>
                 </div>
 
