@@ -8,7 +8,9 @@ import "./style.css";
 
 import { Document, PDFDownloadLink, Page } from '@react-pdf/renderer';
 // import PDFFile from "./component/pdf";
-import PDFFile2 from "./component/pdf2";
+import PDFFile from "./component/pdf";
+import ReportPDF  from "./component/pdf2"
+
 function convertDateFormat(dateString, newFormat) {
     // Parse the input date string
     let parsedDate = new Date(dateString);
@@ -312,7 +314,8 @@ function MissionVIew() {
         return null;
     }
 
-    var pdfdata= <PDFFile2 mission={mission} missionLocation={places} missionVehicle={vehicles}/>
+    var reportPdf= <ReportPDF mission={mission} missionLocation={places} missionVehicle={vehicles}/>
+    var detailsPdf= <PDFFile mission={mission} missionLocation={places} missionVehicle={vehicles}/>
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -327,7 +330,7 @@ function MissionVIew() {
                                             <PDFDownloadLink document={<Document>
                                                 <Page style={{padding: '12px'}}
                                                 >
-                                                    {pdfdata}
+                                                    {detailsPdf}
                                                 </Page>
                                             </Document>} fileName={`${mission && mission.mission_id}.pdf`}>
                                                 {mission?"Download PDF":"processing..."}
@@ -1223,12 +1226,25 @@ function MissionVIew() {
                                     { mission && mission.request_status=="mission_completed" ?
                                         <div className='msv-block bg-white shadow-md rounded px-8 pt-6 pb-8 mb-14 mdf-form-wrap'>
                                             <h2>Mission Debriefing Form</h2>
-                                            <button
-                                                className='mt-4 mb-4 px-4 py-2 mx-2 bg-main text-white rounded'
-                                                onClick={downloadReport}
-                                            >
-                                                Download PDF
-                                            </button>
+                                            {/*<button*/}
+                                                {/*className='mt-4 mb-4 px-4 py-2 mx-2 bg-main text-white rounded'*/}
+                                                {/*onClick={downloadReport}*/}
+                                            {/*>*/}
+                                                {/*Download PDF*/}
+                                            {/*</button>*/}
+                                            <PDFDownloadLink document={<Document>
+                                                <Page style={{padding: '12px'}}
+                                                >
+                                                    {reportPdf}
+                                                </Page>
+                                            </Document>} fileName={`${mission && mission.mission_id}-Report.pdf`}>
+                                                {mission?"Download PDF":"processing..."}
+                                            </PDFDownloadLink>
+                                            <br/>
+                                            <br/>
+
+
+
                                             <div className='mdf-form-body'>
                                                 <div className='mdf-form-head'>
                                                     <p>

@@ -120,19 +120,27 @@ function getStatusString(request_status) {
         : "Unknown Status";
 }
 
-const PDFFile = ({ mission, missionLocation, missionVehicle }) => {
+const ReportPDF = ({ mission, missionLocation, missionVehicle }) => {
     return (
         <>
             <Text style={styles.sectionTitle}>Mission Debriefing Form</Text>
             <Text style={styles.sectionText}>
-                Mission Locations visited and route: Beach Health Center- Beach
-                Distribution Center, ins 1- ins 2, Beach Distribution Center
+                Mission ID: {mission && mission.mission_id}
             </Text>
             <Text style={styles.sectionText}>
-                Date of the mission: Mar 25, 2024
+                Mission Locations visited and route:
+            </Text>
+            {
+                missionLocation && missionLocation.map((item, index) =><Text style={styles.sectionText}>
+                    {`${index+1}.`} {item.departure_umrah_id != null ? item.departure_umrah_id.installation_name : item.departure_installation_name}-
+                    {item.arrival_umrah_id != null ? item.arrival_umrah_id.installation_name : item.arrival_installation_name}
+                </Text>)
+            }
+            <Text style={styles.sectionText}>
+                Date of the mission: {convertDateFormat(mission.movement_date)}
             </Text>
             <Text style={styles.sectionText}>
-                Mission Focal Point: staff103
+                Mission Focal Point: {mission && mission.leader.name}
             </Text>
             <Text style={styles.sectionSubTitle}>
                 A Road Assessment (few bullet points in relevant section)
@@ -160,10 +168,10 @@ const PDFFile = ({ mission, missionLocation, missionVehicle }) => {
                         <Text style={styles.label}>A. Not Passable</Text>
                     </View>
                     <View style={styles.sectionCol}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.not_passable_road_condition}</Text>
                     </View>
                     <View style={styles.sectionCol}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.not_passable_presence_eds_erw_uxo}</Text>
                     </View>
                 </View>
                 <View style={styles.sectionRow}>
@@ -171,10 +179,10 @@ const PDFFile = ({ mission, missionLocation, missionVehicle }) => {
                         <Text style={styles.label}>B. Very bad condition</Text>
                     </View>
                     <View style={styles.sectionCol}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.very_bad_road_condition}</Text>
                     </View>
                     <View style={styles.sectionCol}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.bad_presence_eds_erw_uxo}</Text>
                     </View>
                 </View>
                 <View style={styles.sectionRow}>
@@ -182,10 +190,10 @@ const PDFFile = ({ mission, missionLocation, missionVehicle }) => {
                         <Text style={styles.label}>C. Bad condition</Text>{" "}
                     </View>
                     <View style={styles.sectionCol}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.bad_road_condition}</Text>
                     </View>
                     <View style={styles.sectionCol}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.bad_presence_eds_erw_uxo}</Text>
                     </View>
                 </View>
                 <View style={styles.sectionRow}>
@@ -193,10 +201,10 @@ const PDFFile = ({ mission, missionLocation, missionVehicle }) => {
                         <Text style={styles.label}>D. Regular condition</Text>
                     </View>
                     <View style={styles.sectionCol}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.regular_road_condition}</Text>
                     </View>
                     <View style={styles.sectionCol}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.regular_presence_eds_erw_uxo}</Text>
                     </View>
                 </View>
 
@@ -221,10 +229,10 @@ const PDFFile = ({ mission, missionLocation, missionVehicle }) => {
                 </View>
                 <View style={styles.sectionRow2}>
                     <View style={styles.sectionCol2}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.humanitarian_assistance}</Text>
                     </View>
                     <View style={styles.sectionCol2}>
-                        <Text style={styles.text}>Data</Text>
+                        <Text style={styles.text}>{mission && mission.humanitarian_observations}</Text>
                     </View>
                 </View>
             </View>
@@ -232,4 +240,4 @@ const PDFFile = ({ mission, missionLocation, missionVehicle }) => {
     );
 };
 
-export default PDFFile;
+export default ReportPDF;
