@@ -234,3 +234,45 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
         max-width: calc(100vw - 25px);
     }
 }
+
+.has-sorting th{
+    position: relative;
+    cursor: pointer;
+}
+
+.has-sorting th:after,
+.has-sorting th:before{
+    position: absolute;
+    bottom: 0.9em;
+    display: block;
+    opacity: 0.3;
+    font-size: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.has-sorting th:before{
+    right: 1em;
+    content: "\2191";
+}
+
+.has-sorting th:after{
+    right: 0.5em;
+    content: "\2193";
+}
+
+th.asc:after{
+    opacity: 1;
+}
+
+th.desc:before{
+    opacity: 1;
+}
+
+.has-sorting th.no-sort{
+    cursor: default;
+}
+
+.has-sorting th.no-sort:after,
+.has-sorting th.no-sort:before{
+    opacity: 0!important;
+}
