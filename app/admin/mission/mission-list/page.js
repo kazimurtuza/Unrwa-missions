@@ -4,8 +4,6 @@ import axiosClient from "@/app/axiosClient";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 function MissionList() {
-    const [mission, setMissionList] = useState([]);
-
     const [sortBy, setSortBy] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOrder, setSortOrder] = useState('asc');
@@ -15,6 +13,7 @@ function MissionList() {
     const fetchData = async () => {
         try {
             const { data } = await axiosClient.get("mission");
+
             let resData = [];
             data.result.map((item) => {
                 let tDeta = {
@@ -49,8 +48,11 @@ function MissionList() {
 
     useEffect(() => {
         fetchData();
+    }, []);
+
+    useEffect(() => {
         getData()
-    }, [searchQuery, filterData]); // Empty dependency array means this effect runs only once, similar to componentDidMount
+    }, [searchQuery, sortOrder, sortBy]);
 
     const handleSort = (key ) => {
         if (sortBy === key) {
