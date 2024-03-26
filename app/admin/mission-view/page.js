@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 import "./style.css";
 
 import { Document, PDFDownloadLink, Page } from '@react-pdf/renderer';
-import PDFFile from "./component/pdf";
+// import PDFFile from "./component/pdf";
+import PDFFile2 from "./component/pdf2";
 function convertDateFormat(dateString, newFormat) {
     // Parse the input date string
     let parsedDate = new Date(dateString);
@@ -351,7 +352,8 @@ function MissionVIew() {
         // Returns null on first render, so the client and server match
         return null;
     }
-    var pdfdata= <PDFFile mission={mission} missionLocation={places} missionVehicle={vehicles}/>
+
+    var pdfdata= <PDFFile2 mission={mission} missionLocation={places} missionVehicle={vehicles}/>
 
     return (
         <div className='flex h-screen overflow-hidden'>
