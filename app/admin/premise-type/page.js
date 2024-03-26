@@ -1,11 +1,8 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import $ from 'jquery';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
-import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 function Driver() {
     const [premiseType, setpremiseType] = useState([]);
 
@@ -13,9 +10,6 @@ function Driver() {
         try {
             const { data } = await axiosClient.get('premise-type-all');
             setpremiseType(data.result);
-            setTimeout( function(){
-                $('table').dataTable();
-            }, 300);
         } catch (error) {
             console.error('Error fetching drivers:', error);
         }
@@ -145,6 +139,7 @@ function Driver() {
                 {/* Table */}
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                   <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                  <div className='table-wrap'>
                     <table className="min-w-full leading-normal">
                       <thead>
                       {head}
@@ -154,6 +149,7 @@ function Driver() {
 
                       </tbody>
                     </table>
+                  </div>
                   </div>
                 </div>
 

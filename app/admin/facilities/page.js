@@ -1,11 +1,8 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import $ from 'jquery';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
-import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 
 const base_url = process.env.NEXT_PUBLIC_API_BASE_URL + "/";
 
@@ -20,9 +17,6 @@ function UmrahList() {
             const {data} = await axiosClient.get('facility');
             if (data.success == true) {
                 setUmrahList(data.result);
-                setTimeout( function(){
-                    $('table').dataTable();
-                }, 300);
             }
         } catch (error) {
             //setProductList([]);
@@ -236,6 +230,7 @@ function UmrahList() {
                 {/* Table */}
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                   <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden border-lite">
+                  <div className='table-wrap'>
                     <table className="min-w-full leading-normal">
                       <thead>
                       {head}
@@ -245,6 +240,7 @@ function UmrahList() {
 
                       </tbody>
                     </table>
+                  </div>
                   </div>
                 </div>
 

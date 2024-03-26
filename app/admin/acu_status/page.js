@@ -1,11 +1,8 @@
 "use client";
 import axiosClient from "@/app/axiosClient";
-import $ from 'jquery';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-import '../../../node_modules/datatables/media/css/jquery.dataTables.min.css';
-import '../../../node_modules/datatables/media/js/jquery.dataTables.min';
 
 function AcuStatusList() {
     const [acu_status, setAcu_status] = useState([]);
@@ -15,9 +12,6 @@ function AcuStatusList() {
         try {
             const { data } = await axiosClient.get('acu_status');
             setAcu_status(data.result);
-            setTimeout( function(){
-                $('table').dataTable();
-            }, 300);
         } catch (error) {
             console.error('Error fetching agencies:', error);
         }
@@ -27,7 +21,6 @@ function AcuStatusList() {
         fetchData();
     }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-    let tableName = "Missions UNOPS ACU Status";
     const headName = ["ACU Status", "Action"];
     let head = (
         <tr>
