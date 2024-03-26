@@ -353,16 +353,9 @@ function Steps() {
                                         <div className={'circle ' + (activeTab >= 2 ? 'active' : '')}>3</div>
                                         {/*<div className='circle'>4</div>*/}
                                     </div>
-                                    {/*<div>*/}
-                                    {/*<PDFDownloadLink document={<MissionPDF missionId={'sdfsdfsdf'} />} fileName="example.pdf">*/}
-                                    {/*{({ blob, url, loading, error }) =>*/}
-                                    {/*loading ? 'Loading document...' : 'Download PDF'*/}
-                                    {/*}*/}
-                                    {/*</PDFDownloadLink>*/}
-                                    {/*</div>*/}
                                     <div>{formElements[activeTab]}</div>
                                     <div
-                                        className='flex flex-wrap gap-x-6 py-2.5 px-8  fixed bottom-0 right-[18px] justify-end w-[calc(100%-275px)] bg-white z-20 shadow-[0_-3px_3px_0_rgba(0,0,0,.05)]'>
+                                        className='toolbar w-100 flex flex-wrap gap-x-6 py-2.5 px-8  fixed bottom-0 right-[18px] justify-end w-[calc(100%-275px)] bg-white z-20 shadow-[0_-3px_3px_0_rgba(0,0,0,.05)]'>
                                         <button
                                             disabled={activeTab === 0 ? "disabled" : ""}
                                             onClick={() => setActiveTab((prev) => prev - 1)}

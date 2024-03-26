@@ -59,6 +59,17 @@ a {
 	margin-bottom: 25px;
   }
 
+  @media (max-width: 767px){
+	.form__row.flex-ctr-spb{
+		flex-direction: column;
+	}
+
+	.form__info-box .form__col{
+		max-width: 100%;
+		width: 100%;
+	}
+  }
+
   .form__label {
 	font-size: 14px;
 	line-height: 1.2;
@@ -160,6 +171,8 @@ a {
 .meta-list{
 	display: flex;
 	gap: 7px;
+	flex-wrap: wrap;
+	align-items: center;
 }
 
 .meta-list li{

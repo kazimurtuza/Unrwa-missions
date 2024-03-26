@@ -221,3 +221,16 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
     position: static!important;
     height: auto!important;
 }
+
+.table-wrap{
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+@media (max-width: 767px){
+    .table-wrap{
+        max-width: calc(100vw - 25px);
+    }
+}

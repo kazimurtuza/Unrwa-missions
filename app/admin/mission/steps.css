@@ -308,3 +308,24 @@ a {
 	content: "<<";
 	font-family: initial!important;
   }
+
+  @media (max-width: 767px){
+	.form__row.flex-ctr-spb,
+	.form__row.flex-start-spb{
+		flex-direction: column;
+	}
+
+	.form__row.flex-start-spb .form__field{
+		max-width: 100%;
+		width: 100%;
+	}
+
+	.form__info-box .form__col{
+		max-width: 100%;
+		width: 100%;
+	}
+  }
+
+  .toolbar{
+	width: 100%;
+  }
