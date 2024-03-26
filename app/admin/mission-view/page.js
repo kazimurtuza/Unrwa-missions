@@ -8,7 +8,9 @@ import "./style.css";
 
 import { Document, PDFDownloadLink, Page } from '@react-pdf/renderer';
 // import PDFFile from "./component/pdf";
-import PDFFile2 from "./component/pdf2";
+import PDFFile from "./component/pdf";
+import ReportPDF  from "./component/pdf2"
+
 function convertDateFormat(dateString, newFormat) {
     // Parse the input date string
     let parsedDate = new Date(dateString);
@@ -312,7 +314,7 @@ function MissionVIew() {
         return null;
     }
 
-    var reportPdf= <PDFFile2 mission={mission} missionLocation={places} missionVehicle={vehicles}/>
+    var reportPdf= <ReportPDF mission={mission} missionLocation={places} missionVehicle={vehicles}/>
     var detailsPdf= <PDFFile mission={mission} missionLocation={places} missionVehicle={vehicles}/>
 
     return (
@@ -1238,6 +1240,8 @@ function MissionVIew() {
                                             </Document>} fileName={`${mission && mission.mission_id}-Report.pdf`}>
                                                 {mission?"Download PDF":"processing..."}
                                             </PDFDownloadLink>
+                                            <br/>
+                                            <br/>
 
 
 
